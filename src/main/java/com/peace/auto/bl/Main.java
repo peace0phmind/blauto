@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 
 /**
@@ -7,23 +8,24 @@ import org.sikuli.script.Screen;
  */
 public class Main {
     public static void main(String[] args) throws InterruptedException {
-        Screen screen = new Screen();
+//        Screen screen = new Screen();
+        Region region = new Region(0, 45, 800, 480);
+        region.highlight(10);
 
-        ShouGuFang.Do(screen);
+        ShouGuFang.Do(region);
 
-//        Task.Do(screen);
-//        JiangLi.Do(screen);
-//        XunBao.Do(screen);
-//        ShenShouWu.Do(screen);
-//        Building.Do(screen);
-//        NongChang.Do(screen);
-//        ShengYu.Do(screen);
-//
-//        LianMeng.Do(screen);
-//        HaoYou.Do(screen);
+        Task.Do(region);
+        JiangLi.Do(region);
+        XunBao.Do(region);
+        ShenShouWu.Do(region);
+        Building.Do(region);
+        NongChang.Do(region);
+        ShengYu.Do(region);
 
+        LianMeng.Do(region);
+        HaoYou.Do(region);
 
-        JingJiChang.Do(screen);
+        JingJiChang.Do(region);
     }
 
 }

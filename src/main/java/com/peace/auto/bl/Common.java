@@ -17,4 +17,6 @@ public interface Common {
     String MENU1 = BASE_DIR + "menu1.png";
 
     String RI_CHANG = BASE_DIR + "richang.png";
+
+    String QU_XIAO = BASE_DIR + "quxiao.png";
 }

@@ -3,7 +3,7 @@ package com.peace.auto.bl;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
-import org.sikuli.script.Screen;
+import org.sikuli.script.Region;
 
 import java.util.Iterator;
 
@@ -13,35 +13,43 @@ import java.util.Iterator;
 @Slf4j
 public class HaoYou {
 
-    static public void Do(Screen screen) {
+    static public void Do(Region region) {
         String baseDir = Common.BASE_DIR + "haoyou/";
 
         try {
-            screen.click(Common.MENU);
-            Match haoyou = screen.exists(baseDir + "haoyou.png", 1);
+            region.click(Common.MENU);
+            Match haoyou = region.exists(baseDir + "haoyou.png", 1);
 
             if (haoyou != null) {
                 haoyou.click();
 
-                Match aixing = screen.exists(baseDir + "songaixing.png", 3);
+                Thread.sleep(3000L);
+
+                Match aixing = region.exists(baseDir + "songaixing.png", 3);
                 if (aixing != null) {
-                    Iterator<Match> all = screen.findAll(baseDir + "songaixing.png");
+                    Iterator<Match> all = region.findAll(baseDir + "songaixing.png");
                     while (all.hasNext()) {
                         all.next().click();
-                        screen.click(baseDir + "xiaciba.png");
+                        region.click(baseDir + "xiaciba.png");
                     }
                 }
-
-                screen.click(Common.CLOSE);
-                Thread.sleep(500L);
-
-                screen.click(Common.MENU1);
             }
 
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
-        }catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             log.error("{}", e);
+        } finally {
+            try {
+                region.click(Common.CLOSE);
+                Thread.sleep(500L);
+
+                region.click(Common.MENU1);
+            } catch (FindFailed findFailed) {
+                log.error("{}", findFailed);
+            } catch (InterruptedException e) {
+                log.error("{}", e);
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 
 /**
@@ -11,26 +12,26 @@ import org.sikuli.script.Screen;
  */
 @Slf4j
 public class NongChang {
-    static public void Do(Screen screen) {
+    static public void Do(Region region) {
         String baseDir = Common.BASE_DIR + "nongchang/";
 
         try {
-            screen.doubleClick(baseDir + "nongchang.png");
+            region.doubleClick(baseDir + "nongchang.png");
 
-            Match innongchang = screen.exists(baseDir + "innongchang.png", 30);
+            Match innongchang = region.exists(baseDir + "innongchang.png", 30);
 
             if (innongchang != null) {
                 // 收获
-                Match shouhuo = screen.exists(baseDir + "shouhuo.png", 0.5);
+                Match shouhuo = region.exists(baseDir + "shouhuo.png", 0.5);
                 if (shouhuo != null) {
                     shouhuo.click();
                 }
 
-                Match bozhong = screen.exists(baseDir + "bozhong.png", 0.5);
+                Match bozhong = region.exists(baseDir + "bozhong.png", 0.5);
                 if (bozhong != null) {
                     bozhong.click();
 
-                    Match zhongzhi = screen.exists(baseDir + "mianfeizhongzhi.png");
+                    Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
                     if (zhongzhi != null) {
                         zhongzhi.click();
 
@@ -41,13 +42,13 @@ public class NongChang {
                 Thread.sleep(500L);
 
                 // 喂食
-                Match weishi = screen.exists(baseDir + "weishi.png", 0.5);
+                Match weishi = region.exists(baseDir + "weishi.png", 0.5);
                 if (weishi != null) {
                     weishi.click();
                 }
             }
 
-            screen.click(Common.HUI_CHENG);
+            region.click(Common.HUI_CHENG);
             Thread.sleep(1000L);
 
         } catch (FindFailed findFailed) {
