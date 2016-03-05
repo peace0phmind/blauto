@@ -39,11 +39,10 @@ public class XunBao {
 
                 if (lastButton.isPresent()) {
                     Match match = lastButton.get();
-                    log.info("{}", match);
                     match.click();
                 }
 
-                Match exists = screen.exists(baseDir + "xunbaoend.png", 0.5);
+                Match exists = screen.exists(baseDir + "xunbaoend.png", 0.1);
                 if (exists != null) {
                     exists.below().click(Common.QUE_DING);
                     break;

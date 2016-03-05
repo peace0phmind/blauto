@@ -9,4 +9,12 @@ public interface Common {
     String QUE_DING = BASE_DIR + "queding.png";
 
     String CLOSE = BASE_DIR + "close.png";
+
+    String HUI_CHENG = BASE_DIR + "huicheng.png";
+
+    String MENU = BASE_DIR + "menu.png";
+
+    String MENU1 = BASE_DIR + "menu1.png";
+
+    String RI_CHANG = BASE_DIR + "richang.png";
 }

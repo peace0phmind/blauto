@@ -16,7 +16,7 @@ public class JiangLi {
         String baseDir = Common.BASE_DIR + "jiangli/";
 
         try {
-            screen.doubleClick(baseDir + "jiangli.png");
+            screen.click(baseDir + "jiangli.png");
 
             Match injiangli = screen.exists(baseDir + "injiangli.png", 20);
             if (injiangli == null) {

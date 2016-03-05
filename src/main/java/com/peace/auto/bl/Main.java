@@ -9,13 +9,21 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         Screen screen = new Screen();
 
+        ShouGuFang.Do(screen);
 
-
+//        Task.Do(screen);
 //        JiangLi.Do(screen);
 //        XunBao.Do(screen);
-        Task.Do(screen);
 //        ShenShouWu.Do(screen);
+//        Building.Do(screen);
+//        NongChang.Do(screen);
+//        ShengYu.Do(screen);
+//
+//        LianMeng.Do(screen);
+//        HaoYou.Do(screen);
 
-//        ShouGuFang.Do(screen);
+
+        JingJiChang.Do(screen);
     }
+
 }
