@@ -9,9 +9,9 @@ import org.sikuli.script.Region;
  * Created by mind on 3/5/16.
  */
 @Slf4j
-public class ShengLingQuan {
+public class ShengLingQuan implements IDo{
 
-    static public void Do(Region region) {
+     public void Do(Region region)throws FindFailed, InterruptedException {
         String baseDir = Common.BASE_DIR + "shenglingquan/";
 
         try {

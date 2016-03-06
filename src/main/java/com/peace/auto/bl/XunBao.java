@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,9 +14,9 @@ import java.util.Optional;
  * Created by mind on 3/3/16.
  */
 @Slf4j
-public class XunBao {
+public class XunBao implements IDo {
 
-    static public void Do(Region region) {
+     public void Do(Region region) throws FindFailed, InterruptedException{
         String baseDir = Common.BASE_DIR + "xunbao/";
 
         try {

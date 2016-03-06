@@ -4,14 +4,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
 
 /**
  * Created by mind on 3/3/16.
  */
 @Slf4j
-public class ShenShouWu {
-    static public void Do(Region region) {
+public class ShenShouWu implements IDo {
+    public void Do(Region region) throws FindFailed, InterruptedException{
         String baseDir = Common.BASE_DIR + "shenshouwu/";
 
         try {

@@ -1,10 +1,9 @@
 package com.peace.auto.bl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Match;
-import org.sikuli.script.Region;
+import org.sikuli.script.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,7 +14,7 @@ import java.util.stream.Collectors;
  * Created by mind on 3/4/16.
  */
 @Slf4j
-public class Building {
+public class Building implements IDo {
 
     private static List<Integer> buildingIds = Arrays.asList(
             1,
@@ -31,15 +30,65 @@ public class Building {
             2,
             9);
 
-    static public void Do1(Region region) {
-        String baseDir = Common.BASE_DIR + "building/";
+    String baseDir = Common.BASE_DIR + "building/";
 
-        try {
-            region.doubleClick(baseDir + "building.png");
+    public void Do1(Region region) throws FindFailed {
 
-            Match inbuluo = region.exists(baseDir + "buluodating.png", 3);
+        region.doubleClick(baseDir + "building.png");
 
-            if (inbuluo != null) {
+        Match inbuluo = region.exists(baseDir + "buluodating.png", 3);
+
+        if (inbuluo != null) {
+            Iterator<Match> all = region.findAll(baseDir + "shengji.png");
+            List<Match> list = new ArrayList<>();
+            while (all.hasNext()) {
+                list.add(all.next());
+            }
+
+            List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+            buildLoop:
+            for (Integer bid : buildingIds) {
+                Match match = sorted.get(bid - 1);
+                for (int i = 0; i < 5; i++) {
+                    match.click();
+
+                    Match end = region.exists(baseDir + "end.png", 0.5);
+                    if (end != null) {
+                        region.click(Common.QUE_DING);
+                        break buildLoop;
+                    }
+                }
+            }
+        }
+
+        region.click(Common.CLOSE);
+    }
+
+    public void Do(Region region) throws FindFailed, InterruptedException {
+
+        region.doubleClick(baseDir + "building.png");
+
+        Thread.sleep(1000L);
+
+        Match inbuluo = region.exists(baseDir + "buluodating.png", 10);
+
+        if (inbuluo != null) {
+            // 购买队列
+            Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
+            if (kaiqixinduilie != null) {
+                if (kaiqixinduilie.getX() < 400) {
+                    kaiqixinduilie.click();
+
+                    Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                    if (goumaiduilie != null) {
+                        region.click(Common.QUE_DING);
+                    }
+                }
+            }
+
+            // 升级
+            Match inbuluodating = region.exists(baseDir + "inbuluodating.png", 3);
+            if (inbuluodating != null) {
                 Iterator<Match> all = region.findAll(baseDir + "shengji.png");
                 List<Match> list = new ArrayList<>();
                 while (all.hasNext()) {
@@ -50,7 +99,12 @@ public class Building {
                 buildLoop:
                 for (Integer bid : buildingIds) {
                     Match match = sorted.get(bid - 1);
-                    for (int i = 0; i < 5; i++) {
+
+                    if (!isButtonEnable(match)) {
+                        continue;
+                    }
+
+                    do {
                         match.click();
 
                         Match end = region.exists(baseDir + "end.png", 0.5);
@@ -58,21 +112,11 @@ public class Building {
                             region.click(Common.QUE_DING);
                             break buildLoop;
                         }
-                    }
+                    } while (isButtonEnable(match));
                 }
             }
-
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
         }
-    }
 
-    static public void Do(Region region) {
-        String baseDir = Common.BASE_DIR + "building/";
+        region.click(Common.CLOSE);
     }
 }

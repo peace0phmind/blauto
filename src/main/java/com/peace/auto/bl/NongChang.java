@@ -1,18 +1,16 @@
 package com.peace.auto.bl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.omg.PortableServer.THREAD_POLICY_ID;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
 
 /**
  * Created by mind on 3/4/16.
  */
 @Slf4j
-public class NongChang {
-    static public void Do(Region region) {
+public class NongChang implements IDo {
+     public void Do(Region region)throws FindFailed, InterruptedException {
         String baseDir = Common.BASE_DIR + "nongchang/";
 
         try {

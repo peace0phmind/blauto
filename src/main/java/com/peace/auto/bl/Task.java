@@ -10,8 +10,8 @@ import org.sikuli.script.Screen;
  * Created by mind on 3/3/16.
  */
 @Slf4j
-public class Task {
-    static public void Do(Region region) {
+public class Task implements IDo {
+     public void Do(Region region) throws FindFailed, InterruptedException {
         String baseDir = Common.BASE_DIR + "task/";
 
         try {

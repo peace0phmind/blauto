@@ -11,9 +11,9 @@ import java.util.Iterator;
  * Created by mind on 3/5/16.
  */
 @Slf4j
-public class HaoYou {
+public class HaoYou implements IDo {
 
-    static public void Do(Region region) {
+    public void Do(Region region)throws FindFailed, InterruptedException {
         String baseDir = Common.BASE_DIR + "haoyou/";
 
         try {
