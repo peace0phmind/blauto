@@ -23,8 +23,6 @@ public class HaoYou implements IDo {
 
             Match aixing = region.exists(baseDir + "songaixing.png", 3);
             if (aixing != null && aixing.getScore() > 0.95) {
-                aixing.highlight(10);
-
                 Iterator<Match> all = region.findAll(baseDir + "songaixing.png");
                 while (all.hasNext()) {
                     all.next().click();

@@ -13,15 +13,17 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList = Arrays.asList(
+    static List<IDo> doList1 = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
             new Building(),
             new NongChang(),
             new ShengYu(),
+            new TianSheng(),
 
             new LianMeng(),
+            new YingHun(),
             new HaoYou(),
 
             new JingJiChang(),
@@ -29,6 +31,10 @@ public class Main {
 
             new Task(),
             new JiangLi()
+    );
+
+    static List<IDo> doList = Arrays.asList(
+            new TianSheng()
     );
 
     public static void main(String[] args) {
