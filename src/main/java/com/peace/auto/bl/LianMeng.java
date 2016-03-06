@@ -58,6 +58,8 @@ public class LianMeng {
                 }
             }
 
+            Thread.sleep(2000L);
+
             region.click(Common.CLOSE);
             Thread.sleep(500L);
 

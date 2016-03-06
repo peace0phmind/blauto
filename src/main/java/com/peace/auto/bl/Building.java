@@ -31,7 +31,7 @@ public class Building {
             2,
             9);
 
-    static public void Do(Region region) {
+    static public void Do1(Region region) {
         String baseDir = Common.BASE_DIR + "building/";
 
         try {
@@ -70,5 +70,9 @@ public class Building {
         } catch (InterruptedException e) {
             log.error("{}", e);
         }
+    }
+
+    static public void Do(Region region) {
+        String baseDir = Common.BASE_DIR + "building/";
     }
 }

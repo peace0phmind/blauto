@@ -22,6 +22,7 @@ public class ShenShouWu {
 
             Match inweishi = region.exists(baseDir + "weishi.png", 10);
             if (inweishi != null) {
+                inweishi.click();
 
                 Match weishi = region.find(baseDir + "chujishicai.png").below().find(baseDir + "doweishi.png");
                 if (weishi != null) {
