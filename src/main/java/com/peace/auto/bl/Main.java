@@ -18,9 +18,9 @@ public class Main {
 //            new JiangLi(),
 //            new XunBao(),
 //            new ShenShouWu(),
-            new Building()
+//            new Building(),
 //            new NongChang(),
-//            new ShengYu(),
+            new ShengYu()
 //
 //            new LianMeng(),
 //            new HaoYou(),

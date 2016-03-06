@@ -15,43 +15,39 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public class ShengYu implements IDo {
+    String baseDir = Common.BASE_DIR + "shengyu/";
 
-     public void Do(Region region) throws FindFailed, InterruptedException{
-        String baseDir = Common.BASE_DIR + "shengyu/";
+    public void Do(Region region) throws FindFailed, InterruptedException {
+        region.doubleClick(baseDir + "shengyu.png");
 
-        try {
-            region.doubleClick(baseDir + "shengyu.png");
-
-            Match inshengyu = region.exists(baseDir + "inshengyu.png", 3);
-            if (inshengyu != null) {
-                Iterator<Match> all = region.findAll(baseDir + "shengji.png");
-                List<Match> list = new ArrayList<>();
-                while (all.hasNext()) {
-                    list.add(all.next());
-                }
-
-                List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
-
-                shengyuLoop:
-                for (Match shengji : sorted) {
-                    for (int i = 0; i < 5; i++) {
-                        shengji.click();
-
-                        Match end = region.exists(baseDir + "end.png", 0.5);
-                        if (end != null) {
-                            region.click(Common.QUE_DING);
-                            break shengyuLoop;
-                        }
-                    }
-                }
+        Match inshengyu = region.exists(baseDir + "inshengyu.png", 10);
+        if (inshengyu != null) {
+            Iterator<Match> all = region.findAll(baseDir + "shengji.png");
+            List<Match> list = new ArrayList<>();
+            while (all.hasNext()) {
+                list.add(all.next());
             }
 
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
+            List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+
+            shengyuLoop:
+            for (Match shengji : sorted) {
+                if (!isButtonEnable(shengji)) {
+                    continue;
+                }
+
+                do {
+                    shengji.click();
+
+                    Match end = region.exists(baseDir + "shengyuend.png", 0.5);
+                    if (end != null) {
+                        region.click(Common.QUE_DING);
+                        break shengyuLoop;
+                    }
+                } while (isButtonEnable(shengji));
+            }
         }
+
+        region.click(Common.CLOSE);
     }
 }
