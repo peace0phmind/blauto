@@ -49,6 +49,7 @@ public class ShouGuFang implements IDo {
                         Match liewu = all.next();
                         if (liewu.getScore() > 0.95) {
                             liewu.below().click(baseDir + "kaishishoulie.png");
+                            Thread.sleep(1000L);
                             break shoulie;
                         }
                     }

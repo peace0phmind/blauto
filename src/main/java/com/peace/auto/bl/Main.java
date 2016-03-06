@@ -43,7 +43,7 @@ public class Main {
             yun.doubleClick();
 
             Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png", 3);
-            if (duihua != null) {
+            if (duihua != null && duihua.getScore() > 0.95) {
                 duihua.click();
                 Thread.sleep(1000L);
             }
