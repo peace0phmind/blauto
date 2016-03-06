@@ -9,58 +9,46 @@ import org.sikuli.script.Region;
  * Created by mind on 3/5/16.
  */
 @Slf4j
-public class ShengLingQuan implements IDo{
+public class ShengLingQuan implements IDo {
+    String baseDir = Common.BASE_DIR + "shenglingquan/";
 
-     public void Do(Region region)throws FindFailed, InterruptedException {
-        String baseDir = Common.BASE_DIR + "shenglingquan/";
+    public void Do(Region region) throws FindFailed, InterruptedException {
+        region.click(Common.RI_CHANG);
 
-        try {
-            region.click(Common.RI_CHANG);
+        Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
+        if (shenglingquan != null) {
+            shenglingquan.click();
 
-            Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
-            if (shenglingquan != null) {
-                shenglingquan.click();
+            // 高级修炼
+            Match xiulian = region.exists(baseDir + "xiulian.png", 3);
+            if (xiulian != null) {
+                xiulian.click();
 
-                // 高级修炼
-                Match xiulian = region.exists(baseDir + "xiulian.png", 3);
-                if (xiulian != null) {
-                    xiulian.click();
+                Match tingzhixiulian = region.exists(baseDir + "tingzhixiulian.png", 3);
+                if (tingzhixiulian == null) {
+                    region.click(baseDir + "gaojixiulian.png");
+                    region.click(baseDir + "kaishixiulian.png");
 
-                    Match tingzhixiulian = region.exists(baseDir + "tingzhixiulian.png", 3);
-                    if (tingzhixiulian == null) {
-                        region.click(baseDir + "gaojixiulian.png");
-                        region.click(baseDir + "kaishixiulian.png");
-
-                        Match goumai = region.exists(baseDir + "goumai.png", 3);
-                        if (goumai != null) {
-                            region.click(Common.QUE_DING);
-                        }
+                    Match goumai = region.exists(baseDir + "goumai.png", 3);
+                    if (goumai != null) {
+                        region.click(Common.QUE_DING);
                     }
                 }
+            }
 
-                // 神灵泉
-//                region.click(baseDir + "shenglingquan1.png");
-//
-//                for (int i = 0; i < 5; i++) {
-//                    Match shengpin = region.exists(baseDir + "shengpin", 3);
-//                    if (shengpin == null) {
-//                        break;
-//                    } else {
-//                        region.click(baseDir + "putongxiulian.png");
-//                        Thread.sleep(500L);
-//                    }
-//                }
+            // 神灵泉
+            region.click(baseDir + "shenglingquan1.png");
+
+            Match shengpin = region.exists(baseDir + "shengpin", 3);
+            while (shengpin != null && shengpin.getScore() > 0.95) {
+                region.click(baseDir + "putongxiulian.png");
+                Thread.sleep(500L);
             }
 
             region.click(Common.CLOSE);
             Thread.sleep(500L);
-
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
         }
+
+        region.click(Common.CLOSE);
     }
 }

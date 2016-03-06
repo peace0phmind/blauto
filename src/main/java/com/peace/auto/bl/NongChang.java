@@ -36,13 +36,18 @@ public class NongChang implements IDo {
 
             Thread.sleep(500L);
 
+            // 收获龙
+            Match shouhuolong = region.exists(baseDir + "shouhuolong.png", 0.5);
+            if (shouhuolong != null) {
+                shouhuolong.click();
+            }
+
             // 喂食
             Match weishi = region.exists(baseDir + "weishi.png", 0.5);
             if (weishi != null) {
                 weishi.click();
             }
 
-            // 收获龙
         }
 
         region.click(Common.HUI_CHENG);

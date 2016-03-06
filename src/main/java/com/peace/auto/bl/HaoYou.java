@@ -12,44 +12,29 @@ import java.util.Iterator;
  */
 @Slf4j
 public class HaoYou implements IDo {
+    String baseDir = Common.BASE_DIR + "haoyou/";
 
-    public void Do(Region region)throws FindFailed, InterruptedException {
-        String baseDir = Common.BASE_DIR + "haoyou/";
+    public void Do(Region region) throws FindFailed, InterruptedException {
+        region.click(Common.MENU);
 
-        try {
-            region.click(Common.MENU);
-            Match haoyou = region.exists(baseDir + "haoyou.png", 1);
+        Match haoyou = region.exists(baseDir + "haoyou.png", 3);
+        if (haoyou != null) {
+            haoyou.click();
 
-            if (haoyou != null) {
-                haoyou.click();
+            Match aixing = region.exists(baseDir + "songaixing.png", 3);
+            if (aixing != null && aixing.getScore() > 0.95) {
+                aixing.highlight(10);
 
-                Thread.sleep(3000L);
-
-                Match aixing = region.exists(baseDir + "songaixing.png", 3);
-                if (aixing != null) {
-                    Iterator<Match> all = region.findAll(baseDir + "songaixing.png");
-                    while (all.hasNext()) {
-                        all.next().click();
-                        region.click(baseDir + "xiaciba.png");
-                    }
+                Iterator<Match> all = region.findAll(baseDir + "songaixing.png");
+                while (all.hasNext()) {
+                    all.next().click();
+                    region.click(baseDir + "xiaciba.png");
                 }
             }
-
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
-        } finally {
-            try {
-                region.click(Common.CLOSE);
-                Thread.sleep(500L);
-
-                region.click(Common.MENU1);
-            } catch (FindFailed findFailed) {
-                log.error("{}", findFailed);
-            } catch (InterruptedException e) {
-                log.error("{}", e);
-            }
         }
+
+        region.click(Common.CLOSE);
+        Thread.sleep(500L);
+        region.click(Common.MENU1);
     }
 }

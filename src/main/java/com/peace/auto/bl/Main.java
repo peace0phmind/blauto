@@ -14,20 +14,21 @@ import java.util.List;
 @Slf4j
 public class Main {
     static List<IDo> doList = Arrays.asList(
-//            new ShouGuFang(), // ok
-//            new Task(), // ok
-//            new JiangLi(), // ok
-//            new XunBao(), // ok
+//            new ShouGuFang(),
+//            new JiangLi(),
+//            new XunBao(),
 //            new ShenShouWu(),
-//            new Building(), // ok
+//            new Building(),
 //            new NongChang(),
-//            new ShengYu(), // ok
+//            new ShengYu(),
 //
 //            new LianMeng(),
 //            new HaoYou(),
 //
 //            new JingJiChang(),
 //            new ShengLingQuan(),
+
+            new Task()
     );
 
     public static void main(String[] args) {

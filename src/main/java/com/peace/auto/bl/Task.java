@@ -16,14 +16,15 @@ public class Task implements IDo {
         // 收集金币
         Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
         if (jinbi != null) {
-            jinbi.doubleClick();
+            jinbi.click();
         }
 
         // 收集礼包
         Match libao = region.exists(baseDir + "libao.png", 0.5);
-        if (libao != null) {
-            libao.doubleClick();
-            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+        if (libao != null && libao.getScore() > 0.95) {
+            libao.click();
+
+            Match lingqu = region.exists(baseDir + "lingqu.png", 3);
             if (lingqu != null) {
                 lingqu.click();
             }
@@ -37,7 +38,7 @@ public class Task implements IDo {
         // 领取任务
         Match renwu = region.exists(baseDir + "renwu.png", 0.5);
         if (renwu != null) {
-            renwu.doubleClick();
+            renwu.click();
 
             Thread.sleep(2000L);
 

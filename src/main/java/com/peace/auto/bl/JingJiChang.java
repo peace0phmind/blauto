@@ -10,49 +10,42 @@ import org.sikuli.script.Region;
  */
 @Slf4j
 public class JingJiChang implements IDo {
+    String baseDir = Common.BASE_DIR + "jingjichang/";
+
     public void Do(Region region) throws FindFailed, InterruptedException {
-        String baseDir = Common.BASE_DIR + "jingjichang/";
+        region.click(Common.RI_CHANG);
 
-        try {
-            region.click(Common.RI_CHANG);
+        Match jingjichang = region.exists(baseDir + "jingjichang.png", 30);
+        if (jingjichang != null && jingjichang.getScore() > 0.95) {
+            jingjichang.click();
 
-            Match jingjichang = region.exists(baseDir + "jingjichang.png", 30);
-            if (jingjichang != null) {
-                jingjichang.click();
+            Match injingjichang = region.exists(baseDir + "injingjichang.png", 30);
+            if (injingjichang != null) {
+                // 领取奖励
+                Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
+                if (lingqujiangli != null) {
+                    lingqujiangli.click();
+                }
 
-                Match injingjichang = region.exists(baseDir + "injingjichang.png", 30);
-                if (injingjichang != null) {
-                    // 领取奖励
-                    Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
-                    if (lingqujiangli != null) {
-                        lingqujiangli.click();
-                    }
+                // 挑战
+                region.click(baseDir + "tiaozhan.png");
+                Match queding = region.exists(baseDir + "queding.png", 3);
+                if (queding != null) {
+                    queding.click();
 
-                    // 挑战
-                    region.click(baseDir + "tiaozhan.png");
-                    Match queding = region.exists(baseDir + "queding.png", 3);
-                    if (queding != null) {
-                        queding.click();
+                    Match guankan = region.exists(baseDir + "guankan.png", 3);
+                    if (guankan != null) {
+                        region.click(Common.QU_XIAO);
 
-                        Match guankan = region.exists(baseDir + "guankan.png", 3);
-                        if (guankan != null) {
-                            region.click(Common.QU_XIAO);
-
-                            Match jieguo = region.exists(baseDir + "jieguo.png", 3);
-                            if (jieguo != null) {
-                                region.click(Common.QUE_DING);
-                            }
+                        Match jieguo = region.exists(baseDir + "jieguo.png", 3);
+                        if (jieguo != null) {
+                            region.click(Common.QUE_DING);
                         }
                     }
                 }
             }
-
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
         }
+
+        region.click(Common.CLOSE);
     }
 }
