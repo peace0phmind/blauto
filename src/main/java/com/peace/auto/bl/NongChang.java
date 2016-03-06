@@ -10,49 +10,41 @@ import org.sikuli.script.Region;
  */
 @Slf4j
 public class NongChang implements IDo {
-     public void Do(Region region)throws FindFailed, InterruptedException {
-        String baseDir = Common.BASE_DIR + "nongchang/";
+    String baseDir = Common.BASE_DIR + "nongchang/";
 
-        try {
-            region.doubleClick(baseDir + "nongchang.png");
+    public void Do(Region region) throws FindFailed, InterruptedException {
+        region.doubleClick(baseDir + "nongchang.png");
 
-            Match innongchang = region.exists(baseDir + "innongchang.png", 30);
+        Match innongchang = region.exists(baseDir + "innongchang.png", 30);
 
-            if (innongchang != null) {
-                // 收获
-                Match shouhuo = region.exists(baseDir + "shouhuo.png", 0.5);
-                if (shouhuo != null) {
-                    shouhuo.click();
-                }
+        if (innongchang != null) {
+            // 收获
+            Match shouhuo = region.exists(baseDir + "shouhuo.png", 0.5);
+            if (shouhuo != null) {
+                shouhuo.click();
+            }
 
-                Match bozhong = region.exists(baseDir + "bozhong.png", 0.5);
-                if (bozhong != null) {
-                    bozhong.click();
+            Match bozhong = region.exists(baseDir + "bozhong.png", 0.5);
+            if (bozhong != null) {
+                bozhong.click();
 
-                    Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
-                    if (zhongzhi != null) {
-                        zhongzhi.click();
-
-//                        screen.click(Common.CLOSE);
-                    }
-                }
-
-                Thread.sleep(500L);
-
-                // 喂食
-                Match weishi = region.exists(baseDir + "weishi.png", 0.5);
-                if (weishi != null) {
-                    weishi.click();
+                Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
+                if (zhongzhi != null) {
+                    zhongzhi.click();
                 }
             }
 
-            region.click(Common.HUI_CHENG);
-            Thread.sleep(1000L);
+            Thread.sleep(500L);
 
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
+            // 喂食
+            Match weishi = region.exists(baseDir + "weishi.png", 0.5);
+            if (weishi != null) {
+                weishi.click();
+            }
+
+            // 收获龙
         }
+
+        region.click(Common.HUI_CHENG);
     }
 }

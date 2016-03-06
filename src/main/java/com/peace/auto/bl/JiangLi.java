@@ -12,59 +12,53 @@ import java.util.Iterator;
  */
 @Slf4j
 public class JiangLi implements IDo {
+    String baseDir = Common.BASE_DIR + "jiangli/";
+
     public void Do(Region region) throws FindFailed, InterruptedException {
-        String baseDir = Common.BASE_DIR + "jiangli/";
+        region.click(baseDir + "jiangli.png");
 
-        try {
-            region.click(baseDir + "jiangli.png");
-
-            Match injiangli = region.exists(baseDir + "injiangli.png", 20);
-            if (injiangli == null) {
-                return;
-            }
-
-            Match qiandao = region.exists(baseDir + "qiandao.png");
-            if (qiandao != null) {
-                qiandao.click();
-            }
-
-            Match lianxuqiandaojiangli = region.exists(baseDir + "lingquqiandaojiangli.png");
-            if (lianxuqiandaojiangli != null) {
-                lianxuqiandaojiangli.click();
-            }
-
-
-            // 连续登陆
-            region.click(baseDir + "lianxudenglu.png");
-            Thread.sleep(500L);
-
-            Match lianxulingqu = region.exists(baseDir + "lianxulingqu.png");
-            if (lianxulingqu != null) {
-                lianxulingqu.click();
-            }
-
-            Iterator<Match> all = region.findAll(baseDir + "lingqu.png");
-            while (all.hasNext()) {
-                all.next().click();
-            }
-
-            // 活跃度
-            region.click(baseDir + "huoyuedu.png");
-            Thread.sleep(500L);
-
-            Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
-            if (lingqujiangli != null) {
-                for (int i = 0; i < 6; i++) {
-                    lingqujiangli.click();
-                }
-            }
-
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
+        Match injiangli = region.exists(baseDir + "injiangli.png", 20);
+        if (injiangli == null) {
+            return;
         }
+
+        Match qiandao = region.exists(baseDir + "qiandao.png", 1);
+        if (qiandao != null) {
+            qiandao.click();
+        }
+
+        Match lianxuqiandaojiangli = region.exists(baseDir + "lingquqiandaojiangli.png", 1);
+        if (lianxuqiandaojiangli != null) {
+            lianxuqiandaojiangli.click();
+        }
+
+        // 连续登陆
+        region.click(baseDir + "lianxudenglu.png");
+
+        Match lianxulingqu = region.exists(baseDir + "lianxulingqu.png", 1);
+        if (lianxulingqu != null) {
+            lianxulingqu.click();
+        }
+
+        Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+        while (lingqu != null) {
+            lingqu.click();
+        }
+
+        lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+        while (lingqu != null) {
+            lingqu.click();
+        }
+
+        // 活跃度
+        region.click(baseDir + "huoyuedu.png");
+        Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 1);
+        if (lingqujiangli != null) {
+            while (isButtonEnable(lingqujiangli, 5, 5)) {
+                lingqujiangli.click();
+            }
+        }
+
+        region.click(Common.CLOSE);
     }
 }

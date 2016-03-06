@@ -11,10 +11,9 @@ import org.sikuli.script.Screen;
  */
 @Slf4j
 public class ShouGuFang implements IDo {
-    public static String baseDir = Common.BASE_DIR + "shougufang/";
+    private String baseDir = Common.BASE_DIR + "shougufang/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
-
         // 进入兽骨坊
         region.doubleClick(baseDir + "shougufang.png");
         Match inshougufang = region.exists(baseDir + "inshougufang.png", 10);

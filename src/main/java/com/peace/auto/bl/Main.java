@@ -2,6 +2,7 @@ package com.peace.auto.bl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
 import java.util.Arrays;
@@ -13,14 +14,14 @@ import java.util.List;
 @Slf4j
 public class Main {
     static List<IDo> doList = Arrays.asList(
-//            new ShouGuFang(),
-//            new Task(),
-//            new JiangLi(),
-//            new XunBao(),
+//            new ShouGuFang(), // ok
+//            new Task(), // ok
+//            new JiangLi(), // ok
+//            new XunBao(), // ok
 //            new ShenShouWu(),
-//            new Building(),
+//            new Building(), // ok
 //            new NongChang(),
-            new ShengYu()
+//            new ShengYu(), // ok
 //
 //            new LianMeng(),
 //            new HaoYou(),
@@ -34,6 +35,12 @@ public class Main {
 //        region.highlight(10);
 
         try {
+            Match zhu = region.exists(Common.BASE_DIR + "zhu.png", 3);
+            if (zhu == null) {
+                return;
+            }
+            zhu.doubleClick();
+
             for (IDo iDo : doList) {
                 iDo.Do(region);
 

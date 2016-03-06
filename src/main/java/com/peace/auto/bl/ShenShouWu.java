@@ -10,40 +10,33 @@ import org.sikuli.script.Region;
  */
 @Slf4j
 public class ShenShouWu implements IDo {
-    public void Do(Region region) throws FindFailed, InterruptedException{
-        String baseDir = Common.BASE_DIR + "shenshouwu/";
+    String baseDir = Common.BASE_DIR + "shenshouwu/";
 
-        try {
-            Match shenshouwu = region.exists(baseDir + "shenshouwu.png");
-            if (shenshouwu != null) {
-                shenshouwu.doubleClick();
-            }
+    public void Do(Region region) throws FindFailed, InterruptedException {
+        Match shenshouwu = region.exists(baseDir + "shenshouwu.png");
 
-            Match inweishi = region.exists(baseDir + "weishi.png", 10);
-            if (inweishi != null) {
-                inweishi.click();
+        if (shenshouwu != null) {
+            shenshouwu.doubleClick();
+        }
 
-                Match weishi = region.find(baseDir + "chujishicai.png").below().find(baseDir + "doweishi.png");
-                if (weishi != null) {
-                    for (int i = 0; i < 20; i++) {
-                        weishi.click();
+        Match inweishi = region.exists(baseDir + "weishi.png", 10);
+        if (inweishi != null) {
+            inweishi.click();
 
-                        Match noweishi = region.exists(baseDir + "noweishi.png", 0.5);
-                        if (noweishi != null) {
-                            region.click(Common.QUE_DING);
-                            break;
-                        }
+            Match weishi = region.find(baseDir + "chujishicai.png").below().find(baseDir + "doweishi.png");
+            if (weishi != null) {
+                for (int i = 0; i < 20; i++) {
+                    weishi.click();
+
+                    Match noweishi = region.exists(baseDir + "noweishi.png", 0.5);
+                    if (noweishi != null) {
+                        region.click(Common.QUE_DING);
+                        break;
                     }
                 }
             }
-
-            region.click(Common.CLOSE);
-            Thread.sleep(500L);
-
-        } catch (InterruptedException e) {
-            log.error("{}", e);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
         }
+
+        region.click(Common.CLOSE);
     }
 }
