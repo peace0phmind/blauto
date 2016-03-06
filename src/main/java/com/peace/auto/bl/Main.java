@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList1 = Arrays.asList(
+    static List<IDo> doList = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -33,9 +33,9 @@ public class Main {
             new JiangLi()
     );
 
-    static List<IDo> doList = Arrays.asList(
-            new TianSheng()
-    );
+//    static List<IDo> doList = Arrays.asList(
+//            new TianSheng()
+//    );
 
     public static void main(String[] args) {
         Region region = new Region(0, 45, 800, 480);

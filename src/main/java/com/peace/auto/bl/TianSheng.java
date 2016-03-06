@@ -16,9 +16,7 @@ public class TianSheng implements IDo {
 
     public void Do(Region region) throws FindFailed, InterruptedException {
         Match tiansheng = region.exists(baseDir + "tiansheng.png", 3);
-        if (tiansheng != null && tiansheng.getScore() > 0.95) {
-            log.info("{}", tiansheng);
-
+        if (tiansheng != null && tiansheng.getScore() > 0.9) {
             tiansheng.click();
             Thread.sleep(100L);
 
