@@ -24,6 +24,8 @@ public class NongChang implements IDo {
                 shouhuo.click();
             }
 
+            Thread.sleep(3000L);
+            // 播种
             Match bozhong = region.exists(baseDir + "bozhong.png", 0.5);
             if (bozhong != null) {
                 bozhong.click();

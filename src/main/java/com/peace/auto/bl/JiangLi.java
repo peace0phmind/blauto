@@ -41,12 +41,12 @@ public class JiangLi implements IDo {
         }
 
         Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-        while (lingqu != null) {
+        if (lingqu != null) {
             lingqu.click();
         }
 
         lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-        while (lingqu != null) {
+        if (lingqu != null) {
             lingqu.click();
         }
 

@@ -6,6 +6,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 
+import java.util.Iterator;
+
 /**
  * Created by mind on 3/3/16.
  */
@@ -38,12 +40,18 @@ public class ShouGuFang implements IDo {
         Match shuaxin = region.exists(baseDir + "shuaxin.png", 0.5);
         if (shuaxin != null) {
             // 需要进行狩猎
-            for (int i = 0; i < 3; i++) {
-                Match daliang = region.exists(baseDir + "daliangniaolong.png", 0.5);
+            shoulie:
+            for (int i = 0; i < 20; i++) {
+                Match daliang = region.exists(baseDir + "daliang.png", 0.5);
                 if (daliang != null) {
-                    log.info("{}", daliang);
-                    daliang.below().click(baseDir + "kaishishoulie.png");
-                    break;
+                    Iterator<Match> all = region.findAll(baseDir + "daliang.png");
+                    while (all.hasNext()) {
+                        Match liewu = all.next();
+                        if (liewu.getScore() > 0.95) {
+                            liewu.below().click(baseDir + "kaishishoulie.png");
+                            break shoulie;
+                        }
+                    }
                 }
 
                 shuaxin.click();

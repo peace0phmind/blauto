@@ -15,6 +15,8 @@ public class ShengLingQuan implements IDo {
     public void Do(Region region) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
+        Thread.sleep(3000L);
+
         Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
         if (shenglingquan != null) {
             shenglingquan.click();
@@ -24,8 +26,9 @@ public class ShengLingQuan implements IDo {
             if (xiulian != null) {
                 xiulian.click();
 
-                Match tingzhixiulian = region.exists(baseDir + "tingzhixiulian.png", 3);
-                if (tingzhixiulian == null) {
+                Match kaishixiulian = region.exists(baseDir + "kaishixiulian.png", 3);
+                if (kaishixiulian != null && kaishixiulian.getScore() > 0.95) {
+                    log.info("{}", kaishixiulian);
                     region.click(baseDir + "gaojixiulian.png");
                     region.click(baseDir + "kaishixiulian.png");
 
@@ -42,7 +45,11 @@ public class ShengLingQuan implements IDo {
             Match shengpin = region.exists(baseDir + "shengpin", 3);
             while (shengpin != null && shengpin.getScore() > 0.95) {
                 region.click(baseDir + "putongxiulian.png");
-                Thread.sleep(500L);
+                Match end = region.exists(baseDir + "xilianend.png", 1);
+                if (end != null) {
+                    break;
+                }
+                shengpin = region.exists(baseDir + "shengpin", 3);
             }
 
             region.click(Common.CLOSE);

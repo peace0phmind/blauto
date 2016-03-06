@@ -14,21 +14,21 @@ import java.util.List;
 @Slf4j
 public class Main {
     static List<IDo> doList = Arrays.asList(
-//            new ShouGuFang(),
-//            new JiangLi(),
-//            new XunBao(),
-//            new ShenShouWu(),
-//            new Building(),
-//            new NongChang(),
-//            new ShengYu(),
-//
-//            new LianMeng(),
-//            new HaoYou(),
-//
-//            new JingJiChang(),
-//            new ShengLingQuan(),
+            new ShouGuFang(),
+            new XunBao(),
+            new ShenShouWu(),
+            new Building(),
+            new NongChang(),
+            new ShengYu(),
 
-            new Task()
+            new LianMeng(),
+            new HaoYou(),
+
+            new JingJiChang(),
+            new ShengLingQuan(),
+
+            new Task(),
+            new JiangLi()
     );
 
     public static void main(String[] args) {
@@ -36,16 +36,22 @@ public class Main {
 //        region.highlight(10);
 
         try {
-            Match zhu = region.exists(Common.BASE_DIR + "zhu.png", 3);
-            if (zhu == null) {
+            Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
+            if (yun == null) {
                 return;
             }
-            zhu.doubleClick();
+            yun.doubleClick();
+
+            Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png", 3);
+            if (duihua != null) {
+                duihua.click();
+                Thread.sleep(1000L);
+            }
 
             for (IDo iDo : doList) {
                 iDo.Do(region);
 
-                Thread.sleep(1000L);
+                Thread.sleep(3000L);
             }
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
