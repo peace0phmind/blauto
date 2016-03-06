@@ -32,38 +32,6 @@ public class Building implements IDo {
 
     String baseDir = Common.BASE_DIR + "building/";
 
-    public void Do1(Region region) throws FindFailed {
-
-        region.doubleClick(baseDir + "building.png");
-
-        Match inbuluo = region.exists(baseDir + "buluodating.png", 3);
-
-        if (inbuluo != null) {
-            Iterator<Match> all = region.findAll(baseDir + "shengji.png");
-            List<Match> list = new ArrayList<>();
-            while (all.hasNext()) {
-                list.add(all.next());
-            }
-
-            List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
-            buildLoop:
-            for (Integer bid : buildingIds) {
-                Match match = sorted.get(bid - 1);
-                for (int i = 0; i < 5; i++) {
-                    match.click();
-
-                    Match end = region.exists(baseDir + "end.png", 0.5);
-                    if (end != null) {
-                        region.click(Common.QUE_DING);
-                        break buildLoop;
-                    }
-                }
-            }
-        }
-
-        region.click(Common.CLOSE);
-    }
-
     public void Do(Region region) throws FindFailed, InterruptedException {
 
         region.doubleClick(baseDir + "building.png");
