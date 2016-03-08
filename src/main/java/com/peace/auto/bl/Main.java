@@ -49,14 +49,7 @@ public class Main {
             new JiangLi()
     );
 
-//    static List<IDo> doList1 = Arrays.asList(
-//            new ShouGuFang()
-//    );
-
-    public static void main(String[] args) {
-        Region region = Screen.create(0, 45, 800, 480);
-//        region.setWaitScanRate(2);
-
+    static public void Do(Region region) {
         try {
             for (int i = 0; i < 6; i++) {
                 // 点击云,进入genymotion
@@ -85,6 +78,31 @@ public class Main {
         } catch (InterruptedException e) {
             log.error("{}", e);
         }
+    }
+
+    static public void Test(Region region) {
+        try {
+            // 点击云,进入genymotion
+            Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
+            if (yun == null && yun.getScore() > 0.95) {
+                return;
+            }
+            yun.doubleClick();
+
+            new LianBingChang().Do(region);
+        } catch (FindFailed findFailed) {
+            log.error("{}", findFailed);
+        } catch (InterruptedException e) {
+            log.error("{}", e);
+        }
+    }
+
+    public static void main(String[] args) {
+        Region region = Screen.create(0, 45, 800, 480);
+
+//        Do(region);
+
+        Test(region);
     }
 
 }
