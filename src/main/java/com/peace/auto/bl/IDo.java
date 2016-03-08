@@ -32,4 +32,15 @@ public interface IDo {
             return false;
         }
     }
+
+    default Color getPixelColor(Region region, int xOffset, int yOffset) {
+        try {
+            Location cp = region.getTopLeft().offset(xOffset, yOffset);
+            Robot robot = new Robot();
+            return robot.getPixelColor(cp.x, cp.y);
+
+        } catch (AWTException e) {
+            return null;
+        }
+    }
 }

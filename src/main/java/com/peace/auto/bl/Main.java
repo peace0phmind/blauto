@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList1 = Arrays.asList(
+    static List<IDo> doList2 = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -34,6 +34,7 @@ public class Main {
     );
 
     static List<IDo> doList = Arrays.asList(
+            new ShouGuFang(),
             new Building(),
             new NongChang(),
             new ShengYu(),
@@ -48,40 +49,37 @@ public class Main {
             new JiangLi()
     );
 
-    static List<IDo> doList2 = Arrays.asList(
-            new LieChang()
-    );
+//    static List<IDo> doList1 = Arrays.asList(
+//            new ShouGuFang()
+//    );
 
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 //        region.setWaitScanRate(2);
 
         try {
-            log.info("Begin: {}", LocalDateTime.now());
-//            log.info("{}, {}", region, region.getWaitScanRate());
-//            region.saveScreenCapture("/Users/mind/Pictures/test", "aaa");
+            for (int i = 0; i < 6; i++) {
+                // 点击云,进入genymotion
+                Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
+                if (yun == null && yun.getScore() > 0.95) {
+                    return;
+                }
+                yun.doubleClick();
 
-            // 点击云,进入genymotion
-            Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
-            if (yun == null) {
-                return;
+                // 点击收起对话框
+                Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png", 3);
+                if (duihua != null && duihua.getScore() > 0.95) {
+                    duihua.click();
+                    Thread.sleep(1000L);
+                }
+
+                for (IDo iDo : doList) {
+                    iDo.Do(region);
+                    Thread.sleep(3000L);
+                }
+
+                new DengLu().Do(region);
             }
-            yun.doubleClick();
-
-            // 点击收起对话框
-            Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png", 3);
-            if (duihua != null && duihua.getScore() > 0.95) {
-                duihua.click();
-                Thread.sleep(1000L);
-            }
-
-            for (IDo iDo : doList) {
-                iDo.Do(region);
-
-                Thread.sleep(3000L);
-            }
-
-            log.info("End: {}", LocalDateTime.now());
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } catch (InterruptedException e) {

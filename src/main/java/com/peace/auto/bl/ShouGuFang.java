@@ -6,6 +6,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 
+import java.awt.*;
 import java.util.Iterator;
 
 /**
@@ -42,15 +43,21 @@ public class ShouGuFang implements IDo {
             // 需要进行狩猎
             shoulie:
             for (int i = 0; i < 20; i++) {
-                Match daliang = region.exists(baseDir + "daliang.png", 0.5);
+                Match daliang = region.exists(baseDir + "daliangniaolong.png");
                 if (daliang != null) {
-                    Iterator<Match> all = region.findAll(baseDir + "daliang.png");
+                    Iterator<Match> all = region.findAll(baseDir + "daliangniaolong.png");
                     while (all.hasNext()) {
                         Match liewu = all.next();
                         if (liewu.getScore() > 0.95) {
-                            liewu.below().click(baseDir + "kaishishoulie.png");
-                            Thread.sleep(1000L);
-                            break shoulie;
+                            Color pixelColor = getPixelColor(liewu, 54, 5);
+                            // [r=211,g=83,b=218] 大量
+                            // [r=216,g=202,b=153] 小量
+                            // [r=73,g=55,b=35] 一群
+                            if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 90) {
+                                liewu.below().click(baseDir + "kaishishoulie.png");
+                                Thread.sleep(1000L);
+                                break shoulie;
+                            }
                         }
                     }
                 }
