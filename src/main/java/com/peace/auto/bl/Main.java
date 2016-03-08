@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList = Arrays.asList(
+    static List<IDo> doList1 = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -25,6 +25,21 @@ public class Main {
             new LianMeng(),
             new YingHun(),
             new HaoYou(),
+
+            new JingJiChang(),
+            new ShengLingQuan(),
+
+            new Task(),
+            new JiangLi()
+    );
+
+    static List<IDo> doList = Arrays.asList(
+            new Building(),
+            new NongChang(),
+            new ShengYu(),
+            new TianSheng(),
+
+            new YingHun(),
 
             new JingJiChang(),
             new ShengLingQuan(),
