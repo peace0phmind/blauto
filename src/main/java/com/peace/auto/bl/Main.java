@@ -1,9 +1,11 @@
 package com.peace.auto.bl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.script.*;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Region;
+import org.sikuli.script.Screen;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList2 = Arrays.asList(
+    static List<IDo> doList = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -21,6 +23,7 @@ public class Main {
             new ShengYu(),
             new TianSheng(),
             new LieChang(),
+            new LianBingChang(),
 
             new LianMeng(),
             new YingHun(),
@@ -33,12 +36,13 @@ public class Main {
             new JiangLi()
     );
 
-    static List<IDo> doList = Arrays.asList(
+    static List<IDo> doList1 = Arrays.asList(
             new ShouGuFang(),
             new Building(),
             new NongChang(),
             new ShengYu(),
             new TianSheng(),
+            new LianBingChang(),
 
             new YingHun(),
 
@@ -100,9 +104,9 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 
-//        Do(region);
+        Do(region);
 
-        Test(region);
+//        Test(region);
     }
 
 }

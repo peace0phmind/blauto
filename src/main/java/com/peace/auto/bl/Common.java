@@ -1,5 +1,7 @@
 package com.peace.auto.bl;
 
+import org.sikuli.script.Pattern;
+
 /**
  * Created by mind on 3/3/16.
  */
@@ -12,7 +14,7 @@ public interface Common {
 
     String HUI_CHENG = BASE_DIR + "huicheng.png";
 
-    String MENU = BASE_DIR + "menu.png";
+    Pattern MENU = new Pattern(BASE_DIR + "menu.png").similar(0.95f);
 
     String MENU1 = BASE_DIR + "menu1.png";
 

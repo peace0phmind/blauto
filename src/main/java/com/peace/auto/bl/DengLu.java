@@ -48,6 +48,8 @@ public class DengLu implements IDo {
                 if (qqhaoyouwan != null) {
                     qqhaoyouwan.click();
 
+                    Thread.sleep(3000L);
+
                     Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
                     if (qiehuanzhanghao != null) {
                         qiehuanzhanghao.click();
