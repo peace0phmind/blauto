@@ -23,9 +23,9 @@ public class Building implements IDo {
             3,
             5,
             12,
-            6,
             4,
             8,
+            6,
             7,
             2,
             9);
