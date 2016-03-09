@@ -93,7 +93,7 @@ public class Main {
             }
             yun.doubleClick();
 
-            new LianMeng().Do(region);
+            new QunYingHui().Do(region);
 
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
@@ -105,9 +105,9 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 
-//        Do(region);
+        Do(region);
 
-        Test(region);
+//        Test(region);
     }
 
 }
