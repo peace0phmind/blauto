@@ -24,6 +24,7 @@ public class Main {
             new TianSheng(),
             new LieChang(),
             new LianBingChang(),
+            new ShiChang(),
 
             new LianMeng(),
             new YingHun(),
@@ -43,6 +44,7 @@ public class Main {
             new ShengYu(),
             new TianSheng(),
             new LianBingChang(),
+            new ShiChang(),
 
             new YingHun(),
 
@@ -84,7 +86,7 @@ public class Main {
         }
     }
 
-    static public void Test(Region region) {
+    static public void Test(Region region, IDo ido) {
         try {
             // 点击云,进入genymotion
             Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
@@ -93,7 +95,7 @@ public class Main {
             }
             yun.doubleClick();
 
-            new QunYingHui().Do(region);
+            ido.Do(region);
 
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
@@ -105,9 +107,9 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 
-        Do(region);
+//        Do(region);
 
-//        Test(region);
+        Test(region, new ShiChang());
     }
 
 }
