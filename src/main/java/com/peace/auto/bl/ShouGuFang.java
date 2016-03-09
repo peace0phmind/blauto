@@ -85,7 +85,7 @@ public class ShouGuFang implements IDo {
                 for (int i = 0; i < 3; i++) {
                     xinyunfanbei.click();
 
-                    Match noxinyunfanbei = region.exists(baseDir + "noxinyunfanbei.png", 0.5);
+                    Match noxinyunfanbei = region.exists(baseDir + "noxinyunfanbei.png");
                     if (noxinyunfanbei != null) {
                         region.click(Common.QUE_DING);
                         break;

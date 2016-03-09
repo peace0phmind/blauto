@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList = Arrays.asList(
+    static List<IDo> doList1 = Arrays.asList(
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -36,7 +36,7 @@ public class Main {
             new JiangLi()
     );
 
-    static List<IDo> doList1 = Arrays.asList(
+    static List<IDo> doList = Arrays.asList(
             new ShouGuFang(),
             new Building(),
             new NongChang(),
@@ -93,7 +93,8 @@ public class Main {
             }
             yun.doubleClick();
 
-            new LianBingChang().Do(region);
+            new LianMeng().Do(region);
+
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } catch (InterruptedException e) {
@@ -104,9 +105,9 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 
-        Do(region);
+//        Do(region);
 
-//        Test(region);
+        Test(region);
     }
 
 }

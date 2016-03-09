@@ -31,22 +31,31 @@ public class JingJiChang implements IDo {
 
                 // 挑战
                 region.click(baseDir + "tiaozhan.png");
-                Match queding = region.exists(baseDir + "queding.png", 3);
-                if (queding != null) {
-                    queding.click();
+                Match jingjivip = region.exists(baseDir + "jingjivip.png");
+                if (jingjivip != null) {
+                    // 结束了
+                    jingjivip.above().click(Common.CLOSE);
+                } else {
+                    // 没有结束
+                    Match queding = region.exists(baseDir + "queding.png", 3);
+                    if (queding != null) {
+                        queding.click();
 
-                    Match guankan = region.exists(baseDir + "guankan.png", 3);
-                    if (guankan != null) {
-                        region.click(Common.QU_XIAO);
+                        Match guankan = region.exists(baseDir + "guankan.png", 3);
+                        if (guankan != null) {
+                            region.click(Common.QU_XIAO);
 
-                        Match jieguo = region.exists(baseDir + "jieguo.png", 3);
-                        if (jieguo != null) {
-                            region.click(Common.QUE_DING);
+                            Match jieguo = region.exists(baseDir + "jieguo.png", 3);
+                            if (jieguo != null) {
+                                region.click(Common.QUE_DING);
+                            }
                         }
                     }
                 }
             }
         }
+
+        Thread.sleep(500L);
 
         region.click(Common.CLOSE);
     }

@@ -3,6 +3,7 @@ package com.peace.auto.bl;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.util.Iterator;
@@ -25,12 +26,13 @@ public class TianSheng implements IDo {
                 qidao.click();
                 Thread.sleep(1000L);
 
-                Match mianfei = region.exists(baseDir + "mianfei.png", 3);
+                Pattern mfp = new Pattern(baseDir + "mianfei.png").similar(0.95f);
+                Match mianfei = region.exists(mfp, 3);
                 if (mianfei != null) {
                     region.click(baseDir + "guanbijieguo.png");
                     Thread.sleep(500L);
 
-                    Iterator<Match> all = region.findAll(baseDir + "mianfei.png");
+                    Iterator<Match> all = region.findAll(mfp);
                     while (all.hasNext()) {
                         Match mf = all.next();
                         mf.below().click(baseDir + "qidaoanniu.png");

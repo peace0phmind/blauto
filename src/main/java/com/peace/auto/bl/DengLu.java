@@ -17,8 +17,9 @@ public class DengLu implements IDo {
 
     public void qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
         Region qq = Screen.create(0, 45, 480, 800);
-        Match tianjiazhanghao = qq.exists(baseDir + "tianjiazhanghao.png", 10);
+        Match tianjiazhanghao = qq.exists(baseDir + "tianjiazhanghao.png", 20);
         if (tianjiazhanghao != null) {
+            Thread.sleep(3000L);
 
             List<Match> qqs = new ArrayList<>();
             Iterator<Match> all = tianjiazhanghao.above().findAll(baseDir + "peace.png");
@@ -48,12 +49,13 @@ public class DengLu implements IDo {
                 if (qqhaoyouwan != null) {
                     qqhaoyouwan.click();
 
-                    Thread.sleep(3000L);
+                    Thread.sleep(6000L);
 
                     Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
                     if (qiehuanzhanghao != null) {
                         qiehuanzhanghao.click();
 
+                        Thread.sleep(5000L);
                         // 在qq中切换账号
                         qiehuanzhanghao(region);
 

@@ -50,8 +50,23 @@ public class LianMeng implements IDo {
                 fuli.click();
 
                 Match lingqu = region.exists(baseDir + "lingqu.png", 3);
-                if (lingqu != null) {
+                // 每天领取一次福利,并且进行一次捐赠
+                if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
                     lingqu.click();
+
+                    Match juanxian = region.exists(baseDir + "juanxian.png");
+                    if (juanxian != null) {
+                        juanxian.click();
+
+                        Match renli = region.exists(baseDir + "renliinput.png");
+                        if (renli != null) {
+                            renli.click();
+                            renli.type("1");
+
+                            region.click(baseDir + "juanxiananniu.png");
+                            Thread.sleep(500L);
+                        }
+                    }
                 }
             }
         }

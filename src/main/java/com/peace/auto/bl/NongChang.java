@@ -5,6 +5,9 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.util.Iterator;
+import java.util.concurrent.ThreadFactory;
+
 /**
  * Created by mind on 3/4/16.
  */
@@ -50,6 +53,28 @@ public class NongChang implements IDo {
                 weishi.click();
             }
 
+
+            Match qitanongchang = region.exists(baseDir + "qitanongchang.png");
+            if (qitanongchang != null) {
+                qitanongchang.click();
+
+                Thread.sleep(1000L);
+
+                Match wei = region.exists(baseDir + "wei.png");
+                if (wei != null) {
+                    Iterator<Match> all = region.findAll(baseDir + "wei.png");
+                    while (all.hasNext()) {
+                        all.next().click();
+                        Thread.sleep(1000L);
+
+                        weishi = region.exists(baseDir + "weishi.png");
+                        if (weishi != null) {
+                            weishi.click();
+                            Thread.sleep(500L);
+                        }
+                    }
+                }
+            }
         }
 
         region.click(Common.HUI_CHENG);
