@@ -12,6 +12,9 @@ public class LieChang implements  IDo{
     String baseDir = Common.BASE_DIR + "liechang/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
+        if (isTodayFirstFinished()) {
+            return;
+        }
 
         Match liechang = region.exists(baseDir + "liechang.png");
         if (liechang != null) {

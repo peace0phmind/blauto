@@ -13,6 +13,10 @@ public class LianMeng implements IDo {
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
+        if (isTodayFirstFinished()) {
+            return;
+        }
+
         region.click(Common.MENU);
 
         Match lianmeng = region.exists(baseDir + "lianmeng.png", 3);

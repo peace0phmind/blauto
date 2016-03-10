@@ -22,32 +22,34 @@ public class JiangLi implements IDo {
             return;
         }
 
-        Match qiandao = region.exists(baseDir + "qiandao.png", 1);
-        if (qiandao != null) {
-            qiandao.click();
-        }
+        if (!isTodayFirstFinished()) {
+            Match qiandao = region.exists(baseDir + "qiandao.png", 1);
+            if (qiandao != null) {
+                qiandao.click();
+            }
 
-        Match lianxuqiandaojiangli = region.exists(baseDir + "lingquqiandaojiangli.png", 1);
-        if (lianxuqiandaojiangli != null) {
-            lianxuqiandaojiangli.click();
-        }
+            Match lianxuqiandaojiangli = region.exists(baseDir + "lingquqiandaojiangli.png", 1);
+            if (lianxuqiandaojiangli != null) {
+                lianxuqiandaojiangli.click();
+            }
 
-        // 连续登陆
-        region.click(baseDir + "lianxudenglu.png");
+            // 连续登陆
+            region.click(baseDir + "lianxudenglu.png");
 
-        Match lianxulingqu = region.exists(baseDir + "lianxulingqu.png", 1);
-        if (lianxulingqu != null) {
-            lianxulingqu.click();
-        }
+            Match lianxulingqu = region.exists(baseDir + "lianxulingqu.png", 1);
+            if (lianxulingqu != null) {
+                lianxulingqu.click();
+            }
 
-        Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-        if (lingqu != null) {
-            lingqu.click();
-        }
+            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+            if (lingqu != null) {
+                lingqu.click();
+            }
 
-        lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-        if (lingqu != null) {
-            lingqu.click();
+            lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+            if (lingqu != null) {
+                lingqu.click();
+            }
         }
 
         // 活跃度

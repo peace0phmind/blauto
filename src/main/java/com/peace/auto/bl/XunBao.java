@@ -19,6 +19,10 @@ public class XunBao implements IDo {
     String baseDir = Common.BASE_DIR + "xunbao/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
+        if (isTodayFirstFinished()) {
+            return;
+        }
+
         region.doubleClick(baseDir + "xunbao.png");
 
         Match inbaoshiwu = region.exists(baseDir + "inbaoshiwu.png", 10);

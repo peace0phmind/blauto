@@ -13,6 +13,10 @@ public class ShenShouWu implements IDo {
     String baseDir = Common.BASE_DIR + "shenshouwu/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
+        if (isTodayFirstFinished()) {
+            return;
+        }
+
         Match shenshouwu = region.exists(baseDir + "shenshouwu.png");
 
         if (shenshouwu != null) {

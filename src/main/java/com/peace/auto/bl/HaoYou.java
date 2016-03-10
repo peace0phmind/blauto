@@ -15,6 +15,10 @@ public class HaoYou implements IDo {
     String baseDir = Common.BASE_DIR + "haoyou/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
+        if (isTodayFirstFinished()) {
+            return;
+        }
+
         region.click(Common.MENU);
 
         Match haoyou = region.exists(baseDir + "haoyou.png", 3);
