@@ -30,10 +30,8 @@ public class ShiChang implements IDo {
                         Region left = jixu.leftAt(-80).below(60).grow(160, 120);
                         left.highlight(3);
 
-                        jiaoyi = region.exists(baseDir + "jiaoyi.png");
-                        if (jiaoyi == null) {
-                            break;
-                        } else {
+                        jiaoyi = left.exists(baseDir + "jiaoyi.png");
+                        if (jiaoyi != null) {
                             jiaoyi.click();
 
                             Match wupingbuzu = region.exists(baseDir + "wupingbuzu.png");

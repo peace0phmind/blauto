@@ -55,9 +55,9 @@ public class Main {
             new JiangLi()
     );
 
-    static public void Do(Region region) {
+    static public void Do(Region region, int times) {
         try {
-            for (int i = 0; i < 6; i++) {
+            for (int i = 0; i < times; i++) {
                 // 点击云,进入genymotion
                 Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
                 if (yun == null && yun.getScore() > 0.95) {
@@ -107,9 +107,9 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 45, 800, 480);
 
-//        Do(region);
+        Do(region, 6);
 
-        Test(region, new ShiChang());
+//        Test(region, new LianBingChang());
     }
 
 }

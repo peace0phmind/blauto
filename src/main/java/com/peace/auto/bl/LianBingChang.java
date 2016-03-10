@@ -40,8 +40,6 @@ public class LianBingChang implements IDo {
         }
 
         if (keyilianbing) {
-
-
             // 再进行练兵
             region.click(Common.RI_CHANG);
 
@@ -70,13 +68,14 @@ public class LianBingChang implements IDo {
                         }
                     }
 
-                    Thread.sleep(500L);
+                    Thread.sleep(1000L);
                     region.click(Common.CLOSE);
                 }
             }
 
-            Thread.sleep(500L);
+            Thread.sleep(1000L);
             region.click(Common.CLOSE);
         }
+
     }
 }

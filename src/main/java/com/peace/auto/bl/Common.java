@@ -10,7 +10,7 @@ public interface Common {
 
     String QUE_DING = BASE_DIR + "queding.png";
 
-    String CLOSE = BASE_DIR + "close.png";
+    Pattern CLOSE = new Pattern(BASE_DIR + "close.png").similar(0.95f);
 
     String HUI_CHENG = BASE_DIR + "huicheng.png";
 
