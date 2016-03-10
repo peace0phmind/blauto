@@ -20,6 +20,16 @@ public interface IDo {
     Properties properties = new Properties();
     String FINISHED_PROP = "finished.prop";
 
+    static void setTodayFirstFinished() {
+        properties.setProperty(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.TRUE.toString());
+
+        try {
+            properties.store(new FileWriter(FINISHED_PROP), null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     void Do(Region region) throws FindFailed, InterruptedException;
 
     default boolean isButtonEnable(Region region) {
@@ -76,15 +86,5 @@ public interface IDo {
         }
 
         return Boolean.valueOf((String) properties.getOrDefault(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.FALSE.toString()));
-    }
-
-    default void setTodayFirstFinished() {
-        properties.setProperty(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.TRUE.toString());
-
-        try {
-            properties.store(new FileWriter(FINISHED_PROP), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

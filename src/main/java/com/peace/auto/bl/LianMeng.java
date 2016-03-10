@@ -13,9 +13,9 @@ public class LianMeng implements IDo {
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
     public void Do(Region region) throws FindFailed, InterruptedException {
-        if (isTodayFirstFinished()) {
-            return;
-        }
+//        if (isTodayFirstFinished()) {
+//            return;
+//        }
 
         region.click(Common.MENU);
 
@@ -39,6 +39,13 @@ public class LianMeng implements IDo {
             Match nanman = region.exists(baseDir + "nanman.png", 3);
             if (nanman != null) {
                 nanman.click();
+
+                // 领取奖励
+                Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
+                if (lingqujiangli != null) {
+                    lingqujiangli.click();
+                    Thread.sleep(500L);
+                }
 
                 Match baoming = region.exists(baseDir + "baoming.png", 3);
                 if (baoming != null) {

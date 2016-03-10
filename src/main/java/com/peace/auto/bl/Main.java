@@ -61,6 +61,8 @@ public class Main {
 
                 new DengLu().Do(region);
             }
+
+            IDo.setTodayFirstFinished();
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } catch (InterruptedException e) {
@@ -87,11 +89,10 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Region region = Screen.create(0, 45, 800, 480);
+        Region region = Screen.create(0, 46, 800, 480);
 
-        Do(region, 6);
+//        Do(region, 6);
 
-//        Test(region, new LianBingChang());
+        Test(region, new LianMeng());
     }
-
 }
