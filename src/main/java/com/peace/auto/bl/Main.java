@@ -15,6 +15,7 @@ import java.util.List;
 @Slf4j
 public class Main {
     static List<IDo> doList = Arrays.asList(
+            new ChuZheng(),
             new ShouGuFang(),
             new XunBao(),
             new ShenShouWu(),
@@ -92,6 +93,6 @@ public class Main {
         Region region = Screen.create(0, 46, 800, 480);
 
         Do(region, 6);
-//        Test(region, new LianBingChang());
+//        Test(region, new ChuZheng());
     }
 }
