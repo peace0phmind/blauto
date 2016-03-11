@@ -54,17 +54,20 @@ public class LianBingChang implements IDo {
                     lianbingchangb.click();
 
                     for (String jundui : junduis) {
-                        region.click(baseDir + jundui);
-                        Thread.sleep(500L);
+                        Match jd = region.exists(baseDir + jundui);
+                        if (jd != null) {
+                            jd.click();
+                            Thread.sleep(500L);
 
-                        Match lianbing = region.exists(baseDir + "lianbing.png");
-                        if (lianbing != null && isButtonEnable(lianbing)) {
-                            lianbing.click();
+                            Match lianbing = region.exists(baseDir + "lianbing.png");
+                            if (lianbing != null && isButtonEnable(lianbing)) {
+                                lianbing.click();
 
-                            region.click(baseDir + "quanbubuman.png");
-                            region.click(baseDir + "quedingchuzheng.png");
+                                region.click(baseDir + "quanbubuman.png");
+                                region.click(baseDir + "quedingchuzheng.png");
 
-                            break;
+                                break;
+                            }
                         }
                     }
 

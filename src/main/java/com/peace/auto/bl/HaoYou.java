@@ -30,7 +30,9 @@ public class HaoYou implements IDo {
                 Iterator<Match> all = region.findAll(baseDir + "songaixing.png");
                 while (all.hasNext()) {
                     all.next().click();
+                    Thread.sleep(500L);
                     region.click(baseDir + "xiaciba.png");
+                    Thread.sleep(500L);
                 }
             }
         }

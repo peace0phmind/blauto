@@ -91,8 +91,7 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 46, 800, 480);
 
-//        Do(region, 6);
-
-        Test(region, new LianMeng());
+        Do(region, 6);
+//        Test(region, new LianBingChang());
     }
 }
