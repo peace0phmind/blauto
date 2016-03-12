@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by mind on 3/8/16.
  */
-public class LianBingChang implements IDo {
+public class LianBingChang extends ZhanBao implements IDo {
 
     String baseDir = Common.BASE_DIR + "lianbingchang/";
 
@@ -22,24 +22,7 @@ public class LianBingChang implements IDo {
             "zuojun.png");
 
     public void Do(Region region) throws FindFailed, InterruptedException {
-        boolean keyilianbing = false;
-
-        // 先查看是否有战报
-        region.click(Common.MENU);
-
-        Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
-        if (zhanbao != null) {
-            zhanbao.click();
-
-            Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
-            if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
-                keyilianbing = true;
-            }
-
-            region.click(Common.CLOSE);
-        }
-
-        if (keyilianbing) {
+        if (canFight(region)) {
             // 再进行练兵
             region.click(Common.RI_CHANG);
 
@@ -89,6 +72,5 @@ public class LianBingChang implements IDo {
             Thread.sleep(1000L);
             region.click(Common.CLOSE);
         }
-
     }
 }

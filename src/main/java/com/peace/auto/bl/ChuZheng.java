@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by mind on 3/9/16.
  */
-public class ChuZheng implements IDo {
+public class ChuZheng extends ZhanBao implements IDo {
     String baseDir = Common.BASE_DIR + "chuzheng/";
 
     List<String> direns = Arrays.asList(
@@ -27,25 +27,7 @@ public class ChuZheng implements IDo {
             return;
         }
 
-        boolean keyichuzheng = false;
-
-        // 先查看是否有战报
-        region.click(Common.MENU);
-
-        Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
-        if (zhanbao != null) {
-            zhanbao.click();
-
-            Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
-            if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
-                keyichuzheng = true;
-            }
-
-            region.click(Common.CLOSE);
-        }
-
-
-        if (keyichuzheng) {
+        if (canFight(region)) {
             region.click(Common.MENU);
 
             Match chuzheng = region.exists(baseDir + "chuzheng.png");
