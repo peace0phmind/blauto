@@ -16,7 +16,11 @@ import java.util.List;
 public class Main {
     static List<IDo> doList = Arrays.asList(
             new ShenShouWu(),
+
             new ChuZheng(),
+            new LianBingChang(),
+            new ShiLianDong(),
+
             new ShouGuFang(),
             new XunBao(),
             new Building(),
@@ -24,7 +28,6 @@ public class Main {
             new ShengYu(),
             new TianSheng(),
             new LieChang(),
-            new LianBingChang(),
             new ShiChang(),
 
             new LianMeng(),
@@ -93,6 +96,6 @@ public class Main {
         Region region = Screen.create(0, 46, 800, 480);
 
         Do(region, 1);
-//        Test(region, new LianBingChang());
+//        Test(region, new ShiLianDong());
     }
 }
