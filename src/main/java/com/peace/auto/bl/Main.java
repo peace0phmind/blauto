@@ -15,10 +15,10 @@ import java.util.List;
 @Slf4j
 public class Main {
     static List<IDo> doList = Arrays.asList(
+            new ShenShouWu(),
             new ChuZheng(),
             new ShouGuFang(),
             new XunBao(),
-            new ShenShouWu(),
             new Building(),
             new NongChang(),
             new ShengYu(),
@@ -49,13 +49,13 @@ public class Main {
                 yun.doubleClick();
 
                 // 点击收起对话框
-                Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png", 3);
-                if (duihua != null && duihua.getScore() > 0.95) {
-                    duihua.click();
-                    Thread.sleep(1000L);
-                }
-
                 for (IDo iDo : doList) {
+                    Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
+                    if (duihua != null && duihua.getScore() > 0.95) {
+                        duihua.click();
+                        Thread.sleep(1000L);
+                    }
+
                     iDo.Do(region);
                     Thread.sleep(3000L);
                 }
@@ -92,7 +92,8 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 46, 800, 480);
 
-        Do(region, 6);
-//        Test(region, new ChuZheng());
+//        Do(region, 6);
+        Test(region, new TianSheng());
+//        Test(region, new LieChang());
     }
 }

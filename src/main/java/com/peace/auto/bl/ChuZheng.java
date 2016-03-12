@@ -23,9 +23,9 @@ public class ChuZheng implements IDo {
     );
 
     public void Do(Region region) throws FindFailed, InterruptedException {
-//        if (isTodayFirstFinished()) {
-//            return;
-//        }
+        if (isTodayFirstFinished()) {
+            return;
+        }
 
         boolean keyichuzheng = false;
 
