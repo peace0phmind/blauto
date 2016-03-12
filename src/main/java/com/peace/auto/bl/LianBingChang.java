@@ -53,6 +53,16 @@ public class LianBingChang implements IDo {
                 if (lianbingchangb != null) {
                     lianbingchangb.click();
 
+                    Match kaiqi = region.exists(baseDir + "kaiqi.png");
+                    if (kaiqi != null) {
+                        kaiqi.click();
+                        Match queding = region.exists(Common.QUE_DING);
+                        if (queding != null) {
+                            queding.click();
+                            Thread.sleep(500L);
+                        }
+                    }
+
                     for (String jundui : junduis) {
                         Match jd = region.exists(baseDir + jundui);
                         if (jd != null) {

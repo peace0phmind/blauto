@@ -56,7 +56,20 @@ public class LieChang implements IDo {
                     if (baopokuangren != null && baopokuangren.getScore() > 0.95) {
                         region.click(baseDir + "kaishizhandou.png");
 
-                        Match dengdai = region.exists(baseDir + "dengdai.png", 20);
+                        Match dianjijixu = region.exists(baseDir + "dianjipingmujixu.png", 10);
+                        while (dianjijixu != null) {
+                            dianjijixu.click();
+                            Thread.sleep(500L);
+                            dianjijixu = region.exists(baseDir + "dianjipingmujixu.png");
+                        }
+
+                        Match jixu = region.exists(baseDir + "jixu.png");
+                        if (jixu != null) {
+                            jixu.click();
+                            Thread.sleep(500L);
+                        }
+
+                        Match dengdai = region.exists(baseDir + "dengdai.png");
                         if (dengdai != null) {
                             dengdai.click();
 
