@@ -73,18 +73,19 @@ public class TianSheng implements IDo {
                             Thread.sleep(500L);
                             Match shenglibugou = region.exists(baseDir + "shenglibugou.png", 0.5);
                             if (shenglibugou != null) {
-                                region.click(Common.QUE_DING);
                                 Thread.sleep(500L);
+                                region.click(Common.QUE_DING);
                                 break;
                             }
                         }
                     }
                 }
 
-                region.click(Common.CLOSE);
                 Thread.sleep(500L);
+                region.click(Common.CLOSE);
             }
 
+            Thread.sleep(500L);
             region.click(Common.CLOSE);
         }
     }
