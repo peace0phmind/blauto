@@ -56,8 +56,13 @@ public class LianBingChang extends ZhanBao implements IDo {
                             if (lianbing != null && isButtonEnable(lianbing)) {
                                 lianbing.click();
 
-                                region.click(baseDir + "quanbubuman.png");
-                                region.click(baseDir + "quedingchuzheng.png");
+                                Match bunengtongshi = region.exists(baseDir + "bunengtongshichuzheng.png");
+                                if (bunengtongshi != null) {
+                                    region.click(Common.QUE_DING);
+                                } else {
+                                    region.click(baseDir + "quanbubuman.png");
+                                    region.click(baseDir + "quedingchuzheng.png");
+                                }
 
                                 break;
                             }

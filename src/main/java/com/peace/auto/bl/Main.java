@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
-    static List<IDo> doList = Arrays.asList(
+    static List<IDo> tasks = Arrays.asList(
             new ShenShouWu(),
 
             new ChuZheng(),
@@ -41,11 +41,7 @@ public class Main {
             new JiangLi()
     );
 
-    static List<IDo> doList2 = Arrays.asList(
-            new TianSheng()
-            );
-
-    static public void Do(Region region, int times) {
+    static public void Do(Region region, List<IDo> dos, int times) {
         try {
             for (int i = 0; i < times; i++) {
                 // 点击云,进入genymotion
@@ -62,7 +58,7 @@ public class Main {
                     Thread.sleep(1000L);
                 }
 
-                for (IDo iDo : doList) {
+                for (IDo iDo : dos) {
                     iDo.Do(region);
                     Thread.sleep(3000L);
                 }
@@ -99,7 +95,8 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 46, 800, 480);
 
-//        Do(region, 6);
-        Test(region, new ShiChang());
+        Do(region, tasks, 6);
+
+//        Test(region, new LianBingChang());
     }
 }
