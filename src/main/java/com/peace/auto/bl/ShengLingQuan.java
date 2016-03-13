@@ -21,6 +21,17 @@ public class ShengLingQuan implements IDo {
         if (shenglingquan != null) {
             shenglingquan.click();
 
+            // 神灵泉
+            Match shengpin = region.exists(baseDir + "shengpin");
+            while (shengpin != null && shengpin.getScore() > 0.95) {
+                region.click(baseDir + "putongxiulian.png");
+                Match end = region.exists(baseDir + "xilianend.png", 1);
+                if (end != null) {
+                    break;
+                }
+                shengpin = region.exists(baseDir + "shengpin", 3);
+            }
+
             // 高级修炼
             Match xiulian = region.exists(baseDir + "xiulian.png", 3);
             if (xiulian != null) {
@@ -38,20 +49,7 @@ public class ShengLingQuan implements IDo {
                     }
                 }
             }
-
-            // 神灵泉
-            region.click(baseDir + "shenglingquan1.png");
-
-            Match shengpin = region.exists(baseDir + "shengpin", 3);
-            while (shengpin != null && shengpin.getScore() > 0.95) {
-                region.click(baseDir + "putongxiulian.png");
-                Match end = region.exists(baseDir + "xilianend.png", 1);
-                if (end != null) {
-                    break;
-                }
-                shengpin = region.exists(baseDir + "shengpin", 3);
-            }
-
+            
             region.click(Common.CLOSE);
             Thread.sleep(500L);
         }

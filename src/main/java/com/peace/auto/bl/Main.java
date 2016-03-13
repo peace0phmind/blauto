@@ -1,11 +1,13 @@
 package com.peace.auto.bl;
 
+import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 import org.sikuli.script.Screen;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -97,6 +99,12 @@ public class Main {
 
         Do(region, tasks, 6);
 
-//        Test(region, new LianBingChang());
+//        Test(region, new TianSheng());
+//        try {
+//            AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
+//            region.saveScreenCapture("/Users/mind/peace/blauto", "ttt");
+//        } catch (AWTException e) {
+//            e.printStackTrace();
+//        }
     }
 }
