@@ -41,6 +41,10 @@ public class Main {
             new JiangLi()
     );
 
+    static List<IDo> doList2 = Arrays.asList(
+            new TianSheng()
+            );
+
     static public void Do(Region region, int times) {
         try {
             for (int i = 0; i < times; i++) {
@@ -52,13 +56,13 @@ public class Main {
                 yun.doubleClick();
 
                 // 点击收起对话框
-                for (IDo iDo : doList) {
-                    Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
-                    if (duihua != null && duihua.getScore() > 0.95) {
-                        duihua.click();
-                        Thread.sleep(1000L);
-                    }
+                Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
+                if (duihua != null && duihua.getScore() > 0.95) {
+                    duihua.click();
+                    Thread.sleep(1000L);
+                }
 
+                for (IDo iDo : doList) {
                     iDo.Do(region);
                     Thread.sleep(3000L);
                 }
@@ -95,7 +99,7 @@ public class Main {
     public static void main(String[] args) {
         Region region = Screen.create(0, 46, 800, 480);
 
-        Do(region, 1);
-//        Test(region, new ShiLianDong());
+//        Do(region, 6);
+        Test(region, new ShiChang());
     }
 }

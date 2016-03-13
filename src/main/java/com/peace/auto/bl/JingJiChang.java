@@ -17,7 +17,7 @@ public class JingJiChang implements IDo {
 
         Thread.sleep(3000L);
 
-        Match jingjichang = region.exists(baseDir + "jingjichang.png", 30);
+        Match jingjichang = region.exists(baseDir + "jingjichang.png", 10);
         if (jingjichang != null && jingjichang.getScore() > 0.95) {
             jingjichang.click();
 

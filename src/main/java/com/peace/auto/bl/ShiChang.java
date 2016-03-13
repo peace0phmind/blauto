@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
@@ -9,6 +10,7 @@ import java.util.Iterator;
 /**
  * Created by mind on 3/9/16.
  */
+@Slf4j
 public class ShiChang implements IDo {
 
     String baseDir = Common.BASE_DIR + "shichang/";
@@ -27,8 +29,19 @@ public class ShiChang implements IDo {
                     Iterator<Match> alljixu = region.findAll(baseDir + "jixu.png");
                     while (alljixu.hasNext()) {
                         jixu = alljixu.next();
-                        Region left = jixu.leftAt(-80).below(60).grow(160, 120);
+                        Region left = jixu.leftAt(-80).below(50).grow(160, 140);
                         left.highlight(3);
+
+                        Match huoju = left.exists(baseDir + "huoju.png");
+                        if (huoju != null) {
+                            continue;
+                        }
+
+                        Match shengjing = left.exists(baseDir + "shengjing.png");
+                        if (shengjing != null) {
+                            log.info("find shengjing: {}", shengjing);
+                            continue;
+                        }
 
                         jiaoyi = left.exists(baseDir + "jiaoyi.png");
                         if (jiaoyi != null) {
