@@ -70,8 +70,7 @@ public class TianSheng implements IDo {
 
                         for (int i = 0; i < 25; i++) {
                             region.click(baseDir + "saodang.png");
-                            Thread.sleep(500L);
-                            Match shenglibugou = region.exists(baseDir + "shenglibugou.png", 0.5);
+                            Match shenglibugou = region.exists(baseDir + "shenglibugou.png", 1);
                             if (shenglibugou != null) {
                                 Thread.sleep(500L);
                                 region.click(Common.QUE_DING);
