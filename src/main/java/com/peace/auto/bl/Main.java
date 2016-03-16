@@ -81,14 +81,8 @@ public class Main {
     public static void main_android(String[] args) {
         AndroidScreen region = new AndroidScreen();
 
-//        Do(region, tasks, 1);
-
-//                new (),
-//
-
-        // ShiChang
-
-        Do(region, Arrays.asList(new LianMeng()), 1);
+        Do(region, tasks, 4);
+//        Do(region, Arrays.asList(new LianMeng()), 1);
 
         region.close();
     }

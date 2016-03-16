@@ -2,6 +2,7 @@ package com.peace.auto.bl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Location;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
@@ -29,8 +30,8 @@ public class ShiChang implements IDo {
                     Iterator<Match> alljixu = region.findAll(baseDir + "jixu.png");
                     while (alljixu.hasNext()) {
                         jixu = alljixu.next();
-                        Region left = jixu.leftAt(-80).below(50).grow(160, 140);
-//                        left.highlight(3);
+                        Region left = jixu.left(210).below(150).offset(new Location(50, -40));
+//                        left.saveScreenCapture("/Users/mind/peace/blauto", "tt");
 
                         Match huoju = left.exists(baseDir + "huoju.png");
                         if (huoju != null) {

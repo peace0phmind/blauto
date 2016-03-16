@@ -28,7 +28,7 @@ public class LianMeng implements IDo {
             if (lianmenggongfeng != null) {
                 lianmenggongfeng.click();
 
-                Match shuijin = region.exists(baseDir + "shuijin.png", 3);
+                Match shuijin = region.exists(baseDir + "shuijin.png", 5);
                 if (shuijin != null) {
                     shuijin.below().click(baseDir + "gongfeng.png");
                     region.click(Common.CLOSE);
@@ -41,13 +41,13 @@ public class LianMeng implements IDo {
                 nanman.click();
 
                 // 领取奖励
-                Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
+                Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 5);
                 if (lingqujiangli != null) {
                     lingqujiangli.click();
                     Thread.sleep(500L);
                 }
 
-                Match baoming = region.exists(baseDir + "baoming.png", 3);
+                Match baoming = region.exists(baseDir + "baoming.png", 5);
                 if (baoming != null) {
                     baoming.click();
                 }
@@ -60,23 +60,14 @@ public class LianMeng implements IDo {
             if (fuli != null) {
                 fuli.click();
 
-                Match lingqu = region.exists(baseDir + "lingqu.png", 3);
+                Match lingqu = region.exists(baseDir + "lingqu.png", 5);
                 // 每天领取一次福利,并且进行一次捐赠
                 if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
+                    juanxian(region, 1);
+
+                    fuli.click();
+                    Thread.sleep(1000L);
                     lingqu.click();
-
-                    Match juanxian = region.exists(baseDir + "juanxian.png");
-                    if (juanxian != null) {
-                        juanxian.click();
-
-                        Match renli = region.exists(baseDir + "renliinput.png");
-                        if (renli != null) {
-                            renli.type("1");
-
-                            region.click(baseDir + "juanxiananniu.png");
-                            Thread.sleep(500L);
-                        }
-                    }
                 }
             }
         }
@@ -89,5 +80,20 @@ public class LianMeng implements IDo {
         region.click(Common.MENU1);
 
         return true;
+    }
+
+    private void juanxian(Region region, int iRenLi) throws FindFailed, InterruptedException {
+        Match juanxian = region.exists(baseDir + "juanxian.png");
+        if (juanxian != null) {
+            juanxian.click();
+
+            Match renli = region.exists(baseDir + "renliinput.png", 5);
+            if (renli != null) {
+                renli.type(String.valueOf(iRenLi));
+
+                region.click(baseDir + "juanxiananniu.png");
+                Thread.sleep(500L);
+            }
+        }
     }
 }
