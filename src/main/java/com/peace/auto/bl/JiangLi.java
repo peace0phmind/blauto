@@ -55,10 +55,10 @@ public class JiangLi implements IDo {
         // 活跃度
         region.click(baseDir + "huoyuedu.png");
         Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 1);
-        if (lingqujiangli != null) {
-            while (isButtonEnable(lingqujiangli, 5, 5)) {
-                lingqujiangli.click();
-            }
+        
+        while (lingqujiangli != null && isButtonEnable(lingqujiangli, 5, 5)) {
+            lingqujiangli.click();
+            lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 1);
         }
 
         region.click(Common.CLOSE);

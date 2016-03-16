@@ -63,7 +63,9 @@ public class Main {
                 }
             }
 
-            IDo.setTodayFirstFinished();
+            if (times > 1) {
+                IDo.setTodayFirstFinished();
+            }
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } catch (InterruptedException e) {
@@ -80,7 +82,14 @@ public class Main {
         AndroidScreen region = new AndroidScreen();
 
 //        Do(region, tasks, 1);
-        Do(region, Arrays.asList(new YingHun()), 1);
+
+//                new LianMeng(),
+//
+
+        // ShiChang
+
+
+        Do(region, Arrays.asList(new JiangLi()), 1);
 
         region.close();
     }

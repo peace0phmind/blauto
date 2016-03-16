@@ -1,9 +1,6 @@
 package com.peace.auto.bl;
 
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Match;
-import org.sikuli.script.Pattern;
-import org.sikuli.script.Region;
+import org.sikuli.script.*;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -33,7 +30,7 @@ public class ChuZheng extends ZhanBao implements IDo {
             Match chuzheng = region.exists(baseDir + "chuzheng.png");
             if (chuzheng != null) {
                 chuzheng.click();
-                Thread.sleep(1000L);
+                Thread.sleep(3000L);
 
                 Match chuzhenganniu = region.exists(baseDir + "chuzhenganniu.png");
                 if (chuzhenganniu != null) {
@@ -42,7 +39,7 @@ public class ChuZheng extends ZhanBao implements IDo {
                     region.click(baseDir + diren);
                     Thread.sleep(1000L);
 
-                    chuzhenganniu.aboveAt(-50).click();
+                    chuzhenganniu.offset(new Location(0, -50)).click();
                     Thread.sleep(1000L);
 
                     chuzhenganniu.click();
