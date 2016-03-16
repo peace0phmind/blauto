@@ -10,7 +10,7 @@ import org.sikuli.script.Region;
 public class ShiLianDong extends ZhanBao implements IDo {
     String baseDir = Common.BASE_DIR + "shiliandong/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (canFight(region)) {
             region.click(Common.RI_CHANG);
 
@@ -64,6 +64,10 @@ public class ShiLianDong extends ZhanBao implements IDo {
 
             Thread.sleep(500L);
             region.click(Common.CLOSE);
+
+            return true;
         }
+
+        return false;
     }
 }

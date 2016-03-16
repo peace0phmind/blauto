@@ -22,9 +22,9 @@ public class ChuZheng extends ZhanBao implements IDo {
             "heiwuyaowu.png"
     );
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
-            return;
+            return false;
         }
 
         if (canFight(region)) {
@@ -66,6 +66,10 @@ public class ChuZheng extends ZhanBao implements IDo {
                     }
                 }
             }
+
+            return true;
         }
+
+        return false;
     }
 }

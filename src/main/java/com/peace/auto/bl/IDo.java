@@ -30,37 +30,25 @@ public interface IDo {
         }
     }
 
-    void Do(Region region) throws FindFailed, InterruptedException;
+    boolean Done(Region region) throws FindFailed, InterruptedException;
 
     default boolean isButtonEnable(Region region) {
         return isButtonEnable(region, 0, 0);
     }
 
     default boolean isButtonEnable(Region region, int xOffset, int yOffset) {
-        try {
-            Location cp = region.getTopLeft().offset(xOffset, yOffset);
-            Robot robot = new Robot();
-            Color pixelColor = robot.getPixelColor(cp.x, cp.y);
+        Color pixelColor = getPixelColor(region, xOffset, yOffset);
 
-            if (pixelColor.getRed() < 160) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (AWTException e) {
+        if (pixelColor.getRed() < 160) {
             return false;
+        } else {
+            return true;
         }
     }
 
     default Color getPixelColor(Region region, int xOffset, int yOffset) {
-        try {
-            Location cp = region.getTopLeft().offset(xOffset, yOffset);
-            Robot robot = new Robot();
-            return robot.getPixelColor(cp.x, cp.y);
-
-        } catch (AWTException e) {
-            return null;
-        }
+        Location cp = region.getTopLeft().offset(xOffset, yOffset);
+        return region.getScreen().getRobot().getColorAt(cp.getX(), cp.getY());
     }
 
     default boolean isTodayFirstFinished() {

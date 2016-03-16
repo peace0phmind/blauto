@@ -10,7 +10,7 @@ import org.sikuli.script.Region;
 public class YingHun implements IDo {
     String baseDir = Common.BASE_DIR + "yinghun/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
 
         Match yinghun = region.exists(baseDir + "yinghun.png", 3);
@@ -33,5 +33,7 @@ public class YingHun implements IDo {
         region.click(Common.CLOSE);
         Thread.sleep(500L);
         region.click(Common.CLOSE);
+
+        return true;
     }
 }

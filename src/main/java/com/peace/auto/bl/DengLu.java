@@ -34,7 +34,7 @@ public class DengLu implements IDo {
         }
     }
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
@@ -73,6 +73,9 @@ public class DengLu implements IDo {
                     }
                 }
             }
+            return true;
         }
+
+        return false;
     }
 }

@@ -1,43 +1,47 @@
 package com.peace.sikuli.monkey;
 
-import java.awt.AWTException;
-import java.awt.Rectangle;
-import java.util.TreeMap;
-
 import com.android.chimpchat.ChimpChat;
-import org.python.core.PyFloat;
-import org.python.core.PyObject;
-import org.python.core.PyString;
+import com.android.chimpchat.core.IChimpDevice;
 import org.sikuli.basics.Debug;
-import org.sikuli.script.IRobot;
-import org.sikuli.script.IScreen;
-import org.sikuli.script.Location;
-import org.sikuli.script.Region;
-import org.sikuli.script.ScreenImage;
+import org.sikuli.script.*;
 
-import com.android.monkeyrunner.MonkeyDevice;
-import com.android.monkeyrunner.MonkeyRunner;
+import java.awt.*;
+import java.util.TreeMap;
 
 public class AndroidScreen extends AndroidRegion implements IScreen {
 
-    public AndroidScreen(String serialNumber) throws AWTException {
-        TreeMap<String, String> options = new TreeMap<String, String>();
+    private ChimpChat chimpChat = null;
+
+    public AndroidScreen() {
+        super();
+
+        TreeMap<String, String> options = new TreeMap<>();
         options.put("backend", "adb");
-//        MonkeyRunner
-        MonkeyDevice device = MonkeyRunner.waitForConnection(new PyObject[]{new PyFloat(15), new PyString(serialNumber)}, null);
+        chimpChat = ChimpChat.getInstance(options);
 
-        try { // waitForConnection() never returns null, even the connection cannot be created.
-            String model = device.getProperty(new PyObject[]{new PyString("build.model")}, null);
-            Debug.action("Successfully connect to a device. MODEL: " + model);
-        } catch (Throwable e) {
-            throw new RuntimeException("Failed to connect to a device (within timeout).", e);
-        }
-        _robot = new AndroidRobot(device);
+        IChimpDevice iChimpDevice = chimpChat.waitForConnection();
 
-        // Region's default constructor doesn't use this screen as the default one.
-        Rectangle bounds = getBounds();
-//        super(bounds.x, bounds.y, bounds.width, bounds.height, 0.75, null, "");
+        String model = iChimpDevice.getProperty("build.model");
+        Debug.action("Successfully connect to a device. MODEL: " + model);
+
+        _robot = new AndroidRobot(iChimpDevice);
+
+        initScreen();
+        super.initScreen(this);
     }
+
+    public void close() {
+        chimpChat.shutdown();
+    }
+
+    private void initScreen() {
+        Rectangle bounds = getBounds();
+        x = (int) bounds.getX();
+        y = (int) bounds.getY();
+        w = (int) bounds.getWidth();
+        h = (int) bounds.getHeight();
+    }
+
 
     @Override
     public ScreenImage capture() {
@@ -55,11 +59,15 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
     }
 
 
-
     @Override
     public ScreenImage capture(Region reg) {
-//        return _robot.captureScreen(reg.getROI());
-        return null;
+        Rectangle rectangle;
+        if (reg instanceof AndroidScreen) {
+            rectangle = getBounds();
+        } else {
+            rectangle = reg.getRect();
+        }
+        return _robot.captureScreen(rectangle);
     }
 
     @Override

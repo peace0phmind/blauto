@@ -12,9 +12,9 @@ import org.sikuli.script.Region;
 public class LianMeng implements IDo {
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
-            return;
+            return false;
         }
 
         region.click(Common.MENU);
@@ -88,5 +88,7 @@ public class LianMeng implements IDo {
         Thread.sleep(500L);
 
         region.click(Common.MENU1);
+
+        return true;
     }
 }

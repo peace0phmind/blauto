@@ -1,39 +1,63 @@
 package com.peace.sikuli.monkey;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.core.PyString;
-import org.python.core.PyTuple;
-import org.python.core.PyUnicode;
+import com.android.chimpchat.core.IChimpDevice;
+import com.android.chimpchat.core.TouchPressType;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Debug;
 import org.sikuli.script.IRobot;
 import org.sikuli.script.IScreen;
 import org.sikuli.script.Location;
 import org.sikuli.script.ScreenImage;
 
-import com.android.monkeyrunner.MonkeyDevice;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.util.*;
 
+@Slf4j
 public class AndroidRobot implements IRobot {
 
-    private MonkeyDevice _device;
+    private IChimpDevice _device;
+    private Rectangle _bounds; // cache
+    private Rectangle _landscapeBounds; // cache
+    private String _model; // cache
+    private BufferedImage screen;
 
-    public AndroidRobot(MonkeyDevice dev) {
+    public AndroidRobot(IChimpDevice dev) {
         _device = dev;
+    }
+
+    private static void sleep(float seconds) {
+        try {
+            Thread.sleep((long) (seconds * 1000));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public ScreenImage captureScreen(Rectangle rect) {
         try {
-            Debug.history("Take a screenshot from the device...");
-            byte[] bytes = _device.takeSnapshot().convertToBytes(new PyObject[0], null); // PNG
-            BufferedImage screen = ImageIO.read(new ByteArrayInputStream(bytes));
+            byte[] bytes = _device.takeSnapshot().convertToBytes("png");
+            screen = ImageIO.read(new ByteArrayInputStream(bytes));
+
+            if (isLandscape()) {
+                BufferedImage rotate = new BufferedImage(screen.getHeight(), screen.getWidth(), screen.getType());
+                Graphics2D graphics = rotate.createGraphics();
+
+                AffineTransform affineTransform = new AffineTransform();
+                affineTransform.translate((rotate.getWidth() - screen.getWidth()) / 2, (rotate.getHeight() - screen.getHeight()) / 2);
+                affineTransform.rotate(Math.toRadians(-90), screen.getWidth() / 2, screen.getHeight() / 2);
+                graphics.setTransform(affineTransform);
+                graphics.drawImage(screen, 0, 0, null);
+                graphics.dispose();
+
+                screen = rotate;
+            }
+
             BufferedImage part = screen.getSubimage(rect.x, rect.y, rect.width, rect.height);
             return new ScreenImage(rect, part);
         } catch (IOException e) {
@@ -41,40 +65,55 @@ public class AndroidRobot implements IRobot {
         }
     }
 
-    private Rectangle _bounds; // cache
-
     public Rectangle getBounds() {
-        if (_bounds != null)
-            return _bounds;
+        if (_bounds == null || _landscapeBounds == null) {
+            int width = Integer.parseInt(_device.getProperty("display.width"));
+            int height = Integer.parseInt(_device.getProperty("display.height"));
 
-        int width = Integer.parseInt(_device.getProperty(new PyObject[] { new PyString("display.width") }, null));
-        int height = Integer.parseInt(_device.getProperty(new PyObject[] { new PyString("display.height") }, null));
-        _bounds = new Rectangle(0, 0, width, height);
+            if (isLandscape()) {
+                _landscapeBounds = new Rectangle(0, 0, width, height);
+                _bounds = new Rectangle(0, 0, height, width);
+            } else {
+                _bounds = new Rectangle(0, 0, width, height);
+                _landscapeBounds = new Rectangle(0, 0, height, width);
+            }
+        }
 
-        return _bounds;
+        return isLandscape() ? _landscapeBounds : _bounds;
     }
 
-    private String _model; // cache
+    public boolean isLandscape() {
+        String orientation = _device.shell("dumpsys input");
+        String[] split = orientation.split("\r\n");
+        Optional<String> stringOptional = Arrays.asList(split).stream().filter(x -> x.contains("SurfaceOrientation:")).findFirst();
+        if (stringOptional.isPresent()) {
+            String s = stringOptional.get().trim().replaceFirst("SurfaceOrientation:", "").trim();
+            if ("1".equals(s)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     public String getModel() {
         if (_model != null) return _model;
 
-        _model = _device.getProperty(new PyObject[] { new PyString("build.model") }, null);
+        _model = _device.getProperty("build.model");
         return _model;
     }
 
     public int type(String text) {
-        _device.type(new PyObject[] { new PyUnicode(text) }, null);
+        _device.type(text);
         return 1;
     }
 
-    public void tap(int x, int y) {
-        _device.touch(new PyObject[] { new PyInteger(x), new PyInteger(y), new PyString("DOWN_AND_UP")}, null);
+    public void touch(int x, int y) {
+        _device.touch(x, y, TouchPressType.DOWN_AND_UP);
     }
 
     public void longPress(int x, int y) {
-        PyTuple point = new PyTuple(new PyInteger(x), new PyInteger(y));
-        _device.drag(new PyObject[] { point, point, new PyInteger(2), new PyInteger(2) }, null);
+        _device.drag(x, y, x, y, 2, 2);
     }
 
     public void pressHome() {
@@ -132,19 +171,11 @@ public class AndroidRobot implements IRobot {
     private void press(String keycodeName, float durationSec) {
         sleep(1);
         if (durationSec == 0) {
-            _device.press(new PyObject[] { new PyString(keycodeName), new PyString(MonkeyDevice.DOWN_AND_UP) }, null);
+            _device.press(keycodeName, TouchPressType.DOWN_AND_UP);
         } else {
-            _device.press(new PyObject[] { new PyString(keycodeName), new PyString(MonkeyDevice.DOWN) }, null);
+            _device.press(keycodeName, TouchPressType.DOWN);
             sleep(durationSec);
-            _device.press(new PyObject[] { new PyString(keycodeName), new PyString(MonkeyDevice.UP) }, null);
-        }
-    }
-
-    private static void sleep(float seconds) {
-        try {
-            Thread.sleep((long)(seconds * 1000));
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            _device.press(keycodeName, TouchPressType.UP);
         }
     }
 
@@ -163,9 +194,7 @@ public class AndroidRobot implements IRobot {
     }
 
     @Override
-    public void mouseDown(int buttons) {
-
-    }
+    public void mouseDown(int buttons) {}
 
     @Override
     public int mouseUp(int buttons) {
@@ -174,12 +203,10 @@ public class AndroidRobot implements IRobot {
 
     @Override
     public void clickStarts() {
-
     }
 
     @Override
     public void clickEnds() {
-
     }
 
     @Override
@@ -229,12 +256,15 @@ public class AndroidRobot implements IRobot {
 
     @Override
     public Color getColorAt(int x, int y) {
-        return null;
+        int clr = screen.getRGB(x, y);
+        int red = (clr & 0x00ff0000) >> 16;
+        int green = (clr & 0x0000ff00) >> 8;
+        int blue = clr & 0x000000ff;
+        return new Color(red, green, blue);
     }
 
     @Override
     public void cleanup() {
-
     }
 
     @Override

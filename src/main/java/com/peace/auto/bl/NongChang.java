@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadFactory;
 public class NongChang implements IDo {
     String baseDir = Common.BASE_DIR + "nongchang/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.doubleClick(baseDir + "nongchang.png");
 
         Match innongchang = region.exists(baseDir + "innongchang.png", 30);
@@ -78,5 +78,7 @@ public class NongChang implements IDo {
         }
 
         region.click(Common.HUI_CHENG);
+
+        return true;
     }
 }

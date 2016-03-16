@@ -14,9 +14,9 @@ import java.util.Iterator;
 public class HaoYou implements IDo {
     String baseDir = Common.BASE_DIR + "haoyou/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
-            return;
+            return false;
         }
 
         region.click(Common.MENU);
@@ -40,5 +40,7 @@ public class HaoYou implements IDo {
         region.click(Common.CLOSE);
         Thread.sleep(500L);
         region.click(Common.MENU1);
+
+        return true;
     }
 }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ShengYu implements IDo {
     String baseDir = Common.BASE_DIR + "shengyu/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.doubleClick(baseDir + "shengyu.png");
 
         Match inshengyu = region.exists(baseDir + "inshengyu.png", 10);
@@ -49,5 +49,7 @@ public class ShengYu implements IDo {
         }
 
         region.click(Common.CLOSE);
+
+        return true;
     }
 }

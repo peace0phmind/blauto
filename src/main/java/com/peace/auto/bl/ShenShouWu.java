@@ -12,9 +12,9 @@ import org.sikuli.script.Region;
 public class ShenShouWu implements IDo {
     String baseDir = Common.BASE_DIR + "shenshouwu/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
-            return;
+            return false;
         }
 
         Match shenshouwu = region.exists(baseDir + "shenshouwu.png");
@@ -42,5 +42,7 @@ public class ShenShouWu implements IDo {
         }
 
         region.click(Common.CLOSE);
+
+        return true;
     }
 }

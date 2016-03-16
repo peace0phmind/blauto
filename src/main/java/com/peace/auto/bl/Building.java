@@ -32,7 +32,7 @@ public class Building implements IDo {
 
     String baseDir = Common.BASE_DIR + "building/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
 
         region.doubleClick(baseDir + "building.png");
 
@@ -86,5 +86,7 @@ public class Building implements IDo {
         }
 
         region.click(Common.CLOSE);
+        
+        return true;
     }
 }

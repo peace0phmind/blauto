@@ -12,7 +12,7 @@ import org.sikuli.script.Region;
 public class Task implements IDo {
     String baseDir = Common.BASE_DIR + "task/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         // 收集金币
         Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
         if (jinbi != null) {
@@ -67,5 +67,7 @@ public class Task implements IDo {
 
             region.click(Common.CLOSE);
         }
+
+        return true;
     }
 }

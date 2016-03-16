@@ -14,12 +14,12 @@ import java.util.Iterator;
 public class JiangLi implements IDo {
     String baseDir = Common.BASE_DIR + "jiangli/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(baseDir + "jiangli.png");
 
         Match injiangli = region.exists(baseDir + "injiangli.png", 20);
         if (injiangli == null) {
-            return;
+            return false;
         }
 
         if (!isTodayFirstFinished()) {
@@ -62,5 +62,7 @@ public class JiangLi implements IDo {
         }
 
         region.click(Common.CLOSE);
+
+        return true;
     }
 }

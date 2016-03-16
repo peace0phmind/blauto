@@ -12,7 +12,7 @@ import org.sikuli.script.Region;
 public class JingJiChang implements IDo {
     String baseDir = Common.BASE_DIR + "jingjichang/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -58,5 +58,7 @@ public class JingJiChang implements IDo {
         Thread.sleep(500L);
 
         region.click(Common.CLOSE);
+
+        return true;
     }
 }

@@ -21,7 +21,7 @@ public class LianBingChang extends ZhanBao implements IDo {
             "youjun.png",
             "zuojun.png");
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         if (canFight(region)) {
             // 再进行练兵
             region.click(Common.RI_CHANG);
@@ -76,6 +76,10 @@ public class LianBingChang extends ZhanBao implements IDo {
 
             Thread.sleep(1000L);
             region.click(Common.CLOSE);
+
+            return true;
         }
+
+        return false;
     }
 }

@@ -18,7 +18,7 @@ public class LieChang implements IDo {
 
     String baseDir = Common.BASE_DIR + "liechang/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         Match liechang = region.exists(baseDir + "liechang.png");
         if (liechang != null) {
             liechang.click();
@@ -45,7 +45,7 @@ public class LieChang implements IDo {
 
                 Optional<Match> firstguaiwu = guaiwus.stream().sorted((x, y) -> x.getX() - y.getX()).findFirst();
                 if (firstguaiwu.isPresent()) {
-                    firstguaiwu.get().highlight(3).click();
+                    firstguaiwu.get().click();
 
                     Thread.sleep(1000L);
                     region.click(baseDir + "kaishichuangguan.png");
@@ -88,6 +88,10 @@ public class LieChang implements IDo {
 
             Thread.sleep(500L);
             region.click(baseDir + "huicheng.png");
+
+            return true;
         }
+
+        return false;
     }
 }

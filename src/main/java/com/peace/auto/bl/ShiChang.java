@@ -15,7 +15,7 @@ public class ShiChang implements IDo {
 
     String baseDir = Common.BASE_DIR + "shichang/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         Match shichang = region.exists(baseDir + "shichang.png");
 
         if (shichang != null) {
@@ -30,7 +30,7 @@ public class ShiChang implements IDo {
                     while (alljixu.hasNext()) {
                         jixu = alljixu.next();
                         Region left = jixu.leftAt(-80).below(50).grow(160, 140);
-                        left.highlight(3);
+//                        left.highlight(3);
 
                         Match huoju = left.exists(baseDir + "huoju.png");
                         if (huoju != null) {
@@ -58,5 +58,7 @@ public class ShiChang implements IDo {
 
             region.click(Common.CLOSE);
         }
+
+        return true;
     }
 }

@@ -12,7 +12,7 @@ import org.sikuli.script.Region;
 public class ShengLingQuan implements IDo {
     String baseDir = Common.BASE_DIR + "shenglingquan/";
 
-    public void Do(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -22,15 +22,13 @@ public class ShengLingQuan implements IDo {
             shenglingquan.click();
 
             // 神灵泉
-            Match shengpin = region.exists(baseDir + "shengpin");
-            while (shengpin != null && shengpin.getScore() > 0.95) {
-                region.click(baseDir + "putongxiulian.png");
-                Match end = region.exists(baseDir + "xilianend.png", 1);
-                if (end != null) {
-                    break;
-                }
-                shengpin = region.exists(baseDir + "shengpin", 3);
-            }
+            putongxilian(region);
+
+//            if (isTodayFirstFinished()) {
+//                // 当天免费
+//
+//                putongxilian(region);
+//            }
 
             // 高级修炼
             Match xiulian = region.exists(baseDir + "xiulian.png", 3);
@@ -49,11 +47,25 @@ public class ShengLingQuan implements IDo {
                     }
                 }
             }
-            
+
             region.click(Common.CLOSE);
             Thread.sleep(500L);
         }
 
         region.click(Common.CLOSE);
+
+        return true;
+    }
+
+    private void putongxilian(Region region) throws FindFailed {
+        Match shengpin = region.exists(baseDir + "shengpin");
+        while (shengpin != null && shengpin.getScore() > 0.95) {
+            region.click(baseDir + "putongxiulian.png");
+            Match end = region.exists(baseDir + "xilianend.png", 1);
+            if (end != null) {
+                break;
+            }
+            shengpin = region.exists(baseDir + "shengpin", 3);
+        }
     }
 }
