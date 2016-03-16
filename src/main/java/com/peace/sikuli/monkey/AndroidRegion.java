@@ -97,6 +97,18 @@ public class AndroidRegion extends Match {
 //    }
 
     @Override
+    public int type(String text) {
+        try {
+            click();
+            Thread.sleep(1000L);
+            _robot.type(text);
+            Thread.sleep(1000L);
+        } catch (InterruptedException e) {
+        }
+        return 1;
+    }
+
+    @Override
     public <PSC> Match find(PSC target) throws FindFailed {
         return newMatch(super.find(getAlternativePS(target)));
     }

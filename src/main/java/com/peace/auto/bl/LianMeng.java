@@ -71,7 +71,6 @@ public class LianMeng implements IDo {
 
                         Match renli = region.exists(baseDir + "renliinput.png");
                         if (renli != null) {
-                            renli.click();
                             renli.type("1");
 
                             region.click(baseDir + "juanxiananniu.png");

@@ -83,13 +83,12 @@ public class Main {
 
 //        Do(region, tasks, 1);
 
-//                new LianMeng(),
+//                new (),
 //
 
         // ShiChang
 
-
-        Do(region, Arrays.asList(new JiangLi()), 1);
+        Do(region, Arrays.asList(new LianMeng()), 1);
 
         region.close();
     }
