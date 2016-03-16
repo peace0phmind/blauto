@@ -16,8 +16,7 @@ public class DengLu implements IDo {
     String baseDir = Common.BASE_DIR + "denglu/";
 
     public void qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
-        Region qq = Screen.create(0, 45, 480, 800);
-        Match tianjiazhanghao = qq.exists(baseDir + "tianjiazhanghao.png", 20);
+        Match tianjiazhanghao = region.exists(baseDir + "tianjiazhanghao.png", 20);
         if (tianjiazhanghao != null) {
             Thread.sleep(3000L);
 

@@ -86,7 +86,7 @@ public class Building implements IDo {
         }
 
         region.click(Common.CLOSE);
-        
+
         return true;
     }
 }

@@ -74,14 +74,13 @@ public class Main {
     public static void main(String[] args) {
 //        main_desktop(args);
         main_android(args);
-//        main_test(args);
     }
 
     public static void main_android(String[] args) {
         AndroidScreen region = new AndroidScreen();
 
 //        Do(region, tasks, 1);
-        Do(region, Arrays.asList(new JingJiChang(), new ShengLingQuan()), 1);
+        Do(region, Arrays.asList(new YingHun()), 1);
 
         region.close();
     }
@@ -96,31 +95,6 @@ public class Main {
         }
         yun.doubleClick();
 
-        Do(region, tasks, 6);
-//        Test(region, new ShiChang());
-    }
-
-    public static void main_test(String[] args) {
-        log.info("begin init");
-        AndroidScreen region = new AndroidScreen();
-
-//        region.saveScreenCapture("/Users/mind/peace/blauto", "ttt");
-
-        Match bl = region.exists(Common.BASE_DIR + "bl.png");
-        log.info("bl: {}", bl);
-        if (bl != null) {
-            bl.click();
-        }
-
-        Match close = region.exists(Common.CLOSE, 20);
-        log.info("close: {}", close);
-        region.saveScreenCapture("/Users/mind/peace/blauto", "ttt");
-        close.saveScreenCapture("/Users/mind/peace/blauto", "ttt");
-        if (close != null) {
-            close.click();
-        }
-
-        region.close();
-        log.info("end");
+        Do(region, tasks, 2);
     }
 }

@@ -39,7 +39,7 @@ public interface IDo {
     default boolean isButtonEnable(Region region, int xOffset, int yOffset) {
         Color pixelColor = getPixelColor(region, xOffset, yOffset);
 
-        if (pixelColor.getRed() < 160) {
+        if (pixelColor.getRed() < 180) {
             return false;
         } else {
             return true;

@@ -24,7 +24,7 @@ public class YingHun implements IDo {
                 zhaohuan.click();
 
                 Match meiri = region.exists(baseDir + "meirilingqu.png", 10);
-                while (meiri != null && isButtonEnable(meiri)) {
+                if (meiri != null && isButtonEnable(meiri)) {
                     meiri.click();
                 }
             }

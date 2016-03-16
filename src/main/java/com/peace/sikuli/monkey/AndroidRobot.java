@@ -71,13 +71,11 @@ public class AndroidRobot implements IRobot {
             int width = Integer.parseInt(_device.getProperty("display.width"));
             int height = Integer.parseInt(_device.getProperty("display.height"));
 
-            if (isLandscape()) {
-                _landscapeBounds = new Rectangle(0, 0, width, height);
-                _bounds = new Rectangle(0, 0, height, width);
-            } else {
-                _bounds = new Rectangle(0, 0, width, height);
-                _landscapeBounds = new Rectangle(0, 0, height, width);
-            }
+            int realWidth = Math.min(width, height);
+            int realHeight = Math.max(width, height);
+
+            _bounds = new Rectangle(0, 0, realWidth, realHeight);
+            _landscapeBounds = new Rectangle(0, 0, realHeight, realWidth);
         }
 
         return isLandscape() ? _landscapeBounds : _bounds;
@@ -195,7 +193,8 @@ public class AndroidRobot implements IRobot {
     }
 
     @Override
-    public void mouseDown(int buttons) {}
+    public void mouseDown(int buttons) {
+    }
 
     @Override
     public int mouseUp(int buttons) {

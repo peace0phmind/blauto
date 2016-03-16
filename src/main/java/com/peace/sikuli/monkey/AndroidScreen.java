@@ -45,16 +45,19 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
 
     @Override
     public ScreenImage capture() {
+        initScreen();
         return _robot.captureScreen(getBounds());
     }
 
     @Override
     public ScreenImage capture(int x, int y, int width, int height) {
+        initScreen();
         return _robot.captureScreen(new Rectangle(x, y, width, height));
     }
 
     @Override
     public ScreenImage capture(Rectangle rect) {
+        initScreen();
         return _robot.captureScreen(rect);
     }
 
@@ -67,6 +70,7 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
         } else {
             rectangle = reg.getRect();
         }
+        initScreen();
         return _robot.captureScreen(rectangle);
     }
 

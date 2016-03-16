@@ -54,9 +54,27 @@ public class TianSheng implements IDo {
                 yuanguzhanchang.click();
                 Thread.sleep(1000L);
 
-                Match sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.9f));
+                Match right = region.exists(baseDir + "right.png");
+                while (right != null) {
+                    right.click();
+                    Thread.sleep(500L);
+                    right = region.exists(baseDir + "right.png");
+                }
+
+                Match sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.85f));
+                if (sanxing == null) {
+                    Match left = region.exists(baseDir + "left.png");
+                    if (left != null) {
+                        left.click();
+                        Thread.sleep(500L);
+                    } else {
+                        return true;
+                    }
+                }
+
+                sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.9f));
                 if (sanxing != null) {
-                    Iterator<Match> allsanxing = region.findAll(new Pattern(baseDir + "sanxing.png").similar(0.9f));
+                    Iterator<Match> allsanxing = region.findAll(new Pattern(baseDir + "sanxing.png").similar(0.85f));
                     List<Match> sanxings = new ArrayList<>();
                     while (allsanxing.hasNext()) {
                         sanxings.add(allsanxing.next());
