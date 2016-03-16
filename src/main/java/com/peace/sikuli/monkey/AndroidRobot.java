@@ -40,6 +40,7 @@ public class AndroidRobot implements IRobot {
 
     @Override
     public ScreenImage captureScreen(Rectangle rect) {
+//        log.info("Capture screen: {}", rect);
         try {
             byte[] bytes = _device.takeSnapshot().convertToBytes("png");
             screen = ImageIO.read(new ByteArrayInputStream(bytes));

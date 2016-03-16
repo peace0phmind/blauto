@@ -81,7 +81,7 @@ public class Main {
         AndroidScreen region = new AndroidScreen();
 
 //        Do(region, tasks, 1);
-        Do(region, Arrays.asList(new JingJiChang()), 1);
+        Do(region, Arrays.asList(new JingJiChang(), new ShengLingQuan()), 1);
 
         region.close();
     }

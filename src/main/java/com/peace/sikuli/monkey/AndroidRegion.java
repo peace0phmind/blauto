@@ -7,7 +7,6 @@ import org.sikuli.script.Image;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.InputEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.regex.Matcher;
 
 public class AndroidRegion extends Match {
 
-    private static double AUTO_WAIT_TIMEOUT = 20;
+    private static double AUTO_WAIT_TIMEOUT = 3;
 
     protected AndroidRobot _robot;
 
