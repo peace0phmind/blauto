@@ -38,7 +38,7 @@ public class ShouGuFang implements IDo {
         // 兽骨狩猎
         region.click(baseDir + "shougushoulie.png");
 
-        Match shuaxin = region.exists(baseDir + "shuaxin.png", 0.5);
+        Match shuaxin = region.exists(baseDir + "shuaxin.png");
         if (shuaxin != null) {
             // 需要进行狩猎
             shoulie:
@@ -50,10 +50,10 @@ public class ShouGuFang implements IDo {
                         Match liewu = all.next();
                         if (liewu.getScore() > 0.95) {
                             Color pixelColor = getPixelColor(liewu, 54, 5);
-                            // [r=211,g=83,b=218] 大量
+                            // [r=220,g=117,b=223] 大量
                             // [r=216,g=202,b=153] 小量
-                            // [r=73,g=55,b=35] 一群
-                            if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 90) {
+                            // [r=91,g=71,b=48] 一群
+                            if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 120) {
                                 liewu.below().click(baseDir + "kaishishoulie.png");
                                 Thread.sleep(1000L);
                                 break shoulie;

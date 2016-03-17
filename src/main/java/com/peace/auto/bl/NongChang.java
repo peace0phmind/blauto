@@ -16,7 +16,7 @@ public class NongChang implements IDo {
     String baseDir = Common.BASE_DIR + "nongchang/";
 
     public boolean Done(Region region) throws FindFailed, InterruptedException {
-        region.doubleClick(baseDir + "nongchang.png");
+        region.click(baseDir + "nongchang.png");
 
         Match innongchang = region.exists(baseDir + "innongchang.png", 30);
 
@@ -77,6 +77,7 @@ public class NongChang implements IDo {
             }
         }
 
+        Thread.sleep(500L);
         region.click(Common.HUI_CHENG);
 
         return true;

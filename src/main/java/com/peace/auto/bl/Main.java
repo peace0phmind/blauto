@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
-import org.sikuli.script.Screen;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,36 +66,19 @@ public class Main {
                 IDo.setTodayFirstFinished();
             }
         } catch (FindFailed findFailed) {
+            region.saveScreenCapture(".", "error");
             log.error("{}", findFailed);
         } catch (InterruptedException e) {
             log.error("{}", e);
         }
     }
 
-    public static void main(String[] args) {
-//        main_desktop(args);
-        main_android(args);
-    }
-
-    public static void main_android(String[] args) {
+    public static void main(String[] args) throws FindFailed {
         AndroidScreen region = new AndroidScreen();
 
-        Do(region, tasks, 4);
-//        Do(region, Arrays.asList(new LianMeng()), 1);
+        Do(region, tasks, 7);
+//        Do(region, Arrays.asList(new ShouGuFang()), 1);
 
         region.close();
-    }
-
-    public static void main_desktop(String[] args) {
-        Region region = Screen.create(0, 46, 800, 480);
-
-        // 点击云,进入genymotion
-        Match yun = region.exists(Common.BASE_DIR + "yun.png", 3);
-        if (yun == null && yun.getScore() > 0.95) {
-            return;
-        }
-        yun.doubleClick();
-
-        Do(region, tasks, 2);
     }
 }
