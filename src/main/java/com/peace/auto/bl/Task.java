@@ -24,10 +24,10 @@ public class Task implements IDo {
         if (libao != null && libao.getScore() > 0.95) {
             libao.click();
 
-            Thread.sleep(2000L);
-            Match lingqu = region.exists(baseDir + "lingqu.png", 3);
+            Match lingqu = region.exists(baseDir + "lingqu.png", 10);
             if (lingqu != null) {
-                lingqu.click();
+                Thread.sleep(2000L);
+                region.click(baseDir + "lingqu.png");
             }
 
             Match nolibao = region.exists(baseDir + "nolibao.png", 0.5);
@@ -69,5 +69,6 @@ public class Task implements IDo {
         }
 
         return true;
+
     }
 }

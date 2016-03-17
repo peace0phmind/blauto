@@ -17,7 +17,7 @@ public class Main {
     static List<IDo> tasks = Arrays.asList(
             new ShenShouWu(),
 
-            new ChuZheng(),
+//            new ChuZheng(),
             new LianBingChang(),
             new ShiLianDong(),
 
@@ -41,7 +41,7 @@ public class Main {
             new JiangLi()
     );
 
-    static public void Do(Region region, List<IDo> dos, int times) {
+    static public void Do(Region region, List<IDo> dos, int times, boolean reboot) {
         try {
             for (int i = 0; i < times; i++) {
                 // 点击收起对话框
@@ -57,12 +57,12 @@ public class Main {
                     }
                 }
 
-                if (times > 1) {
+                if (reboot) {
                     new DengLu().Done(region);
                 }
             }
 
-            if (times > 1) {
+            if (reboot) {
                 IDo.setTodayFirstFinished();
             }
         } catch (FindFailed findFailed) {
@@ -73,10 +73,12 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws FindFailed {
+    public static void main(String[] args) throws FindFailed, InterruptedException {
         AndroidScreen region = new AndroidScreen();
 
-        Do(region, tasks, 7);
+//        region.click(Common.BASE_DIR + "task/lingqu.png");
+//        region.click(Common.CLOSE);
+        Do(region, tasks, 7, true);
 //        Do(region, Arrays.asList(new ShouGuFang()), 1);
 
         region.close();
