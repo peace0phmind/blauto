@@ -35,7 +35,7 @@ public class LieChang implements IDo {
             }
 
             // 打怪
-            Match guaiwu = region.exists(baseDir + "guaiwu.png");
+            Match guaiwu = region.exists(baseDir + "guaiwu.png", 10);
             if (guaiwu != null) {
                 Iterator<Match> all = region.findAll(baseDir + "guaiwu.png");
                 List<Match> guaiwus = new ArrayList<>();

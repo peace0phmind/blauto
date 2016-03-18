@@ -17,7 +17,7 @@ public class Main {
     static List<IDo> tasks = Arrays.asList(
             new ShenShouWu(),
 
-//            new ChuZheng(),
+            new ChuZheng(),
             new LianBingChang(),
             new ShiLianDong(),
 
@@ -41,7 +41,11 @@ public class Main {
             new JiangLi()
     );
 
-    static public void Do(Region region, List<IDo> dos, int times, boolean reboot) {
+    static public void Do(Region region, List<IDo> dos, int times) {
+        Do(region, dos, times, true, 3);
+    }
+
+    static public void Do(Region region, List<IDo> dos, int times, boolean reboot, int waitSeconds) {
         try {
             for (int i = 0; i < times; i++) {
                 // 点击收起对话框
@@ -53,7 +57,7 @@ public class Main {
 
                 for (IDo iDo : dos) {
                     if (iDo.Done(region)) {
-                        Thread.sleep(3000L);
+                        Thread.sleep(waitSeconds * 1000L);
                     }
                 }
 
@@ -76,10 +80,25 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException {
         AndroidScreen region = new AndroidScreen();
 
-//        region.click(Common.BASE_DIR + "task/lingqu.png");
-//        region.click(Common.CLOSE);
-        Do(region, tasks, 7, true);
-//        Do(region, Arrays.asList(new ShouGuFang()), 1);
+        Do(region, tasks, 6);
+
+        // 切换账号 到peace, 如果peace在最下面
+//        new DengLu().similar(0.5f).Done(region);
+
+        // peace tasks
+//        Do(region, Arrays.asList(
+//                new ShouGuFang(),
+//                new Building(),
+//                new NongChang(),
+//                new JingJiChang(),
+//                new ShengYu(),
+//                new TianSheng(),
+//                new ShengLingQuan(),
+//                new Task()
+//        ), 1, false, 3);
+
+        // peace jingjichang
+//        Do(region, Arrays.asList(new JingJiChang()), 10, false, 10 * 60);
 
         region.close();
     }

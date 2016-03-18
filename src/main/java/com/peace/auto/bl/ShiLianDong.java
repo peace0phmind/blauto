@@ -20,7 +20,7 @@ public class ShiLianDong extends ZhanBao implements IDo {
             if (shiliandong != null && shiliandong.getScore() > 0.95) {
                 shiliandong.click();
 
-                Thread.sleep(1000L);
+                Thread.sleep(3000L);
 
                 // 有刷新则先刷新
                 Match shuaxin = region.exists(baseDir + "shuaxindongxue.png");

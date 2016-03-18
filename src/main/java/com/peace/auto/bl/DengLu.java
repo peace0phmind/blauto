@@ -15,6 +15,13 @@ import java.util.Optional;
 public class DengLu implements IDo {
     String baseDir = Common.BASE_DIR + "denglu/";
 
+    private float similar = 0.75f;
+
+    public DengLu similar(float similar) {
+        this.similar = similar;
+        return this;
+    }
+
     public boolean qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
         Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
         if (qiehuanzhanghao != null) {
@@ -27,7 +34,7 @@ public class DengLu implements IDo {
                 Thread.sleep(3000L);
 
                 List<Match> qqs = new ArrayList<>();
-                Iterator<Match> all = tianjiazhanghao.above().findAll(baseDir + "peace.png");
+                Iterator<Match> all = tianjiazhanghao.above().findAll(new Pattern(baseDir + "peace.png").similar(similar));
                 while (all.hasNext()) {
                     qqs.add(all.next());
                 }
