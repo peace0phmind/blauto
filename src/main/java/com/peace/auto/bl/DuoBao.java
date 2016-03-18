@@ -65,7 +65,7 @@ public class DuoBao implements IDo {
                             jiarus.add(allJiaru.next());
                         }
 
-                        Optional<Match> firstJiaru = jiarus.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
+                        Optional<Match> firstJiaru = jiarus.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).findFirst();
                         if (firstJiaru.isPresent()) {
                             firstJiaru.get().click();
                         }
@@ -73,7 +73,7 @@ public class DuoBao implements IDo {
                 }
             }
 
-            Thread.sleep(500L);
+            Thread.sleep(3000L);
             region.click(Common.CLOSE);
         }
 

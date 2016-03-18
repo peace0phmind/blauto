@@ -22,7 +22,7 @@ public class DengLu implements IDo {
         return this;
     }
 
-    public boolean qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
+    private boolean qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
         Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
         if (qiehuanzhanghao != null) {
             qiehuanzhanghao.click();
@@ -45,22 +45,45 @@ public class DengLu implements IDo {
                     firstqq.get().click();
 
                     // 进入部落
-                    Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 30);
-                    if (jinrubuluo != null) {
-                        jinrubuluo.click();
-
-                        Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
-                        if (dating != null) {
-                            log.info("login ok");
-                            return true;
-                        }
-                    }
+                    return jinrubuluo(region);
                 }
             }
         }
 
         return false;
     }
+
+    private boolean jinrubuluo(Region region) throws FindFailed, InterruptedException {
+        Match gonggaolan = region.exists(baseDir + "gonggaolan.png", 10);
+        if (gonggaolan != null) {
+            Match close = region.exists(Common.CLOSE);
+            if (close == null) {
+                return false;
+            }
+
+            for (int i = 0; i < 10; i++) {
+                close.click();
+                gonggaolan = region.exists(baseDir + "gonggaolan.png", 1);
+                if (gonggaolan == null) {
+                    break;
+                }
+            }
+        }
+
+        Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 30);
+        if (jinrubuluo != null) {
+            jinrubuluo.click();
+
+            Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
+            if (dating != null) {
+                log.info("login ok");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 
     public boolean Done(Region region) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
@@ -73,19 +96,40 @@ public class DengLu implements IDo {
             if (tuichudenglu != null) {
                 tuichudenglu.click();
 
-                Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png");
-                if (qqhaoyouwan != null) {
-                    qqhaoyouwan.click();
-
-                    Thread.sleep(6000L);
-
-                    for (int i = 0; i < 3; i++) {
-                        if (qiehuanzhanghao(region)) {
-                            return true;
-                        }
-                    }
-                }
+                return chongxindenglu(region);
             }
+        }
+
+        return false;
+    }
+
+    public boolean QiDong(Region region) throws FindFailed, InterruptedException {
+        Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);
+        if (bl != null) {
+            bl.click();
+
+            Match close = region.exists(Common.CLOSE, 20);
+            if (close == null) {
+                return chongxindenglu(region);
+            }
+
+            for (int i = 0; i < 3; i++) {
+                close.click();
+            }
+        }
+
+        return false;
+    }
+
+
+    private boolean chongxindenglu(Region region) throws InterruptedException, FindFailed {
+        Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
+        if (qqhaoyouwan != null) {
+            qqhaoyouwan.click();
+
+            Thread.sleep(6000L);
+
+            return qiehuanzhanghao(region);
         }
 
         return false;

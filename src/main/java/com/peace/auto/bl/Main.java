@@ -80,7 +80,12 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException {
         AndroidScreen region = new AndroidScreen();
 
-        Do(region, tasks, 6);
+        // qidong login
+//        new DengLu().QiDong(region);
+
+        // xiaohao renwu
+//        new DengLu().Done(region);
+//        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region);
@@ -90,15 +95,17 @@ public class Main {
 //                new ShouGuFang(),
 //                new Building(),
 //                new NongChang(),
-//                new JingJiChang(),
 //                new ShengYu(),
 //                new TianSheng(),
+//                new JingJiChang(),
 //                new ShengLingQuan(),
 //                new Task()
 //        ), 1, false, 3);
 
         // peace jingjichang
 //        Do(region, Arrays.asList(new JingJiChang()), 10, false, 10 * 60);
+
+        Do(region, Arrays.asList(new DuoBao()), 6);
 
         region.close();
     }
