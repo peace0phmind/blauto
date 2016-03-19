@@ -81,7 +81,7 @@ public class Main {
         AndroidScreen region = new AndroidScreen();
 
         // qidong login
-        new DengLu().QiDong(region);
+//        new DengLu().QiDong(region);
 
         // xiaohao renwu
 //        new DengLu().Done(region);
@@ -108,6 +108,8 @@ public class Main {
 //        Do(region, Arrays.asList(new DuoBao()), 6);
 
 //        Do(region, Arrays.asList(new NongChang()), 1);
+
+//        Do(region, Arrays.asList(new NongChang()), 1, false, 3);
 
         region.close();
     }
