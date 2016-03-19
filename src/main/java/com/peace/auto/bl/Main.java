@@ -81,7 +81,7 @@ public class Main {
         AndroidScreen region = new AndroidScreen();
 
         // qidong login
-//        new DengLu().QiDong(region);
+        new DengLu().QiDong(region);
 
         // xiaohao renwu
 //        new DengLu().Done(region);

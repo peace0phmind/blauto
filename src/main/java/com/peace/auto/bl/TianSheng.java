@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -74,11 +75,7 @@ public class TianSheng implements IDo {
 
                 sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.9f));
                 if (sanxing != null) {
-                    Iterator<Match> allsanxing = region.findAll(new Pattern(baseDir + "sanxing.png").similar(0.85f));
-                    List<Match> sanxings = new ArrayList<>();
-                    while (allsanxing.hasNext()) {
-                        sanxings.add(allsanxing.next());
-                    }
+                    List<Match> sanxings = Lists.newArrayList(region.findAll(new Pattern(baseDir + "sanxing.png").similar(0.85f)));
 
                     Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
                     if (lastsanxing.isPresent()) {

@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -44,11 +45,7 @@ public class NongChang implements IDo {
 
                     Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
                     if (zhongzhi != null) {
-                        Iterator<Match> allzhongzhi = region.findAll(baseDir + "mianfeizhongzhi.png");
-                        List<Match> zhongzhis = new ArrayList<>();
-                        while (allzhongzhi.hasNext()) {
-                            zhongzhis.add(allzhongzhi.next());
-                        }
+                        List<Match> zhongzhis = Lists.newArrayList(region.findAll(baseDir + "mianfeizhongzhi.png"));
 
                         Optional<Match> lastzhongzhi = zhongzhis.stream().sorted((x, y) -> y.getX() - x.getX()).findFirst();
                         if (lastzhongzhi.isPresent()) {

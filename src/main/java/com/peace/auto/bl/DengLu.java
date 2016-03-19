@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
@@ -33,12 +34,7 @@ public class DengLu implements IDo {
             if (tianjiazhanghao != null) {
                 Thread.sleep(3000L);
 
-                List<Match> qqs = new ArrayList<>();
-                Iterator<Match> all = tianjiazhanghao.above().findAll(new Pattern(baseDir + "peace.png").similar(similar));
-                while (all.hasNext()) {
-                    qqs.add(all.next());
-                }
-
+                List<Match> qqs = Lists.newArrayList(tianjiazhanghao.above().findAll(new Pattern(baseDir + "peace.png").similar(similar)));
                 // 点击账号
                 Optional<Match> firstqq = qqs.stream().sorted((x, y) -> y.getY() - x.getY()).findFirst();
                 if (firstqq.isPresent()) {

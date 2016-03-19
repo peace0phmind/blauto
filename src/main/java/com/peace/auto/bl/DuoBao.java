@@ -1,11 +1,10 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +16,14 @@ public class DuoBao implements IDo {
 
     @Override
     public boolean Done(Region region) throws FindFailed, InterruptedException {
+        return xunbao(region, false);
+    }
+
+    public boolean xunbao(Region region) throws InterruptedException, FindFailed {
+        return xunbao(region, true);
+    }
+
+    private boolean xunbao(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -49,26 +56,18 @@ public class DuoBao implements IDo {
 
                 Match chazhao = region.exists(baseDir + "chazhaofangjian.png");
                 if (chazhao != null) {
-                    Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");
-                    if (shurufangjian != null) {
-                        shurufangjian.type("31");
-                    }
-                    chazhao.click();
+                    // 持续寻宝
+                    if (keepXunbao) {
 
-                    Thread.sleep(2000L);
-
-                    Match jiaru = region.exists(baseDir + "jiaru.png");
-                    if (jiaru != null) {
-                        List<Match> jiarus = new ArrayList<>();
-                        Iterator<Match> allJiaru = region.findAll(baseDir + "jiaru.png");
-                        while (allJiaru.hasNext()) {
-                            jiarus.add(allJiaru.next());
+                    } else {
+                        Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");
+                        if (shurufangjian != null) {
+                            shurufangjian.type("31");
                         }
+                        chazhao.click();
 
-                        Optional<Match> firstJiaru = jiarus.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).findFirst();
-                        if (firstJiaru.isPresent()) {
-                            firstJiaru.get().click();
-                        }
+                        Thread.sleep(2000L);
+                        jiaru(region);
                     }
                 }
             }
@@ -81,5 +80,17 @@ public class DuoBao implements IDo {
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    private void jiaru(Region region) throws FindFailed {
+        Match jiaru = region.exists(baseDir + "jiaru.png");
+        if (jiaru != null) {
+            List<Match> jiarus = Lists.newArrayList(region.findAll(baseDir + "jiaru.png"));
+
+            Optional<Match> firstJiaru = jiarus.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).findFirst();
+            if (firstJiaru.isPresent()) {
+                firstJiaru.get().click();
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
@@ -57,11 +58,7 @@ public class Building implements IDo {
             // 升级
             Match inbuluodating = region.exists(baseDir + "inbuluodating.png", 3);
             if (inbuluodating != null) {
-                Iterator<Match> all = region.findAll(baseDir + "shengji.png");
-                List<Match> list = new ArrayList<>();
-                while (all.hasNext()) {
-                    list.add(all.next());
-                }
+                List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
 
                 List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
                 buildLoop:

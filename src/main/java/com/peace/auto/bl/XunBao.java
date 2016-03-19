@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -31,13 +32,7 @@ public class XunBao implements IDo {
         }
 
         for (int i = 0; i < 100; i++) {
-            Iterator<Match> all = region.findAll(baseDir + "xunbaobutton.png");
-            List<Match> list = new ArrayList<>();
-            while (all.hasNext()) {
-                Match next = all.next();
-                list.add(next);
-            }
-
+            List<Match> list = Lists.newArrayList(region.findAll(baseDir + "xunbaobutton.png"));
             Optional<Match> lastButton = list.stream().sorted((a, b) -> b.x - a.x).findFirst();
 
             if (lastButton.isPresent()) {

@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -37,12 +38,8 @@ public class LieChang implements IDo {
             // 打怪
             Match guaiwu = region.exists(baseDir + "guaiwu.png", 10);
             if (guaiwu != null) {
-                Iterator<Match> all = region.findAll(baseDir + "guaiwu.png");
-                List<Match> guaiwus = new ArrayList<>();
-                while (all.hasNext()) {
-                    guaiwus.add(all.next());
-                }
-
+                List<Match> guaiwus = Lists.newArrayList(region.findAll(baseDir + "guaiwu.png"));
+                
                 Optional<Match> firstguaiwu = guaiwus.stream().sorted((x, y) -> x.getX() - y.getX()).findFirst();
                 if (firstguaiwu.isPresent()) {
                     firstguaiwu.get().click();
