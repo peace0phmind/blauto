@@ -37,8 +37,9 @@ public class ShengLingQuan implements IDo {
 
                 Match kaishixiulian = region.exists(baseDir + "kaishixiulian.png", 3);
                 if (kaishixiulian != null && kaishixiulian.getScore() > 0.95) {
-                    log.info("{}", kaishixiulian);
+                    Thread.sleep(1000L);
                     region.click(baseDir + "gaojixiulian.png");
+                    Thread.sleep(1000L);
                     region.click(baseDir + "kaishixiulian.png");
 
                     Match goumai = region.exists(baseDir + "goumai.png", 3);

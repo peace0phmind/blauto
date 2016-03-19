@@ -69,12 +69,12 @@ public class LianBingChang extends ZhanBao implements IDo {
                         }
                     }
 
-                    Thread.sleep(1000L);
+                    Thread.sleep(2000L);
                     region.click(Common.CLOSE);
                 }
             }
 
-            Thread.sleep(1000L);
+            Thread.sleep(2000L);
             region.click(Common.CLOSE);
 
             return true;

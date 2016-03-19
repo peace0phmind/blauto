@@ -5,7 +5,10 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.ThreadFactory;
 
 /**
@@ -33,9 +36,25 @@ public class NongChang implements IDo {
             if (bozhong != null) {
                 bozhong.click();
 
-                Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
-                if (zhongzhi != null) {
-                    zhongzhi.click();
+                Match bianhua = region.exists(baseDir + "bianhua.png");
+                if (bianhua != null) {
+                    bianhua.click();
+
+                    Thread.sleep(500L);
+
+                    Match zhongzhi = region.exists(baseDir + "mianfeizhongzhi.png");
+                    if (zhongzhi != null) {
+                        Iterator<Match> allzhongzhi = region.findAll(baseDir + "mianfeizhongzhi.png");
+                        List<Match> zhongzhis = new ArrayList<>();
+                        while (allzhongzhi.hasNext()) {
+                            zhongzhis.add(allzhongzhi.next());
+                        }
+
+                        Optional<Match> lastzhongzhi = zhongzhis.stream().sorted((x, y) -> y.getX() - x.getX()).findFirst();
+                        if (lastzhongzhi.isPresent()) {
+                            lastzhongzhi.get().click();
+                        }
+                    }
                 }
             }
 

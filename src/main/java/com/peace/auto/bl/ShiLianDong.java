@@ -58,11 +58,11 @@ public class ShiLianDong extends ZhanBao implements IDo {
                     }
                 }
 
-                Thread.sleep(500L);
+                Thread.sleep(2000L);
                 region.click(Common.CLOSE);
             }
 
-            Thread.sleep(500L);
+            Thread.sleep(2000L);
             region.click(Common.CLOSE);
 
             return true;

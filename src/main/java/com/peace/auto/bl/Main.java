@@ -85,7 +85,7 @@ public class Main {
 
         // xiaohao renwu
 //        new DengLu().Done(region);
-//        Do(region, tasks, 6);
+        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region);
@@ -105,7 +105,9 @@ public class Main {
         // peace jingjichang
 //        Do(region, Arrays.asList(new JingJiChang()), 10, false, 10 * 60);
 
-        Do(region, Arrays.asList(new DuoBao()), 6);
+//        Do(region, Arrays.asList(new DuoBao()), 6);
+
+//        Do(region, Arrays.asList(new NongChang()), 1);
 
         region.close();
     }
