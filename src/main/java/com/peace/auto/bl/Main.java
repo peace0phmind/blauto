@@ -2,6 +2,7 @@ package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
+import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
@@ -17,9 +18,9 @@ public class Main {
     static List<IDo> tasks = Arrays.asList(
             new ShenShouWu(),
 
-            new ChuZheng(),
             new LianBingChang(),
             new ShiLianDong(),
+            new ChuZheng(),
 
             new ShouGuFang(),
             new XunBao(),
@@ -78,7 +79,13 @@ public class Main {
     }
 
     public static void main(String[] args) throws FindFailed, InterruptedException {
+        Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
+
+//        region.saveScreenCapture(".", "info");
+
+//        ArrayList<Match> matches = Lists.newArrayList(region.findAll(new Pattern(Common.BASE_DIR + "denglu/peace.png").similar(0.5f)));
+//        matches.forEach(x -> log.info("test: {}", x.text()));
 
         // qidong login
 //        new DengLu().QiDong(region);
@@ -86,6 +93,14 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region);
         Do(region, tasks, 6);
+
+//        Do(region, tasks, 6);
+
+//        Do(region, tasks, 6);
+
+//        Do(region, tasks, 6);
+
+//        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region);

@@ -5,6 +5,8 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalTime;
+
 /**
  * Created by mind on 3/5/16.
  */
@@ -13,6 +15,10 @@ public class JingJiChang implements IDo {
     String baseDir = Common.BASE_DIR + "jingjichang/";
 
     public boolean Done(Region region) throws FindFailed, InterruptedException {
+        if (LocalTime.now().isAfter(LocalTime.of(23, 45)) || LocalTime.now().isBefore(LocalTime.of(0, 15))) {
+            return false;
+        }
+
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);

@@ -38,7 +38,9 @@ public class DengLu implements IDo {
                 // 点击账号
                 Optional<Match> firstqq = qqs.stream().sorted((x, y) -> y.getY() - x.getY()).findFirst();
                 if (firstqq.isPresent()) {
-                    firstqq.get().click();
+                    Match qq = firstqq.get();
+                    log.info("登录: {}", qq.text());
+                    qq.click();
 
                     // 进入部落
                     return jinrubuluo(region);
