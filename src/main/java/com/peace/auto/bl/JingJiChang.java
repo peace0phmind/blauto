@@ -34,10 +34,12 @@ public class JingJiChang implements IDo {
 
             Match injingjichang = region.exists(baseDir + "injingjichang.png", 30);
             if (injingjichang != null) {
-                // 领取奖励
-                Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
-                if (lingqujiangli != null) {
-                    lingqujiangli.click();
+                // 每天首次执行,领取奖励
+                if (status.todayFinishCount(Task.JING_JI_CHANG) == 0) {
+                    Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
+                    if (lingqujiangli != null) {
+                        lingqujiangli.click();
+                    }
                 }
 
                 // 挑战
