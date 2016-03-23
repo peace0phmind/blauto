@@ -96,7 +96,7 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region, status);
 
-        Do(region, tasks, 6);
+        Do(region, tasks, 1);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);

@@ -17,6 +17,10 @@ public class ShouGuFang implements IDo {
     private String baseDir = Common.BASE_DIR + "shougufang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (!status.canDo(Task.SHOU_GU_JIA_GONG) && !status.canDo(Task.SHOU_GU_SHOU_LIE)) {
+            return false;
+        }
+
         // 进入兽骨坊
         region.doubleClick(baseDir + "shougufang.png");
         Match inshougufang = region.exists(baseDir + "inshougufang.png", 10);
@@ -33,7 +37,7 @@ public class ShouGuFang implements IDo {
         }
 
         // 兽骨加工
-        shougujiagong(region);
+        shougujiagong(region, status);
 
         // 兽骨狩猎
         region.click(baseDir + "shougushoulie.png");
@@ -55,6 +59,7 @@ public class ShouGuFang implements IDo {
                             // [r=91,g=71,b=48] 一群
                             if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 120) {
                                 liewu.below().click(baseDir + "kaishishoulie.png");
+                                status.Done(Task.SHOU_GU_SHOU_LIE);
                                 Thread.sleep(1000L);
                                 break shoulie;
                             }
@@ -78,7 +83,7 @@ public class ShouGuFang implements IDo {
      * @param region
      * @throws FindFailed
      */
-    private void shougujiagong(Region region) throws FindFailed {
+    private void shougujiagong(Region region, Status status) throws FindFailed {
         Match shouhuogupian = region.exists(baseDir + "shouhuogupian.png", 3);
         if (shouhuogupian != null) {
             // 进行幸运翻倍
@@ -86,6 +91,7 @@ public class ShouGuFang implements IDo {
             if (xinyunfanbei != null) {
                 for (int i = 0; i < 3; i++) {
                     xinyunfanbei.click();
+                    status.Done(Task.SHOU_GU_JIA_GONG);
 
                     Match noxinyunfanbei = region.exists(baseDir + "noxinyunfanbei.png");
                     if (noxinyunfanbei != null) {
@@ -103,7 +109,7 @@ public class ShouGuFang implements IDo {
                 if (goumaijindao != null) {
                     region.click(Common.QU_XIAO);
                 } else {
-                    shougujiagong(region);
+                    shougujiagong(region, status);
                 }
             }
         }
