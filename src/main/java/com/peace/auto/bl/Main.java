@@ -63,9 +63,8 @@ public class Main {
                 }
 
                 for (IDo iDo : dos) {
-                    if (iDo.Done(region, status)) {
-                        Thread.sleep(waitSeconds * 1000L);
-                    }
+                    iDo.Done(region, status);
+                    Thread.sleep(waitSeconds * 1000L);
                 }
 
                 if (reboot) {

@@ -20,7 +20,7 @@ public class ChuZheng extends ZhanBao implements IDo {
     );
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (isTodayFirstFinished()) {
+        if (!status.canDo(Task.CHU_ZHENG_YE_GUAI)) {
             return false;
         }
 
@@ -56,6 +56,8 @@ public class ChuZheng extends ZhanBao implements IDo {
                         region.click(baseDir + "quanbubuman.png");
 
                         region.click(baseDir + "quedingchuzheng.png");
+
+                        status.Done(Task.CHU_ZHENG_YE_GUAI);
 
                         Thread.sleep(1000L);
                         // 出征成功, 点击close

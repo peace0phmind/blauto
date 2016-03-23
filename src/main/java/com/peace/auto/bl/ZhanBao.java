@@ -5,6 +5,9 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
+import java.util.Arrays;
+
 /**
  * Created by mind on 3/12/16.
  */
@@ -13,6 +16,18 @@ abstract public class ZhanBao {
     private String baseDir = Common.BASE_DIR + "zhanbao/";
 
     public boolean canFight(Region region, Status status) throws FindFailed, InterruptedException {
+        LocalDateTime now = LocalDateTime.now();
+        if (!Arrays.asList(Task.CHU_ZHENG_YE_GUAI).stream().allMatch(x -> {
+            LocalDateTime lastFinishTime = status.getLastFinishTime(x);
+            if (lastFinishTime == null) {
+                return true;
+            } else {
+                return now.isAfter(lastFinishTime);
+            }
+        })) {
+            return false;
+        }
+
         boolean ret = false;
         // 先查看是否有战报
         region.click(Common.MENU);
