@@ -16,7 +16,7 @@ public class ShiChang implements IDo {
 
     String baseDir = Common.BASE_DIR + "shichang/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         Match shichang = region.exists(baseDir + "shichang.png");
 
         if (shichang != null) {

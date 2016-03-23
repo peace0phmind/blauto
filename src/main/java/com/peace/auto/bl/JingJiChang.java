@@ -5,6 +5,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -14,8 +15,12 @@ import java.time.LocalTime;
 public class JingJiChang implements IDo {
     String baseDir = Common.BASE_DIR + "jingjichang/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (LocalTime.now().isAfter(LocalTime.of(23, 45)) || LocalTime.now().isBefore(LocalTime.of(0, 15))) {
+            return false;
+        }
+
+        if (!status.canDo(Task.JING_JI_CHANG)) {
             return false;
         }
 
@@ -54,6 +59,7 @@ public class JingJiChang implements IDo {
                             Match jieguo = region.exists(baseDir + "jieguo.png", 3);
                             if (jieguo != null) {
                                 region.click(Common.QUE_DING);
+                                status.Done(Task.JING_JI_CHANG);
                             }
                         }
                     }

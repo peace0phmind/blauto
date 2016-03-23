@@ -15,7 +15,7 @@ public class DuoBao implements IDo {
     String baseDir = Common.BASE_DIR + "duobao/";
 
     @Override
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         return xunbao(region, false);
     }
 

@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class HaoYou implements IDo {
     String baseDir = Common.BASE_DIR + "haoyou/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
             return false;
         }

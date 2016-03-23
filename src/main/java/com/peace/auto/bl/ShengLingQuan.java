@@ -12,7 +12,7 @@ import org.sikuli.script.Region;
 public class ShengLingQuan implements IDo {
     String baseDir = Common.BASE_DIR + "shenglingquan/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);

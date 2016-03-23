@@ -30,7 +30,7 @@ public interface IDo {
         }
     }
 
-    boolean Done(Region region) throws FindFailed, InterruptedException;
+    boolean Done(Region region, Status status) throws FindFailed, InterruptedException;
 
     default boolean isButtonEnable(Region region) {
         return isButtonEnable(region, 0, 0);

@@ -10,8 +10,8 @@ import org.sikuli.script.Region;
 public class ShiLianDong extends ZhanBao implements IDo {
     String baseDir = Common.BASE_DIR + "shiliandong/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
-        if (canFight(region)) {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (canFight(region, status)) {
             region.click(Common.RI_CHANG);
 
             Thread.sleep(3000L);

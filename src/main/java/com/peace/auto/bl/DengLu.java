@@ -83,7 +83,7 @@ public class DengLu implements IDo {
     }
 
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
@@ -106,14 +106,7 @@ public class DengLu implements IDo {
         if (bl != null) {
             bl.click();
 
-            Match close = region.exists(Common.CLOSE, 20);
-            if (close == null) {
-                return chongxindenglu(region);
-            }
-
-            for (int i = 0; i < 3; i++) {
-                close.click();
-            }
+            return jinrubuluo(region);
         }
 
         return false;

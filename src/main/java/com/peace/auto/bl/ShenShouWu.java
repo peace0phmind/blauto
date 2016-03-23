@@ -12,7 +12,7 @@ import org.sikuli.script.Region;
 public class ShenShouWu implements IDo {
     String baseDir = Common.BASE_DIR + "shenshouwu/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
             return false;
         }

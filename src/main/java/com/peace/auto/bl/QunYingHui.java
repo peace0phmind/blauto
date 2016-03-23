@@ -10,7 +10,7 @@ import org.sikuli.script.Region;
 public class QunYingHui implements IDo {
     String baseDir = Common.BASE_DIR + "qunyinghui/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);

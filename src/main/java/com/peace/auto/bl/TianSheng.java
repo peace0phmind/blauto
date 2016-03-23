@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class TianSheng implements IDo {
     String baseDir = Common.BASE_DIR + "tiansheng/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         Match tiansheng = region.exists(baseDir + "tiansheng.png", 3);
         if (tiansheng != null && tiansheng.getScore() > 0.9) {
             tiansheng.click();

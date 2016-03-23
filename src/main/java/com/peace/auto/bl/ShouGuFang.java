@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class ShouGuFang implements IDo {
     private String baseDir = Common.BASE_DIR + "shougufang/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         // 进入兽骨坊
         region.doubleClick(baseDir + "shougufang.png");
         Match inshougufang = region.exists(baseDir + "inshougufang.png", 10);

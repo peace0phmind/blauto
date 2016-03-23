@@ -19,12 +19,12 @@ public class ChuZheng extends ZhanBao implements IDo {
             "heiwuyaowu.png"
     );
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (isTodayFirstFinished()) {
             return false;
         }
 
-        if (canFight(region)) {
+        if (canFight(region, status)) {
             region.click(Common.MENU);
 
             Match chuzheng = region.exists(baseDir + "chuzheng.png");

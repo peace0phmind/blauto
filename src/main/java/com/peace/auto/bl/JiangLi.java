@@ -14,7 +14,7 @@ import java.util.Iterator;
 public class JiangLi implements IDo {
     String baseDir = Common.BASE_DIR + "jiangli/";
 
-    public boolean Done(Region region) throws FindFailed, InterruptedException {
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(baseDir + "jiangli.png");
 
         Match injiangli = region.exists(baseDir + "injiangli.png", 20);

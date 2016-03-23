@@ -12,7 +12,7 @@ abstract public class ZhanBao {
 
     private String baseDir = Common.BASE_DIR + "zhanbao/";
 
-    public boolean canFight(Region region) throws FindFailed, InterruptedException {
+    public boolean canFight(Region region, Status status) throws FindFailed, InterruptedException {
         boolean ret = false;
         // 先查看是否有战报
         region.click(Common.MENU);

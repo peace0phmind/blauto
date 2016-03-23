@@ -1,0 +1,133 @@
+package com.peace.auto.bl;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+
+/**
+ * Created by mind on 3/21/16.
+ */
+@Slf4j
+public class Status {
+
+    private static final String LOG_FILE = "./log_map.bin";
+
+    private String currentUser;
+
+    private Map<String, List<DoLog>> logMap = new HashMap<>();
+
+    private LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+
+    private LocalDateTime today = LocalDate.now().atStartOfDay();
+
+    public Status() {
+        loadObjects();
+    }
+
+    public void changeUser(String currentUser) {
+        this.currentUser = currentUser;
+//        this.currentUserEnd = currentUser.substring(currentUser.length());
+    }
+
+    public void Done(Task task) {
+        List<DoLog> userLogs = getLogs();
+        userLogs.add(new DoLog(LocalDateTime.now(), LocalDateTime.now().minusSeconds(task.getFinishSecond()), task));
+        userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
+        saveObjects();
+    }
+
+    public LocalDateTime getLastExecuteTime(Task task) {
+        Optional<DoLog> lastTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> x.getExecuteTime().compareTo(y.getExecuteTime())).findFirst();
+        if (lastTime.isPresent()) {
+            return lastTime.get().getExecuteTime();
+        } else {
+            return null;
+        }
+    }
+
+    public LocalDateTime getLastFinishTime(Task task) {
+        Optional<DoLog> lastFinishTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> x.getFinishTime().compareTo(y.getFinishTime())).findFirst();
+        if (lastFinishTime.isPresent()) {
+            return lastFinishTime.get().getFinishTime();
+        } else {
+            return null;
+        }
+    }
+
+    public long todayFinishCount(Task task) {
+        return getLogs().stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
+    }
+
+    public boolean canDo(Task task) {
+        if (task.getTimesPerDay() == 0) {
+            return true;
+        }
+
+        int dayLimit = "l".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+
+        if (todayFinishCount(task) < dayLimit) {
+            return true;
+        }
+
+        if (task.getFinishSecond() != 0) {
+            LocalDateTime lastFinishTime = getLastFinishTime(task);
+            if (lastFinishTime == null) {
+                return true;
+            } else {
+                return LocalDateTime.now().isBefore(lastFinishTime);
+            }
+        }
+
+        return false;
+    }
+
+    private List<DoLog> getLogs() {
+        return logMap.getOrDefault(currentUser, new ArrayList<>());
+    }
+
+    private void saveObjects() {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(LOG_FILE))) {
+            oos.writeObject(logMap);
+            oos.flush();
+        } catch (IOException e) {
+            log.error("Save Objects exception: {}", e);
+        }
+    }
+
+    private void loadObjects() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(LOG_FILE))) {
+            logMap = (Map<String, List<DoLog>>) ois.readObject();
+        } catch (FileNotFoundException e) {
+            log.error("{}", e);
+        } catch (IOException e) {
+            log.error("{}", e);
+        } catch (ClassNotFoundException e) {
+            log.error("{}", e);
+        }
+    }
+}
+
+@Data
+@AllArgsConstructor
+class DoLog {
+
+    /**
+     * 执行时间
+     */
+    private LocalDateTime executeTime;
+
+    /**
+     * 完成时间
+     */
+    private LocalDateTime finishTime;
+
+    /**
+     * 任务类型
+     */
+    private Task task;
+}
