@@ -20,7 +20,7 @@ public class XunBao implements IDo {
     String baseDir = Common.BASE_DIR + "xunbao/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (isTodayFirstFinished()) {
+        if (!status.canDo(Task.XUN_BAO)) {
             return false;
         }
 
@@ -43,6 +43,7 @@ public class XunBao implements IDo {
             Match exists = region.exists(baseDir + "xunbaoend.png", 0.1);
             if (exists != null) {
                 exists.below().click(Common.QUE_DING);
+                status.Done(Task.XUN_BAO);
                 break;
             }
         }

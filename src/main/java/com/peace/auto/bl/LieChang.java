@@ -20,73 +20,82 @@ public class LieChang implements IDo {
     String baseDir = Common.BASE_DIR + "liechang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU) && !status.canDo(Task.LIE_CHANG_DA_GUAI)) {
+            return false;
+        }
+
         Match liechang = region.exists(baseDir + "liechang.png");
         if (liechang != null) {
             liechang.click();
 
             Thread.sleep(1000L);
 
-            if (!isTodayFirstFinished()) {
-                // 征收
+            // 征收
+            if (status.canDo(Task.LIE_CHANG_ZHENG_SHOU)) {
                 Match zhengshou = region.exists(baseDir + "zhengshou.png");
                 if (zhengshou != null && isButtonEnable(zhengshou, 10, 10)) {
                     zhengshou.click();
+                    status.Done(Task.LIE_CHANG_ZHENG_SHOU);
                 }
                 Thread.sleep(500L);
             }
 
             // 打怪
-            Match guaiwu = region.exists(baseDir + "guaiwu.png", 10);
-            if (guaiwu != null) {
-                List<Match> guaiwus = Lists.newArrayList(region.findAll(baseDir + "guaiwu.png"));
-                
-                Optional<Match> firstguaiwu = guaiwus.stream().sorted((x, y) -> x.getX() - y.getX()).findFirst();
-                if (firstguaiwu.isPresent()) {
-                    firstguaiwu.get().click();
+            if (status.canDo(Task.LIE_CHANG_DA_GUAI)) {
 
-                    Thread.sleep(1000L);
-                    region.click(baseDir + "kaishichuangguan.png");
+                Match guaiwu = region.exists(baseDir + "guaiwu.png", 10);
+                if (guaiwu != null) {
+                    List<Match> guaiwus = Lists.newArrayList(region.findAll(baseDir + "guaiwu.png"));
 
-                    Thread.sleep(1000L);
+                    Optional<Match> firstguaiwu = guaiwus.stream().sorted((x, y) -> x.getX() - y.getX()).findFirst();
+                    if (firstguaiwu.isPresent()) {
+                        firstguaiwu.get().click();
 
-                    Match baopokuangren = region.exists(baseDir + "baopokuangren.png");
-                    if (baopokuangren != null && baopokuangren.getScore() > 0.95) {
-                        region.click(baseDir + "kaishizhandou.png");
+                        Thread.sleep(1000L);
+                        region.click(baseDir + "kaishichuangguan.png");
 
-                        Match dianjijixu = region.exists(baseDir + "dianjipingmujixu.png", 10);
-                        while (dianjijixu != null) {
-                            dianjijixu.click();
-                            Thread.sleep(500L);
-                            dianjijixu = region.exists(baseDir + "dianjipingmujixu.png");
-                        }
+                        Thread.sleep(1000L);
 
-                        Match jixu = region.exists(baseDir + "jixu.png");
-                        if (jixu != null) {
-                            jixu.click();
-                            Thread.sleep(500L);
-                        }
+                        Match baopokuangren = region.exists(baseDir + "baopokuangren.png");
+                        if (baopokuangren != null && baopokuangren.getScore() > 0.95) {
+                            region.click(baseDir + "kaishizhandou.png");
 
-                        Match dengdai = region.exists(baseDir + "dengdai.png");
-                        if (dengdai != null) {
-                            dengdai.click();
-
-                            Match xuanguan = region.exists(baseDir + "xuanguan.png");
-                            if (xuanguan != null) {
-                                xuanguan.click();
+                            Match dianjijixu = region.exists(baseDir + "dianjipingmujixu.png", 10);
+                            while (dianjijixu != null) {
+                                dianjijixu.click();
+                                Thread.sleep(500L);
+                                dianjijixu = region.exists(baseDir + "dianjipingmujixu.png");
                             }
+
+                            Match jixu = region.exists(baseDir + "jixu.png");
+                            if (jixu != null) {
+                                jixu.click();
+                                Thread.sleep(500L);
+                            }
+
+                            Match dengdai = region.exists(baseDir + "dengdai.png");
+                            if (dengdai != null) {
+                                dengdai.click();
+
+                                Match xuanguan = region.exists(baseDir + "xuanguan.png");
+                                if (xuanguan != null) {
+                                    xuanguan.click();
+                                    status.Done(Task.LIE_CHANG_DA_GUAI);
+                                }
+                            }
+                        } else {
+                            region.click(Common.CLOSE);
+                            Thread.sleep(500L);
+                            region.click(baseDir + "close.png");
                         }
-                    } else {
-                        region.click(Common.CLOSE);
-                        Thread.sleep(500L);
-                        region.click(baseDir + "close.png");
                     }
                 }
+
+                Thread.sleep(500L);
+                region.click(baseDir + "huicheng.png");
+
+                return true;
             }
-
-            Thread.sleep(500L);
-            region.click(baseDir + "huicheng.png");
-
-            return true;
         }
 
         return false;

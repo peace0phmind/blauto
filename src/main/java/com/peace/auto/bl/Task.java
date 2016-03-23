@@ -8,11 +8,33 @@ import lombok.Getter;
 @Getter
 public enum Task {
 
+    XUN_BAO(1),
+
+    LIE_CHANG_ZHENG_SHOU(1),
+
+    LIE_CHANG_DA_GUAI(1),
+
+    MEI_RI_JIANG_LI(1),
+
+    HAO_YOU(1),
+
     SHEN_SHOU_WU_WEI_SHI(1),
 
     CHU_ZHENG_YE_GUAI(1),
 
-    JING_JI_CHANG(10, 10 * 60, 20),;
+    JING_JI_CHANG(10, 10 * 60, 20),
+
+    LIAN_BING_CHANG(3, 10 * 60),
+
+    SHI_CHANG(3),
+
+    SHI_LIAN_DONG(2, 20 * 60, 0),
+
+    SHEN_SHOU_WU(1),
+
+    LIAN_MENG(1),
+
+    YING_HUN(1);
 
     private int timesPerDay;
     private long finishSecond;

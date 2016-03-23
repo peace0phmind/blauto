@@ -17,6 +17,10 @@ public class ShiChang implements IDo {
     String baseDir = Common.BASE_DIR + "shichang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (!status.canDo(Task.SHI_CHANG)) {
+            return false;
+        }
+
         Match shichang = region.exists(baseDir + "shichang.png");
 
         if (shichang != null) {
@@ -51,6 +55,8 @@ public class ShiChang implements IDo {
                             Match wupingbuzu = region.exists(baseDir + "wupingbuzu.png");
                             if (wupingbuzu != null) {
                                 region.click(Common.QUE_DING);
+                            } else {
+                                status.Done(Task.SHI_CHANG);
                             }
                         }
                     }

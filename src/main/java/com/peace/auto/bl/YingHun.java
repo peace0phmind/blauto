@@ -11,6 +11,9 @@ public class YingHun implements IDo {
     String baseDir = Common.BASE_DIR + "yinghun/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (!status.canDo(Task.YING_HUN)) {
+            return false;
+        }
         region.click(Common.MENU);
 
         Match yinghun = region.exists(baseDir + "yinghun.png", 3);
@@ -26,6 +29,7 @@ public class YingHun implements IDo {
                 Match meiri = region.exists(baseDir + "meirilingqu.png", 10);
                 if (meiri != null && isButtonEnable(meiri)) {
                     meiri.click();
+                    status.Done(Task.YING_HUN);
                 }
             }
         }

@@ -15,7 +15,7 @@ public class HaoYou implements IDo {
     String baseDir = Common.BASE_DIR + "haoyou/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (isTodayFirstFinished()) {
+        if (!status.canDo(Task.HAO_YOU)) {
             return false;
         }
 
@@ -36,6 +36,8 @@ public class HaoYou implements IDo {
                 }
             }
         }
+
+        status.Done(Task.HAO_YOU);
 
         region.click(Common.CLOSE);
         Thread.sleep(500L);

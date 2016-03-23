@@ -22,7 +22,7 @@ public class JiangLi implements IDo {
             return false;
         }
 
-        if (!isTodayFirstFinished()) {
+        if (status.canDo(Task.MEI_RI_JIANG_LI)) {
             Match qiandao = region.exists(baseDir + "qiandao.png", 1);
             if (qiandao != null) {
                 qiandao.click();
@@ -50,12 +50,14 @@ public class JiangLi implements IDo {
             if (lingqu != null) {
                 lingqu.click();
             }
+
+            status.Done(Task.MEI_RI_JIANG_LI);
         }
 
         // 活跃度
         region.click(baseDir + "huoyuedu.png");
         Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 1);
-        
+
         while (lingqujiangli != null && isButtonEnable(lingqujiangli, 5, 5)) {
             lingqujiangli.click();
             lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 1);

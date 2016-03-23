@@ -13,7 +13,7 @@ public class LianMeng implements IDo {
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (isTodayFirstFinished()) {
+        if (!status.canDo(Task.LIAN_MENG)) {
             return false;
         }
 
@@ -71,6 +71,8 @@ public class LianMeng implements IDo {
                 }
             }
         }
+
+        status.Done(Task.LIAN_MENG);
 
         Thread.sleep(2000L);
 

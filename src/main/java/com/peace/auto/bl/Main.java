@@ -1,6 +1,5 @@
 package com.peace.auto.bl;
 
-import com.peace.sikuli.monkey.AndroidRobot;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
@@ -96,7 +95,8 @@ public class Main {
 
         // xiaohao renwu
 //        new DengLu().Done(region, status);
-//        Do(region, tasks, 6);
+
+        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
@@ -114,9 +114,9 @@ public class Main {
 //        ), 1, false, 3);
 
         // peace jingjichang
-        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
+//        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
 
-//        Do(region, Arrays.asList(new DuoBao()), 6);
+//        Do(region, Arrays.asList(new DuoBao()), 2);
 
 //        Do(region, Arrays.asList(new NongChang()), 1);
 
@@ -126,17 +126,29 @@ public class Main {
     }
 
     private static void setUser(AndroidScreen region) throws FindFailed, InterruptedException {
-        ((AndroidRobot) region.getRobot()).touch(60, 30);
-        Thread.sleep(1500L);
+        Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
+        if (touxiang != null) {
+            touxiang.click();
 
-        Region nameRegion = region.newRegion(new Rectangle(200, 94, 100, 22));
-        String name = nameRegion.text();
+            Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
+            if (qiuzhangxinxi == null) {
+                touxiang.click();
+                qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
+            }
 
-        region.click(Common.CLOSE);
-        Thread.sleep(1000L);
+            if (qiuzhangxinxi == null) {
+                return;
+            }
 
-        String user = name.substring(name.length() - 1);
-        log.info("Recognize name: {}, User is : {}", name, user);
-        status.changeUser(user);
+            Region nameRegion = region.newRegion(new Rectangle(246, 94, 54, 22));
+            String name = nameRegion.text();
+
+            region.click(Common.CLOSE);
+            Thread.sleep(1000L);
+
+            String user = name.substring(name.length() - 1);
+            log.info("Recognize name: {}, User is : {}", name, user);
+            status.changeUser(user);
+        }
     }
 }

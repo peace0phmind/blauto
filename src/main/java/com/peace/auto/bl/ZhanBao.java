@@ -17,7 +17,9 @@ abstract public class ZhanBao {
 
     public boolean canFight(Region region, Status status) throws FindFailed, InterruptedException {
         LocalDateTime now = LocalDateTime.now();
-        if (!Arrays.asList(Task.CHU_ZHENG_YE_GUAI).stream().allMatch(x -> {
+        if (!Arrays.asList(Task.CHU_ZHENG_YE_GUAI,
+                Task.LIAN_BING_CHANG,
+                Task.SHI_LIAN_DONG).stream().allMatch(x -> {
             LocalDateTime lastFinishTime = status.getLastFinishTime(x);
             if (lastFinishTime == null) {
                 return true;
