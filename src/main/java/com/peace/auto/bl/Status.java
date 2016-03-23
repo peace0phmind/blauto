@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -36,13 +38,13 @@ public class Status {
 
     public void Done(Task task) {
         List<DoLog> userLogs = getLogs();
-        userLogs.add(new DoLog(LocalDateTime.now(), LocalDateTime.now().minusSeconds(task.getFinishSecond()), task));
+        userLogs.add(new DoLog(LocalDateTime.now(), LocalDateTime.now().plusSeconds(task.getFinishSecond()), task));
         userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
         saveObjects();
     }
 
     public LocalDateTime getLastExecuteTime(Task task) {
-        Optional<DoLog> lastTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> x.getExecuteTime().compareTo(y.getExecuteTime())).findFirst();
+        Optional<DoLog> lastTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getExecuteTime().compareTo(x.getExecuteTime())).findFirst();
         if (lastTime.isPresent()) {
             return lastTime.get().getExecuteTime();
         } else {
@@ -51,7 +53,7 @@ public class Status {
     }
 
     public LocalDateTime getLastFinishTime(Task task) {
-        Optional<DoLog> lastFinishTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> x.getFinishTime().compareTo(y.getFinishTime())).findFirst();
+        Optional<DoLog> lastFinishTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getFinishTime().compareTo(x.getFinishTime())).findFirst();
         if (lastFinishTime.isPresent()) {
             return lastFinishTime.get().getFinishTime();
         } else {
@@ -64,14 +66,12 @@ public class Status {
     }
 
     public boolean canDo(Task task) {
-        if (task.getTimesPerDay() == 0) {
-            return true;
-        }
+        if (task.getTimesPerDay() > 0) {
+            int dayLimit = "l".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
-        int dayLimit = "l".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
-
-        if (todayFinishCount(task) < dayLimit) {
-            return true;
+            if (todayFinishCount(task) >= dayLimit) {
+                return false;
+            }
         }
 
         if (task.getFinishSecond() != 0) {
@@ -79,15 +79,21 @@ public class Status {
             if (lastFinishTime == null) {
                 return true;
             } else {
-                return LocalDateTime.now().isBefore(lastFinishTime);
+                return LocalDateTime.now().isAfter(lastFinishTime);
             }
         }
 
-        return false;
+        return true;
     }
 
     private List<DoLog> getLogs() {
-        return logMap.getOrDefault(currentUser, new ArrayList<>());
+        List<DoLog> doLogs = logMap.get(currentUser);
+        if (doLogs == null) {
+            doLogs = new ArrayList<>();
+            logMap.put(currentUser, doLogs);
+        }
+
+        return doLogs;
     }
 
     private void saveObjects() {
@@ -100,21 +106,23 @@ public class Status {
     }
 
     private void loadObjects() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(LOG_FILE))) {
-            logMap = (Map<String, List<DoLog>>) ois.readObject();
-        } catch (FileNotFoundException e) {
-            log.error("{}", e);
-        } catch (IOException e) {
-            log.error("{}", e);
-        } catch (ClassNotFoundException e) {
-            log.error("{}", e);
+        if (Files.exists(Paths.get(LOG_FILE))) {
+            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(LOG_FILE))) {
+                logMap = (Map<String, List<DoLog>>) ois.readObject();
+            } catch (FileNotFoundException e) {
+                log.error("{}", e);
+            } catch (IOException e) {
+                log.error("{}", e);
+            } catch (ClassNotFoundException e) {
+                log.error("{}", e);
+            }
         }
     }
 }
 
 @Data
 @AllArgsConstructor
-class DoLog {
+class DoLog implements Serializable {
 
     /**
      * 执行时间

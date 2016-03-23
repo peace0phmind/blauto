@@ -53,7 +53,7 @@ public class Main {
     static public void Do(AndroidScreen region, List<IDo> dos, int times, boolean reboot, int waitSeconds) {
         try {
             for (int i = 0; i < times; i++) {
-                changeUser(region);
+                setUser(region);
 
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -126,8 +126,10 @@ public class Main {
         region.close();
     }
 
-    private static void changeUser(AndroidScreen region) throws FindFailed, InterruptedException {
+    private static void setUser(AndroidScreen region) throws FindFailed, InterruptedException {
         ((AndroidRobot) region.getRobot()).touch(60, 30);
+        Thread.sleep(1500L);
+
         Region nameRegion = region.newRegion(new Rectangle(200, 94, 100, 22));
         String name = nameRegion.text();
 
