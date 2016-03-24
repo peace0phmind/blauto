@@ -99,10 +99,10 @@ public class Main {
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
-        Do(region, tasks, 1, false, 3);
+//        Do(region, tasks, 1, false, 3);
 
         // peace jingjichang
-//        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
+        Do(region, Arrays.asList(new JingJiChang()), 20, false, 10 * 60);
 
 //        Do(region, Arrays.asList(new DuoBao()), 2);
 

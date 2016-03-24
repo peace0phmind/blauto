@@ -14,6 +14,9 @@ public class ShengLingQuan implements IDo {
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         // TODO add mianfei
+        if (!status.canDo(Task.SHENG_LING_QUAN)) {
+            return false;
+        }
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
