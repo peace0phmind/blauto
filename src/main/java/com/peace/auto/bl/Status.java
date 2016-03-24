@@ -66,9 +66,13 @@ public class Status {
     }
 
     public boolean canDo(Task task) {
-        if (task.getTimesPerDay() > 0) {
-            int dayLimit = ".".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+        int dayLimit = ".".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
+        if (dayLimit < 0) {
+            return false;
+        }
+
+        if (dayLimit > 0) {
             if (todayFinishCount(task) >= dayLimit) {
                 return false;
             }

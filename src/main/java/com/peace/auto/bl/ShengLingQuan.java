@@ -13,6 +13,7 @@ public class ShengLingQuan implements IDo {
     String baseDir = Common.BASE_DIR + "shenglingquan/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        // TODO add mianfei
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);

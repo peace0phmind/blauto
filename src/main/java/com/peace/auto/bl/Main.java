@@ -84,7 +84,6 @@ public class Main {
         Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
 
-
 //        region.saveScreenCapture(".", "info");
 
 //        ArrayList<Match> matches = Lists.newArrayList(region.findAll(new Pattern(Common.BASE_DIR + "denglu/peace.png").similar(0.5f)));
@@ -96,31 +95,17 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region, status);
 
-        Do(region, tasks, 1);
+//        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
-
-        // peace tasks
-//        Do(region, Arrays.asList(
-//                new ShouGuFang(),
-//                new Building(),
-//                new NongChang(),
-//                new ShengYu(),
-//                new TianSheng(),
-//                new JingJiChang(),
-//                new ShengLingQuan(),
-//                new RenWu()
-//        ), 1, false, 3);
+        Do(region, tasks, 1, false, 3);
 
         // peace jingjichang
 //        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
 
 //        Do(region, Arrays.asList(new DuoBao()), 2);
 
-//        Do(region, Arrays.asList(new NongChang()), 1);
-
-//        Do(region, Arrays.asList(new NongChang()), 1, false, 3);
 
         region.close();
     }
