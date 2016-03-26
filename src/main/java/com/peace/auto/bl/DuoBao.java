@@ -6,7 +6,9 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -63,7 +65,12 @@ public class DuoBao implements IDo {
                     if (keepXunbao) {
                         while (true) {
                             jiaru(region);
-                            // TODO
+                            Color color = getPixelColor(region, 656, 100);
+                            if (Math.abs(color.getRed() - 173) < 3
+                                    && Math.abs(color.getGreen() - 54) < 3
+                                    && Math.abs(color.getBlue() - 45) < 3) {
+                                break;
+                            }
                         }
                     } else {
                         Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");

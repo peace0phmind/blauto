@@ -89,11 +89,7 @@ public class Main {
         Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
 
-
 //        region.saveScreenCapture(".", "info");
-
-//        ArrayList<Match> matches = Lists.newArrayList(region.findAll(new Pattern(Common.BASE_DIR + "denglu/peace.png").similar(0.5f)));
-//        matches.forEach(x -> log.info("test: {}", x.text()));
 
         // qidong login
 //        new DengLu().QiDong(region);
@@ -101,7 +97,7 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region, status);
 
-        Do(region, tasks, 6);
+//        Do(region, tasks, 5);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);

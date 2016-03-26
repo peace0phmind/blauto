@@ -256,6 +256,9 @@ public class AndroidRobot implements IRobot {
 
     @Override
     public Color getColorAt(int x, int y) {
+        if (screen == null) {
+            captureScreen(getBounds());
+        }
         int clr = screen.getRGB(x, y);
         int red = (clr & 0x00ff0000) >> 16;
         int green = (clr & 0x0000ff00) >> 8;
