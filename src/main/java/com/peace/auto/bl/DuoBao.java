@@ -7,6 +7,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
 import java.awt.*;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,11 +25,16 @@ public class DuoBao implements IDo {
     }
 
     public boolean xunbao(Region region) throws InterruptedException, FindFailed {
-        return true;
-//        return xunbao(region, true);
+        return xunbao(region, true);
     }
 
     private boolean xunbao(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
+        LocalTime now = LocalTime.now();
+        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
+                || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
+            return false;
+        }
+
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
