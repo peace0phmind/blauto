@@ -77,12 +77,14 @@ public class ShengLingQuan implements IDo {
         return true;
     }
 
-    private void putongxilian(Region region) throws FindFailed {
+    private void putongxilian(Region region) throws FindFailed, InterruptedException {
         Match shengpin = region.exists(baseDir + "shengpin");
         while (shengpin != null && shengpin.getScore() > 0.95) {
             region.click(baseDir + "putongxiulian.png");
             Match end = region.exists(baseDir + "xilianend.png", 1);
             if (end != null) {
+                Thread.sleep(1000L);
+                region.click(Common.QUE_DING);
                 break;
             }
             shengpin = region.exists(baseDir + "shengpin", 3);
