@@ -89,6 +89,7 @@ public class Main {
         Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
 
+
 //        region.saveScreenCapture(".", "info");
 
 //        ArrayList<Match> matches = Lists.newArrayList(region.findAll(new Pattern(Common.BASE_DIR + "denglu/peace.png").similar(0.5f)));
@@ -107,7 +108,7 @@ public class Main {
 //        Do(region, tasks, 1, false, 3);
 
         // peace jingjichang
-//        Do(region, Arrays.asList(new JingJiChang()), 10, false, 10 * 60);
+//        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
 
 //        new ShengHuo().Done(region, status);
 

@@ -8,6 +8,10 @@ import lombok.Getter;
 @Getter
 public enum Task {
 
+    TIAN_SHEN_QI_DAO(0, 0, 1 * 60 * 60),
+
+    TIAN_SHEN_YUAN_GU(0, 0, 1 * 60 * 60),
+
     SHENG_HUO(3, -1),
 
     YUE_KA(1),
