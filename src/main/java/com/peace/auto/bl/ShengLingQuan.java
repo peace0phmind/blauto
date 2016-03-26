@@ -28,11 +28,19 @@ public class ShengLingQuan implements IDo {
             // 神灵泉
             putongxilian(region);
 
-//            if (isTodayFirstFinished()) {
-//                // 当天免费
-//
-//                putongxilian(region);
-//            }
+            if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
+                region.click(baseDir + "dingjishenshui.png");
+
+                Match zhixingmianfeicaozuo = region.exists(baseDir + "zhixingmianfeicaozuo.png", 6);
+                if (zhixingmianfeicaozuo != null) {
+                    Thread.sleep(2000L);
+                    region.click(Common.QUE_DING);
+                    Thread.sleep(2000L);
+                    status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
+                }
+
+                putongxilian(region);
+            }
 
             // 高级修炼
             Match xiulian = region.exists(baseDir + "xiulian.png", 3);

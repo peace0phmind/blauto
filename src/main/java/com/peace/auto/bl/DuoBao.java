@@ -1,16 +1,18 @@
 package com.peace.auto.bl;
 
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/17/16.
  */
+@Slf4j
 public class DuoBao implements IDo {
     String baseDir = Common.BASE_DIR + "duobao/";
 
@@ -20,7 +22,8 @@ public class DuoBao implements IDo {
     }
 
     public boolean xunbao(Region region) throws InterruptedException, FindFailed {
-        return xunbao(region, true);
+        return true;
+//        return xunbao(region, true);
     }
 
     private boolean xunbao(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
@@ -34,7 +37,7 @@ public class DuoBao implements IDo {
 
             Thread.sleep(3000L);
 
-            Match duobao = region.exists(baseDir + "duobaoqibing.png");
+            Match duobao = region.exists(baseDir + "duobaoqibing.png", 20);
             if (duobao != null) {
                 duobao.click();
 
@@ -58,7 +61,10 @@ public class DuoBao implements IDo {
                 if (chazhao != null) {
                     // 持续寻宝
                     if (keepXunbao) {
-
+                        while (true) {
+                            jiaru(region);
+                            // TODO
+                        }
                     } else {
                         Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");
                         if (shurufangjian != null) {
@@ -70,26 +76,61 @@ public class DuoBao implements IDo {
                         jiaru(region);
                     }
                 }
-            }
 
-            Thread.sleep(3000L);
+                Thread.sleep(3000L);
+                region.click(Common.CLOSE);
+            }
+            Thread.sleep(500L);
             region.click(Common.CLOSE);
         }
-
-        Thread.sleep(500L);
-        region.click(Common.CLOSE);
 
         return true;
     }
 
     private void jiaru(Region region) throws FindFailed {
-        Match jiaru = region.exists(baseDir + "jiaru.png");
-        if (jiaru != null) {
-            List<Match> jiarus = Lists.newArrayList(region.findAll(baseDir + "jiaru.png"));
+        Match ru = region.exists(baseDir + "jiaru.png", 60);
+        if (ru != null) {
+            ArrayList<Match> kongweis = Lists.newArrayList(region.findAll(baseDir + "baotukongwei.png"));
+            ArrayList<Match> jiarus = Lists.newArrayList(region.findAll(baseDir + "jiaru.png"));
 
-            Optional<Match> firstJiaru = jiarus.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).findFirst();
-            if (firstJiaru.isPresent()) {
-                firstJiaru.get().click();
+            List<Integer> xLine = Arrays.asList(0, 250, 500, 800);
+            List<Integer> yLine = Arrays.asList(0, 300, 480);
+
+            Match firstJiaRu = null;
+            out_loop:
+            for (int i = 0; i < xLine.size() - 1; i++) {
+                for (int j = 0; j < yLine.size() - 1; j++) {
+                    final int finalI = i;
+                    final int finalJ = j;
+                    List<Match> kongwei = kongweis.stream().filter(x ->
+                            (x.getX() > xLine.get(finalI) && x.getX() < xLine.get(finalI + 1))
+                                    && (x.getY() > yLine.get(finalJ) && x.getY() < yLine.get(finalJ + 1))).collect(Collectors.toList());
+
+                    List<Match> jiaru = jiarus.stream().filter(x ->
+                            (x.getX() > xLine.get(finalI) && x.getX() < xLine.get(finalI + 1))
+                                    && (x.getY() > yLine.get(finalJ) && x.getY() < yLine.get(finalJ + 1))).collect(Collectors.toList());
+
+                    if (jiaru != null && jiaru.size() > 0) {
+                        if (kongwei != null) {
+                            switch (kongwei.size()) {
+                                case 1:
+                                    firstJiaRu = jiaru.get(0);
+                                    break out_loop;
+                                case 2:
+                                    if (firstJiaRu == null) {
+                                        firstJiaRu = jiaru.get(0);
+                                    }
+                                    break;
+                                default:
+                                    log.error("kongwei number error: {}", kongwei.size());
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (firstJiaRu != null) {
+                firstJiaRu.click();
             }
         }
     }

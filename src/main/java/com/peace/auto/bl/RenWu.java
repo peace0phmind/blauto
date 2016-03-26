@@ -13,6 +13,25 @@ public class RenWu implements IDo {
     String baseDir = Common.BASE_DIR + "task/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (status.canDo(Task.YUE_KA)) {
+            Match yueka = region.exists(baseDir + "yueka.png");
+            if (yueka != null) {
+                yueka.click();
+                Thread.sleep(1000L);
+
+                region.click(baseDir + "lingquyueka.png");
+
+                Thread.sleep(2000L);
+
+                Match close = region.exists(Common.CLOSE, 20);
+                if (close != null) {
+                    close.click();
+                }
+
+                status.Done(Task.YUE_KA);
+            }
+        }
+
         // 收集金币
         Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
         if (jinbi != null) {

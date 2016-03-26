@@ -40,7 +40,11 @@ public class Main {
             new ShengLingQuan(),
 
             new RenWu(),
-            new JiangLi()
+            new JiangLi(),
+
+            // shenghuo
+            new ShengHuo()
+            // duobao
     );
 
     static Status status = new Status();
@@ -62,8 +66,9 @@ public class Main {
                 }
 
                 for (IDo iDo : dos) {
-                    iDo.Done(region, status);
-                    Thread.sleep(waitSeconds * 1000L);
+                    if (iDo.Done(region, status)) {
+                        Thread.sleep(waitSeconds * 1000L);
+                    }
                 }
 
                 if (reboot) {
@@ -95,17 +100,19 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region, status);
 
-//        Do(region, tasks, 6);
+        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
 //        Do(region, tasks, 1, false, 3);
 
         // peace jingjichang
-        Do(region, Arrays.asList(new JingJiChang()), 20, false, 10 * 60);
+//        Do(region, Arrays.asList(new JingJiChang()), 10, false, 10 * 60);
 
-//        Do(region, Arrays.asList(new DuoBao()), 2);
+//        new ShengHuo().Done(region, status);
 
+//        new DuoBao().xunbao(region);
+//        Do(region, Arrays.asList(new DuoBao()), 6);
 
         region.close();
     }
