@@ -68,11 +68,11 @@ public class LianMeng implements IDo {
                     fuli.click();
                     Thread.sleep(1000L);
                     lingqu.click();
+
+                    status.Done(Task.LIAN_MENG);
                 }
             }
         }
-
-        status.Done(Task.LIAN_MENG);
 
         Thread.sleep(2000L);
 

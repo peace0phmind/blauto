@@ -20,6 +20,10 @@ public class NongChang implements IDo {
     String baseDir = Common.BASE_DIR + "nongchang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI)) {
+            return false;
+        }
+
         region.click(baseDir + "nongchang.png");
 
         Match innongchang = region.exists(baseDir + "innongchang.png", 30);
@@ -50,6 +54,7 @@ public class NongChang implements IDo {
                         Optional<Match> lastzhongzhi = zhongzhis.stream().sorted((x, y) -> y.getX() - x.getX()).findFirst();
                         if (lastzhongzhi.isPresent()) {
                             lastzhongzhi.get().click();
+                            status.Done(Task.NONG_CHANG_ZHONG_ZHI);
                         }
                     }
                 }

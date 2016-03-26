@@ -8,6 +8,8 @@ import lombok.Getter;
 @Getter
 public enum Task {
 
+    NONG_CHANG_ZHONG_ZHI(2, 2, 8 * 60 * 60),
+
     TIAN_SHEN_QI_DAO(0, 0, 1 * 60 * 60),
 
     TIAN_SHEN_YUAN_GU(0, 0, 1 * 60 * 60),
@@ -46,13 +48,11 @@ public enum Task {
 
     YING_HUN(1),
 
-    SHENG_LING_QUAN(0, -1),
+    SHENG_LING_QUAN_MIAN_FEI(1, -1),
 
-    SHENG_LING_QUAN_MIAN_FEI(1),
+    SHENG_LING_QUAN_XIU_LIAN(1, -1, 24 * 60 * 60),
 
-    SHENG_LING_QUAN_XIU_LIAN(1, 1, 24 * 60 * 60),
-
-    SHENG_LING_QUAN_XI_LIAN(0, 0, 2 * 60 * 60);
+    SHENG_LING_QUAN_XI_LIAN(0, -1, 1 * 60 * 60);
 
     private int timesPerDay;
     private long finishSecond;
