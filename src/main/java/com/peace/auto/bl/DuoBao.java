@@ -70,7 +70,7 @@ public class DuoBao implements IDo {
                     // 持续寻宝
                     if (keepXunbao) {
                         while (true) {
-                            jiaru(region);
+                            jiaru(region, keepXunbao);
                             Color color = getPixelColor(region, 656, 100);
                             if (Math.abs(color.getRed() - 173) < 3
                                     && Math.abs(color.getGreen() - 54) < 3
@@ -86,7 +86,7 @@ public class DuoBao implements IDo {
                         chazhao.click();
 
                         Thread.sleep(2000L);
-                        jiaru(region);
+                        jiaru(region, keepXunbao);
                     }
                 }
 
@@ -100,9 +100,18 @@ public class DuoBao implements IDo {
         return true;
     }
 
-    private void jiaru(Region region) throws FindFailed {
+    private void jiaru(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
         Match ru = region.exists(baseDir + "jiaru.png", 60);
         if (ru != null) {
+            if (keepXunbao) {
+                Thread.sleep(5000L);
+                Match changshiweixunbao = region.exists(baseDir + "changshiweixunbao.png");
+                if (changshiweixunbao != null) {
+                    region.click(Common.QUE_DING);
+                    Thread.sleep(1000L);
+                }
+            }
+
             ArrayList<Match> kongweis = Lists.newArrayList(region.findAll(baseDir + "baotukongwei.png"));
             ArrayList<Match> jiarus = Lists.newArrayList(region.findAll(baseDir + "jiaru.png"));
 
@@ -123,7 +132,7 @@ public class DuoBao implements IDo {
                             (x.getX() > xLine.get(finalI) && x.getX() < xLine.get(finalI + 1))
                                     && (x.getY() > yLine.get(finalJ) && x.getY() < yLine.get(finalJ + 1))).collect(Collectors.toList());
 
-                    if (jiaru != null && jiaru.size() > 0) {
+                    if (jiaru != null && jiaru.size() > 0 && isButtonEnable(jiaru.get(0), 3, 3)) {
                         if (kongwei != null) {
                             switch (kongwei.size()) {
                                 case 1:
@@ -144,6 +153,7 @@ public class DuoBao implements IDo {
 
             if (firstJiaRu != null) {
                 firstJiaRu.click();
+                Thread.sleep(1000L);
             }
         }
     }

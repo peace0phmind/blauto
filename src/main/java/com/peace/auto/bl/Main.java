@@ -97,7 +97,7 @@ public class Main {
         // xiaohao renwu
 //        new DengLu().Done(region, status);
 
-        Do(region, tasks, 6);
+//        Do(region, tasks, 6);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
@@ -108,7 +108,7 @@ public class Main {
 
 //        new ShengHuo().Done(region, status);
 
-//        new DuoBao().xunbao(region);
+        new DuoBao().xunbao(region);
 //        Do(region, Arrays.asList(new DuoBao()), 6);
 
         region.close();
