@@ -40,6 +40,8 @@ public class LianMeng implements IDo {
             if (nanman != null) {
                 nanman.click();
 
+                Thread.sleep(3000L);
+
                 // 领取奖励
                 Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 5);
                 if (lingqujiangli != null) {
@@ -64,9 +66,10 @@ public class LianMeng implements IDo {
                 // 每天领取一次福利,并且进行一次捐赠
                 if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
                     juanxian(region, 1);
+                    Thread.sleep(3000L);
 
                     fuli.click();
-                    Thread.sleep(1000L);
+                    Thread.sleep(2000L);
                     lingqu.click();
 
                     status.Done(Task.LIAN_MENG);

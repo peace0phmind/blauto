@@ -43,7 +43,8 @@ public class Main {
             new JiangLi(),
 
             // shenghuo
-            new ShengHuo()
+            new ShengHuo(),
+            new QunYingHui()
             // duobao
     );
 
@@ -96,19 +97,16 @@ public class Main {
 
         // xiaohao renwu
 //        new DengLu().Done(region, status);
-
-//        Do(region, tasks, 6);
+//        region.click(Common.CLOSE);
 
         // 切换账号 到peace, 如果peace在最下面
 //        new DengLu().similar(0.5f).Done(region, status);
 //        Do(region, tasks, 1, false, 3);
+//        new DuoBao().xunbao(region);
+//        Do(region, Arrays.asList(new JingJiChang()), 18, false, 10 * 60);
 
         // peace jingjichang
-//        Do(region, Arrays.asList(new JingJiChang()), 15, false, 10 * 60);
-
-//        new ShengHuo().Done(region, status);
-
-        new DuoBao().xunbao(region);
+        Do(region, tasks, 6);
 //        Do(region, Arrays.asList(new DuoBao()), 6);
 
         region.close();

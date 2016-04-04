@@ -44,7 +44,12 @@ public class ShengHuo implements IDo {
 
                 region.click(baseDir + "shenghuozhenduo.png");
 
-                Match langguo = region.exists(baseDir + "langguo.png", 6);
+                Match lingqu = region.exists(baseDir + "lingqu.png", 6);
+                if (lingqu != null && isButtonEnable(lingqu)) {
+                    lingqu.click();
+                }
+
+                Match langguo = region.exists(baseDir + "huguo.png", 6);
                 if (langguo != null) {
                     langguo.click();
 

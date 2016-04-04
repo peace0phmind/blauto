@@ -35,12 +35,15 @@ public class ShengLingQuan implements IDo {
                     Match zhixingmianfeicaozuo = region.exists(baseDir + "zhixingmianfeicaozuo.png", 6);
                     if (zhixingmianfeicaozuo != null) {
                         Thread.sleep(2000L);
-                        region.click(Common.QUE_DING);
-                        Thread.sleep(2000L);
-                        status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
+                        Match queding = region.exists(Common.QUE_DING, 10);
+                        if (queding != null) {
+                            Thread.sleep(2000L);
+                            region.click(Common.QUE_DING);
+                            status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
+                        }
+                        
+                        putongxilian(region);
                     }
-
-                    putongxilian(region);
                 }
 
                 status.Done(Task.SHENG_LING_QUAN_XI_LIAN);

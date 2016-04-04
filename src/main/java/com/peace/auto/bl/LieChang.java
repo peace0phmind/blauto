@@ -47,6 +47,7 @@ public class LieChang implements IDo {
                 if (guaiwu != null) {
                     List<Match> guaiwus = Lists.newArrayList(region.findAll(baseDir + "guaiwu.png"));
 
+                    Thread.sleep(3000L);
                     Optional<Match> firstguaiwu = guaiwus.stream().sorted((x, y) -> x.getX() - y.getX()).findFirst();
                     if (firstguaiwu.isPresent()) {
                         firstguaiwu.get().click();
@@ -91,7 +92,7 @@ public class LieChang implements IDo {
                     }
                 }
 
-                Thread.sleep(500L);
+                Thread.sleep(3000L);
                 region.click(baseDir + "huicheng.png");
 
                 return true;
