@@ -287,7 +287,9 @@ public class AndroidRobot implements IRobot {
 
     @Override
     public void smoothMove(Location src, Location dest, long ms) {
-        throw new UnsupportedOperationException();
+        double distance = Math.sqrt(Math.pow(src.getX() - dest.getX(), 2) + Math.pow(src.getY() - dest.getY(), 2));
+        log.debug("Drag from {} to {}: distance {}", src, dest, distance);
+        _device.drag(src.getX(), src.getY(), dest.getX(), dest.getY(), (int)distance, ms);
     }
 
     @Override

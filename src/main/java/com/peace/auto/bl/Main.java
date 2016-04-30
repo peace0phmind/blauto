@@ -44,7 +44,8 @@ public class Main {
             new JiangLi(),
 
             // shenghuo
-            new ShengHuo()
+            new ShengHuo(),
+            new ShenQi()
 //            new QunYingHui()
             // duobao
     );
@@ -105,7 +106,7 @@ public class Main {
 //        new DengLu().similar(0.5f).Done(region, status);
 //        Do(region, tasks, 1, false, 3);
 //        new DuoBao().xunbao(region);
-//        Do(region, Arrays.asList(new JingJiChang()), 18, false, 10 * 60);
+        Do(region, Arrays.asList(new JingJiChang()), 18, false, 10 * 60);
 
         // peace jingjichang
 //        Do(region, tasks, 6);

@@ -20,7 +20,7 @@ public enum Task {
 
     YUE_KA(1),
 
-    SHOU_GU_JIA_GONG(3),
+    SHOU_GU_JIA_GONG(6),
 
     SHOU_GU_SHOU_LIE(0, 0, 8 * 60 * 60),
 
@@ -56,7 +56,9 @@ public enum Task {
 
     SHENG_LING_QUAN_XIU_LIAN(1, -1, 24 * 60 * 60),
 
-    SHENG_LING_QUAN_XI_LIAN(0, -1, 1 * 60 * 60);
+    SHENG_LING_QUAN_XI_LIAN(0, -1, 1 * 60 * 60),
+
+    SHEN_QI(1, -1);
 
     private int timesPerDay;
     private long finishSecond;
