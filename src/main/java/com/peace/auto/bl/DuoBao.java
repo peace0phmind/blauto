@@ -105,8 +105,8 @@ public class DuoBao implements IDo {
         if (ru != null) {
             if (keepXunbao) {
                 Thread.sleep(5000L);
-                Match changshiweixunbao = region.exists(baseDir + "changshiweixunbao.png");
-                if (changshiweixunbao != null) {
+                Match queding = region.exists(Common.QUE_DING);
+                if (queding != null && queding.getScore() > 0.9) {
                     region.click(Common.QUE_DING);
                     Thread.sleep(1000L);
                 }

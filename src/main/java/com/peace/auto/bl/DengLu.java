@@ -52,19 +52,9 @@ public class DengLu implements IDo {
     }
 
     private boolean jinrubuluo(Region region) throws FindFailed, InterruptedException {
-        Match gonggaolan = region.exists(baseDir + "gonggaolan.png", 10);
-        if (gonggaolan != null && gonggaolan.getScore() > 0.95) {
-            Match close = region.exists(Common.CLOSE);
-            if (close == null) {
-                return false;
-            }
-
-            for (int i = 0; i < 10; i++) {
-                close.click();
-                gonggaolan = region.exists(baseDir + "gonggaolan.png", 1);
-                if (gonggaolan == null) {
-                    break;
-                }
+        if (!closeGongGaoLan(region)) {
+            if (chongxindenglu(region)) {
+                return true;
             }
         }
 
@@ -76,6 +66,26 @@ public class DengLu implements IDo {
             if (dating != null) {
                 log.info("login ok");
                 return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean closeGongGaoLan(Region region) throws FindFailed, InterruptedException {
+        Match gonggaolan = region.exists(baseDir + "gonggaolan.png", 5);
+        if (gonggaolan != null && gonggaolan.getScore() > 0.95) {
+            Match close = region.exists(Common.CLOSE);
+            if (close == null) {
+                return false;
+            }
+
+            for (int i = 0; i < 10; i++) {
+                close.click();
+                gonggaolan = region.exists(baseDir + "gonggaolan.png", 1);
+                if (gonggaolan == null) {
+                    return true;
+                }
             }
         }
 
@@ -106,6 +116,8 @@ public class DengLu implements IDo {
         if (bl != null) {
             bl.click();
 
+            Thread.sleep(10 * 1000L);
+
             return jinrubuluo(region);
         }
 
@@ -114,7 +126,7 @@ public class DengLu implements IDo {
 
 
     private boolean chongxindenglu(Region region) throws InterruptedException, FindFailed {
-        Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
+        Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 5);
         if (qqhaoyouwan != null) {
             qqhaoyouwan.click();
 

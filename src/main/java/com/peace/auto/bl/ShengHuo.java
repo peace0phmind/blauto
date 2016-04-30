@@ -49,7 +49,7 @@ public class ShengHuo implements IDo {
                     lingqu.click();
                 }
 
-                Match langguo = region.exists(baseDir + "huguo.png", 6);
+                Match langguo = region.exists(baseDir + "langguo.png", 6);
                 if (langguo != null) {
                     langguo.click();
 

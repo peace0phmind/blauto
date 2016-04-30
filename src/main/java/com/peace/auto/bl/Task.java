@@ -50,6 +50,8 @@ public enum Task {
 
     YING_HUN(1, -1),
 
+    RONG_LIAN(1, -1),
+
     SHENG_LING_QUAN_MIAN_FEI(1, -1),
 
     SHENG_LING_QUAN_XIU_LIAN(1, -1, 24 * 60 * 60),
