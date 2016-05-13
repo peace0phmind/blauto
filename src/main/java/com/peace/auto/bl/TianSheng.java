@@ -71,7 +71,9 @@ public class TianSheng implements IDo {
                         right = region.exists(baseDir + "right.png");
                     }
 
-                    Match sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.85f));
+                    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
+
+                    Match sanxing = region.exists(sanxingpng);
                     if (sanxing == null) {
                         Match left = region.exists(baseDir + "left.png");
                         if (left != null) {
@@ -82,13 +84,14 @@ public class TianSheng implements IDo {
                         }
                     }
 
-                    sanxing = region.exists(new Pattern(baseDir + "sanxing.png").similar(0.9f));
+                    sanxing = region.exists(sanxingpng);
                     if (sanxing != null) {
-                        List<Match> sanxings = Lists.newArrayList(region.findAll(new Pattern(baseDir + "sanxing.png").similar(0.85f)));
+                        List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
 
                         Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
                         if (lastsanxing.isPresent()) {
                             Match sx = lastsanxing.get();
+                            log.info("{}", sx);
                             sx.click();
                             Thread.sleep(500L);
 

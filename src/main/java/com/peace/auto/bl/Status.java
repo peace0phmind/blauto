@@ -18,17 +18,19 @@ import java.util.*;
 public class Status {
 
     private static final String LOG_FILE = "./log_map.bin";
-
+    List<String> users = Arrays.asList("peace0ph001", "peace0ph002", "peace0ph004", "peace0ph006", "peace0ph007", "peace0ph008");
     private String currentUser;
-
     private Map<String, List<DoLog>> logMap = new HashMap<>();
-
     private LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
-
     private LocalDateTime today = LocalDate.now().atStartOfDay();
+    private int loginTimes = 0;
 
     public Status() {
         loadObjects();
+    }
+
+    public String getNextLoginName() {
+        return users.get(loginTimes++ / users.size());
     }
 
     public void changeUser(String currentUser) {

@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.base.StandardSystemProperty;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * Created by mind on 3/7/16.
@@ -16,14 +18,9 @@ import java.util.Optional;
 public class DengLu implements IDo {
     String baseDir = Common.BASE_DIR + "denglu/";
 
-    private float similar = 0.75f;
+    private float similar = 0.5f;
 
-    public DengLu similar(float similar) {
-        this.similar = similar;
-        return this;
-    }
-
-    private boolean qiehuanzhanghao(Region region) throws FindFailed, InterruptedException {
+    private boolean qiehuanzhanghao(Region region, String loginName) throws FindFailed, InterruptedException {
         Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
         if (qiehuanzhanghao != null) {
             qiehuanzhanghao.click();
@@ -35,15 +32,22 @@ public class DengLu implements IDo {
                 Thread.sleep(3000L);
 
                 List<Match> qqs = Lists.newArrayList(tianjiazhanghao.above().findAll(new Pattern(baseDir + "peace.png").similar(similar)));
+
+                String lastChar = loginName.substring(loginName.length() - 1);
+
+                Optional<Match> firstqq = qqs.stream().filter(x -> {
+                    String text = x.getText();
+                    return lastChar.equals(text.substring(text.length() - 1));
+                }).findFirst();
+
                 // 点击账号
-                Optional<Match> firstqq = qqs.stream().sorted((x, y) -> y.getY() - x.getY()).findFirst();
                 if (firstqq.isPresent()) {
                     Match qq = firstqq.get();
                     log.info("登录: {}", qq.text());
                     qq.click();
 
                     // 进入部落
-                    return jinrubuluo(region);
+                    return jinrubuluo(region, loginName);
                 }
             }
         }
@@ -51,9 +55,9 @@ public class DengLu implements IDo {
         return false;
     }
 
-    private boolean jinrubuluo(Region region) throws FindFailed, InterruptedException {
+    private boolean jinrubuluo(Region region, String loginName) throws FindFailed, InterruptedException {
         if (!closeGongGaoLan(region)) {
-            if (chongxindenglu(region)) {
+            if (chongxindenglu(region, loginName)) {
                 return true;
             }
         }
@@ -94,6 +98,10 @@ public class DengLu implements IDo {
 
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        return Done(region, status, status.getNextLoginName());
+    }
+
+    public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
@@ -104,35 +112,34 @@ public class DengLu implements IDo {
             if (tuichudenglu != null) {
                 tuichudenglu.click();
 
-                return chongxindenglu(region);
+                return chongxindenglu(region, loginName);
             }
         }
 
         return false;
     }
 
-    public boolean QiDong(Region region) throws FindFailed, InterruptedException {
+    public boolean QiDong(Region region, String loginName) throws FindFailed, InterruptedException {
         Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);
         if (bl != null) {
             bl.click();
 
             Thread.sleep(10 * 1000L);
 
-            return jinrubuluo(region);
+            return jinrubuluo(region, loginName);
         }
 
         return false;
     }
 
-
-    private boolean chongxindenglu(Region region) throws InterruptedException, FindFailed {
+    private boolean chongxindenglu(Region region, String loginName) throws InterruptedException, FindFailed {
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 5);
         if (qqhaoyouwan != null) {
             qqhaoyouwan.click();
 
             Thread.sleep(6000L);
 
-            return qiehuanzhanghao(region);
+            return qiehuanzhanghao(region, loginName);
         }
 
         return false;

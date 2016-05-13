@@ -45,8 +45,8 @@ public class Main {
 
             // shenghuo
             new ShengHuo(),
+            new QunYingHui(),
             new ShenQi()
-//            new QunYingHui()
             // duobao
     );
 
@@ -95,7 +95,9 @@ public class Main {
 //        region.saveScreenCapture(".", "info");
 
         // qidong login
-//        new DengLu().QiDong(region);
+        new DengLu().QiDong(region, "peace");
+
+//        Do(region, tasks, 18);
 
         // xiaohao renwu
 //        new DengLu().Done(region, status);
@@ -103,17 +105,37 @@ public class Main {
 //        region.click(Common.QUE_DING);
 
         // 切换账号 到peace, 如果peace在最下面
-//        new DengLu().similar(0.5f).Done(region, status);
 //        Do(region, tasks, 1, false, 3);
-//        new DuoBao().xunbao(region);
-        Do(region, Arrays.asList(new JingJiChang()), 18, false, 10 * 60);
+        Do(region, Arrays.asList(new JingJiChang()), 7, false, 10 * 60);
+        new DuoBao().xunbao(region);
+        Do(region, Arrays.asList(new JingJiChang()), 11, false, 10 * 60);
+//        Do(region, Arrays.asList(new LieChang()), 1, false, 1);
 
         // peace jingjichang
-//        Do(region, tasks, 6);
+        Do(region, tasks, 7);
 //        Do(region, Arrays.asList(new DuoBao()), 14);
-//        Do(region, tasks, 18);
+
+//        Thread.sleep(60 * 60 * 1000);
+//
+//        Do(region, tasks, 6);
+
+//        nightMode(region);
 
         region.close();
+    }
+
+    private static void nightMode(AndroidScreen region) throws FindFailed, InterruptedException {
+        Thread.sleep(60 * 60 * 1000);
+
+        new DengLu().QiDong(region, "peace0ph001");
+        Do(region, tasks, 12);
+
+        for (int i = 0; i < 3; i++) {
+            // 切换账号 到peace, 如果peace在最下面
+            new DengLu().Done(region, status, "peace");
+            Do(region, Arrays.asList(new JingJiChang()), 6, false, 10 * 60);
+            Do(region, tasks, 7);
+        }
     }
 
     private static void setUser(AndroidScreen region) throws FindFailed, InterruptedException {

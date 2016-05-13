@@ -42,7 +42,7 @@ public enum Task {
 
     SHI_CHANG(3, -1),
 
-    SHI_LIAN_DONG(2, -1, 20 * 60),
+    SHI_LIAN_DONG(2, -1, 45 * 60),
 
     SHEN_SHOU_WU(1, -1),
 

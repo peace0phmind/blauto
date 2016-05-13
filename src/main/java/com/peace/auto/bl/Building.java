@@ -43,17 +43,17 @@ public class Building implements IDo {
 
         if (inbuluo != null) {
             // 购买队列 - 小号没人力了
-//            Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
-//            if (kaiqixinduilie != null) {
-//                if (kaiqixinduilie.getX() < 400) {
-//                    kaiqixinduilie.click();
-//
-//                    Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
-//                    if (goumaiduilie != null) {
-//                        region.click(Common.QUE_DING);
-//                    }
-//                }
-//            }
+            Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
+            if (kaiqixinduilie != null) {
+                if (kaiqixinduilie.getX() < 400) {
+                    kaiqixinduilie.click();
+
+                    Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                    if (goumaiduilie != null) {
+                        region.click(Common.QUE_DING);
+                    }
+                }
+            }
 
             // 升级
             Match inbuluodating = region.exists(baseDir + "inbuluodating.png", 3);
