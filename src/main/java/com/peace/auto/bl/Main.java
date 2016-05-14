@@ -103,22 +103,24 @@ public class Main {
 
 //        Region region1 = region.newRegion(new Rectangle(92, 456, 70, 14));
 //        Region region1 = region.newRegion(new Rectangle(655, 92, 26, 14));
-        Region region1 = region.newRegion(new Rectangle(335, 456, 70, 14));
-        region1.saveScreenCapture(".", "r");
+//        Region region1 = region.newRegion(new Rectangle(335, 456, 70, 14));
+//        region1.saveScreenCapture(".", "r");
 
         // duobao
 //        ScreenImage simg = region.getScreen().capture(new Rectangle(655, 92, 26, 14));
         //
 //        ScreenImage simg = region.getScreen().capture(new Rectangle(92, 456, 70, 14));
-        ScreenImage simg = region.getScreen().capture(new Rectangle(335, 456, 70, 14));
-        TextRecognizer tr = TextRecognizer.getInstance();
+//        ScreenImage simg = region.getScreen().capture(new Rectangle(335, 456, 70, 14));
+//        TextRecognizer tr = TextRecognizer.getInstance();
+//
+//        BufferedImage binarized = getBlackWhiteImage(simg.getImage());
+//
+//        String word = tr.recognizeWord(binarized);
+//        log.info("{}", word);
 
-        BufferedImage binarized = getBlackWhiteImage(simg.getImage());
+//        new NongChang().Done(region, status);
 
-        String word = tr.recognizeWord(binarized);
-        log.info("{}", word);
-
-//        dayMode(region);
+        dayMode(region);
 //        nightMode(region);
 
         region.close();
@@ -148,7 +150,7 @@ public class Main {
 //        Do(region, Arrays.asList(new ShengHuo()), 21);
 
         // peace jingjichang
-        Do(region, tasks, 56);
+        Do(region, tasks, 70);
 //        Do(region, Arrays.asList(new DuoBao()), 14);
 
 //        Thread.sleep(60 * 60 * 1000);

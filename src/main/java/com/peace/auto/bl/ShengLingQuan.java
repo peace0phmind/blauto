@@ -41,7 +41,8 @@ public class ShengLingQuan implements IDo {
                             region.click(Common.QUE_DING);
                             status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                         }
-                        
+
+                        Thread.sleep(2000L);
                         putongxilian(region);
                     } else {
                         region.click(Common.QU_XIAO);

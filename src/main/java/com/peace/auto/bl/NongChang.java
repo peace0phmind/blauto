@@ -2,9 +2,7 @@ package com.peace.auto.bl;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Match;
-import org.sikuli.script.Region;
+import org.sikuli.script.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +18,7 @@ public class NongChang implements IDo {
     String baseDir = Common.BASE_DIR + "nongchang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI)) {
+        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI) && !status.canDo(Task.NONG_CHANG_TOU_CAI)) {
             return false;
         }
 
@@ -68,8 +66,10 @@ public class NongChang implements IDo {
                 shouhuolong.click();
             }
 
+            Thread.sleep(2000L);
+
             // 喂食
-            Match weishi = region.exists(baseDir + "weishi.png", 0.5);
+            Match weishi = region.exists(baseDir + "weishi.png", 5);
             if (weishi != null) {
                 weishi.click();
             }
@@ -81,19 +81,36 @@ public class NongChang implements IDo {
 
                 Thread.sleep(1000L);
 
-                Match wei = region.exists(baseDir + "wei.png");
-                if (wei != null) {
-                    Iterator<Match> all = region.findAll(baseDir + "wei.png");
-                    while (all.hasNext()) {
-                        all.next().click();
+                // 偷菜
+                if (status.canDo(Task.NONG_CHANG_TOU_CAI)) {
+                    Match zhai = region.exists(baseDir + "zhai.png");
+                    if (zhai != null) {
+                        zhai.click();
                         Thread.sleep(1000L);
 
-                        weishi = region.exists(baseDir + "weishi.png");
-                        if (weishi != null) {
-                            weishi.click();
-                            Thread.sleep(500L);
+                        Match zhaiqu = region.exists(baseDir + "zhaiqu.png");
+                        if (zhaiqu != null) {
+                            zhaiqu.click();
+                            Thread.sleep(1000L);
+
+                            status.Done(Task.NONG_CHANG_TOU_CAI);
                         }
                     }
+                }
+
+                // 喂食
+                weishi(region, status);
+
+                ArrayList<Match> allRen = Lists.newArrayList(region.findAll(baseDir + "rentou.png"));
+                Optional<Match> lastRen = allRen.stream().sorted((a, b) -> b.x - a.x).findFirst();
+                if (lastRen.isPresent()) {
+                    IRobot robot = region.getScreen().getRobot();
+                    Location center = lastRen.get().getCenter();
+                    robot.smoothMove(center, center.left(800), 1000);
+
+                    Thread.sleep(3000L);
+
+                    weishi(region, status);
                 }
             }
         }
@@ -102,5 +119,22 @@ public class NongChang implements IDo {
         region.click(Common.HUI_CHENG);
 
         return true;
+    }
+
+    private void weishi(Region region, Status status) throws FindFailed, InterruptedException {
+        Match wei = region.exists(baseDir + "wei.png");
+        if (wei != null) {
+            Iterator<Match> all = region.findAll(baseDir + "wei.png");
+            while (all.hasNext()) {
+                all.next().click();
+                Thread.sleep(1000L);
+
+                Match weishi = region.exists(baseDir + "weishi.png");
+                if (weishi != null) {
+                    weishi.click();
+                    Thread.sleep(500L);
+                }
+            }
+        }
     }
 }

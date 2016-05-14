@@ -37,7 +37,7 @@ public class DengLu implements IDo {
 
                 Optional<Match> firstqq = qqs.stream().filter(x -> {
                     String text = x.text();
-                    log.info("{}, {}", text, text.length());
+//                    log.info("{}, {}", text, text.length());
                     return lastChar.equals(text.substring(text.length() - 1));
                 }).findFirst();
 
