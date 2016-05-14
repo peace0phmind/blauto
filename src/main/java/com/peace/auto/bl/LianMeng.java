@@ -49,10 +49,12 @@ public class LianMeng implements IDo {
                     Thread.sleep(500L);
                 }
 
-                Match baoming = region.exists(baseDir + "baoming.png", 10);
+                Match baoming = region.exists(baseDir + "baoming.png", 5);
                 if (baoming != null) {
                     baoming.click();
                 }
+
+                Thread.sleep(2000L);
 
                 region.click(Common.CLOSE);
             }
