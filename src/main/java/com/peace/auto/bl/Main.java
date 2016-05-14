@@ -7,7 +7,11 @@ import org.apache.commons.exec.util.StringUtils;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.*;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +49,8 @@ public class Main {
             new RenWu(),
             new JiangLi(),
 
-            // shenghuo
+            new HaiDiShiJie(),
+
             new ShengHuo(),
             new QunYingHui(),
             new ShenQi()
@@ -90,17 +95,30 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws FindFailed, InterruptedException {
+    public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
         Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
 
 //        region.saveScreenCapture(".", "info");
 
-//        Region region1 = region.newRegion(new Rectangle(125, 380, 18, 18));
-//        region1.saveScreenCapture(".", "r");
-//        log.info("{}", region1.text());
+//        Region region1 = region.newRegion(new Rectangle(92, 456, 70, 14));
+//        Region region1 = region.newRegion(new Rectangle(655, 92, 26, 14));
+        Region region1 = region.newRegion(new Rectangle(335, 456, 70, 14));
+        region1.saveScreenCapture(".", "r");
 
-        dayMode(region);
+        // duobao
+//        ScreenImage simg = region.getScreen().capture(new Rectangle(655, 92, 26, 14));
+        //
+//        ScreenImage simg = region.getScreen().capture(new Rectangle(92, 456, 70, 14));
+        ScreenImage simg = region.getScreen().capture(new Rectangle(335, 456, 70, 14));
+        TextRecognizer tr = TextRecognizer.getInstance();
+
+        BufferedImage binarized = getBlackWhiteImage(simg.getImage());
+
+        String word = tr.recognizeWord(binarized);
+        log.info("{}", word);
+
+//        dayMode(region);
 //        nightMode(region);
 
         region.close();
@@ -127,7 +145,7 @@ public class Main {
 //        new DuoBao().xunbao(region);
 //        Do(region, Arrays.asList(new JingJiChang()), 12, false, 10 * 60);
 //        Do(region, Arrays.asList(new LieChang()), 1, false, 1);
-//        Do(region, Arrays.asList(new LianMeng()), 1, false, 1);
+//        Do(region, Arrays.asList(new ShengHuo()), 21);
 
         // peace jingjichang
         Do(region, tasks, 56);
@@ -181,5 +199,47 @@ public class Main {
                 log.info("current user: {}, want user: {}, word: {}", status.getCurrentUser(), status.getWantUser(), word);
             }
         }
+    }
+
+    private static BufferedImage getBlackWhiteImage(BufferedImage original) {
+        BufferedImage binarized = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+        int red;
+        int newPixel;
+        int threshold = 170;
+
+        for (int i = 0; i < original.getWidth(); i++) {
+            for (int j = 0; j < original.getHeight(); j++) {
+
+                // Get pixels
+                red = new Color(original.getRGB(i, j)).getRed();
+
+                int alpha = new Color(original.getRGB(i, j)).getAlpha();
+
+                if (red > threshold) {
+                    newPixel = 0;
+                } else {
+                    newPixel = 255;
+                }
+                newPixel = colorToRGB(alpha, newPixel, newPixel, newPixel);
+                binarized.setRGB(i, j, newPixel);
+
+            }
+        }
+
+        return binarized;
+    }
+
+    private static int colorToRGB(int alpha, int red, int green, int blue) {
+        int newPixel = 0;
+        newPixel += alpha;
+        newPixel = newPixel << 8;
+        newPixel += red;
+        newPixel = newPixel << 8;
+        newPixel += green;
+        newPixel = newPixel << 8;
+        newPixel += blue;
+
+        return newPixel;
     }
 }

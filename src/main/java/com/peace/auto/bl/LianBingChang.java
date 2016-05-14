@@ -21,7 +21,9 @@ public class LianBingChang extends ZhanBao implements IDo {
     List<String> junduis = Arrays.asList(
             "houjun.png",
             "youjun.png",
-            "zuojun.png");
+            "zuojun.png",
+            "qianjun.png",
+            "zhongjun.png");
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (!status.canDo(Task.LIAN_BING_CHANG)) {
@@ -52,6 +54,7 @@ public class LianBingChang extends ZhanBao implements IDo {
                         }
                     }
 
+                    boolean canLianBing = false;
                     for (String jundui : junduis) {
                         Match jd = region.exists(baseDir + jundui);
                         if (jd != null) {
@@ -61,6 +64,7 @@ public class LianBingChang extends ZhanBao implements IDo {
                             Match lianbing = region.exists(baseDir + "lianbing.png");
                             if (lianbing != null && isButtonEnable(lianbing)) {
                                 lianbing.click();
+                                canLianBing = true;
 
                                 Match bunengtongshi = region.exists(baseDir + "bunengtongshichuzheng.png");
                                 if (bunengtongshi != null) {
@@ -74,6 +78,13 @@ public class LianBingChang extends ZhanBao implements IDo {
                                 break;
                             }
                         }
+                    }
+
+                    // 不能练兵,则下次不进行检查。
+                    if (!canLianBing) {
+                        status.Done(Task.LIAN_BING_CHANG);
+                        status.Done(Task.LIAN_BING_CHANG);
+                        status.Done(Task.LIAN_BING_CHANG);
                     }
 
                     Thread.sleep(2000L);

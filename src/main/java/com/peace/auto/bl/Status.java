@@ -62,10 +62,6 @@ public class Status {
         saveObjects();
     }
 
-    public LocalDateTime getLastExecuteTime(Task task) {
-        return getLastExecuteTime(task, currentUser);
-    }
-
     private LocalDateTime getLastExecuteTime(Task task, String userName) {
         Optional<DoLog> lastTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getExecuteTime().compareTo(x.getExecuteTime())).findFirst();
         if (lastTime.isPresent()) {

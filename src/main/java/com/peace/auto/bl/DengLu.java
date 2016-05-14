@@ -88,6 +88,7 @@ public class DengLu implements IDo {
     private boolean closeGongGaoLan(Region region) throws FindFailed, InterruptedException {
         Match gonggaolan = region.exists(baseDir + "gonggaolan.png", 5);
         if (gonggaolan != null && gonggaolan.getScore() > 0.95) {
+            Thread.sleep(5000L);
             Match close = region.exists(Common.CLOSE);
             if (close == null) {
                 return false;

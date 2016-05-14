@@ -16,7 +16,7 @@ public enum Task {
 
     TIAN_SHEN_YUAN_GU(0, 0, 1 * 60 * 60),
 
-    SHENG_HUO(3, -1),
+    SHENG_HUO(3, 3, 10 * 60),
 
     YUE_KA(1),
 
@@ -57,6 +57,8 @@ public enum Task {
     SHENG_LING_QUAN_XIU_LIAN(1, -1, 24 * 60 * 60),
 
     SHENG_LING_QUAN_XI_LIAN(0, -1, 1 * 60 * 60),
+
+    HAI_DI_SHI_JIE(1, -1),
 
     SHEN_QI(1, -1);
 
