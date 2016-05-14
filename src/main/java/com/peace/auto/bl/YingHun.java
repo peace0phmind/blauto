@@ -33,9 +33,10 @@ public class YingHun implements IDo {
                     if (meiri != null && isButtonEnable(meiri)) {
                         meiri.click();
                         status.Done(Task.YING_HUN);
-                        region.click(Common.CLOSE);
-                        Thread.sleep(500L);
                     }
+
+                    region.click(Common.CLOSE);
+                    Thread.sleep(500L);
                 }
             }
 
@@ -66,17 +67,17 @@ public class YingHun implements IDo {
                                         break;
                                     }
                                 }
-
-                                Thread.sleep(1000L);
-                                region.click(Common.CLOSE);
                             }
                         }
                     }
+
+                    Thread.sleep(1000L);
+                    region.click(Common.CLOSE);
                 }
             }
         }
 
-        Thread.sleep(500L);
+        Thread.sleep(1000L);
         region.click(Common.CLOSE);
 
         return true;

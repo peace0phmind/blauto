@@ -15,11 +15,23 @@ import java.util.*;
  * Created by mind on 3/21/16.
  */
 @Slf4j
+@Data
 public class Status {
 
     private static final String LOG_FILE = "./log_map.bin";
-    List<String> users = Arrays.asList("peace0ph001", "peace0ph002", "peace0ph004", "peace0ph006", "peace0ph007", "peace0ph008");
+
+    private static final Map<Integer, String> users = new HashMap<Integer, String>() {{
+        put(1, "peace");
+        put(2, "peace0ph001");
+        put(3, "peace0ph002");
+        put(4, "peace0ph004");
+        put(5, "peace0ph006");
+        put(6, "peace0ph007");
+        put(7, "peace0ph008");
+    }};
+
     private String currentUser;
+    private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
     private LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
     private LocalDateTime today = LocalDate.now().atStartOfDay();
@@ -30,23 +42,32 @@ public class Status {
     }
 
     public String getNextLoginName() {
-        return users.get(loginTimes++ / users.size());
+        if (loginTimes == 0) {
+            wantUser = "peace";
+        }
+        log.info("loginTimes: {}", loginTimes);
+        return users.get(loginTimes++ % users.size() + 1);
     }
 
-    public void changeUser(String currentUser) {
-        this.currentUser = currentUser;
-//        this.currentUserEnd = currentUser.substring(currentUser.length());
+    public boolean changeUser(String num) {
+        this.currentUser = users.get(Integer.valueOf(num));
+        log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
+        return currentUser.equals(wantUser);
     }
 
     public void Done(Task task) {
-        List<DoLog> userLogs = getLogs();
+        List<DoLog> userLogs = getLogs(currentUser);
         userLogs.add(new DoLog(LocalDateTime.now(), LocalDateTime.now().plusSeconds(task.getFinishSecond()), task));
         userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
         saveObjects();
     }
 
     public LocalDateTime getLastExecuteTime(Task task) {
-        Optional<DoLog> lastTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getExecuteTime().compareTo(x.getExecuteTime())).findFirst();
+        return getLastExecuteTime(task, currentUser);
+    }
+
+    private LocalDateTime getLastExecuteTime(Task task, String userName) {
+        Optional<DoLog> lastTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getExecuteTime().compareTo(x.getExecuteTime())).findFirst();
         if (lastTime.isPresent()) {
             return lastTime.get().getExecuteTime();
         } else {
@@ -55,7 +76,11 @@ public class Status {
     }
 
     public LocalDateTime getLastFinishTime(Task task) {
-        Optional<DoLog> lastFinishTime = getLogs().stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getFinishTime().compareTo(x.getFinishTime())).findFirst();
+        return getLastFinishTime(task, currentUser);
+    }
+
+    private LocalDateTime getLastFinishTime(Task task, String userName) {
+        Optional<DoLog> lastFinishTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getFinishTime().compareTo(x.getFinishTime())).findFirst();
         if (lastFinishTime.isPresent()) {
             return lastFinishTime.get().getFinishTime();
         } else {
@@ -64,24 +89,36 @@ public class Status {
     }
 
     public long todayFinishCount(Task task) {
-        return getLogs().stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
+        return todayFinishCount(task, currentUser);
+    }
+
+    private long todayFinishCount(Task task, String userName) {
+        return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
+    }
+
+    public boolean isMaster() {
+        return "peace".equals(currentUser);
     }
 
     public boolean canDo(Task task) {
-        int dayLimit = ".".equals(currentUser) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+        return canDo(task, currentUser);
+    }
+
+    private boolean canDo(Task task, String userName) {
+        int dayLimit = isMaster() ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
         if (dayLimit < 0) {
             return false;
         }
 
         if (dayLimit > 0) {
-            if (todayFinishCount(task) >= dayLimit) {
+            if (todayFinishCount(task, userName) >= dayLimit) {
                 return false;
             }
         }
 
         if (task.getFinishSecond() != 0) {
-            LocalDateTime lastFinishTime = getLastFinishTime(task);
+            LocalDateTime lastFinishTime = getLastFinishTime(task, userName);
             if (lastFinishTime == null) {
                 return true;
             } else {
@@ -92,11 +129,11 @@ public class Status {
         return true;
     }
 
-    private List<DoLog> getLogs() {
-        List<DoLog> doLogs = logMap.get(currentUser);
+    private List<DoLog> getLogs(String userName) {
+        List<DoLog> doLogs = logMap.get(userName);
         if (doLogs == null) {
             doLogs = new ArrayList<>();
-            logMap.put(currentUser, doLogs);
+            logMap.put(userName, doLogs);
         }
 
         return doLogs;

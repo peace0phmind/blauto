@@ -1,15 +1,17 @@
 package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidScreen;
+import com.sun.org.apache.xpath.internal.operations.And;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.exec.util.StringUtils;
 import org.sikuli.basics.Settings;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Match;
-import org.sikuli.script.Region;
+import org.sikuli.script.*;
 
 import java.awt.*;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by mind on 3/2/16.
@@ -94,9 +96,24 @@ public class Main {
 
 //        region.saveScreenCapture(".", "info");
 
-        // qidong login
-        new DengLu().QiDong(region, "peace");
+//        Region region1 = region.newRegion(new Rectangle(125, 380, 18, 18));
+//        region1.saveScreenCapture(".", "r");
+//        log.info("{}", region1.text());
 
+        dayMode(region);
+//        nightMode(region);
+
+        region.close();
+    }
+
+    private static void dayMode(AndroidScreen region) throws FindFailed, InterruptedException {
+        new DengLu().QiDong(region, status);
+//        new DengLu().QiDong(region, status, "peace");
+//        new DengLu().QiDong(region, status, "peace0ph002");
+//        new DengLu().Done(region, status, "peace");
+//        new DengLu().Done(region, status, "peace0ph001");
+
+//        status.setWantUser("peace");
 //        Do(region, tasks, 18);
 
         // xiaohao renwu
@@ -106,28 +123,25 @@ public class Main {
 
         // 切换账号 到peace, 如果peace在最下面
 //        Do(region, tasks, 1, false, 3);
-        Do(region, Arrays.asList(new JingJiChang()), 7, false, 10 * 60);
-        new DuoBao().xunbao(region);
-        Do(region, Arrays.asList(new JingJiChang()), 11, false, 10 * 60);
+//        Do(region, Arrays.asList(new JingJiChang()), 16, false, 10 * 60);
+//        new DuoBao().xunbao(region);
+//        Do(region, Arrays.asList(new JingJiChang()), 12, false, 10 * 60);
 //        Do(region, Arrays.asList(new LieChang()), 1, false, 1);
+//        Do(region, Arrays.asList(new LianMeng()), 1, false, 1);
 
         // peace jingjichang
-        Do(region, tasks, 7);
+        Do(region, tasks, 56);
 //        Do(region, Arrays.asList(new DuoBao()), 14);
 
 //        Thread.sleep(60 * 60 * 1000);
 //
 //        Do(region, tasks, 6);
-
-//        nightMode(region);
-
-        region.close();
     }
 
     private static void nightMode(AndroidScreen region) throws FindFailed, InterruptedException {
-        Thread.sleep(60 * 60 * 1000);
+//        Thread.sleep(30 * 60 * 1000);
 
-        new DengLu().QiDong(region, "peace0ph001");
+//        new DengLu().QiDong(region, "peace0ph001");
         Do(region, tasks, 12);
 
         for (int i = 0; i < 3; i++) {
@@ -153,15 +167,19 @@ public class Main {
                 return;
             }
 
-            Region nameRegion = region.newRegion(new Rectangle(246, 94, 54, 22));
-            String name = nameRegion.text();
+            ScreenImage simg = region.getScreen().capture(new Rectangle(134, 382, 8, 14));
+            TextRecognizer tr = TextRecognizer.getInstance();
+            String word = tr.recognizeWord(simg);
 
             region.click(Common.CLOSE);
             Thread.sleep(1000L);
 
-            String user = name.substring(name.length() - 1);
-            log.info("Recognize name: {}, User is : {}", name, user);
-            status.changeUser(user);
+            if (!status.changeUser(word)) {
+                new DengLu().Done(region, status, status.getWantUser());
+                setUser(region);
+            } else {
+                log.info("current user: {}, want user: {}, word: {}", status.getCurrentUser(), status.getWantUser(), word);
+            }
         }
     }
 }

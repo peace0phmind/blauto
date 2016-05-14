@@ -36,7 +36,8 @@ public class DengLu implements IDo {
                 String lastChar = loginName.substring(loginName.length() - 1);
 
                 Optional<Match> firstqq = qqs.stream().filter(x -> {
-                    String text = x.getText();
+                    String text = x.text();
+                    log.info("{}, {}", text, text.length());
                     return lastChar.equals(text.substring(text.length() - 1));
                 }).findFirst();
 
@@ -45,6 +46,14 @@ public class DengLu implements IDo {
                     Match qq = firstqq.get();
                     log.info("登录: {}", qq.text());
                     qq.click();
+
+                    // 进入部落
+                    return jinrubuluo(region, loginName);
+                } else {
+                    region.click(baseDir + "qqdenglu.png");
+                    Thread.sleep(1000L);
+
+                    region.click(baseDir + "denglu.png");
 
                     // 进入部落
                     return jinrubuluo(region, loginName);
@@ -102,7 +111,11 @@ public class DengLu implements IDo {
     }
 
     public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
+        log.info("reboot to user: {}", loginName);
+
         region.click(Common.MENU);
+
+        status.setWantUser(loginName);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
         if (peizhi != null) {
@@ -119,7 +132,13 @@ public class DengLu implements IDo {
         return false;
     }
 
-    public boolean QiDong(Region region, String loginName) throws FindFailed, InterruptedException {
+    public boolean QiDong(Region region, Status status) throws FindFailed, InterruptedException {
+        return QiDong(region, status, status.getNextLoginName());
+    }
+
+    public boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
+        status.setWantUser(loginName);
+
         Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);
         if (bl != null) {
             bl.click();

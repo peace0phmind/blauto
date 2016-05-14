@@ -31,7 +31,7 @@ public class XunBao implements IDo {
             return false;
         }
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             List<Match> list = Lists.newArrayList(region.findAll(baseDir + "xunbaobutton.png"));
             Optional<Match> lastButton = list.stream().sorted((a, b) -> b.x - a.x).findFirst();
 
