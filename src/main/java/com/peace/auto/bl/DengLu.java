@@ -36,7 +36,7 @@ public class DengLu implements IDo {
                 String lastChar = loginName.substring(loginName.length() - 1);
 
                 Optional<Match> firstqq = qqs.stream().filter(x -> {
-                    String text = x.text();
+                    String text = getWord(x);
 //                    log.info("{}, {}", text, text.length());
                     return lastChar.equals(text.substring(text.length() - 1));
                 }).findFirst();
@@ -44,7 +44,7 @@ public class DengLu implements IDo {
                 // 点击账号
                 if (firstqq.isPresent()) {
                     Match qq = firstqq.get();
-                    log.info("登录: {}", qq.text());
+                    log.info("登录: {}", getWord(qq));
                     qq.click();
 
                     // 进入部落

@@ -52,7 +52,7 @@ public interface IDo {
     }
 
     default String getWord(Region region) {
-        return getWord(region, "0123456789/");
+        return getWord(region, "0123456789/abcdefghijklmnopqrstuvwxyz.-");
     }
 
     default int getNumber(Region region) {

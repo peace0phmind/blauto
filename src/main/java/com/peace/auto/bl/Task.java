@@ -28,7 +28,7 @@ public enum Task {
 
     XUN_BAO(1),
 
-    LIE_CHANG_ZHENG_SHOU(1, -1),
+    LIE_CHANG_ZHENG_SHOU(1),
 
     LIE_CHANG_DA_GUAI(1, -1),
 
