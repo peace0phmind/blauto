@@ -1,5 +1,7 @@
 package com.peace.auto.bl;
 
+import com.peace.sikuli.monkey.AndroidRegion;
+import com.peace.sikuli.monkey.AndroidScreen;
 import org.sikuli.natives.OCR;
 import org.sikuli.script.*;
 
@@ -61,6 +63,14 @@ public interface IDo {
 
     default String getTime(Region region) {
         return getWord(region, "0123456789:");
+    }
+
+    default Region newRegion(Region region, Rectangle rectangle) {
+        if (region instanceof AndroidScreen) {
+            return ((AndroidScreen) region).newRegion(rectangle);
+        }
+
+        return Region.create(rectangle);
     }
 
     default void move(Region region, Location dest, long ms) {

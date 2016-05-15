@@ -2,9 +2,12 @@ package com.peace.auto.bl;
 
 import com.google.common.base.StandardSystemProperty;
 import com.google.common.collect.Lists;
+import com.peace.sikuli.monkey.AndroidRegion;
+import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +23,41 @@ public class DengLu implements IDo {
 
     private float similar = 0.5f;
 
-    private boolean qiehuanzhanghao(Region region, String loginName) throws FindFailed, InterruptedException {
+    public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
+        Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
+        if (touxiang != null) {
+            touxiang.click();
+
+            Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
+            if (qiuzhangxinxi == null) {
+                touxiang.click();
+                qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
+            }
+
+            if (qiuzhangxinxi == null) {
+                return;
+            }
+
+            ;
+//            ScreenImage simg = region.getScreen().capture();
+//            TextRecognizer tr = TextRecognizer.getInstance();
+            int num = getNumber(newRegion(region, new Rectangle(134, 382, 8, 14)));
+
+            region.click(Common.CLOSE);
+            Thread.sleep(1000L);
+
+            if (!status.changeUser(num)) {
+                new DengLu().Done(region, status, status.getWantUser());
+                checkUser(region, status);
+            } else {
+                log.info("current user: {}, want user: {}, num: {}", status.getCurrentUser(), status.getWantUser(), num);
+            }
+        }
+    }
+
+    private boolean qiehuanzhanghao(Region region, Status status) throws FindFailed, InterruptedException {
+        String loginName = status.getWantUser();
+
         Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
         if (qiehuanzhanghao != null) {
             qiehuanzhanghao.click();
@@ -48,7 +85,7 @@ public class DengLu implements IDo {
                     qq.click();
 
                     // 进入部落
-                    return jinrubuluo(region, loginName);
+                    return jinrubuluo(region, status);
                 } else {
                     region.click(baseDir + "qqdenglu.png");
                     Thread.sleep(1000L);
@@ -56,7 +93,7 @@ public class DengLu implements IDo {
                     region.click(baseDir + "denglu.png");
 
                     // 进入部落
-                    return jinrubuluo(region, loginName);
+                    return jinrubuluo(region, status);
                 }
             }
         }
@@ -64,9 +101,9 @@ public class DengLu implements IDo {
         return false;
     }
 
-    private boolean jinrubuluo(Region region, String loginName) throws FindFailed, InterruptedException {
+    private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
         if (!closeGongGaoLan(region)) {
-            if (chongxindenglu(region, loginName)) {
+            if (chongxindenglu(region, status)) {
                 return true;
             }
         }
@@ -77,6 +114,7 @@ public class DengLu implements IDo {
 
             Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
             if (dating != null) {
+                checkUser(region, status);
                 log.info("login ok");
                 return true;
             }
@@ -106,12 +144,12 @@ public class DengLu implements IDo {
         return false;
     }
 
-
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         return Done(region, status, status.getNextLoginName());
     }
 
     public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
+        status.setWantUser(loginName);
         log.info("reboot to user: {}", loginName);
 
         region.click(Common.MENU);
@@ -126,7 +164,7 @@ public class DengLu implements IDo {
             if (tuichudenglu != null) {
                 tuichudenglu.click();
 
-                return chongxindenglu(region, loginName);
+                return chongxindenglu(region, status);
             }
         }
 
@@ -146,20 +184,20 @@ public class DengLu implements IDo {
 
             Thread.sleep(10 * 1000L);
 
-            return jinrubuluo(region, loginName);
+            return jinrubuluo(region, status);
         }
 
         return false;
     }
 
-    private boolean chongxindenglu(Region region, String loginName) throws InterruptedException, FindFailed {
+    private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 5);
         if (qqhaoyouwan != null) {
             qqhaoyouwan.click();
 
             Thread.sleep(6000L);
 
-            return qiehuanzhanghao(region, loginName);
+            return qiehuanzhanghao(region, status);
         }
 
         return false;

@@ -52,6 +52,7 @@ public class Main {
     );
 
     static Status status = new Status();
+    private static DengLu DENG_LU = new DengLu();
 
     static public void Do(AndroidScreen region, List<IDo> dos, int times) {
         Do(region, dos, times, true, 3);
@@ -60,7 +61,7 @@ public class Main {
     static public void Do(AndroidScreen region, List<IDo> dos, int times, boolean reboot, int waitSeconds) {
         try {
             for (int i = 0; i < times; i++) {
-                checkUser(region);
+//                checkUser(region);
 
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -120,38 +121,29 @@ public class Main {
     }
 
     private static void dayMode(AndroidScreen region) throws FindFailed, InterruptedException {
-        new DengLu().QiDong(region, status);
+        DENG_LU.QiDong(region, status);
 
-        Do(region, tasks, 70);
-    }
+        while (true) {
+            try {
+                // 点击收起对话框
+                Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
+                if (duihua != null && duihua.getScore() > 0.95) {
+                    duihua.click();
+                    Thread.sleep(1000L);
+                }
 
-    private static void checkUser(AndroidScreen region) throws FindFailed, InterruptedException {
-        Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
-        if (touxiang != null) {
-            touxiang.click();
+                for (IDo iDo : tasks) {
+                    if (iDo.Done(region, status)) {
+                        Thread.sleep(3 * 1000L);
+                    }
+                }
 
-            Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
-            if (qiuzhangxinxi == null) {
-                touxiang.click();
-                qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png");
-            }
-
-            if (qiuzhangxinxi == null) {
-                return;
-            }
-
-            ScreenImage simg = region.getScreen().capture(new Rectangle(134, 382, 8, 14));
-            TextRecognizer tr = TextRecognizer.getInstance();
-            String word = tr.recognizeWord(simg);
-
-            region.click(Common.CLOSE);
-            Thread.sleep(1000L);
-
-            if (!status.changeUser(word)) {
-                new DengLu().Done(region, status, status.getWantUser());
-                checkUser(region);
-            } else {
-                log.info("current user: {}, want user: {}, word: {}", status.getCurrentUser(), status.getWantUser(), word);
+                DENG_LU.Done(region, status);
+            } catch (FindFailed findFailed) {
+                region.saveScreenCapture(".", "error");
+                log.error("{}", findFailed);
+            } catch (InterruptedException e) {
+                log.error("{}", e);
             }
         }
     }

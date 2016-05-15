@@ -49,8 +49,8 @@ public class Status {
         return users.get(loginTimes++ % users.size() + 1);
     }
 
-    public boolean changeUser(String num) {
-        this.currentUser = users.get(Integer.valueOf(num));
+    public boolean changeUser(int num) {
+        this.currentUser = users.get(num);
         log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
         return currentUser.equals(wantUser);
     }

@@ -91,12 +91,12 @@ public class LieChang implements IDo {
                         }
                     }
                 }
-
-                Thread.sleep(3000L);
-                region.click(baseDir + "huicheng.png");
-
-                return true;
             }
+
+            Thread.sleep(3000L);
+            region.click(baseDir + "huicheng.png");
+
+            return true;
         }
 
         return false;
