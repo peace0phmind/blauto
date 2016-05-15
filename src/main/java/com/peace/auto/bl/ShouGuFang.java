@@ -49,7 +49,7 @@ public class ShouGuFang implements IDo {
             if (shuaxin != null) {
                 // 需要进行狩猎
                 shoulie:
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < 40; i++) {
                     Match daliang = region.exists(baseDir + "daliangniaolong.png");
                     if (daliang != null) {
                         Iterator<Match> all = region.findAll(baseDir + "daliangniaolong.png");

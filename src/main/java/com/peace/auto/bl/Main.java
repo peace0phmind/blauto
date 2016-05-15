@@ -121,34 +121,8 @@ public class Main {
 
     private static void dayMode(AndroidScreen region) throws FindFailed, InterruptedException {
         new DengLu().QiDong(region, status);
-//        new DengLu().QiDong(region, status, "peace");
-//        new DengLu().QiDong(region, status, "peace0ph002");
-//        new DengLu().Done(region, status, "peace");
-//        new DengLu().Done(region, status, "peace0ph001");
 
-//        status.setWantUser("peace");
-//        Do(region, tasks, 18);
-
-        // xiaohao renwu
-//        new DengLu().Done(region, status);
-//        region.click(Common.CLOSE);
-//        region.click(Common.QUE_DING);
-
-        // 切换账号 到peace, 如果peace在最下面
-//        Do(region, tasks, 1, false, 3);
-//        Do(region, Arrays.asList(new JingJiChang()), 16, false, 10 * 60);
-//        new DuoBao().xunbao(region);
-//        Do(region, Arrays.asList(new JingJiChang()), 12, false, 10 * 60);
-//        Do(region, Arrays.asList(new LieChang()), 1, false, 1);
-//        Do(region, Arrays.asList(new ShengHuo()), 21);
-
-        // peace jingjichang
         Do(region, tasks, 70);
-//        Do(region, Arrays.asList(new DuoBao()), 14);
-
-//        Thread.sleep(60 * 60 * 1000);
-//
-//        Do(region, tasks, 6);
     }
 
     private static void checkUser(AndroidScreen region) throws FindFailed, InterruptedException {
