@@ -1,14 +1,17 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/9/16.
  */
+@Slf4j
 public class ChuZheng extends ZhanBao implements IDo {
     String baseDir = Common.BASE_DIR + "chuzheng/";
 
@@ -25,6 +28,19 @@ public class ChuZheng extends ZhanBao implements IDo {
         }
 
         if (canFight(region, status)) {
+            // 获取战力
+            int userZhanLi = 0;
+            Match zhanli = region.exists(baseDir + "zhanli.png");
+            if (zhanli != null) {
+                Region right = zhanli.right(80);
+                userZhanLi = getNumber(right);
+            }
+
+            if (userZhanLi < 20000) {
+                // 获取战力失败
+                return false;
+            }
+
             region.click(Common.MENU);
 
             Match chuzheng = region.exists(baseDir + "chuzheng.png");
@@ -39,7 +55,31 @@ public class ChuZheng extends ZhanBao implements IDo {
                     region.click(baseDir + diren);
                     Thread.sleep(1000L);
 
-                    chuzhenganniu.offset(new Location(0, -50)).click();
+                    // 选择大于战力的第二个
+                    while (true) {
+                        Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.90f));
+                        ArrayList<Match> matches = Lists.newArrayList(all);
+                        if (matches.size() < 3) {
+                            log.error("list size is {}.", matches.size());
+                            return false;
+                        }
+
+                        List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
+
+                        Match match = sortedList.get(0);
+                        Region left = match.left(60);
+
+                        int cankaozhanli = getNumber(left);
+                        log.info("{}, {}", userZhanLi, cankaozhanli);
+                        if (cankaozhanli < userZhanLi) {
+                            move(match, match.getCenter().above(51), 1000);
+                            Thread.sleep(500L);
+                        } else {
+                            sortedList.get(2).click();
+                            break;
+                        }
+                    }
+
                     Thread.sleep(1000L);
 
                     chuzhenganniu.click();

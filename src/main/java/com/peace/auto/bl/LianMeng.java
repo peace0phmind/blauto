@@ -30,7 +30,9 @@ public class LianMeng implements IDo {
 
                 Match shuijin = region.exists(baseDir + "shuijin.png", 5);
                 if (shuijin != null) {
+                    Thread.sleep(1000L);
                     shuijin.below().click(baseDir + "gongfeng.png");
+                    Thread.sleep(1000L);
                     region.click(Common.CLOSE);
                 }
             }

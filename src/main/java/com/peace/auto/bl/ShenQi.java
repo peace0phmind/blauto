@@ -14,11 +14,9 @@ public class ShenQi implements IDo {
             return false;
         }
 
-        IRobot robot = region.getScreen().getRobot();
         Match match = region.exists(baseDir + "shengyu.png");
         if (match != null) {
-            Location center = match.getCenter();
-            robot.smoothMove(center, center.above(300), 1000);
+            move(region, region.getCenter().above(300), 1000);
             Match shenqi = region.exists(baseDir + "shenqi.png");
             if (shenqi != null) {
                 shenqi.click();
@@ -42,7 +40,7 @@ public class ShenQi implements IDo {
                 Thread.sleep(500L);
             }
 
-            robot.smoothMove(center, center.below(300), 1000);
+            move(region, region.getCenter().below(300), 1000);
         }
 
         return true;

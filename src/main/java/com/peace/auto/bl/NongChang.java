@@ -104,9 +104,8 @@ public class NongChang implements IDo {
                 ArrayList<Match> allRen = Lists.newArrayList(region.findAll(baseDir + "rentou.png"));
                 Optional<Match> lastRen = allRen.stream().sorted((a, b) -> b.x - a.x).findFirst();
                 if (lastRen.isPresent()) {
-                    IRobot robot = region.getScreen().getRobot();
-                    Location center = lastRen.get().getCenter();
-                    robot.smoothMove(center, center.left(800), 1000);
+                    Match lr = lastRen.get();
+                    move(lr, lr.getCenter().left(800), 1000);
 
                     Thread.sleep(3000L);
 

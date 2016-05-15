@@ -1,8 +1,7 @@
 package com.peace.auto.bl;
 
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Location;
-import org.sikuli.script.Region;
+import org.sikuli.natives.OCR;
+import org.sikuli.script.*;
 
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -11,24 +10,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+
+import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
 
 /**
  * Created by mind on 3/6/16.
  */
 public interface IDo {
-    Properties properties = new Properties();
-    String FINISHED_PROP = "finished.prop";
-
-    static void setTodayFirstFinished() {
-        properties.setProperty(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.TRUE.toString());
-
-        try {
-            properties.store(new FileWriter(FINISHED_PROP), null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     boolean Done(Region region, Status status) throws FindFailed, InterruptedException;
 
@@ -51,28 +42,29 @@ public interface IDo {
         return region.getScreen().getRobot().getColorAt(cp.getX(), cp.getY());
     }
 
-    default boolean isTodayFirstFinished() {
-        if (properties.isEmpty()) {
-            try {
-                properties.load(new FileReader(FINISHED_PROP));
-            } catch (IOException e) {
-                if (e instanceof FileNotFoundException) {
-                    try (FileWriter fileWriter = new FileWriter(FINISHED_PROP)) {
-                        fileWriter.flush();
-                        properties.load(new FileReader(FINISHED_PROP));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-                e.printStackTrace();
-            }
-            System.out.println("load property");
-
-            if (properties.isEmpty()) {
-                properties.setProperty(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.FALSE.toString());
-            }
+    default String getWord(Region region, String range) {
+        if (range != null && !"".equals(range.trim())) {
+            OCR.setParameter("tessedit_char_whitelist", range);
         }
+        ScreenImage simg = region.getScreen().capture(region.getRect());
+        TextRecognizer tr = TextRecognizer.getInstance();
+        return tr.recognizeWord(simg);
+    }
 
-        return Boolean.valueOf((String) properties.getOrDefault(LocalDate.now().format(DateTimeFormatter.BASIC_ISO_DATE), Boolean.FALSE.toString()));
+    default String getWord(Region region) {
+        return getWord(region, "0123456789/");
+    }
+
+    default int getNumber(Region region) {
+        return Integer.parseInt(getWord(region, "0123456789"));
+    }
+
+    default String getTime(Region region) {
+        return getWord(region, "0123456789:");
+    }
+
+    default void move(Region region, Location dest, long ms) {
+        IRobot robot = region.getScreen().getRobot();
+        robot.smoothMove(region.getCenter(), dest, ms);
     }
 }

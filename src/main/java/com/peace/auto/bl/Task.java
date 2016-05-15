@@ -36,7 +36,7 @@ public enum Task {
 
     HAO_YOU(1, -1),
 
-    CHU_ZHENG_YE_GUAI(1, -1, 8 * 2 * 6 * 60),
+    CHU_ZHENG_YE_GUAI(1, 1, 8 * 2 * 6 * 60),
 
     JING_JI_CHANG(10, 20, 10 * 60),
 

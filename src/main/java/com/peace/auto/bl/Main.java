@@ -1,21 +1,15 @@
 package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidScreen;
-import com.sun.org.apache.xpath.internal.operations.And;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.exec.util.StringUtils;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.*;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by mind on 3/2/16.
@@ -66,7 +60,7 @@ public class Main {
     static public void Do(AndroidScreen region, List<IDo> dos, int times, boolean reboot, int waitSeconds) {
         try {
             for (int i = 0; i < times; i++) {
-                setUser(region);
+                checkUser(region);
 
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -118,10 +112,9 @@ public class Main {
 //        String word = tr.recognizeWord(binarized);
 //        log.info("{}", word);
 
-//        new NongChang().Done(region, status);
+//        new ChuZheng().Done(region, status);
 
         dayMode(region);
-//        nightMode(region);
 
         region.close();
     }
@@ -158,21 +151,7 @@ public class Main {
 //        Do(region, tasks, 6);
     }
 
-    private static void nightMode(AndroidScreen region) throws FindFailed, InterruptedException {
-//        Thread.sleep(30 * 60 * 1000);
-
-//        new DengLu().QiDong(region, "peace0ph001");
-        Do(region, tasks, 12);
-
-        for (int i = 0; i < 3; i++) {
-            // 切换账号 到peace, 如果peace在最下面
-            new DengLu().Done(region, status, "peace");
-            Do(region, Arrays.asList(new JingJiChang()), 6, false, 10 * 60);
-            Do(region, tasks, 7);
-        }
-    }
-
-    private static void setUser(AndroidScreen region) throws FindFailed, InterruptedException {
+    private static void checkUser(AndroidScreen region) throws FindFailed, InterruptedException {
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {
             touxiang.click();
@@ -196,7 +175,7 @@ public class Main {
 
             if (!status.changeUser(word)) {
                 new DengLu().Done(region, status, status.getWantUser());
-                setUser(region);
+                checkUser(region);
             } else {
                 log.info("current user: {}, want user: {}, word: {}", status.getCurrentUser(), status.getWantUser(), word);
             }
