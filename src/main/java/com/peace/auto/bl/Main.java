@@ -54,43 +54,7 @@ public class Main {
     static Status status = new Status();
     private static DengLu DENG_LU = new DengLu();
 
-    static public void Do(AndroidScreen region, List<IDo> dos, int times) {
-        Do(region, dos, times, true, 3);
-    }
-
-    static public void Do(AndroidScreen region, List<IDo> dos, int times, boolean reboot, int waitSeconds) {
-        try {
-            for (int i = 0; i < times; i++) {
-//                checkUser(region);
-
-                // 点击收起对话框
-                Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
-                if (duihua != null && duihua.getScore() > 0.95) {
-                    duihua.click();
-                    Thread.sleep(1000L);
-                }
-
-                for (IDo iDo : dos) {
-                    if (iDo.Done(region, status)) {
-                        Thread.sleep(waitSeconds * 1000L);
-                    }
-                }
-
-                if (reboot) {
-                    if (!new DengLu().Done(region, status)) {
-                        return;
-                    }
-                }
-            }
-        } catch (FindFailed findFailed) {
-            region.saveScreenCapture(".", "error");
-            log.error("{}", findFailed);
-        } catch (InterruptedException e) {
-            log.error("{}", e);
-        }
-    }
-
-    public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
+    public static void main(String[] args) throws FindFailed, InterruptedException {
         Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen();
 
@@ -113,14 +77,15 @@ public class Main {
 //        String word = tr.recognizeWord(binarized);
 //        log.info("{}", word);
 
-//        new ChuZheng().Done(region, status);
+        new HaoYou().Done(region, status);
 
-        dayMode(region);
 
+//        autoMode(region);
+//        status.getNextLoginName();
         region.close();
     }
 
-    private static void dayMode(AndroidScreen region) throws FindFailed, InterruptedException {
+    private static void autoMode(AndroidScreen region) throws FindFailed, InterruptedException {
         DENG_LU.QiDong(region, status);
 
         while (true) {

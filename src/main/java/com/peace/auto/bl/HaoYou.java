@@ -1,10 +1,12 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -34,6 +36,42 @@ public class HaoYou implements IDo {
                     region.click(baseDir + "xiaciba.png");
                     Thread.sleep(500L);
                 }
+            }
+
+            Match haoyoufuli = region.exists(baseDir + "haoyoufuli.png");
+            if (haoyoufuli != null) {
+                haoyoufuli.click();
+
+                Thread.sleep(1000L);
+
+                Match quanbulingqu = region.exists(baseDir + "quanbulingqu.png");
+                if (quanbulingqu != null) {
+                    quanbulingqu.click();
+                    Thread.sleep(500L);
+                }
+
+                region.click(baseDir + "guyong.png");
+                Thread.sleep(1000L);
+                quanbulingqu = region.exists(baseDir + "quanbulingqu.png");
+                if (quanbulingqu != null) {
+                    quanbulingqu.click();
+                    Thread.sleep(500L);
+                }
+
+                region.click(baseDir + "hujiao.png");
+                Thread.sleep(1000L);
+                Match qingtashangxian = region.exists(baseDir + "qingtashangxian.png");
+                if (qingtashangxian != null) {
+                    Iterator<Match> all = region.findAll(baseDir + "qingtashangxian.png");
+                    ArrayList<Match> allqingtashangxian = Lists.newArrayList(all);
+
+                    allqingtashangxian.stream().sorted((a, b) -> b.y - a.y).forEach(x -> {
+                        x.click();
+                    });
+                }
+
+                Thread.sleep(500L);
+                region.click(Common.CLOSE);
             }
         }
 

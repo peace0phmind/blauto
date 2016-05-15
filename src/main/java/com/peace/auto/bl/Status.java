@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Created by mind on 3/21/16.
@@ -46,6 +49,14 @@ public class Status {
             wantUser = "peace";
         }
         log.info("loginTimes: {}", loginTimes);
+
+        ArrayList<Task> tasks = Lists.newArrayList(Task.values());
+
+        Map<String, List<Task>> collect = users.values().stream().collect(Collectors.toMap((u) -> u,
+                (u) -> tasks.stream().filter(t -> canDo(t, u)).collect(Collectors.toList())));
+
+        log.info("{}", collect);
+
         return users.get(loginTimes++ % users.size() + 1);
     }
 
@@ -56,8 +67,12 @@ public class Status {
     }
 
     public void Done(Task task) {
+        Done(task, LocalDateTime.now().plusSeconds(task.getFinishSecond()));
+    }
+
+    public void Done(Task task, LocalDateTime finishTime) {
         List<DoLog> userLogs = getLogs(currentUser);
-        userLogs.add(new DoLog(LocalDateTime.now(), LocalDateTime.now().plusSeconds(task.getFinishSecond()), task));
+        userLogs.add(new DoLog(LocalDateTime.now(), finishTime, task));
         userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
         saveObjects();
     }
@@ -93,7 +108,11 @@ public class Status {
     }
 
     public boolean isMaster() {
-        return "peace".equals(currentUser);
+        return isMaster(currentUser);
+    }
+
+    private boolean isMaster(String userName) {
+        return "peace".equals(userName);
     }
 
     public boolean canDo(Task task) {
@@ -101,7 +120,7 @@ public class Status {
     }
 
     private boolean canDo(Task task, String userName) {
-        int dayLimit = isMaster() ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+        int dayLimit = isMaster(userName) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
         if (dayLimit < 0) {
             return false;

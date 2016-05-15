@@ -50,6 +50,9 @@ public class QunYingHui implements IDo {
                                 lingqu.click();
                             }
                         }
+                    } else {
+                        // 找不到参战,则默认认为已经执行过群英会
+                        status.Done(Task.QUN_YING_HUI);
                     }
 
                     Thread.sleep(1000L);

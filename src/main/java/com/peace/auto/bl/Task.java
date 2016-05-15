@@ -8,13 +8,15 @@ import lombok.Getter;
 @Getter
 public enum Task {
 
-    QUN_YING_HUI(1),
+//    DENG_LU(0, 0, 5 * 60),
+
+    QUN_YING_HUI(2),
 
     NONG_CHANG_ZHONG_ZHI(2, 2, 8 * 60 * 60),
 
     NONG_CHANG_TOU_CAI(1),
 
-    TIAN_SHEN_QI_DAO(0, 0, 1 * 60 * 60),
+    TIAN_SHEN_QI_DAO(0, 0, 12 * 60 * 60),
 
     TIAN_SHEN_YUAN_GU(0, 0, 1 * 60 * 60),
 
@@ -34,7 +36,7 @@ public enum Task {
 
     MEI_RI_JIANG_LI(2),
 
-    HAO_YOU(1, -1),
+    HAO_YOU(1),
 
     CHU_ZHENG_YE_GUAI(1, 1, 8 * 2 * 6 * 60),
 
