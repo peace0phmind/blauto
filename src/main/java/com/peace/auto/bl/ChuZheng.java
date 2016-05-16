@@ -84,9 +84,16 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                     chuzhenganniu.click();
 
+                    Match huolibuzu = region.exists(baseDir + "huolibuzu.png");
+                    if (huolibuzu != null) {
+                        region.click(Common.QUE_DING);
+                        status.Done(Task.CHU_ZHENG_YE_GUAI);
+                    }
+
                     Match zidongbubing = region.exists(baseDir + "zidongbubing.png");
                     if (zidongbubing != null) {
                         zidongbubing.click();
+                        Thread.sleep(500L);
 
                         for (int i = 0; i < 5; i++) {
                             region.click(baseDir + "tianjiacishu.png");
@@ -95,14 +102,16 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                         region.click(baseDir + "quanbubuman.png");
 
+                        Thread.sleep(500L);
+
                         region.click(baseDir + "quedingchuzheng.png");
 
                         status.Done(Task.CHU_ZHENG_YE_GUAI);
-
-                        Thread.sleep(1000L);
-                        // 出征成功, 点击close
-                        region.click(Common.CLOSE);
                     }
+
+                    Thread.sleep(1000L);
+                    // 出征成功, 点击close
+                    region.click(Common.CLOSE);
                 }
             }
 

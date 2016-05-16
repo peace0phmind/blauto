@@ -12,7 +12,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
+import static com.peace.auto.bl.Task.*;
 
 /**
  * Created by mind on 3/21/16.
@@ -32,7 +33,10 @@ public class Status {
         put(6, "peace0ph007");
         put(7, "peace0ph008");
     }};
-
+    Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
+        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE));
+    }};
     private String currentUser;
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
@@ -107,12 +111,17 @@ public class Status {
         return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
     }
 
-    public boolean isMaster() {
-        return isMaster(currentUser);
+    public boolean isMaster(Task task) {
+        return isMaster(task, currentUser);
     }
 
-    private boolean isMaster(String userName) {
-        return "peace".equals(userName);
+    private boolean isMaster(Task task, String userName) {
+        List<Task> tasks = vipUser.get(userName);
+        if (tasks == null || tasks.size() == 0) {
+            return false;
+        }
+
+        return tasks.contains(task);
     }
 
     public boolean canDo(Task task) {
@@ -120,7 +129,7 @@ public class Status {
     }
 
     private boolean canDo(Task task, String userName) {
-        int dayLimit = isMaster(userName) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+        int dayLimit = isMaster(task, userName) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
         if (dayLimit < 0) {
             return false;

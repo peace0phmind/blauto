@@ -12,14 +12,20 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
 
     private ChimpChat chimpChat = null;
 
-    public AndroidScreen() {
+    private String deviceId;
+
+    public AndroidScreen(String deviceId) {
         super();
+
+        this.deviceId = deviceId;
 
         TreeMap<String, String> options = new TreeMap<>();
         options.put("backend", "adb");
         chimpChat = ChimpChat.getInstance(options);
 
-        IChimpDevice iChimpDevice = chimpChat.waitForConnection();
+//        IChimpDevice iChimpDevice = chimpChat.waitForConnection();
+        IChimpDevice iChimpDevice = chimpChat.waitForConnection(10000L, deviceId);
+
 
         String model = iChimpDevice.getProperty("build.model");
         Debug.action("Successfully connect to a device. MODEL: " + model);

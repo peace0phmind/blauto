@@ -54,41 +54,31 @@ public class Main {
     static Status status = new Status();
     private static DengLu DENG_LU = new DengLu();
 
-    public static void main(String[] args) throws FindFailed, InterruptedException {
-        Settings.OcrTextRead = true;
-        AndroidScreen region = new AndroidScreen();
+    public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
+        String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
 
-//        region.saveScreenCapture(".", "info");
+        Runtime rt = Runtime.getRuntime();
+        // 启动
+        Process exec = rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player --no-popup --vm-name " + device1);
+//        rt.exec("VBoxHeadless --startvm " + device1);
+//        rt.exec("VBoxHeadless --comment Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800 --startvm 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --vrde config");
+        Thread.sleep(30 * 1000L);
 
-//        Region region1 = region.newRegion(new Rectangle(92, 456, 70, 14));
-//        Region region1 = region.newRegion(new Rectangle(655, 92, 26, 14));
-//        Region region1 = region.newRegion(new Rectangle(335, 456, 70, 14));
-//        region1.saveScreenCapture(".", "r");
+        log.info("start ok");
 
-        // duobao
-//        ScreenImage simg = region.getScreen().capture(new Rectangle(655, 92, 26, 14));
-        //
-//        ScreenImage simg = region.getScreen().capture(new Rectangle(92, 456, 70, 14));
-//        ScreenImage simg = region.getScreen().capture(new Rectangle(335, 456, 70, 14));
-//        TextRecognizer tr = TextRecognizer.getInstance();
-//
-//        BufferedImage binarized = getBlackWhiteImage(simg.getImage());
-//
-//        String word = tr.recognizeWord(binarized);
-//        log.info("{}", word);
+        autoMode();
 
-        new HaoYou().Done(region, status);
-
-
-//        autoMode(region);
-//        status.getNextLoginName();
-        region.close();
+        // 退出player
+        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --stopadb --vm-name " + device1);
     }
 
-    private static void autoMode(AndroidScreen region) throws FindFailed, InterruptedException {
+    private static void autoMode() throws FindFailed, InterruptedException {
+        Settings.OcrTextRead = true;
+        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
         DENG_LU.QiDong(region, status);
 
-        while (true) {
+//        while (true) {
+        for (int i = 0; i < 7; i++) {
             try {
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -107,10 +97,14 @@ public class Main {
             } catch (FindFailed findFailed) {
                 region.saveScreenCapture(".", "error");
                 log.error("{}", findFailed);
+                break;
             } catch (InterruptedException e) {
                 log.error("{}", e);
+                break;
             }
         }
+
+        region.close();
     }
 
     private static BufferedImage getBlackWhiteImage(BufferedImage original) {
