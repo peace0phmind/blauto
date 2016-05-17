@@ -14,6 +14,8 @@ public enum Task {
 
     NONG_CHANG_ZHONG_ZHI(2, 2, 8 * 60 * 60),
 
+    NONG_CHANG_SHOU_HUO(2, 2, 8 * 60 * 60),
+
     NONG_CHANG_TOU_CAI(1),
 
     TIAN_SHEN_QI_DAO(0, 0, 12 * 60 * 60),

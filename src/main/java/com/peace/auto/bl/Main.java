@@ -58,18 +58,17 @@ public class Main {
         String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
 
         Runtime rt = Runtime.getRuntime();
+        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
+        Thread.sleep(3 * 1000L);
         // 启动
-        Process exec = rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player --no-popup --vm-name " + device1);
-//        rt.exec("VBoxHeadless --startvm " + device1);
-//        rt.exec("VBoxHeadless --comment Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800 --startvm 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --vrde config");
+        Process exec = rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
         Thread.sleep(30 * 1000L);
-
         log.info("start ok");
 
         autoMode();
 
         // 退出player
-        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --stopadb --vm-name " + device1);
+        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
     }
 
     private static void autoMode() throws FindFailed, InterruptedException {
@@ -78,7 +77,7 @@ public class Main {
         DENG_LU.QiDong(region, status);
 
 //        while (true) {
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 1; i++) {
             try {
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -105,6 +104,17 @@ public class Main {
         }
 
         region.close();
+    }
+
+    private static void lingQuXunBao() {
+        String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
+        String device2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
+
+        String device1ip = "192.168.60.101:5555";
+        String device2ip = "192.168.60.102:5555";
+
+
+
     }
 
     private static BufferedImage getBlackWhiteImage(BufferedImage original) {
