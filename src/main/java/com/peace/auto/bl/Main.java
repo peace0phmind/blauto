@@ -1,13 +1,16 @@
 package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidScreen;
+import com.sun.tools.hat.internal.parser.ReadBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,6 +19,7 @@ import java.util.List;
  */
 @Slf4j
 public class Main {
+    private static final String PLAY_PATH = "/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player";
     static List<IDo> tasks = Arrays.asList(
             new ShenShouWu(),
 
@@ -50,34 +54,47 @@ public class Main {
             new ShenQi()
             // duobao
     );
-
     static Status status = new Status();
     private static DengLu DENG_LU = new DengLu();
 
+
+    static String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
-        String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
-
-        Runtime rt = Runtime.getRuntime();
-        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
-        Thread.sleep(3 * 1000L);
-        // 启动
-        Process exec = rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
-        Thread.sleep(30 * 1000L);
-        log.info("start ok");
-
         autoMode();
-
-        // 退出player
-        rt.exec("/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player -x --vm-name 3e08a7ca-d763-44e3-88a8-ce4c1831a1f9 --no-popup");
     }
 
-    private static void autoMode() throws FindFailed, InterruptedException {
+    private static AndroidScreen startDevice(String deviceId) throws IOException, InterruptedException {
+        Runtime rt = Runtime.getRuntime();
+
+        rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, deviceId));
+        Thread.sleep(3 * 1000L);
+        rt.exec(String.format("%s --vm-name %s --no-popup", PLAY_PATH, deviceId));
+
+        Thread.sleep(30 * 1000L);
+
+        Process exec = rt.exec(String.format("VBoxManage guestproperty get %s androvm_ip_management", deviceId));
+        String ip = new BufferedReader(new InputStreamReader(exec.getInputStream())).readLine();
+        ip = ip.replaceAll("Value: ", "") + ":5555";
+
+        log.info("ip: {}", ip);
+
+        return new AndroidScreen(ip.trim());
+    }
+
+    private static void stopDevice(String deviceId) throws IOException {
+        Runtime rt = Runtime.getRuntime();
+
+        rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, deviceId));
+    }
+
+
+    private static void autoMode() throws FindFailed, InterruptedException, IOException {
         Settings.OcrTextRead = true;
-        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
+        AndroidScreen region = startDevice(device1);
         DENG_LU.QiDong(region, status);
 
-//        while (true) {
-        for (int i = 0; i < 1; i++) {
+        while (true) {
+//        for (int i = 0; i < 7; i++) {
             try {
                 // 点击收起对话框
                 Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
@@ -104,16 +121,13 @@ public class Main {
         }
 
         region.close();
+        stopDevice(device1);
     }
 
     private static void lingQuXunBao() {
         String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
         String device2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
-
-        String device1ip = "192.168.60.101:5555";
-        String device2ip = "192.168.60.102:5555";
-
-
+        String device3 = "e10a2c0d-b1cd-40b2-be65-5b714fa9fea1";
 
     }
 

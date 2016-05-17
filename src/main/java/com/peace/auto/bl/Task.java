@@ -14,7 +14,7 @@ public enum Task {
 
     NONG_CHANG_ZHONG_ZHI(2, 2, 8 * 60 * 60),
 
-    NONG_CHANG_SHOU_HUO(2, 2, 8 * 60 * 60),
+    NONG_CHANG_SHOU_HUO(-1),
 
     NONG_CHANG_TOU_CAI(1),
 
@@ -48,7 +48,8 @@ public enum Task {
 
     SHI_CHANG(3, -1),
 
-    SHI_LIAN_DONG(2, 4, 45 * 60),
+    //    SHI_LIAN_DONG(2, 4, 45 * 60),
+    SHI_LIAN_DONG(2, -1, 45 * 60),
 
     SHEN_SHOU_WU(1),
 
