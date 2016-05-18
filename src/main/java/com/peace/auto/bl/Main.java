@@ -55,19 +55,31 @@ public class Main {
             // duobao
     );
     static Status status = new Status();
+    static String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
+    static String device2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
+    static String device3 = "e10a2c0d-b1cd-40b2-be65-5b714fa9fea1";
+
     private static DengLu DENG_LU = new DengLu();
 
-
-    static String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
         autoMode();
+//        testMode();
+    }
+
+    private static void testMode() throws InterruptedException, FindFailed {
+        Settings.OcrTextRead = true;
+        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
+
+        new ShenQi().Done(region, status);
+
+        region.close();
     }
 
     private static AndroidScreen startDevice(String deviceId) throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
 
         rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, deviceId));
-        Thread.sleep(3 * 1000L);
+        Thread.sleep(10 * 1000L);
         rt.exec(String.format("%s --vm-name %s --no-popup", PLAY_PATH, deviceId));
 
         Thread.sleep(30 * 1000L);
@@ -122,13 +134,6 @@ public class Main {
 
         region.close();
         stopDevice(device1);
-    }
-
-    private static void lingQuXunBao() {
-        String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
-        String device2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
-        String device3 = "e10a2c0d-b1cd-40b2-be65-5b714fa9fea1";
-
     }
 
     private static BufferedImage getBlackWhiteImage(BufferedImage original) {

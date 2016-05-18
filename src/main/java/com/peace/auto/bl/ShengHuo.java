@@ -49,27 +49,8 @@ public class ShengHuo implements IDo {
                     lingqu.click();
                 }
 
-                Match langguo = region.exists(baseDir + "langguo.png", 6);
-                if (langguo != null) {
-                    langguo.click();
-
-                    Match huo = region.exists(baseDir + "huo.png", 6);
-                    if (huo != null) {
-                        huo.click();
-
-                        Match quedingduoqu = region.exists(baseDir + "quedingduoqu.png", 6);
-                        if (quedingduoqu != null) {
-                            region.click(Common.QUE_DING);
-
-                            status.Done(Task.SHENG_HUO);
-
-                            Thread.sleep(1000L);
-
-                            region.click(baseDir + "fanhui.png");
-
-                            Thread.sleep(1000L);
-                        }
-                    }
+                if (!duoqu(region, status, "langguo.png")) {
+                    duoqu(region, status, "huguo.png");
                 }
 
                 region.click(Common.CLOSE);
@@ -80,5 +61,36 @@ public class ShengHuo implements IDo {
             }
         }
         return false;
+    }
+
+    private boolean duoqu(Region region, Status status, String guojia) throws FindFailed, InterruptedException {
+        boolean ret = false;
+        Match gj = region.exists(baseDir + guojia, 6);
+        if (gj != null) {
+            gj.click();
+
+            Match huo = region.exists(baseDir + "huo.png", 6);
+            if (huo != null) {
+                huo.click();
+
+                Match quedingduoqu = region.exists(baseDir + "quedingduoqu.png", 6);
+                if (quedingduoqu != null) {
+                    region.click(Common.QUE_DING);
+                    status.Done(Task.SHENG_HUO);
+                    ret = true;
+                }
+
+                Match duoquwan = region.exists(baseDir + "duoquwan.png");
+                if (duoquwan != null) {
+                    region.click(Common.QUE_DING);
+                }
+            }
+
+            Thread.sleep(1000L);
+            region.click(baseDir + "fanhui.png");
+            Thread.sleep(1000L);
+        }
+
+        return ret;
     }
 }
