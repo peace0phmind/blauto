@@ -62,9 +62,9 @@ public class Main {
     private static DengLu DENG_LU = new DengLu();
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
-//        autoMode();
+        autoMode();
 //        testMode();
-        xunbaoMode();
+//        xunbaoMode();
 //        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
     }
 
@@ -78,7 +78,7 @@ public class Main {
         DENG_LU.QiDong(region3, status, "peace0ph004");
 
         new DuoBao().xunbao(region2, region3);
-        
+
         stopDevice(device2);
         stopDevice(device3);
     }
