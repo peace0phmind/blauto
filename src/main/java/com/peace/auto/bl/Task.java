@@ -69,8 +69,7 @@ public enum Task {
 
     SHEN_QI(1),
 
-//    SHEN_XIANG_SHENG_JI(3, 3, 8 * 60 * 60);
-    SHEN_XIANG_SHENG_JI(6);
+    SHEN_XIANG_SHENG_JI(3, 3, 8 * 60 * 60);
 
     private int timesPerDay;
     private long finishSecond;

@@ -63,8 +63,8 @@ public class Main {
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
 //        autoMode();
-        testMode();
-//        xunbaoMode();
+//        testMode();
+        xunbaoMode();
 //        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
     }
 
@@ -77,10 +77,10 @@ public class Main {
         DENG_LU.QiDong(region2, status, "peace0ph006");
         DENG_LU.QiDong(region3, status, "peace0ph004");
 
-        Thread.sleep(30 * 1000L);
-
+        new DuoBao().xunbao(region2, region3);
+        
         stopDevice(device2);
-        stopDevice(device2);
+        stopDevice(device3);
     }
 
     private static void testMode() throws InterruptedException, FindFailed {
