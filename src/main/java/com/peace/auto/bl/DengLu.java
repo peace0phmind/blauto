@@ -110,6 +110,7 @@ public class DengLu implements IDo {
 
         Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 60);
         if (jinrubuluo != null) {
+            Thread.sleep(6000L);
             jinrubuluo.click();
 
             Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);

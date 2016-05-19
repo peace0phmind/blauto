@@ -62,8 +62,25 @@ public class Main {
     private static DengLu DENG_LU = new DengLu();
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
-        autoMode();
-//        testMode();
+//        autoMode();
+        testMode();
+//        xunbaoMode();
+//        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
+    }
+
+    private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
+        Settings.OcrTextRead = true;
+
+        AndroidScreen region2 = startDevice(device2);
+        AndroidScreen region3 = startDevice(device3);
+
+        DENG_LU.QiDong(region2, status, "peace0ph006");
+        DENG_LU.QiDong(region3, status, "peace0ph004");
+
+        Thread.sleep(30 * 1000L);
+
+        stopDevice(device2);
+        stopDevice(device2);
     }
 
     private static void testMode() throws InterruptedException, FindFailed {

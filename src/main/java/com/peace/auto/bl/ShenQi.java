@@ -18,7 +18,7 @@ public class ShenQi implements IDo {
             return false;
         }
 
-        Match shengyu = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f));
+        Match shengyu = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
         if (shengyu != null) {
             move(shengyu, shengyu.getCenter().above(300), 1000);
 
@@ -59,12 +59,16 @@ public class ShenQi implements IDo {
                             sx.click();
                             Thread.sleep(500L);
 
-                            Match jb = region.exists(baseDir + "mianfeijibai.png");
-                            if (jb != null) {
-                                jb.click();
-                                log.info("祭拜 : {}", shenxiang);
-                                Thread.sleep(500L);
-                                bjb = true;
+                            // 免费倒计时不存在,则进行免费祭拜
+                            Match daojishi = region.exists(baseDir + "mianfeidaojishi.png", 6);
+                            if (daojishi == null) {
+                                Match jb = region.exists(baseDir + "mianfeijibai.png");
+                                if (jb != null) {
+                                    jb.click();
+                                    log.info("祭拜 : {}", shenxiang);
+                                    Thread.sleep(500L);
+                                    bjb = true;
+                                }
                             }
                         }
                     }
@@ -79,7 +83,7 @@ public class ShenQi implements IDo {
             region.click(Common.CLOSE);
             Thread.sleep(500L);
 
-            shengyu = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f));
+            shengyu = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
             move(shengyu, shengyu.getCenter().below(300), 1000);
         }
 

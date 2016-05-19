@@ -48,8 +48,8 @@ public enum Task {
 
     SHI_CHANG(3, -1),
 
-    //    SHI_LIAN_DONG(2, 4, 45 * 60),
-    SHI_LIAN_DONG(2, -1, 45 * 60),
+    SHI_LIAN_DONG(2, 4, 45 * 60),
+//    SHI_LIAN_DONG(2, -1, 45 * 60),
 
     SHEN_SHOU_WU(1),
 
@@ -69,7 +69,8 @@ public enum Task {
 
     SHEN_QI(1),
 
-    SHEN_XIANG_SHENG_JI(3, 3, 8 * 60 * 60);
+//    SHEN_XIANG_SHENG_JI(3, 3, 8 * 60 * 60);
+    SHEN_XIANG_SHENG_JI(6);
 
     private int timesPerDay;
     private long finishSecond;

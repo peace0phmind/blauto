@@ -128,7 +128,7 @@ public class Status {
         return canDo(task, currentUser);
     }
 
-    private boolean canDo(Task task, String userName) {
+    public boolean canDo(Task task, String userName) {
         int dayLimit = isMaster(task, userName) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
 
         if (dayLimit < 0) {

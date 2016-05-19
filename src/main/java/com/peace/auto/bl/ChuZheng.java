@@ -70,7 +70,7 @@ public class ChuZheng extends ZhanBao implements IDo {
                         Region left = match.left(60);
 
                         int cankaozhanli = getNumber(left);
-                        log.info("{}, {}", userZhanLi, cankaozhanli);
+                        log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
                         if (cankaozhanli < userZhanLi) {
                             move(match, match.getCenter().above(51), 1000);
                             Thread.sleep(500L);
