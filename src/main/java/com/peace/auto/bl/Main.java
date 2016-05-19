@@ -62,10 +62,23 @@ public class Main {
     private static DengLu DENG_LU = new DengLu();
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
+        Settings.OcrTextRead = true;
+
         autoMode();
+//        autoTestMode();
 //        testMode();
 //        xunbaoMode();
 //        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
+    }
+
+    private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
+        AndroidScreen region = startDevice(device1);
+        DENG_LU.QiDong(region, status, "peace");
+
+        region.saveScreenCapture(".", "info");
+
+        region.close();
+        stopDevice(device1);
     }
 
     private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
@@ -84,7 +97,6 @@ public class Main {
     }
 
     private static void testMode() throws InterruptedException, FindFailed {
-        Settings.OcrTextRead = true;
         AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
 
         new ShenQi().Done(region, status);
@@ -118,7 +130,6 @@ public class Main {
 
 
     private static void autoMode() throws FindFailed, InterruptedException, IOException {
-        Settings.OcrTextRead = true;
         AndroidScreen region = startDevice(device1);
         DENG_LU.QiDong(region, status);
 
