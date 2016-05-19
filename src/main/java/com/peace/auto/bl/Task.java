@@ -22,7 +22,7 @@ public enum Task {
 
     TIAN_SHEN_YUAN_GU(0, 0, 1 * 60 * 60),
 
-    SHENG_HUO(3, 3, 15 * 60),
+    SHENG_HUO(3, 3, 8 * 60),
 
     YUE_KA(1),
 

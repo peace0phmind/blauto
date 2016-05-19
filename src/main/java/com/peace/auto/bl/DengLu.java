@@ -112,6 +112,7 @@ public class DengLu implements IDo {
         if (jinrubuluo != null) {
             Thread.sleep(6000L);
             jinrubuluo.click();
+            log.info("click jinrubuluo");
 
             Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
             if (dating != null) {
@@ -154,8 +155,6 @@ public class DengLu implements IDo {
         log.info("reboot to user: {}", loginName);
 
         region.click(Common.MENU);
-
-        status.setWantUser(loginName);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
         if (peizhi != null) {

@@ -1,10 +1,10 @@
 package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidScreen;
-import com.sun.tools.hat.internal.parser.ReadBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
-import org.sikuli.script.*;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -55,9 +55,9 @@ public class Main {
             // duobao
     );
     static Status status = new Status();
-    static String device1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
-    static String device2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
-    static String device3 = "e10a2c0d-b1cd-40b2-be65-5b714fa9fea1";
+    static String DEVICE_1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
+    static String DEVICE_2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
+    static String DEVICE_3 = "e10a2c0d-b1cd-40b2-be65-5b714fa9fea1";
 
     private static DengLu DENG_LU = new DengLu();
 
@@ -65,39 +65,57 @@ public class Main {
         Settings.OcrTextRead = true;
 
         autoMode();
+//        xunbaoMode(DEVICE_2, "peace0ph008", DEVICE_3, "peace0ph007", false);
+//        xunbaoMode(DEVICE_2, "peace0ph006", DEVICE_3, "peace0ph004");
+//        xunbaoMode(DEVICE_1, "peace", DEVICE_2, "peace0ph001", true);
+//        xunbaoMode(DEVICE_1, "peace", DEVICE_2, "peace0ph001", false);
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
 //        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
     }
 
+    private static void xunbaoMode(String device1, String user1, String device2, String user2, boolean tuOnly) throws InterruptedException, FindFailed, IOException {
+        AndroidScreen region1 = startDevice(device1);
+        AndroidScreen region2 = startDevice(device2);
+
+        DENG_LU.QiDong(region1, status, user1);
+        DENG_LU.QiDong(region2, status, user2);
+
+        new DuoBao().xunbao(region1, region2, tuOnly);
+
+//        stopDevice(device1);
+//        stopDevice(device2);
+    }
+
+    private static void duobaoMode(String device1, String user1, String device2, String user2, boolean tuOnly) throws InterruptedException, FindFailed, IOException {
+        AndroidScreen region1 = startDevice(device1);
+        AndroidScreen region2 = startDevice(device2);
+        AndroidScreen region3 = startDevice(DEVICE_1);
+
+        DENG_LU.QiDong(region1, status, user1);
+        DENG_LU.QiDong(region2, status, user2);
+        DENG_LU.QiDong(region3, status, "peace");
+
+        new DuoBao().xunbao(region1, region2, tuOnly);
+
+        stopDevice(device1);
+        stopDevice(device2);
+    }
+
     private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = startDevice(device1);
+        AndroidScreen region = startDevice(DEVICE_1);
         DENG_LU.QiDong(region, status, "peace");
 
         region.saveScreenCapture(".", "info");
 
         region.close();
-        stopDevice(device1);
+        stopDevice(DEVICE_1);
     }
 
-    private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
-        Settings.OcrTextRead = true;
-
-        AndroidScreen region2 = startDevice(device2);
-        AndroidScreen region3 = startDevice(device3);
-
-        DENG_LU.QiDong(region2, status, "peace0ph006");
-        DENG_LU.QiDong(region3, status, "peace0ph004");
-
-        new DuoBao().xunbao(region2, region3);
-
-        stopDevice(device2);
-        stopDevice(device3);
-    }
-
-    private static void testMode() throws InterruptedException, FindFailed {
-        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
+    private static void testMode() throws InterruptedException, FindFailed, IOException {
+//        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
+        AndroidScreen region = startDevice(DEVICE_1);
 
         new ShenQi().Done(region, status);
 
@@ -130,7 +148,7 @@ public class Main {
 
 
     private static void autoMode() throws FindFailed, InterruptedException, IOException {
-        AndroidScreen region = startDevice(device1);
+        AndroidScreen region = startDevice(DEVICE_1);
         DENG_LU.QiDong(region, status);
 
         while (true) {
@@ -161,7 +179,7 @@ public class Main {
         }
 
         region.close();
-        stopDevice(device1);
+        stopDevice(DEVICE_1);
     }
 
     private static BufferedImage getBlackWhiteImage(BufferedImage original) {

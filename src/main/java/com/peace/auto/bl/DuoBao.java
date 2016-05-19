@@ -28,7 +28,7 @@ public class DuoBao implements IDo {
         return xunbao(region, true);
     }
 
-    public boolean xunbao(Region region1, Region region2) throws InterruptedException, FindFailed {
+    public boolean xunbao(Region region1, Region region2, boolean tuOnly) throws InterruptedException, FindFailed {
         LocalTime now = LocalTime.now();
         if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
                 || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
@@ -66,40 +66,52 @@ public class DuoBao implements IDo {
 
                     Thread.sleep(1000L);
 
-                    Match kaishi1 = region1.exists(baseDir + "kaishixunbao.png");
-                    Match kaishi2 = region2.exists(baseDir + "kaishixunbao.png");
-                    if (kaishi1 != null && kaishi2 != null) {
-                        kaishi1.click();
-                        kaishi2.click();
+                    if (!tuOnly) {
+                        Match kaishi1 = region1.exists(baseDir + "kaishixunbao.png");
+                        Match kaishi2 = region2.exists(baseDir + "kaishixunbao.png");
+                        if (kaishi1 != null && kaishi2 != null) {
+                            kaishi1.click();
+                            kaishi2.click();
+                        }
                     }
                 }
 
                 Thread.sleep(2000L);
 
-                Match chazhao1 = region1.exists(baseDir + "chazhaofangjian.png");
-                Match chazhao2 = region2.exists(baseDir + "chazhaofangjian.png");
-                if (chazhao1 != null && chazhao2 != null) {
-                    // 持续寻宝
-                    Match shurufangjian1 = region1.exists(baseDir + "shurufangjianhaoma.png");
-                    Match shurufangjian2 = region2.exists(baseDir + "shurufangjianhaoma.png");
-                    if (shurufangjian1 != null && shurufangjian2 != null) {
-                        shurufangjian1.type("31");
-                        shurufangjian2.type("31");
-                    }
-                    chazhao1.click();
-                    chazhao2.click();
+                if (!tuOnly) {
+                    Match chazhao1 = region1.exists(baseDir + "chazhaofangjian.png");
+                    Match chazhao2 = region2.exists(baseDir + "chazhaofangjian.png");
+                    if (chazhao1 != null && chazhao2 != null) {
+                        // 持续寻宝
+                        Match shurufangjian1 = region1.exists(baseDir + "shurufangjianhaoma.png");
+                        Match shurufangjian2 = region2.exists(baseDir + "shurufangjianhaoma.png");
+                        if (shurufangjian1 != null && shurufangjian2 != null) {
+                            shurufangjian1.type("31");
+                            shurufangjian2.type("31");
+                        }
+                        chazhao1.click();
+                        chazhao2.click();
 
-                    Thread.sleep(2000L);
+                        Thread.sleep(2000L);
 
-                    Match ru1 = region1.exists(baseDir + "jiaru.png", 60);
-                    Match ru2 = region2.exists(baseDir + "jiaru.png", 60);
-                    if (ru1 != null && ru2 != null) {
-                        Match jiaru1 = getFirstJiaRu(region1);
-                        if (jiaru1 != null) {
-                            jiaru1.click();
-                            Thread.sleep(1000L);
+                        Match ru1 = region1.exists(baseDir + "jiaru.png", 60);
+                        Match ru2 = region2.exists(baseDir + "jiaru.png", 60);
+                        if (ru1 != null && ru2 != null) {
+                            Match jiaru1 = getFirstJiaRu(region1);
+                            if (jiaru1 != null) {
+                                jiaru1.click();
+                                Thread.sleep(1000L);
 
+                                region2.click(baseDir + "shuaxin.png");
 
+                                Thread.sleep(3000L);
+
+                                Match jiaru2 = getFirstJiaRu(region2);
+                                if (jiaru2 != null) {
+                                    jiaru2.click();
+                                }
+
+                            }
                         }
                     }
                 }
