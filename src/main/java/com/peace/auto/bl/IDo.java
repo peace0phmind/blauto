@@ -58,7 +58,7 @@ public interface IDo {
     }
 
     default int getNumber(Region region) {
-        return Integer.parseInt(getWord(region, "0123456789"));
+        return Integer.parseInt(getWord(region, "0123456789").replaceAll(" ", ""));
     }
 
     default String getTime(Region region) {

@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,48 +25,55 @@ public class Status {
 
     private static final String LOG_FILE = "./log_map.bin";
 
-    private static final Map<Integer, String> users = new HashMap<Integer, String>() {{
-        put(1, "peace");
-        put(2, "peace0ph001");
-        put(3, "peace0ph002");
-        put(4, "peace0ph004");
-        put(5, "peace0ph006");
-        put(6, "peace0ph007");
-        put(7, "peace0ph008");
-    }};
+    private static final List<String> users = Arrays.asList(
+            "peace",
+            "peace0ph001",
+            "peace0ph002",
+            "peace0ph004",
+            "peace0ph006",
+            "peace0ph007",
+            "peace0ph008"
+    );
+
     Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE));
     }};
+
     private String currentUser;
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
     private LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
     private LocalDateTime today = LocalDate.now().atStartOfDay();
-    private int loginTimes = 0;
 
     public Status() {
         loadObjects();
     }
 
     public String getNextLoginName() {
-        if (loginTimes == 0) {
-            wantUser = "peace";
+        if (currentUser == null && wantUser == null) {
+            return users.get(0);
         }
-        log.info("loginTimes: {}", loginTimes);
 
         ArrayList<Task> tasks = Lists.newArrayList(Task.values());
 
-        Map<String, List<Task>> collect = users.values().stream().collect(Collectors.toMap((u) -> u,
+        Map<String, List<Task>> collect = users.stream().collect(Collectors.toMap((u) -> u,
                 (u) -> tasks.stream().filter(t -> canDo(t, u)).collect(Collectors.toList())));
 
         log.info("{}", collect);
 
-        return users.get(loginTimes++ % users.size() + 1);
+        String user = currentUser == null ? wantUser : currentUser;
+
+        int index = users.indexOf(user);
+        if (-1 == index) {
+            return users.get(0);
+        }
+
+        return users.get((index + 1) % users.size());
     }
 
     public boolean changeUser(int num) {
-        this.currentUser = users.get(num);
+        this.currentUser = users.get(num - 1);
         log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
         return currentUser.equals(wantUser);
     }
