@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.google.common.collect.Lists;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/2/16.
@@ -21,40 +24,7 @@ import java.util.List;
 @Slf4j
 public class Main {
     private static final String PLAY_PATH = "/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player";
-    static List<IDo> tasks = Arrays.asList(
-            new ShenShouWu(),
 
-            new LianBingChang(),
-            new ShiLianDong(),
-            new ChuZheng(),
-
-            new LieChang(),
-
-            new ShouGuFang(),
-            new XunBao(),
-            new Building(),
-            new NongChang(),
-            new ShengYu(),
-            new TianSheng(),
-            new ShiChang(),
-
-            new LianMeng(),
-            new YingHun(),
-            new HaoYou(),
-
-            new JingJiChang(),
-            new ShengLingQuan(),
-
-            new RenWu(),
-            new JiangLi(),
-
-            new HaiDiShiJie(),
-
-            new ShengHuo(),
-            new QunYingHui(),
-            new ShenQi()
-            // duobao
-    );
     static Status status = new Status();
     static String DEVICE_1 = "3e08a7ca-d763-44e3-88a8-ce4c1831a1f9";
     static String DEVICE_2 = "efc444e7-aeb9-4ce4-8993-9e777ed033d9";
@@ -65,11 +35,11 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
         Settings.OcrTextRead = true;
 
-        autoMode();
-//        xunbaoMode();
+//        autoMode();
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
+        duobaoMode();
     }
 
     private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
@@ -99,9 +69,13 @@ public class Main {
     }
 
     private static void duobaoMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region1 = getRegion(DEVICE_1);
-        AndroidScreen region2 = getRegion(DEVICE_2);
-        AndroidScreen region3 = getRegion(DEVICE_3);
+        AndroidScreen region1 = startDevice(DEVICE_1);
+        AndroidScreen region2 = startDevice(DEVICE_2);
+        AndroidScreen region3 = startDevice(DEVICE_3);
+
+        DENG_LU.QiDong(region1, status, "peace");
+        DENG_LU.QiDong(region2, status, "peace0ph006");
+        DENG_LU.QiDong(region3, status, "peace0ph004");
 
         List<Region> regions = Arrays.asList(region1, region2, region3);
 
@@ -119,6 +93,10 @@ public class Main {
         region1.close();
         region2.close();
         region3.close();
+
+        stopDevice(DEVICE_1);
+        stopDevice(DEVICE_2);
+        stopDevice(DEVICE_3);
     }
 
     private static void duobaoMode(List<Region> regions, List<String> users) throws InterruptedException, FindFailed, IOException {
@@ -200,7 +178,7 @@ public class Main {
                     Thread.sleep(1000L);
                 }
 
-                for (IDo iDo : tasks) {
+                for (IDo iDo : status.getTasks(status.getCurrentUser())) {
                     if (iDo.CanDo(status, status.getCurrentUser())) {
                         if (iDo.Done(region, status)) {
                             Thread.sleep(3 * 1000L);

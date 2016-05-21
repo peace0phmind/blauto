@@ -33,58 +33,67 @@ public class RenWu implements IDo {
         }
 
         // 收集金币
-        Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
-        if (jinbi != null) {
-            jinbi.click();
+        if (status.canDo(Task.SHOU_JI_JIN_BI)) {
+            Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
+            if (jinbi != null) {
+                jinbi.click();
+                status.Done(Task.SHOU_JI_JIN_BI);
+            }
         }
 
         // 收集礼包
-        Match libao = region.exists(baseDir + "libao.png", 0.5);
-        if (libao != null && libao.getScore() > 0.95) {
-            libao.click();
+        if (status.canDo(Task.LI_BAO)) {
+            Match libao = region.exists(baseDir + "libao.png", 0.5);
+            if (libao != null && libao.getScore() > 0.95) {
+                libao.click();
 
-            Match lingqu = region.exists(baseDir + "lingqu.png", 10);
-            if (lingqu != null) {
-                Thread.sleep(2000L);
-                region.click(baseDir + "lingqu.png");
-            }
+                Match lingqu = region.exists(baseDir + "lingqu.png", 10);
+                if (lingqu != null) {
+                    Thread.sleep(2000L);
+                    region.click(baseDir + "lingqu.png");
+                    status.Done(Task.LI_BAO);
+                }
 
-            Match nolibao = region.exists(baseDir + "nolibao.png", 0.5);
-            if (nolibao != null) {
-                region.click(Common.QUE_DING);
+                Match nolibao = region.exists(baseDir + "nolibao.png", 0.5);
+                if (nolibao != null) {
+                    region.click(Common.QUE_DING);
+                }
             }
         }
 
         // 领取任务
-        Match renwu = region.exists(baseDir + "renwu.png", 0.5);
-        if (renwu != null) {
-            renwu.click();
+        if (status.canDo(Task.LIN_QU_REN_WU)) {
+            Match renwu = region.exists(baseDir + "renwu.png", 0.5);
+            if (renwu != null) {
+                renwu.click();
 
-            Thread.sleep(2000L);
+                Thread.sleep(2000L);
 
-            // wait 10 seconds, for check if in task list
-            Match renwulingqu = region.exists(baseDir + "renwulingqu.png", 3);
+                // wait 10 seconds, for check if in task list
+                Match renwulingqu = region.exists(baseDir + "renwulingqu.png", 3);
 
-            if (renwulingqu != null) {
-                for (int i = 0; i < 20; i++) {
+                if (renwulingqu != null) {
+                    for (int i = 0; i < 20; i++) {
 
-                    if (renwulingqu == null) {
-                        break;
-                    } else {
-                        renwulingqu.click();
+                        if (renwulingqu == null) {
+                            break;
+                        } else {
+                            renwulingqu.click();
 
-                        Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-                        if (lingqu != null) {
-                            lingqu.click();
-                            Thread.sleep(2000L);
+                            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+                            if (lingqu != null) {
+                                lingqu.click();
+                                Thread.sleep(2000L);
+                                status.Done(Task.LIN_QU_REN_WU);
+                            }
                         }
+
+                        renwulingqu = region.exists(baseDir + "renwulingqu.png", 0.5);
                     }
-
-                    renwulingqu = region.exists(baseDir + "renwulingqu.png", 0.5);
                 }
-            }
 
-            region.click(Common.CLOSE);
+                region.click(Common.CLOSE);
+            }
         }
 
         return true;
@@ -93,6 +102,13 @@ public class RenWu implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.YUE_KA, userName)
+                && !status.canDo(Task.LI_BAO, userName)
+                && !status.canDo(Task.SHOU_JI_JIN_BI, userName)
+                && !status.canDo(Task.LIN_QU_REN_WU, userName)) {
+            return false;
+        }
+
         return true;
     }
 }

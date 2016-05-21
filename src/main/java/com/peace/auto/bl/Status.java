@@ -55,13 +55,6 @@ public class Status {
             return users.get(0);
         }
 
-        ArrayList<Task> tasks = Lists.newArrayList(Task.values());
-
-        Map<String, List<Task>> collect = users.stream().collect(Collectors.toMap((u) -> u,
-                (u) -> tasks.stream().filter(t -> canDo(t, u)).collect(Collectors.toList())));
-
-        log.info("{}", collect);
-
         String user = currentUser == null ? wantUser : currentUser;
 
         int index = users.indexOf(user);
@@ -70,6 +63,30 @@ public class Status {
         }
 
         return users.get((index + 1) % users.size());
+    }
+
+    public List<IDo> getTasks(String userName) {
+        List<Class<? extends IDo>> ret = new ArrayList<>();
+
+        Lists.newArrayList(Task.values()).forEach(t -> {
+//            if (canDo(t, userName)) {
+            if (!ret.contains(t.getIDoClass())) {
+                ret.add(t.getIDoClass());
+            }
+//            }
+        });
+
+        return ret.stream().map(x -> {
+            try {
+                return x.newInstance();
+            } catch (InstantiationException e) {
+                log.info("{}", e);
+            } catch (IllegalAccessException e) {
+                log.info("{}", e);
+            }
+
+            return null;
+        }).filter(Objects::nonNull).collect(Collectors.toList());
     }
 
     public boolean changeUser(int num) {
