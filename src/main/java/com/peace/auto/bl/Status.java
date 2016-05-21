@@ -69,11 +69,11 @@ public class Status {
         List<Class<? extends IDo>> ret = new ArrayList<>();
 
         Lists.newArrayList(Task.values()).forEach(t -> {
-//            if (canDo(t, userName)) {
-            if (!ret.contains(t.getIDoClass())) {
-                ret.add(t.getIDoClass());
+            if (canDo(t, userName)) {
+                if (!ret.contains(t.getIDoClass())) {
+                    ret.add(t.getIDoClass());
+                }
             }
-//            }
         });
 
         return ret.stream().map(x -> {
@@ -86,7 +86,7 @@ public class Status {
             }
 
             return null;
-        }).filter(Objects::nonNull).collect(Collectors.toList());
+        }).filter(Objects::nonNull).filter(x -> x.CanDo(this, userName)).collect(Collectors.toList());
     }
 
     public boolean changeUser(int num) {

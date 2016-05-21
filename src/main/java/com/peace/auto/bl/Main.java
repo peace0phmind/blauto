@@ -73,11 +73,13 @@ public class Main {
         AndroidScreen region2 = startDevice(DEVICE_2);
         AndroidScreen region3 = startDevice(DEVICE_3);
 
+        List<Region> regions = Arrays.asList(region1, region2, region3);
+        log.info("{}", regions);
+
         DENG_LU.QiDong(region1, status, "peace");
         DENG_LU.QiDong(region2, status, "peace0ph006");
         DENG_LU.QiDong(region3, status, "peace0ph004");
 
-        List<Region> regions = Arrays.asList(region1, region2, region3);
 
         duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
         duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
@@ -179,10 +181,8 @@ public class Main {
                 }
 
                 for (IDo iDo : status.getTasks(status.getCurrentUser())) {
-                    if (iDo.CanDo(status, status.getCurrentUser())) {
-                        if (iDo.Done(region, status)) {
-                            Thread.sleep(3 * 1000L);
-                        }
+                    if (iDo.Done(region, status)) {
+                        Thread.sleep(3 * 1000L);
                     }
                 }
 
