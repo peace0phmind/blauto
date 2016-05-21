@@ -14,7 +14,7 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
         put("backend", "adb");
     }};
 
-    private static final ChimpChat chimpChat = ChimpChat.getInstance(options);
+    private static ChimpChat chimpChat = ChimpChat.getInstance(options);
 
     public AndroidScreen(String deviceId) {
 
@@ -32,7 +32,10 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
     }
 
     public void close() {
-        chimpChat.shutdown();
+        if (chimpChat != null) {
+            chimpChat.shutdown();
+            chimpChat = null;
+        }
     }
 
     private void initScreen() {

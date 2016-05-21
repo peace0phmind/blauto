@@ -23,6 +23,11 @@ public class DengLu implements IDo {
 
     private float similar = 0.5f;
 
+    public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
+        status.setWantUser(userName);
+        checkUser(region, status);
+    }
+
     public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {

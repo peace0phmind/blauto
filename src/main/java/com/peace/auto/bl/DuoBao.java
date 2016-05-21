@@ -3,6 +3,7 @@ package com.peace.auto.bl;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Location;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
@@ -28,12 +29,66 @@ public class DuoBao implements IDo {
         return xunbao(region, true);
     }
 
-    public boolean xunbao(Region region1, Region region2, boolean tuOnly) throws InterruptedException, FindFailed {
+    public boolean duobao(Region region, Region region1, Region region2) throws FindFailed, InterruptedException {
         LocalTime now = LocalTime.now();
         if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
                 || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
             return false;
         }
+
+        region.click(Common.RI_CHANG);
+
+        Thread.sleep(3000L);
+
+        Match tiaozhan = region.exists(baseDir + "tiaozhan.png", 10);
+        if (tiaozhan != null) {
+            tiaozhan.click();
+
+            Thread.sleep(3000L);
+
+            Match duobao = region.exists(baseDir + "duobaoqibing.png", 20);
+            if (duobao != null) {
+                duobao.click();
+
+                region.click(baseDir + "duobaoqibingjingru.png");
+
+                Thread.sleep(2000L);
+
+                Match chazhao = region.exists(baseDir + "chazhaofangjian.png");
+                if (chazhao != null) {
+                    // 持续寻宝
+                    Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");
+                    if (shurufangjian != null) {
+                        shurufangjian.type("31");
+                    }
+                    chazhao.click();
+
+                    Rectangle qiangduo = xunbao(region1, region2, false);
+                    if (qiangduo != null) {
+                        region.click(baseDir + "shuaxin.png");
+                        Thread.sleep(1000L);
+                        newRegion(region, qiangduo).click();
+                    }
+                }
+
+                Thread.sleep(1000L);
+                region.click(Common.CLOSE);
+            }
+            Thread.sleep(500L);
+            region.click(Common.CLOSE);
+        }
+
+        return true;
+    }
+
+    public Rectangle xunbao(Region region1, Region region2, boolean tuOnly) throws InterruptedException, FindFailed {
+        LocalTime now = LocalTime.now();
+        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
+                || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
+            return null;
+        }
+
+        Rectangle ret = null;
 
         region1.click(Common.RI_CHANG);
         region2.click(Common.RI_CHANG);
@@ -109,6 +164,7 @@ public class DuoBao implements IDo {
                                 Match jiaru2 = getFirstJiaRu(region2);
                                 if (jiaru2 != null) {
                                     jiaru2.click();
+                                    ret = jiaru2.getRect();
                                 }
 
                             }
@@ -116,7 +172,7 @@ public class DuoBao implements IDo {
                     }
                 }
 
-                Thread.sleep(3000L);
+                Thread.sleep(1000L);
                 region1.click(Common.CLOSE);
                 region2.click(Common.CLOSE);
             }
@@ -125,7 +181,7 @@ public class DuoBao implements IDo {
             region2.click(Common.CLOSE);
         }
 
-        return true;
+        return ret;
     }
 
     private boolean xunbao(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {

@@ -1,22 +1,10 @@
 package com.peace.auto.bl;
 
-import com.peace.sikuli.monkey.AndroidRegion;
 import com.peace.sikuli.monkey.AndroidScreen;
 import org.sikuli.natives.OCR;
 import org.sikuli.script.*;
 
 import java.awt.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-
-import static com.sun.corba.se.spi.activation.IIOP_CLEAR_TEXT.value;
 
 /**
  * Created by mind on 3/6/16.

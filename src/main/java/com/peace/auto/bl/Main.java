@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Region;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -65,42 +66,60 @@ public class Main {
         Settings.OcrTextRead = true;
 
         autoMode();
-//        xunbaoMode(DEVICE_2, "peace0ph008", DEVICE_3, "peace0ph007", false);
-//        xunbaoMode(DEVICE_2, "peace0ph006", DEVICE_3, "peace0ph004");
-//        xunbaoMode(DEVICE_1, "peace", DEVICE_2, "peace0ph001", true);
-//        xunbaoMode(DEVICE_1, "peace", DEVICE_2, "peace0ph001", false);
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
-//        status.canDo(Task.SHEN_XIANG_SHENG_JI, "peace");
     }
 
-    private static void xunbaoMode(String device1, String user1, String device2, String user2, boolean tuOnly) throws InterruptedException, FindFailed, IOException {
-        AndroidScreen region1 = startDevice(device1);
-        AndroidScreen region2 = startDevice(device2);
+    private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
+        AndroidScreen region1 = startDevice(DEVICE_1);
+        AndroidScreen region2 = startDevice(DEVICE_2);
 
-        DENG_LU.QiDong(region1, status, user1);
-        DENG_LU.QiDong(region2, status, user2);
+        DENG_LU.QiDong(region1, status, "peace");
+        DENG_LU.QiDong(region2, status, "peace0ph001");
 
-        new DuoBao().xunbao(region1, region2, tuOnly);
+//        DENG_LU.checkUser(region1, status, user1);
+//        DENG_LU.checkUser(region2, status, user2);
 
-//        stopDevice(device1);
-//        stopDevice(device2);
+        new DuoBao().xunbao(region1, region2, false);
+
+
+        region1.close();
+        region2.close();
+
+        stopDevice(DEVICE_1);
+        stopDevice(DEVICE_2);
     }
 
-    private static void duobaoMode(String device1, String user1, String device2, String user2, boolean tuOnly) throws InterruptedException, FindFailed, IOException {
-        AndroidScreen region1 = startDevice(device1);
-        AndroidScreen region2 = startDevice(device2);
-        AndroidScreen region3 = startDevice(DEVICE_1);
+    private static void duobaoMode() throws IOException, InterruptedException, FindFailed {
+        AndroidScreen region1 = getRegion(DEVICE_1);
+        AndroidScreen region2 = getRegion(DEVICE_2);
+        AndroidScreen region3 = getRegion(DEVICE_3);
 
-        DENG_LU.QiDong(region1, status, user1);
-        DENG_LU.QiDong(region2, status, user2);
-        DENG_LU.QiDong(region3, status, "peace");
+        List<Region> regions = Arrays.asList(region1, region2, region3);
 
-        new DuoBao().xunbao(region1, region2, tuOnly);
+        duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
+        duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
+        Thread.sleep(10 * 60 * 1000L);
 
-        stopDevice(device1);
-        stopDevice(device2);
+        duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
+        duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
+        Thread.sleep(10 * 60 * 1000L);
+
+        duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
+        duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph008", "peace0ph007"));
+
+        region1.close();
+        region2.close();
+        region3.close();
+    }
+
+    private static void duobaoMode(List<Region> regions, List<String> users) throws InterruptedException, FindFailed, IOException {
+        DENG_LU.checkUser(regions.get(0), status, users.get(0));
+        DENG_LU.checkUser(regions.get(1), status, users.get(1));
+        DENG_LU.checkUser(regions.get(2), status, users.get(2));
+
+        new DuoBao().duobao(regions.get(0), regions.get(1), regions.get(2));
     }
 
     private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
@@ -139,6 +158,19 @@ public class Main {
 
         return new AndroidScreen(ip.trim());
     }
+
+    private static AndroidScreen getRegion(String deviceId) throws IOException, InterruptedException {
+        Runtime rt = Runtime.getRuntime();
+
+        Process exec = rt.exec(String.format("VBoxManage guestproperty get %s androvm_ip_management", deviceId));
+        String ip = new BufferedReader(new InputStreamReader(exec.getInputStream())).readLine();
+        ip = ip.replaceAll("Value: ", "") + ":5555";
+
+        log.info("ip: {}", ip);
+
+        return new AndroidScreen(ip.trim());
+    }
+
 
     private static void stopDevice(String deviceId) throws IOException {
         Runtime rt = Runtime.getRuntime();
