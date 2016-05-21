@@ -25,6 +25,11 @@ public class DuoBao implements IDo {
         return xunbao(region, false);
     }
 
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return true;
+    }
+
     public boolean xunbao(Region region) throws InterruptedException, FindFailed {
         return xunbao(region, true);
     }

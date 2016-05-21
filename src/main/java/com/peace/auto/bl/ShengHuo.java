@@ -16,16 +16,6 @@ public class ShengHuo implements IDo {
 
     @Override
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        LocalTime now = LocalTime.now();
-        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(14, 0)))
-                || (now.isAfter(LocalTime.of(20, 30)) && now.isBefore(LocalTime.of(23, 0))))) {
-            return false;
-        }
-
-        if (!status.canDo(Task.SHENG_HUO)) {
-            return false;
-        }
-
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -61,6 +51,17 @@ public class ShengHuo implements IDo {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        LocalTime now = LocalTime.now();
+        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(14, 0)))
+                || (now.isAfter(LocalTime.of(20, 30)) && now.isBefore(LocalTime.of(23, 0))))) {
+            return false;
+        }
+
+        return status.canDo(Task.SHENG_HUO);
     }
 
     private boolean duoqu(Region region, Status status, String guojia) throws FindFailed, InterruptedException {

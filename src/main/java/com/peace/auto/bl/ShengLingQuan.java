@@ -13,10 +13,6 @@ public class ShengLingQuan implements IDo {
     String baseDir = Common.BASE_DIR + "shenglingquan/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHENG_LING_QUAN_XIU_LIAN) && !status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
-            return false;
-        }
-
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -80,6 +76,15 @@ public class ShengLingQuan implements IDo {
         }
 
         region.click(Common.CLOSE);
+
+        return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.SHENG_LING_QUAN_XIU_LIAN) && !status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
+            return false;
+        }
 
         return true;
     }

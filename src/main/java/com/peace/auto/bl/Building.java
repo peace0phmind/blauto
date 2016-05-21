@@ -33,8 +33,11 @@ public class Building implements IDo {
 
     String baseDir = Common.BASE_DIR + "building/";
 
-    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.BUILDING, userName);
+    }
 
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.doubleClick(baseDir + "building.png");
 
         Thread.sleep(1000L);
@@ -80,6 +83,8 @@ public class Building implements IDo {
                     } while (isButtonEnable(match));
                 }
             }
+
+            status.Done(Task.BUILDING);
         }
 
         region.click(Common.CLOSE);

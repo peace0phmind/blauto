@@ -14,10 +14,6 @@ public class ShenQi implements IDo {
     private static final String baseDir = Common.BASE_DIR + "shenqi/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHEN_QI) && !status.canDo(Task.SHEN_XIANG_SHENG_JI)) {
-            return false;
-        }
-
         Match bashou = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
         if (bashou != null) {
             move(bashou, bashou.getCenter().above(300), 1000);
@@ -45,7 +41,6 @@ public class ShenQi implements IDo {
                     }
                     Thread.sleep(500L);
                 }
-
 
                 // 神像升级
                 if (status.canDo(Task.SHEN_XIANG_SHENG_JI)) {
@@ -87,6 +82,15 @@ public class ShenQi implements IDo {
 
             bashou = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
             move(bashou, bashou.getCenter().below(300), 1000);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.SHEN_QI) && !status.canDo(Task.SHEN_XIANG_SHENG_JI)) {
+            return false;
         }
 
         return true;

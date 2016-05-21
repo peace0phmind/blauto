@@ -11,10 +11,6 @@ public class QunYingHui implements IDo {
     String baseDir = Common.BASE_DIR + "qunyinghui/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.QUN_YING_HUI)) {
-            return false;
-        }
-
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -66,5 +62,10 @@ public class QunYingHui implements IDo {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.QUN_YING_HUI);
     }
 }

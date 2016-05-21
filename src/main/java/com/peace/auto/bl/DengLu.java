@@ -23,6 +23,8 @@ public class DengLu implements IDo {
 
     private float similar = 0.5f;
 
+
+
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         status.setWantUser(userName);
         checkUser(region, status);
@@ -153,6 +155,11 @@ public class DengLu implements IDo {
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         return Done(region, status, status.getNextLoginName());
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return true;
     }
 
     public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {

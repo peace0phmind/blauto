@@ -17,10 +17,6 @@ public class ShouGuFang implements IDo {
     private String baseDir = Common.BASE_DIR + "shougufang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHOU_GU_JIA_GONG) && !status.canDo(Task.SHOU_GU_SHOU_LIE)) {
-            return false;
-        }
-
         // 进入兽骨坊
         region.doubleClick(baseDir + "shougufang.png");
         Match inshougufang = region.exists(baseDir + "inshougufang.png", 10);
@@ -77,6 +73,15 @@ public class ShouGuFang implements IDo {
         }
 
         region.click(Common.CLOSE);
+
+        return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.SHOU_GU_JIA_GONG) && !status.canDo(Task.SHOU_GU_SHOU_LIE)) {
+            return false;
+        }
 
         return true;
     }

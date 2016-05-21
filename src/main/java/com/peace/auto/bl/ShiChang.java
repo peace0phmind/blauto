@@ -17,10 +17,6 @@ public class ShiChang implements IDo {
     String baseDir = Common.BASE_DIR + "shichang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHI_CHANG)) {
-            return false;
-        }
-
         Match shichang = region.exists(baseDir + "shichang.png");
 
         if (shichang != null) {
@@ -67,5 +63,10 @@ public class ShiChang implements IDo {
         }
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.SHI_CHANG);
     }
 }

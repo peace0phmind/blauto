@@ -17,10 +17,6 @@ public class HaoYou implements IDo {
     String baseDir = Common.BASE_DIR + "haoyou/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.HAO_YOU)) {
-            return false;
-        }
-
         region.click(Common.MENU);
 
         Match haoyou = region.exists(baseDir + "haoyou.png", 3);
@@ -82,5 +78,10 @@ public class HaoYou implements IDo {
         region.click(Common.MENU1);
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.HAO_YOU);
     }
 }

@@ -22,11 +22,11 @@ public class ChuZheng extends ZhanBao implements IDo {
             "heiwuyaowu.png"
     );
 
-    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.CHU_ZHENG_YE_GUAI)) {
-            return false;
-        }
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.CHU_ZHENG_YE_GUAI, userName);
+    }
 
+    public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (canFight(region, status)) {
             // 获取战力
             int userZhanLi = 0;

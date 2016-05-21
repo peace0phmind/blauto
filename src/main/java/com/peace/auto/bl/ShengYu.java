@@ -42,10 +42,17 @@ public class ShengYu implements IDo {
                     }
                 } while (isButtonEnable(shengji));
             }
+
+            status.Done(Task.SHENG_YU);
         }
 
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.SHENG_YU, userName);
     }
 }

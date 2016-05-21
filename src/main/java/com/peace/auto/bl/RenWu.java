@@ -90,4 +90,9 @@ public class RenWu implements IDo {
         return true;
 
     }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return true;
+    }
 }

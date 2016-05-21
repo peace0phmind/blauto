@@ -18,10 +18,6 @@ public class NongChang implements IDo {
     String baseDir = Common.BASE_DIR + "nongchang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI) && !status.canDo(Task.NONG_CHANG_TOU_CAI)) {
-            return false;
-        }
-
         region.click(baseDir + "nongchang.png");
 
         Match innongchang = region.exists(baseDir + "innongchang.png", 30);
@@ -116,6 +112,15 @@ public class NongChang implements IDo {
 
         Thread.sleep(500L);
         region.click(Common.HUI_CHENG);
+
+        return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI) && !status.canDo(Task.NONG_CHANG_TOU_CAI)) {
+            return false;
+        }
 
         return true;
     }

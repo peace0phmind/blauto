@@ -13,6 +13,8 @@ public interface IDo {
 
     boolean Done(Region region, Status status) throws FindFailed, InterruptedException;
 
+    boolean CanDo(Status status, String userName);
+
     default boolean isButtonEnable(Region region) {
         return isButtonEnable(region, 0, 0);
     }

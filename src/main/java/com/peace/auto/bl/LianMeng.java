@@ -13,10 +13,6 @@ public class LianMeng implements IDo {
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.LIAN_MENG)) {
-            return false;
-        }
-
         region.click(Common.MENU);
 
         Match lianmeng = region.exists(baseDir + "lianmeng.png", 3);
@@ -89,6 +85,11 @@ public class LianMeng implements IDo {
         region.click(Common.MENU1);
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.LIAN_MENG);
     }
 
     private void juanxian(Region region, int iRenLi) throws FindFailed, InterruptedException {

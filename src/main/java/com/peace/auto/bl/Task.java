@@ -10,6 +10,10 @@ public enum Task {
 
 //    DENG_LU(0, 0, 5 * 60),
 
+    BUILDING(0, 0, 10 * 60),
+
+    SHENG_YU(0, 0, 10 * 60),
+
     QUN_YING_HUI(2),
 
     NONG_CHANG_ZHONG_ZHI(2, 2, 8 * 60 * 60),

@@ -20,10 +20,6 @@ public class LieChang implements IDo {
     String baseDir = Common.BASE_DIR + "liechang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU) && !status.canDo(Task.LIE_CHANG_DA_GUAI)) {
-            return false;
-        }
-
         Match liechang = region.exists(baseDir + "liechang.png");
         if (liechang != null) {
             liechang.click();
@@ -100,5 +96,14 @@ public class LieChang implements IDo {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU) && !status.canDo(Task.LIE_CHANG_DA_GUAI)) {
+            return false;
+        }
+
+        return true;
     }
 }

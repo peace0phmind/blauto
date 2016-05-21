@@ -16,14 +16,6 @@ public class JingJiChang implements IDo {
     String baseDir = Common.BASE_DIR + "jingjichang/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (LocalTime.now().isAfter(LocalTime.of(23, 45)) || LocalTime.now().isBefore(LocalTime.of(0, 15))) {
-            return false;
-        }
-
-        if (!status.canDo(Task.JING_JI_CHANG)) {
-            return false;
-        }
-
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);
@@ -74,5 +66,14 @@ public class JingJiChang implements IDo {
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        if (LocalTime.now().isAfter(LocalTime.of(23, 45)) || LocalTime.now().isBefore(LocalTime.of(0, 15))) {
+            return false;
+        }
+
+        return status.canDo(Task.JING_JI_CHANG);
     }
 }

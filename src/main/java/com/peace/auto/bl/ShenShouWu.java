@@ -13,10 +13,6 @@ public class ShenShouWu implements IDo {
     String baseDir = Common.BASE_DIR + "shenshouwu/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHEN_SHOU_WU)) {
-            return false;
-        }
-
         Match shenshouwu = region.exists(baseDir + "shenshouwu.png");
 
         if (shenshouwu != null) {
@@ -45,5 +41,10 @@ public class ShenShouWu implements IDo {
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.SHEN_SHOU_WU);
     }
 }

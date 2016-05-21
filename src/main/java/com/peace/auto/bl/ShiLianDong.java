@@ -11,10 +11,6 @@ public class ShiLianDong extends ZhanBao implements IDo {
     String baseDir = Common.BASE_DIR + "shiliandong/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!status.canDo(Task.SHI_LIAN_DONG)) {
-            return false;
-        }
-
         if (canFight(region, status)) {
             region.click(Common.RI_CHANG);
 
@@ -75,5 +71,10 @@ public class ShiLianDong extends ZhanBao implements IDo {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean CanDo(Status status, String userName) {
+        return status.canDo(Task.SHI_LIAN_DONG);
     }
 }
