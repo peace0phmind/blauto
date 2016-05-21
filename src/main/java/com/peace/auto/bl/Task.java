@@ -8,7 +8,8 @@ import lombok.Getter;
 @Getter
 public enum Task {
 
-//    DENG_LU(0, 0, 5 * 60),
+    //    DENG_LU(0, 0, 5 * 60),
+    SHEN_SHOU_WU(1),
 
     BUILDING(0, 0, 10 * 60),
 
@@ -54,8 +55,6 @@ public enum Task {
 
     SHI_LIAN_DONG(2, 4, 45 * 60),
 //    SHI_LIAN_DONG(2, -1, 45 * 60),
-
-    SHEN_SHOU_WU(1),
 
     LIAN_MENG(1),
 

@@ -115,9 +115,22 @@ public class DengLu implements IDo {
             }
         }
 
-        Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 60);
+        Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
+        int i = 0;
+        while (jinrubuluo == null) {
+            i++;
+            Match close = region.exists(Common.CLOSE);
+            if (close != null) {
+                close.click();
+                jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
+            }
+
+            if (i > 30) {
+                return false;
+            }
+        }
+
         if (jinrubuluo != null) {
-            Thread.sleep(6000L);
             jinrubuluo.click();
             log.info("click jinrubuluo");
 

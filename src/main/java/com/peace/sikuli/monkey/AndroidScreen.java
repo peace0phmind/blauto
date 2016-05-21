@@ -14,13 +14,14 @@ public class AndroidScreen extends AndroidRegion implements IScreen {
         put("backend", "adb");
     }};
 
-    private static ChimpChat chimpChat = ChimpChat.getInstance(options);
+    private static ChimpChat chimpChat = null;
 
     public AndroidScreen(String deviceId) {
+        if (chimpChat == null) {
+            chimpChat = ChimpChat.getInstance(options);
+        }
 
-//        IChimpDevice iChimpDevice = chimpChat.waitForConnection();
         IChimpDevice iChimpDevice = chimpChat.waitForConnection(10000L, deviceId);
-
 
         String model = iChimpDevice.getProperty("build.model");
         Debug.action("Successfully connect to a device. MODEL: " + model);

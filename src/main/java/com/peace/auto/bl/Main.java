@@ -66,6 +66,7 @@ public class Main {
         Settings.OcrTextRead = true;
 
         autoMode();
+//        xunbaoMode();
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
@@ -80,6 +81,12 @@ public class Main {
 
 //        DENG_LU.checkUser(region1, status, user1);
 //        DENG_LU.checkUser(region2, status, user2);
+
+        new DuoBao().xunbao(region1, region2, false);
+        Thread.sleep(5 * 60 * 1000L);
+
+        new DuoBao().xunbao(region1, region2, false);
+        Thread.sleep(5 * 60 * 1000L);
 
         new DuoBao().xunbao(region1, region2, false);
 
