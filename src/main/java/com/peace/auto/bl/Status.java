@@ -36,8 +36,8 @@ public class Status {
     );
 
     Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
-        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE));
+        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
     }};
 
     private String currentUser;
