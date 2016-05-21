@@ -109,6 +109,65 @@ public class TianSheng implements IDo {
                 }
             }
 
+            if (status.canDo(Task.TIAN_SHEN_LUAN_DOU)) {
+                // 天神大乱斗
+                Match tianshendaluandou = region.exists(baseDir + "tianshendaluandou.png");
+                if (tianshendaluandou != null) {
+                    tianshendaluandou.click();
+                    Thread.sleep(1000L);
+
+                    Match right = region.exists(baseDir + "right.png");
+                    while (right != null) {
+                        right.click();
+                        Thread.sleep(500L);
+                        right = region.exists(baseDir + "right.png");
+                    }
+
+                    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
+
+                    Match sanxing = region.exists(sanxingpng);
+                    if (sanxing == null) {
+                        Match left = region.exists(baseDir + "left.png");
+                        if (left != null) {
+                            left.click();
+                            Thread.sleep(500L);
+                        } else {
+                            return true;
+                        }
+                    }
+
+                    sanxing = region.exists(sanxingpng);
+                    if (sanxing != null) {
+                        List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
+
+                        Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
+                        if (lastsanxing.isPresent()) {
+                            Match sx = lastsanxing.get();
+                            log.info("{}", sx);
+                            sx.click();
+                            Thread.sleep(500L);
+
+                            for (int i = 0; i < 25; i++) {
+                                region.click(baseDir + "saodang.png");
+                                Match shenglibugou = region.exists(baseDir + "hunlibuzu.png", 1);
+                                if (shenglibugou != null) {
+                                    Thread.sleep(500L);
+                                    region.click(Common.QUE_DING);
+                                    status.Done(Task.TIAN_SHEN_LUAN_DOU);
+                                    break;
+                                }
+                            }
+
+                            Thread.sleep(500L);
+                            region.click(baseDir + "xiaoclose.png");
+                        }
+
+                        Thread.sleep(500L);
+                        region.click(Common.CLOSE);
+                    }
+                }
+            }
+
             Thread.sleep(500L);
             region.click(Common.CLOSE);
         }

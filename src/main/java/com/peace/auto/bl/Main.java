@@ -1,6 +1,5 @@
 package com.peace.auto.bl;
 
-import com.google.common.collect.Lists;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Settings;
@@ -15,8 +14,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/2/16.
@@ -35,11 +32,11 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException {
         Settings.OcrTextRead = true;
 
-//        autoMode();
+        autoMode();
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
-        duobaoMode();
+//        duobaoMode();
     }
 
     private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
@@ -49,9 +46,6 @@ public class Main {
         DENG_LU.QiDong(region1, status, "peace");
         DENG_LU.QiDong(region2, status, "peace0ph001");
 
-//        DENG_LU.checkUser(region1, status, user1);
-//        DENG_LU.checkUser(region2, status, user2);
-
         new DuoBao().xunbao(region1, region2, false);
         Thread.sleep(5 * 60 * 1000L);
 
@@ -59,7 +53,6 @@ public class Main {
         Thread.sleep(5 * 60 * 1000L);
 
         new DuoBao().xunbao(region1, region2, false);
-
 
         region1.close();
         region2.close();
@@ -111,19 +104,20 @@ public class Main {
 
     private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
         AndroidScreen region = startDevice(DEVICE_1);
-        DENG_LU.QiDong(region, status, "peace");
+        DENG_LU.QiDong(region, status, "peace0ph006");
 
-        region.saveScreenCapture(".", "info");
+        new TianSheng().Done(region, status);
 
         region.close();
-        stopDevice(DEVICE_1);
+//        stopDevice(DEVICE_1);
     }
 
     private static void testMode() throws InterruptedException, FindFailed, IOException {
 //        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
-        AndroidScreen region = startDevice(DEVICE_1);
+//        AndroidScreen region = startDevice(DEVICE_1);
+        AndroidScreen region = getRegion(DEVICE_1);
 
-        new ShenQi().Done(region, status);
+        new TianSheng().Done(region, status);
 
         region.close();
     }
