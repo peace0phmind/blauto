@@ -27,10 +27,11 @@ public class JingJiChang implements IDo {
             Match injingjichang = region.exists(baseDir + "injingjichang.png", 30);
             if (injingjichang != null) {
                 // 每天首次执行,领取奖励
-                if (status.todayFinishCount(Task.JING_JI_CHANG) == 0) {
+                if (status.canDo(Task.JING_JI_CHANG_LING_QU)) {
                     Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
                     if (lingqujiangli != null) {
                         lingqujiangli.click();
+                        status.Done(Task.JING_JI_CHANG_LING_QU);
                     }
                 }
 
@@ -74,6 +75,11 @@ public class JingJiChang implements IDo {
             return false;
         }
 
-        return status.canDo(Task.JING_JI_CHANG);
+        if (!status.canDo(Task.JING_JI_CHANG_LING_QU)
+                && !status.canDo(Task.JING_JI_CHANG)) {
+            return false;
+        }
+
+        return true;
     }
 }

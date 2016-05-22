@@ -43,6 +43,7 @@ public enum Task {
     RONG_LIAN(YingHun.class, 1),
 
     JING_JI_CHANG(JingJiChang.class, 10, 20, 10 * 60),
+    JING_JI_CHANG_LING_QU(JingJiChang.class, 1),
 
     SHENG_LING_QUAN_MIAN_FEI(ShengLingQuan.class, 1),
     SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 1, 1, 24 * 60 * 60),

@@ -24,7 +24,6 @@ public class DengLu implements IDo {
     private float similar = 0.5f;
 
 
-
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         status.setWantUser(userName);
         checkUser(region, status);
@@ -109,12 +108,6 @@ public class DengLu implements IDo {
     }
 
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
-        if (!closeGongGaoLan(region)) {
-            if (chongxindenglu(region, status)) {
-                return true;
-            }
-        }
-
         Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
         int i = 0;
         while (jinrubuluo == null) {
@@ -139,27 +132,6 @@ public class DengLu implements IDo {
                 checkUser(region, status);
                 log.info("login ok");
                 return true;
-            }
-        }
-
-        return false;
-    }
-
-    private boolean closeGongGaoLan(Region region) throws FindFailed, InterruptedException {
-        Match gonggaolan = region.exists(baseDir + "gonggaolan.png", 10);
-        if (gonggaolan != null && gonggaolan.getScore() > 0.95) {
-            Thread.sleep(5000L);
-            Match close = region.exists(Common.CLOSE);
-            if (close == null) {
-                return false;
-            }
-
-            for (int i = 0; i < 10; i++) {
-                close.click();
-                gonggaolan = region.exists(baseDir + "gonggaolan.png", 1);
-                if (gonggaolan == null) {
-                    return true;
-                }
             }
         }
 
@@ -209,7 +181,13 @@ public class DengLu implements IDo {
 
             Thread.sleep(10 * 1000L);
 
-            return jinrubuluo(region, status);
+            Match close = region.exists(Common.CLOSE);
+            while (close != null) {
+                close.click();
+                close = region.exists(Common.CLOSE);
+            }
+
+            return chongxindenglu(region, status);
         }
 
         return false;

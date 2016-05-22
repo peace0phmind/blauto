@@ -189,7 +189,10 @@ public class Main implements Job {
                     Thread.sleep(1000L);
                 }
 
-                for (IDo iDo : status.getTasks(status.getCurrentUser())) {
+                List<IDo> tasks = status.getTasks(status.getCurrentUser());
+                log.info("{}", tasks);
+
+                for (IDo iDo : tasks) {
                     if (iDo.Done(region, status)) {
                         Thread.sleep(3 * 1000L);
                     }

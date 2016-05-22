@@ -43,8 +43,6 @@ public class Status {
     private String currentUser;
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
-    private LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
-    private LocalDateTime today = LocalDate.now().atStartOfDay();
 
     public Status() {
         loadObjects();
@@ -100,6 +98,8 @@ public class Status {
     }
 
     public void Done(Task task, LocalDateTime finishTime) {
+        LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+
         List<DoLog> userLogs = getLogs(currentUser);
         userLogs.add(new DoLog(LocalDateTime.now(), finishTime, task));
         userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
@@ -133,6 +133,7 @@ public class Status {
     }
 
     private long todayFinishCount(Task task, String userName) {
+        LocalDateTime today = LocalDate.now().atStartOfDay();
         return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
     }
 
