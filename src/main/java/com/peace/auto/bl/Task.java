@@ -55,6 +55,7 @@ public enum Task {
     LIN_QU_REN_WU(RenWu.class, 0, 0, 30 * 60),
 
     MEI_RI_JIANG_LI(JiangLi.class, 2),
+    HUO_YUE_DU(JiangLi.class, 0, 0, 30 * 60),
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, 1, 3),
 
