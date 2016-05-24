@@ -79,7 +79,8 @@ public class ShouGuFang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.SHOU_GU_JIA_GONG) && !status.canDo(Task.SHOU_GU_SHOU_LIE)) {
+        if (!status.canDo(Task.SHOU_GU_JIA_GONG, userName)
+                && !status.canDo(Task.SHOU_GU_SHOU_LIE, userName)) {
             return false;
         }
 

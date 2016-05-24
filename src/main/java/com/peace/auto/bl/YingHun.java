@@ -82,7 +82,8 @@ public class YingHun implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.YING_HUN) && !status.canDo(Task.RONG_LIAN)) {
+        if (!status.canDo(Task.YING_HUN, userName)
+                && !status.canDo(Task.RONG_LIAN, userName)) {
             return false;
         }
 

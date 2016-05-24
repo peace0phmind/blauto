@@ -75,8 +75,8 @@ public class JingJiChang implements IDo {
             return false;
         }
 
-        if (!status.canDo(Task.JING_JI_CHANG_LING_QU)
-                && !status.canDo(Task.JING_JI_CHANG)) {
+        if (!status.canDo(Task.JING_JI_CHANG_LING_QU, userName)
+                && !status.canDo(Task.JING_JI_CHANG, userName)) {
             return false;
         }
 

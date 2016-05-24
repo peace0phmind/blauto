@@ -75,6 +75,11 @@ public class ShiLianDong extends ZhanBao implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.SHI_LIAN_DONG);
+        if (!status.canDo(Task.SHI_LIAN_DONG, userName)
+                && !super.canDo(status, userName)) {
+            return false;
+        }
+
+        return true;
     }
 }

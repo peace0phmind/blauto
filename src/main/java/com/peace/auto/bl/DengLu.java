@@ -23,7 +23,6 @@ public class DengLu implements IDo {
 
     private float similar = 0.5f;
 
-
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         status.setWantUser(userName);
         checkUser(region, status);
@@ -44,7 +43,6 @@ public class DengLu implements IDo {
                 return;
             }
 
-            ;
 //            ScreenImage simg = region.getScreen().capture();
 //            TextRecognizer tr = TextRecognizer.getInstance();
             int num = getNumber(newRegion(region, new Rectangle(134, 382, 8, 14)));
@@ -118,8 +116,8 @@ public class DengLu implements IDo {
                 jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
             }
 
-            if (i > 30) {
-                return false;
+            if (i > 10) {
+                return chongxindenglu(region, status);
             }
         }
 
@@ -134,6 +132,8 @@ public class DengLu implements IDo {
                 return true;
             }
         }
+
+        log.info("jinrubuluo is null");
 
         return false;
     }

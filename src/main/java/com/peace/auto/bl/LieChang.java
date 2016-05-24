@@ -100,7 +100,8 @@ public class LieChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU) && !status.canDo(Task.LIE_CHANG_DA_GUAI)) {
+        if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU, userName)
+                && !status.canDo(Task.LIE_CHANG_DA_GUAI, userName)) {
             return false;
         }
 

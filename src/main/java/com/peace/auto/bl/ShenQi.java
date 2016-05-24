@@ -89,7 +89,8 @@ public class ShenQi implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.SHEN_QI) && !status.canDo(Task.SHEN_XIANG_SHENG_JI)) {
+        if (!status.canDo(Task.SHEN_QI, userName)
+                && !status.canDo(Task.SHEN_XIANG_SHENG_JI, userName)) {
             return false;
         }
 

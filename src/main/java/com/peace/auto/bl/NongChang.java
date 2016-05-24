@@ -118,7 +118,8 @@ public class NongChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI) && !status.canDo(Task.NONG_CHANG_TOU_CAI)) {
+        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)
+                && !status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {
             return false;
         }
 

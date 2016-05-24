@@ -67,6 +67,6 @@ public class ShiChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.SHI_CHANG);
+        return status.canDo(Task.SHI_CHANG, userName);
     }
 }

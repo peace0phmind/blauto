@@ -45,6 +45,6 @@ public class ShenShouWu implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.SHEN_SHOU_WU);
+        return status.canDo(Task.SHEN_SHOU_WU, userName);
     }
 }

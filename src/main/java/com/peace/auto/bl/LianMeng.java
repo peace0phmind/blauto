@@ -89,7 +89,7 @@ public class LianMeng implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.LIAN_MENG);
+        return status.canDo(Task.LIAN_MENG, userName);
     }
 
     private void juanxian(Region region, int iRenLi) throws FindFailed, InterruptedException {

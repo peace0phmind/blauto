@@ -177,7 +177,8 @@ public class TianSheng implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.TIAN_SHEN_QI_DAO) && !status.canDo(Task.TIAN_SHEN_YUAN_GU)) {
+        if (!status.canDo(Task.TIAN_SHEN_QI_DAO, userName)
+                && !status.canDo(Task.TIAN_SHEN_YUAN_GU, userName)) {
             return false;
         }
 

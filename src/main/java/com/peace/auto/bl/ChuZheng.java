@@ -23,7 +23,12 @@ public class ChuZheng extends ZhanBao implements IDo {
     );
 
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.CHU_ZHENG_YE_GUAI, userName);
+        if (!status.canDo(Task.CHU_ZHENG_YE_GUAI, userName)
+                && !super.canDo(status, userName)) {
+            return false;
+        }
+
+        return true;
     }
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {

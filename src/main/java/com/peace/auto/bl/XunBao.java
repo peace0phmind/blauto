@@ -51,6 +51,6 @@ public class XunBao implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.XUN_BAO);
+        return status.canDo(Task.XUN_BAO, userName);
     }
 }

@@ -3,7 +3,6 @@ package com.peace.auto.bl;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.quartz.impl.JobDetailImpl;
 import org.quartz.impl.StdSchedulerFactory;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
@@ -35,19 +34,23 @@ public class Main implements Job {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
+        status.getNextUserTask();
         autoMode();
 //        autoTestMode();
 //        testMode();
 //        xunbaoMode();
 //        duobaoMode();
+//        timeMode();
+    }
 
-//        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-//
-//        JobDetail job = JobBuilder.newJob(Main.class).build();
-//        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 36, 0)).build();
-//
-//        defaultScheduler.scheduleJob(job, trigger);
-//        defaultScheduler.start();
+    private static void timeMode() throws SchedulerException {
+        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
+
+        JobDetail job = JobBuilder.newJob(Main.class).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 36, 0)).build();
+
+        defaultScheduler.scheduleJob(job, trigger);
+        defaultScheduler.start();
     }
 
     private static void xunbaoMode() throws InterruptedException, FindFailed, IOException {
@@ -116,10 +119,11 @@ public class Main implements Job {
     }
 
     private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = startDevice(DEVICE_1);
-        DENG_LU.QiDong(region, status, "peace0ph006");
+//        AndroidScreen region = startDevice(DEVICE_1);
+        AndroidScreen region = getRegion(DEVICE_1);
+//        DENG_LU.QiDong(region, status, "peace");
 
-        new TianSheng().Done(region, status);
+        new HaiDiShiJie().Done(region, status);
 
         region.close();
 //        stopDevice(DEVICE_1);
@@ -258,18 +262,6 @@ public class Main implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         try {
             xunbaoMode();
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
-            autoMode();
-            Thread.sleep(1 * 60 * 60 * 1000L);
             autoMode();
         } catch (FindFailed findFailed) {
             log.info("{}", findFailed);

@@ -99,6 +99,11 @@ public class LianBingChang extends ZhanBao implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.LIAN_BING_CHANG);
+        if (!status.canDo(Task.LIAN_BING_CHANG, userName)
+                && !super.canDo(status, userName)) {
+            return false;
+        }
+
+        return true;
     }
 }

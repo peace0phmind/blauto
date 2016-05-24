@@ -61,7 +61,7 @@ public class ShengHuo implements IDo {
             return false;
         }
 
-        return status.canDo(Task.SHENG_HUO);
+        return status.canDo(Task.SHENG_HUO, userName);
     }
 
     private boolean duoqu(Region region, Status status, String guojia) throws FindFailed, InterruptedException {

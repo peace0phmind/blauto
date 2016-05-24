@@ -35,11 +35,6 @@ public class Status {
             "peace0ph008"
     );
 
-    Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
-        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
-    }};
-
     private String currentUser;
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
@@ -61,6 +56,45 @@ public class Status {
         }
 
         return users.get((index + 1) % users.size());
+    }
+
+    public TaskItem getNextUserTask() {
+        ArrayList<Task> tasks = Lists.newArrayList(Task.values());
+        List<TaskItem> taskItems = new ArrayList<>();
+        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(5);
+
+        users.forEach(u -> tasks.forEach(t -> {
+            int dayLimit = t.getDayLimit(u);
+
+            if (dayLimit < 0) {
+                return;
+            }
+
+            if (dayLimit > 0) {
+                if (todayFinishCount(t, u) >= dayLimit) {
+                    return;
+                }
+            }
+
+            if (t.getFinishSecond() == 0) {
+                taskItems.add(new TaskItem(u, t, localDateTime));
+            } else {
+                LocalDateTime lastFinishTime = getLastFinishTime(t, u);
+                if (lastFinishTime == null) {
+                    taskItems.add(new TaskItem(u, t, localDateTime));
+                } else {
+                    taskItems.add(new TaskItem(u, t, lastFinishTime));
+                }
+            }
+        }));
+
+        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> x.getExecutableTime().compareTo(y.getExecutableTime())).collect(Collectors.toList());
+        sortedTasks.forEach(x -> log.info("{}", x));
+        if (sortedTasks == null) {
+            return null;
+        }
+
+        return sortedTasks.get(0);
     }
 
     public List<IDo> getTasks(String userName) {
@@ -106,20 +140,11 @@ public class Status {
         saveObjects();
     }
 
-    private LocalDateTime getLastExecuteTime(Task task, String userName) {
-        Optional<DoLog> lastTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getExecuteTime().compareTo(x.getExecuteTime())).findFirst();
-        if (lastTime.isPresent()) {
-            return lastTime.get().getExecuteTime();
-        } else {
-            return null;
-        }
-    }
-
     public LocalDateTime getLastFinishTime(Task task) {
         return getLastFinishTime(task, currentUser);
     }
 
-    private LocalDateTime getLastFinishTime(Task task, String userName) {
+    public LocalDateTime getLastFinishTime(Task task, String userName) {
         Optional<DoLog> lastFinishTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getFinishTime().compareTo(x.getFinishTime())).findFirst();
         if (lastFinishTime.isPresent()) {
             return lastFinishTime.get().getFinishTime();
@@ -137,25 +162,12 @@ public class Status {
         return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
     }
 
-    public boolean isMaster(Task task) {
-        return isMaster(task, currentUser);
-    }
-
-    private boolean isMaster(Task task, String userName) {
-        List<Task> tasks = vipUser.get(userName);
-        if (tasks == null || tasks.size() == 0) {
-            return false;
-        }
-
-        return tasks.contains(task);
-    }
-
     public boolean canDo(Task task) {
         return canDo(task, currentUser);
     }
 
     public boolean canDo(Task task, String userName) {
-        int dayLimit = isMaster(task, userName) ? task.getMasterTimesPerDay() : task.getTimesPerDay();
+        int dayLimit = task.getDayLimit(userName);
 
         if (dayLimit < 0) {
             return false;
@@ -231,4 +243,23 @@ class DoLog implements Serializable {
      * 任务类型
      */
     private Task task;
+}
+
+@Data
+@AllArgsConstructor
+class TaskItem implements Serializable {
+    /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
+     * 任务类型
+     */
+    private Task task;
+
+    /**
+     * 任务可执行时间
+     */
+    private LocalDateTime executableTime;
 }

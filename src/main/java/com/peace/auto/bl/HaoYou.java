@@ -82,6 +82,6 @@ public class HaoYou implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.HAO_YOU);
+        return status.canDo(Task.HAO_YOU, userName);
     }
 }

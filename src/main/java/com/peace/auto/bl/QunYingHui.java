@@ -66,6 +66,6 @@ public class QunYingHui implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.QUN_YING_HUI);
+        return status.canDo(Task.QUN_YING_HUI, userName);
     }
 }
