@@ -58,16 +58,13 @@ public enum Task {
     YUE_KA(RenWu.class, 1),
     LI_BAO(RenWu.class, 5, 5, 30 * 60),
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
-    // TODO
-    LIN_QU_REN_WU(RenWu.class, 0, 0, 30 * 60),
+    LIN_QU_REN_WU(RenWu.class, 0),
 
     MEI_RI_JIANG_LI(JiangLi.class, 2),
-    // TODO
-    HUO_YUE_DU(JiangLi.class, 0, 0, 30 * 60),
+    HUO_YUE_DU(JiangLi.class, 0),
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, 1, 3),
 
-    // TODO
     SHENG_HUO(ShengHuo.class, 3, 3, 15 * 60),
 
     QUN_YING_HUI(QunYingHui.class, 1),

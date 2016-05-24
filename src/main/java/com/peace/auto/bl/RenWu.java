@@ -84,7 +84,6 @@ public class RenWu implements IDo {
                             if (lingqu != null) {
                                 lingqu.click();
                                 Thread.sleep(2000L);
-                                status.Done(Task.LIN_QU_REN_WU);
                             }
                         }
 
@@ -92,6 +91,7 @@ public class RenWu implements IDo {
                     }
                 }
 
+                status.Done(Task.LIN_QU_REN_WU);
                 region.click(Common.CLOSE);
             }
         }

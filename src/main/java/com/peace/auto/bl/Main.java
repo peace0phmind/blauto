@@ -14,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * Created by mind on 3/2/16.
  */
 @Slf4j
+@DisallowConcurrentExecution
 public class Main implements Job {
     private static final String PLAY_PATH = "/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player";
 
@@ -260,15 +262,21 @@ public class Main implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+//        try {
+//            xunbaoMode();
+//            autoMode();
+//        } catch (FindFailed findFailed) {
+//            log.info("{}", findFailed);
+//        } catch (InterruptedException e) {
+//            log.info("{}", e);
+//        } catch (IOException e) {
+//            log.info("{}", e);
+//        }
         try {
-            xunbaoMode();
-            autoMode();
-        } catch (FindFailed findFailed) {
-            log.info("{}", findFailed);
+            log.info("{}", LocalDateTime.now());
+            Thread.sleep(30*1000L);
         } catch (InterruptedException e) {
-            log.info("{}", e);
-        } catch (IOException e) {
-            log.info("{}", e);
+            e.printStackTrace();
         }
     }
 }

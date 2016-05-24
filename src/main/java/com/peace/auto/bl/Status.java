@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,11 @@ public class Status {
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(5);
 
         users.forEach(u -> tasks.forEach(t -> {
+            // 忽略活跃度和领取任务的任务计算
+            if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
+                return;
+            }
+
             int dayLimit = t.getDayLimit(u);
 
             if (dayLimit < 0) {
@@ -76,16 +82,23 @@ public class Status {
                 }
             }
 
-            if (t.getFinishSecond() == 0) {
-                taskItems.add(new TaskItem(u, t, localDateTime));
-            } else {
+            LocalDateTime executableTime = localDateTime;
+            if (t.getFinishSecond() > 0) {
                 LocalDateTime lastFinishTime = getLastFinishTime(t, u);
-                if (lastFinishTime == null) {
-                    taskItems.add(new TaskItem(u, t, localDateTime));
-                } else {
-                    taskItems.add(new TaskItem(u, t, lastFinishTime));
+                if (lastFinishTime != null) {
+                    executableTime = lastFinishTime;
                 }
             }
+
+            if (t == Task.SHENG_HUO) {
+                if (LocalTime.now().isBefore(LocalTime.of(14, 0))) {
+                    executableTime = localDateTime.withHour(11).withMinute(30);
+                } else {
+                    executableTime = localDateTime.withHour(20).withMinute(30);
+                }
+            }
+
+            taskItems.add(new TaskItem(u, t, executableTime));
         }));
 
         List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> x.getExecutableTime().compareTo(y.getExecutableTime())).collect(Collectors.toList());
