@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.peace.auto.bl.task.*;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -75,7 +76,7 @@ public enum Task {
     /**
      * vip user and task
      */
-    Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
+    private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
     }};

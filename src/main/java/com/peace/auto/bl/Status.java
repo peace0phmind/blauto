@@ -1,7 +1,7 @@
 package com.peace.auto.bl;
 
-import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
+import com.peace.auto.bl.task.IDo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static com.peace.auto.bl.Task.*;
 
 /**
  * Created by mind on 3/21/16.
@@ -39,6 +37,10 @@ public class Status {
     private String currentUser;
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
+
+    public static int getUserCount() {
+        return users.size();
+    }
 
     public Status() {
         loadObjects();

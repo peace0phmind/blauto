@@ -2,6 +2,7 @@ package com.peace.sikuli.monkey;
 
 import com.android.chimpchat.core.IChimpDevice;
 import com.android.chimpchat.core.TouchPressType;
+import com.peace.auto.bl.common.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.basics.Debug;
 import org.sikuli.script.IRobot;
@@ -17,6 +18,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.*;
 
+import static com.peace.auto.bl.common.CommonUtils.hidePlayer;
+
 @Slf4j
 public class AndroidRobot implements IRobot {
 
@@ -25,6 +28,8 @@ public class AndroidRobot implements IRobot {
     private Rectangle _landscapeBounds; // cache
     private String _model; // cache
     private BufferedImage screen;
+
+    private boolean __isLandscape = false;
 
     public AndroidRobot(IChimpDevice dev) {
         _device = dev;
@@ -46,6 +51,12 @@ public class AndroidRobot implements IRobot {
             screen = ImageIO.read(new ByteArrayInputStream(bytes));
 
             if (isLandscape()) {
+
+                if (!__isLandscape) {
+                    hidePlayer();
+                    __isLandscape = true;
+                }
+
                 BufferedImage rotate = new BufferedImage(screen.getHeight(), screen.getWidth(), screen.getType());
                 Graphics2D graphics = rotate.createGraphics();
 
@@ -57,6 +68,11 @@ public class AndroidRobot implements IRobot {
                 graphics.dispose();
 
                 screen = rotate;
+            } else {
+                if (__isLandscape) {
+                    hidePlayer();
+                    __isLandscape = false;
+                }
             }
 
             BufferedImage part = screen.getSubimage(rect.x, rect.y, rect.width, rect.height);
@@ -289,7 +305,7 @@ public class AndroidRobot implements IRobot {
     public void smoothMove(Location src, Location dest, long ms) {
         double distance = Math.sqrt(Math.pow(src.getX() - dest.getX(), 2) + Math.pow(src.getY() - dest.getY(), 2));
         log.debug("Drag from {} to {}: distance {}", src, dest, distance);
-        _device.drag(src.getX(), src.getY(), dest.getX(), dest.getY(), (int)distance, ms);
+        _device.drag(src.getX(), src.getY(), dest.getX(), dest.getY(), (int) distance, ms);
     }
 
     @Override
