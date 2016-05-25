@@ -29,8 +29,6 @@ public class AndroidRobot implements IRobot {
     private String _model; // cache
     private BufferedImage screen;
 
-    private boolean __isLandscape = false;
-
     public AndroidRobot(IChimpDevice dev) {
         _device = dev;
     }
@@ -51,12 +49,6 @@ public class AndroidRobot implements IRobot {
             screen = ImageIO.read(new ByteArrayInputStream(bytes));
 
             if (isLandscape()) {
-
-                if (!__isLandscape) {
-                    hidePlayer();
-                    __isLandscape = true;
-                }
-
                 BufferedImage rotate = new BufferedImage(screen.getHeight(), screen.getWidth(), screen.getType());
                 Graphics2D graphics = rotate.createGraphics();
 
@@ -68,11 +60,6 @@ public class AndroidRobot implements IRobot {
                 graphics.dispose();
 
                 screen = rotate;
-            } else {
-                if (__isLandscape) {
-                    hidePlayer();
-                    __isLandscape = false;
-                }
             }
 
             BufferedImage part = screen.getSubimage(rect.x, rect.y, rect.width, rect.height);

@@ -53,9 +53,7 @@ public class OrderModeJob implements Job, TaskJob {
         AndroidScreen region = null;
         try {
             region = startDevice(DEVICE_1);
-            hidePlayer();
             DENG_LU.QiDong(region, status);
-            hidePlayer();
 
             for (int i = 0; i < Status.getUserCount(); i++) {
                 List<IDo> tasks = status.getTasks(status.getCurrentUser());
@@ -69,9 +67,9 @@ public class OrderModeJob implements Job, TaskJob {
 
                 // 最后一次不用重启
                 if (i < Status.getUserCount() - 1) {
-                    hidePlayer();
                     DENG_LU.Done(region, status);
-                    hidePlayer();
+                } else {
+                    status.setCurrentUser(status.getNextLoginName());
                 }
             }
         } catch (InterruptedException e) {

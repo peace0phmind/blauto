@@ -2,7 +2,6 @@ package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
-import com.peace.auto.bl.job.TestModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.auto.bl.task.TianSheng;
@@ -42,6 +41,9 @@ public class Main {
         DuoBaoModeJob.init(defaultScheduler);
 
         defaultScheduler.start();
+
+
+//        hidePlayer();
 
 //        autoTestMode();
 //        testMode();
