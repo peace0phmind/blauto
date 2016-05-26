@@ -23,7 +23,7 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(DuoBaoModeJob.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(22, 30, 0)).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(21, 30, 0)).build();
 
         try {
             scheduler.scheduleJob(job, trigger);
@@ -44,7 +44,7 @@ public class DuoBaoModeJob implements Job, TaskJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job");
 
-        if (isValidTime(LocalTime.of(22, 29), LocalTime.of(23, 59))) {
+        if (isValidTime(LocalTime.of(21, 29), LocalTime.of(22, 29))) {
             execute();
         }
     }

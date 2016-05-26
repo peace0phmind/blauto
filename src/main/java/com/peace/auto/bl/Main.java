@@ -5,6 +5,7 @@ import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.DengLu;
 import com.peace.auto.bl.task.HaiDiShiJie;
+import com.peace.auto.bl.task.LianMeng;
 import com.peace.auto.bl.task.TianSheng;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -33,36 +34,27 @@ public class Main {
 
         status.getNextUserTask();
 
-        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-        OrderModeJob.init(defaultScheduler);
-        XunBaoModeJob.init(defaultScheduler);
-        DuoBaoModeJob.init(defaultScheduler);
-        defaultScheduler.start();
+//        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
+//        OrderModeJob.init(defaultScheduler);
+//        XunBaoModeJob.init(defaultScheduler);
+//        DuoBaoModeJob.init(defaultScheduler);
+//        defaultScheduler.start();
 
-//        autoTestMode();
-//        testMode();
+        testMode();
     }
 
-    private static void autoTestMode() throws IOException, InterruptedException, FindFailed {
+    private static void testMode() throws IOException, InterruptedException, FindFailed {
 //        AndroidScreen region = startDevice(DEVICE_1);
         AndroidScreen region = getRegion(DEVICE_1);
 //        DENG_LU.QiDong(region, status, "peace");
 
-        new HaiDiShiJie().Done(region, status);
+        status.setCurrentUser("peace0ph002");
+        new LianMeng().Done(region, status);
 
         region.close();
 //        stopDevice(DEVICE_1);
     }
 
-    private static void testMode() throws InterruptedException, FindFailed, IOException {
-//        AndroidScreen region = new AndroidScreen("192.168.60.101:5555");
-//        AndroidScreen region = startDevice(DEVICE_1);
-        AndroidScreen region = getRegion(DEVICE_1);
-
-        new TianSheng().Done(region, status);
-
-        region.close();
-    }
 
     private static BufferedImage getBlackWhiteImage(BufferedImage original) {
         BufferedImage binarized = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_BYTE_BINARY);

@@ -8,16 +8,19 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by mind on 3/4/16.
  */
 @Slf4j
 public class LianMeng implements IDo {
+    private static Random random = new Random();
     String baseDir = Common.BASE_DIR + "lianmeng/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
@@ -72,27 +75,6 @@ public class LianMeng implements IDo {
                 }
             }
 
-            // 福利
-            if (status.canDo(Task.LIAN_MENG_FU_LI)) {
-                Match fuli = region.exists(baseDir + "fuli.png", 3);
-                if (fuli != null) {
-                    fuli.click();
-
-                    Match lingqu = region.exists(baseDir + "lingqu.png", 5);
-                    // 每天领取一次福利,并且进行一次捐赠
-                    if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
-                        juanxian(region, 1);
-                        Thread.sleep(3000L);
-
-                        fuli.click();
-                        Thread.sleep(2000L);
-                        lingqu.click();
-
-                        status.Done(Task.LIAN_MENG_FU_LI);
-                    }
-                }
-            }
-
             // 联盟战
             if (status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN)) {
                 Match lianmengzhan = region.exists(baseDir + "lianmengzhan.png");
@@ -115,22 +97,53 @@ public class LianMeng implements IDo {
 
                             // 尚未报名则进行报名
                             Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
-                            if (shangweibaom == null) {
+                            if (shangweibaom != null) {
                                 region.click(baseDir + "baomingcansai.png");
                                 Thread.sleep(1000L);
 
-                                Iterator<Match> all = region.findAll(baseDir + "mengzhanbaomin.png");
+                                Iterator<Match> all = region.findAll(new Pattern(baseDir + "mengzhanbaomin.png").similar(0.95f));
                                 ArrayList<Match> allBaoMin = Lists.newArrayList(all);
-                                allBaoMin.get(status.getCurrentUserIndex() % 2 == 0 ? 0 : 2).click();
+
+                                log.info("{}", allBaoMin);
+                                allBaoMin.get(random.nextInt(allBaoMin.size())).click();
                                 status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
 
                                 Thread.sleep(1000L);
                                 region.click(Common.CLOSE);
                             }
+
+                            // 已被淘汰
+                            Match yibeitaotai = region.exists(baseDir + "yibeitaotai.png");
+                            if (yibeitaotai != null) {
+                                status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                            }
+
+                            region.click(Common.CLOSE);
                         }
 
                         Thread.sleep(1000L);
                         region.click(Common.CLOSE);
+                    }
+                }
+            }
+
+            // 福利
+            if (status.canDo(Task.LIAN_MENG_FU_LI)) {
+                Match fuli = region.exists(baseDir + "fuli.png", 3);
+                if (fuli != null) {
+                    fuli.click();
+
+                    Match lingqu = region.exists(baseDir + "lingqu.png", 5);
+                    // 每天领取一次福利,并且进行一次捐赠
+                    if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
+                        juanxian(region, 1);
+                        Thread.sleep(3000L);
+
+                        fuli.click();
+                        Thread.sleep(2000L);
+                        lingqu.click();
+
+                        status.Done(Task.LIAN_MENG_FU_LI);
                     }
                 }
             }
@@ -154,7 +167,7 @@ public class LianMeng implements IDo {
                 && !status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN, userName)) {
             return false;
         }
-        
+
         return true;
     }
 

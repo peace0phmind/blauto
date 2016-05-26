@@ -25,8 +25,7 @@ public class HaiDiShiJie implements IDo {
 
             Match goumai = region.exists(baseDir + "goumai.png");
             if (goumai != null) {
-                Iterator<Match> all = region.findAll(Common.CLOSE);
-                Lists.newArrayList(all).stream().sorted((a, b) -> a.x - b.x).findFirst().get().click();
+                clickInside(region, Common.CLOSE);
             } else {
                 region.click(baseDir + "yijiansaodang.png");
             }

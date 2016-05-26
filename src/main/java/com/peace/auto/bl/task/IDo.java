@@ -1,11 +1,13 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.sikuli.monkey.AndroidScreen;
 import org.sikuli.natives.OCR;
 import org.sikuli.script.*;
 
 import java.awt.*;
+import java.util.Iterator;
 
 /**
  * Created by mind on 3/6/16.
@@ -42,6 +44,12 @@ public interface IDo {
         ScreenImage simg = region.getScreen().capture(region.getRect());
         TextRecognizer tr = TextRecognizer.getInstance();
         return tr.recognizeWord(simg);
+    }
+
+    default void clickInside(Region region, Pattern pattern) throws FindFailed {
+        Iterator<Match> all = region.findAll(pattern);
+        Lists.newArrayList(all).stream().sorted((a, b) -> a.x - b.x).findFirst().get().click();
+
     }
 
     default String getWord(Region region) {

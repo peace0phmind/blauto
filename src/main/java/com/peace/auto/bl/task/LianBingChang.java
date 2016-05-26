@@ -6,6 +6,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -76,9 +77,9 @@ public class LianBingChang extends ZhanBao implements IDo {
 
                     // 不能练兵,则下次不进行检查。
                     if (!canLianBing) {
-                        status.Done(Task.LIAN_BING_CHANG);
-                        status.Done(Task.LIAN_BING_CHANG);
-                        status.Done(Task.LIAN_BING_CHANG);
+                        status.Done(Task.LIAN_BING_CHANG, LocalDateTime.now());
+                        status.Done(Task.LIAN_BING_CHANG, LocalDateTime.now());
+                        status.Done(Task.LIAN_BING_CHANG, LocalDateTime.now());
                     }
 
                     Thread.sleep(2000L);

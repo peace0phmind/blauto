@@ -24,7 +24,8 @@ public class OrderModeJob implements Job, TaskJob {
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(OrderModeJob.class).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).repeatForever()).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).withRepeatCount(20)).build();
+//                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).repeatForever()).build();
 
         try {
             scheduler.scheduleJob(job, trigger);
@@ -41,7 +42,7 @@ public class OrderModeJob implements Job, TaskJob {
             execute();
         }
 
-        if (isValidTime(LocalTime.of(14, 0), LocalTime.of(21, 30))) {
+        if (isValidTime(LocalTime.of(14, 0), LocalTime.of(21, 0))) {
             execute();
         }
     }
