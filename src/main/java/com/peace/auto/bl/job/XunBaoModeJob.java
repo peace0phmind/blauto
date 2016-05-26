@@ -21,7 +21,7 @@ public class XunBaoModeJob implements Job, TaskJob {
 
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(XunBaoModeJob.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 36, 0)).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 38, 0)).build();
 
         try {
             scheduler.scheduleJob(job, trigger);

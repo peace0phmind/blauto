@@ -2,9 +2,7 @@ package com.peace.sikuli.monkey;
 
 import com.android.chimpchat.core.IChimpDevice;
 import com.android.chimpchat.core.TouchPressType;
-import com.peace.auto.bl.common.CommonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.basics.Debug;
 import org.sikuli.script.IRobot;
 import org.sikuli.script.IScreen;
 import org.sikuli.script.Location;
@@ -16,9 +14,8 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.*;
-
-import static com.peace.auto.bl.common.CommonUtils.hidePlayer;
+import java.util.Arrays;
+import java.util.Optional;
 
 @Slf4j
 public class AndroidRobot implements IRobot {

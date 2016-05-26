@@ -10,18 +10,16 @@ import java.util.TreeMap;
 
 public class AndroidScreen extends AndroidRegion implements IScreen {
 
-    private static final TreeMap<String, String> options = new TreeMap<String, String>() {{
-        put("backend", "adb");
-    }};
-
     private static ChimpChat chimpChat = null;
+
+    private IChimpDevice iChimpDevice = null;
 
     public AndroidScreen(String deviceId) {
         if (chimpChat == null) {
-            chimpChat = ChimpChat.getInstance(options);
+            chimpChat = ChimpChat.getInstance();
         }
 
-        IChimpDevice iChimpDevice = chimpChat.waitForConnection(10000L, deviceId);
+        iChimpDevice = chimpChat.waitForConnection(10000L, deviceId);
 
         String model = iChimpDevice.getProperty("build.model");
         Debug.action("Successfully connect to a device. MODEL: " + model);

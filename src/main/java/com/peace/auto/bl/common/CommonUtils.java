@@ -41,18 +41,30 @@ public class CommonUtils {
     private static String closeButton = "close button";
     private static String minimizeButton = "minimize button";
 
-    public static AndroidScreen startDevice(Device device) throws IOException, InterruptedException {
+    public static AndroidScreen startDevice(Device device, boolean visible) throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
+        String[] args = {"osascript", "-e", String.format(script, device.getDescription(), minimizeButton)};
 
         rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, device.getId()));
         Thread.sleep(10 * 1000L);
-        rt.exec(String.format("%s --vm-name %s --no-popup", PLAY_PATH, device.getId()));
+        rt.exec(String.format("%s --vm-name %s", PLAY_PATH, device.getId()));
+
+        rt.exec("adb start-server");
 
         for (int i = 0; i < 30; i++) {
-            String[] args = {"osascript", "-e", String.format(script, device.getDescription(), minimizeButton)};
-            rt.exec(args);
+            if (!visible) {
+                rt.exec(args);
+            }
             Thread.sleep(1 * 1000L);
         }
+
+//        rt.exec(String.format("%s --vm-name %s --startadb", PLAY_PATH, device.getId()));
+//        for (int i = 0; i < 15; i++) {
+//            if (!visible) {
+//                rt.exec(args);
+//            }
+//            Thread.sleep(1 * 1000L);
+//        }
 
         Process exec = rt.exec(String.format("VBoxManage guestproperty get %s androvm_ip_management", device.getId()));
         String ip = new BufferedReader(new InputStreamReader(exec.getInputStream())).readLine();
@@ -61,6 +73,11 @@ public class CommonUtils {
         log.info("ip: {}", ip);
 
         return new AndroidScreen(ip.trim());
+    }
+
+
+    public static AndroidScreen startDevice(Device device) throws IOException, InterruptedException {
+        return startDevice(device, false);
     }
 
     public static AndroidScreen getRegion(Device device) throws IOException, InterruptedException {
@@ -77,6 +94,8 @@ public class CommonUtils {
 
     public static void stopDevice(Device device) throws IOException {
         Runtime rt = Runtime.getRuntime();
+//        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, device.getId()));
+
         String[] args = {"osascript", "-e", String.format(script, device.getDescription(), closeButton)};
         rt.exec(args);
     }

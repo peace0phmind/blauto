@@ -3,6 +3,7 @@ package com.peace.auto.bl;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
+import com.peace.auto.bl.task.DengLu;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.auto.bl.task.TianSheng;
 import com.peace.sikuli.monkey.AndroidScreen;
@@ -33,17 +34,25 @@ public class Main {
         status.getNextUserTask();
 
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-
         OrderModeJob.init(defaultScheduler);
-
         XunBaoModeJob.init(defaultScheduler);
-
         DuoBaoModeJob.init(defaultScheduler);
-
         defaultScheduler.start();
 
+//        AndroidScreen androidScreen = startDevice(DEVICE_1);
+//        new DengLu().QiDong(androidScreen, status);
+//        androidScreen.close();
+//        stopDevice(DEVICE_1);
+//
+//        Thread.sleep(5000L);
+//
+//        androidScreen = startDevice(DEVICE_1);
+//        new DengLu().QiDong(androidScreen, status);
+//        androidScreen.close();
+//        stopDevice(DEVICE_1);
 
-//        hidePlayer();
+//        new OrderModeJob().execute();
+//        Thread.sleep(10 * 60 * 1000L);
 
 //        autoTestMode();
 //        testMode();
