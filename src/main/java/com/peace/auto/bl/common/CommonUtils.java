@@ -53,17 +53,8 @@ public class CommonUtils {
             if (!visible) {
                 rt.exec(args);
             }
-            rt.exec("adb start-server");
             Thread.sleep(1 * 1000L);
         }
-
-//        rt.exec(String.format("%s --vm-name %s --startadb", PLAY_PATH, device.getId()));
-//        for (int i = 0; i < 15; i++) {
-//            if (!visible) {
-//                rt.exec(args);
-//            }
-//            Thread.sleep(1 * 1000L);
-//        }
 
         Process exec = rt.exec(String.format("VBoxManage guestproperty get %s androvm_ip_management", device.getId()));
         String ip = new BufferedReader(new InputStreamReader(exec.getInputStream())).readLine();
@@ -96,8 +87,10 @@ public class CommonUtils {
 //        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, device.getId()));
 
         String[] args = {"osascript", "-e", String.format(script, device.getDescription(), closeButton)};
-        log.info("{}", args);
+        log.info("{}", args[2]);
         rt.exec(args);
+
+        rt.exec("adb kill-server");
     }
 }
 

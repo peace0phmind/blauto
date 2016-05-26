@@ -148,7 +148,14 @@ public class LianMeng implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.LIAN_MENG, userName);
+        if (!status.canDo(Task.LIAN_MENG_GONG_FENG, userName)
+                && !status.canDo(Task.LIAN_MENG_NAN_MAN, userName)
+                && !status.canDo(Task.LIAN_MENG_FU_LI, userName)
+                && !status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN, userName)) {
+            return false;
+        }
+        
+        return true;
     }
 
     private void juanxian(Region region, int iRenLi) throws FindFailed, InterruptedException {

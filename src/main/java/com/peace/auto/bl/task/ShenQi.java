@@ -66,8 +66,19 @@ public class ShenQi implements IDo {
                                     if (jb != null) {
                                         jb.click();
                                         log.info("祭拜 : {}", shenxiang);
-                                        Thread.sleep(500L);
                                         bjb = true;
+                                    }
+
+                                    Match gp = region.exists(baseDir + "gongpinjibai.png");
+                                    if (gp != null) {
+                                        for (int i = 0; i < 3; i++) {
+                                            gp.click();
+                                            Match cishu = region.exists(baseDir + "dadaomeiricishu.png");
+                                            if (cishu != null) {
+                                                region.click(Common.CLOSE);
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                             }

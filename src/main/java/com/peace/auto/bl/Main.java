@@ -39,21 +39,6 @@ public class Main {
         DuoBaoModeJob.init(defaultScheduler);
         defaultScheduler.start();
 
-//        AndroidScreen androidScreen = startDevice(DEVICE_1);
-//        new DengLu().QiDong(androidScreen, status);
-//        androidScreen.close();
-//        stopDevice(DEVICE_1);
-//
-//        Thread.sleep(5000L);
-//
-//        androidScreen = startDevice(DEVICE_1);
-//        new DengLu().QiDong(androidScreen, status);
-//        androidScreen.close();
-//        stopDevice(DEVICE_1);
-
-//        new OrderModeJob().execute();
-//        Thread.sleep(10 * 60 * 1000L);
-
 //        autoTestMode();
 //        testMode();
     }
