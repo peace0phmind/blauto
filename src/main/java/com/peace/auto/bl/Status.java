@@ -38,12 +38,12 @@ public class Status {
     private String wantUser;
     private Map<String, List<DoLog>> logMap = new HashMap<>();
 
-    public static int getUserCount() {
-        return users.size();
-    }
-
     public Status() {
         loadObjects();
+    }
+
+    public static int getUserCount() {
+        return users.size();
     }
 
     public String getNextLoginName() {
@@ -140,6 +140,14 @@ public class Status {
         this.currentUser = users.get(num - 1);
         log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
         return currentUser.equals(wantUser);
+    }
+
+    public int getCurrentUserIndex() {
+        if (currentUser == null || !users.contains(currentUser)) {
+            return 0;
+        }
+
+        return users.indexOf(currentUser);
     }
 
     public void Done(Task task) {

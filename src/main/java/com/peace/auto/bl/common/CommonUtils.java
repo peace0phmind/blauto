@@ -49,12 +49,11 @@ public class CommonUtils {
         Thread.sleep(10 * 1000L);
         rt.exec(String.format("%s --vm-name %s", PLAY_PATH, device.getId()));
 
-        rt.exec("adb start-server");
-
         for (int i = 0; i < 30; i++) {
             if (!visible) {
                 rt.exec(args);
             }
+            rt.exec("adb start-server");
             Thread.sleep(1 * 1000L);
         }
 
@@ -97,6 +96,7 @@ public class CommonUtils {
 //        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, device.getId()));
 
         String[] args = {"osascript", "-e", String.format(script, device.getDescription(), closeButton)};
+        log.info("{}", args);
         rt.exec(args);
     }
 }
