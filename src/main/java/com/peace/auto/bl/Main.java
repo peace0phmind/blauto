@@ -34,13 +34,13 @@ public class Main {
 
         status.getNextUserTask();
 
-//        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-//        OrderModeJob.init(defaultScheduler);
-//        XunBaoModeJob.init(defaultScheduler);
-//        DuoBaoModeJob.init(defaultScheduler);
-//        defaultScheduler.start();
+        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
+        OrderModeJob.init(defaultScheduler);
+        XunBaoModeJob.init(defaultScheduler);
+        DuoBaoModeJob.init(defaultScheduler);
+        defaultScheduler.start();
 
-        testMode();
+//        testMode();
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
@@ -48,7 +48,7 @@ public class Main {
         AndroidScreen region = getRegion(DEVICE_1);
 //        DENG_LU.QiDong(region, status, "peace");
 
-        status.setCurrentUser("peace0ph002");
+        status.setCurrentUser("peace0ph004");
         new LianMeng().Done(region, status);
 
         region.close();
