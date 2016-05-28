@@ -22,7 +22,6 @@ public class ShenQi implements IDo {
         if (bashou != null) {
             move(bashou, bashou.getCenter().above(300), 1000);
 
-
             Match shenqi = region.exists(baseDir + "shenqi.png");
             if (shenqi != null) {
                 shenqi.click();
@@ -75,7 +74,7 @@ public class ShenQi implements IDo {
                                             gp.click();
                                             Match cishu = region.exists(baseDir + "dadaomeiricishu.png");
                                             if (cishu != null) {
-                                                region.click(Common.CLOSE);
+                                                region.click(Common.QUE_DING);
                                                 break;
                                             }
                                         }
@@ -95,11 +94,16 @@ public class ShenQi implements IDo {
                 Thread.sleep(500L);
             }
 
-            bashou = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
-            move(bashou, bashou.getCenter().below(300), 1000);
+            for (int i = 0; i < 6; i++) {
+                bashou = region.exists(new Pattern(baseDir + "shengyu.png").similar(0.9f), 15);
+                if (bashou != null) {
+                    move(bashou, bashou.getCenter().below(300), 1000);
+                    return true;
+                }
+            }
         }
 
-        return true;
+        return false;
     }
 
     @Override

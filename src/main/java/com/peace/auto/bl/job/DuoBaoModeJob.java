@@ -12,7 +12,7 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.peace.auto.bl.common.CommonUtils.*;
+import static com.peace.auto.bl.common.Devices.*;
 
 /**
  * Created by mind on 5/25/16.
@@ -51,13 +51,10 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
-        AndroidScreen region1 = null;
-        AndroidScreen region2 = null;
-        AndroidScreen region3 = null;
         try {
-            region1 = startDevice(DEVICE_1);
-            region2 = startDevice(DEVICE_2);
-            region3 = startDevice(DEVICE_3);
+            AndroidScreen region1 = DEVICE_1.startDevice();
+            AndroidScreen region2 = DEVICE_2.startDevice();
+            AndroidScreen region3 = DEVICE_3.startDevice();
 
             List<Region> regions = Arrays.asList(region1, region2, region3);
             log.info("{}", regions);
@@ -78,29 +75,20 @@ public class DuoBaoModeJob implements Job, TaskJob {
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph008", "peace0ph007"));
 
         } catch (InterruptedException e) {
+            log.error("{}", e);
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("{}", e);
         } catch (FindFailed findFailed) {
-            findFailed.printStackTrace();
+            log.error("{}", findFailed);
         } finally {
-            if (region1 != null) {
-                region1.close();
-            }
-
-            if (region2 != null) {
-                region2.close();
-            }
-
-            if (region3 != null) {
-                region3.close();
-            }
-
             try {
-                stopDevice(DEVICE_1);
-                stopDevice(DEVICE_2);
-                stopDevice(DEVICE_3);
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
+                DEVICE_3.stopDevice();
             } catch (IOException e) {
+                log.error("{}", e);
+            } catch (InterruptedException e) {
                 log.error("{}", e);
             }
         }

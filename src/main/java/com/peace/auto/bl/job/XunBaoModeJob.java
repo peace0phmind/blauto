@@ -10,7 +10,7 @@ import org.sikuli.script.FindFailed;
 import java.io.IOException;
 import java.time.LocalTime;
 
-import static com.peace.auto.bl.common.CommonUtils.*;
+import static com.peace.auto.bl.common.Devices.*;
 
 /**
  * Created by mind on 5/25/16.
@@ -42,11 +42,10 @@ public class XunBaoModeJob implements Job, TaskJob {
     @Override
     public void execute() {
         Settings.OcrTextRead = true;
-        AndroidScreen region1 = null;
-        AndroidScreen region2 = null;
+
         try {
-            region1 = startDevice(DEVICE_1);
-            region2 = startDevice(DEVICE_2);
+            AndroidScreen region1 = DEVICE_1.startDevice();
+            AndroidScreen region2 = DEVICE_2.startDevice();
 
             DENG_LU.QiDong(region1, status, "peace");
             DENG_LU.QiDong(region2, status, "peace0ph001");
@@ -59,7 +58,6 @@ public class XunBaoModeJob implements Job, TaskJob {
 
             new DuoBao().xunbao(region1, region2, false);
             Thread.sleep(3 * 1000L);
-
         } catch (InterruptedException e) {
             log.error("{}", e);
         } catch (IOException e) {
@@ -67,25 +65,14 @@ public class XunBaoModeJob implements Job, TaskJob {
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } finally {
-            if (region1 != null) {
-                region1.close();
-            }
-            if (region2 != null) {
-                region2.close();
-            }
-
             try {
-                stopDevice(DEVICE_1);
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
             } catch (IOException e) {
                 log.error("{}", e);
-            }
-
-            try {
-                stopDevice(DEVICE_2);
-            } catch (IOException e) {
+            } catch (InterruptedException e) {
                 log.error("{}", e);
             }
-
         }
     }
 }

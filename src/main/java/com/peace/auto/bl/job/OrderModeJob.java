@@ -1,6 +1,8 @@
 package com.peace.auto.bl.job;
 
 import com.peace.auto.bl.Status;
+import com.peace.auto.bl.common.Device;
+import com.peace.auto.bl.common.Devices;
 import com.peace.auto.bl.task.IDo;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,7 @@ import java.io.IOException;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.peace.auto.bl.common.CommonUtils.*;
+import static com.peace.auto.bl.common.Devices.*;
 
 /**
  * Created by mind on 5/25/16.
@@ -52,9 +54,10 @@ public class OrderModeJob implements Job, TaskJob {
         Settings.OcrTextRead = true;
 
         AndroidScreen region = null;
+
+        boolean bNeedRestart = false;
         try {
-            region = startDevice(DEVICE_1);
-            DENG_LU.QiDong(region, status);
+            region = DEVICE_1.getRegion(status);
 
             for (int i = 0; i < Status.getUserCount(); i++) {
                 List<IDo> tasks = status.getTasks(status.getCurrentUser());
@@ -66,29 +69,28 @@ public class OrderModeJob implements Job, TaskJob {
                     }
                 }
 
-                // 最后一次不用重启
-                if (i < Status.getUserCount() - 1) {
-                    DENG_LU.Done(region, status);
-                } else {
-                    status.setCurrentUser(status.getNextLoginName());
-                }
+                DENG_LU.Done(region, status);
             }
         } catch (InterruptedException e) {
             log.error("{}", e);
+            bNeedRestart = true;
         } catch (IOException e) {
             log.error("{}", e);
+            bNeedRestart = true;
         } catch (FindFailed findFailed) {
             if (region != null) {
                 region.saveScreenCapture(".", "error");
             }
             log.error("region: {}, {}", region, findFailed);
-        } finally {
-            if (region != null) {
-                region.close();
-            }
+            bNeedRestart = true;
+        }
+
+        if (bNeedRestart) {
             try {
-                stopDevice(DEVICE_1);
+                DEVICE_1.stopDevice();
             } catch (IOException e) {
+                log.error("{}", e);
+            } catch (InterruptedException e) {
                 log.error("{}", e);
             }
         }
