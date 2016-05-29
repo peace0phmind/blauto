@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 
 import java.time.LocalDateTime;
+import java.util.Random;
 
 /**
  * Created by mind on 5/25/16.
@@ -12,10 +13,11 @@ import java.time.LocalDateTime;
 @DisallowConcurrentExecution
 public class TestModeJob implements Job, TaskJob {
 
-    public TestModeJob(Scheduler scheduler) {
+    private Random random = new Random();
+
+    public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(TestModeJob.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(11, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(3).withRepeatCount(3)).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(11, 15, 0)).build();
 
         try {
             scheduler.scheduleJob(job, trigger);
@@ -31,11 +33,17 @@ public class TestModeJob implements Job, TaskJob {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+        int i = random.nextInt(10) + 1;
+
+        log.info("Do job: {}, {}", LocalDateTime.now(), i);
+
+        Trigger tr = TriggerBuilder.newTrigger().forJob(context.getJobDetail()).startAt(DateBuilder.futureDate(i, DateBuilder.IntervalUnit.SECOND)).build();
+
         try {
-            log.info("{}", LocalDateTime.now());
-            Thread.sleep(9 * 1000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            context.getScheduler().scheduleJob(tr);
+        } catch (SchedulerException e) {
+            log.error("{}", e);
         }
+
     }
 }

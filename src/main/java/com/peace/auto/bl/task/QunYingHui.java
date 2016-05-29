@@ -33,27 +33,40 @@ public class QunYingHui implements IDo {
                 if (qunyinhui != null) {
                     qunyinhui.click();
 
-                    Match canzhan = region.exists(baseDir + "canzhan.png", 20);
-                    if (canzhan != null) {
-                        canzhan.click();
+                    if (status.canDo(Task.QUN_YING_HUI_BAO_MING)) {
+                        Match canzhan = region.exists(baseDir + "canzhan.png", 20);
+                        if (canzhan != null) {
+                            canzhan.click();
+                            Thread.sleep(6000L);
+                            status.Done(Task.QUN_YING_HUI_BAO_MING);
+                        } else {
+                            // 找不到参战,则默认认为已经执行过群英会
+                            status.Done(Task.QUN_YING_HUI_BAO_MING);
+                        }
+                    }
 
-                        Thread.sleep(6000L);
-
-                        status.Done(Task.QUN_YING_HUI);
-
-                        Match jiangli = region.exists(baseDir + "jiangli.png");
+                    if (status.canDo(Task.QUN_YING_HUI_LING_JIANG)) {
+                        Match jiangli = region.exists(baseDir + "jiangli.png", 20);
                         if (jiangli != null) {
                             jiangli.click();
+
+                            Thread.sleep(3000L);
 
                             Match lingqu = region.exists(baseDir + "lingqu.png");
                             if (lingqu != null && isButtonEnable(lingqu)) {
                                 lingqu.click();
                             }
+
+                            Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
+                            if (lingqujiangli != null && isButtonEnable(lingqujiangli)) {
+                                lingqujiangli.click();
+                            }
+
+                            Thread.sleep(1000L);
+                            status.Done(Task.QUN_YING_HUI_LING_JIANG);
                         }
-                    } else {
-                        // 找不到参战,则默认认为已经执行过群英会
-                        status.Done(Task.QUN_YING_HUI);
                     }
+
 
                     Thread.sleep(1000L);
                     region.click(Common.CLOSE);
@@ -70,6 +83,11 @@ public class QunYingHui implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.QUN_YING_HUI, userName);
+        if (!status.canDo(Task.QUN_YING_HUI_BAO_MING, userName)
+                && !status.canDo(Task.QUN_YING_HUI_LING_JIANG, userName)) {
+            return false;
+        }
+
+        return true;
     }
 }

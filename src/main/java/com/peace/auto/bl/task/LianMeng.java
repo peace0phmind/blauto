@@ -118,6 +118,28 @@ public class LianMeng implements IDo {
                                 status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                             }
 
+                            Match benjiepaiming = region.exists(baseDir + "benjiepaihang.png");
+                            if (benjiepaiming != null) {
+                                benjiepaiming.click();
+                                Thread.sleep(1000L);
+
+                                mengzhanlingqujiangli = region.exists(baseDir + "mengzhanlingqujiangli.png");
+                                if (mengzhanlingqujiangli != null) {
+                                    mengzhanlingqujiangli.click();
+
+                                    Match lingquguojiangli = region.exists(baseDir + "lingquguojiangli.png");
+                                    if (lingquguojiangli != null) {
+                                        region.click(Common.QUE_DING);
+                                    }
+
+                                    status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                                }
+
+                                Thread.sleep(1000L);
+                                clickInside(region, Common.CLOSE);
+                            }
+
+                            Thread.sleep(1000L);
                             region.click(Common.CLOSE);
                         }
 

@@ -58,8 +58,8 @@ public class Device {
         Runtime rt = Runtime.getRuntime();
         String[] args = {"osascript", "-e", String.format(script, description, minimizeButton)};
 
-//        rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, device.getId()));
-//        Thread.sleep(10 * 1000L);
+        rt.exec(String.format("%s -x --vm-name %s --no-popup", PLAY_PATH, id));
+        Thread.sleep(10 * 1000L);
         rt.exec(String.format("%s --vm-name %s", PLAY_PATH, id));
 
         for (int i = 0; i < 30; i++) {

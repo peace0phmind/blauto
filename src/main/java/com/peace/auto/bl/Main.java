@@ -2,8 +2,10 @@ package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
+import com.peace.auto.bl.job.TestModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.LianMeng;
+import com.peace.auto.bl.task.QunYingHui;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -31,25 +33,27 @@ public class Main {
 
         status.getNextUserTask();
 
-        killAllBoxSVC();
+//        killAllBoxSVC();
 
-        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-        OrderModeJob.init(defaultScheduler);
-        XunBaoModeJob.init(defaultScheduler);
-        DuoBaoModeJob.init(defaultScheduler);
-        defaultScheduler.start();
+//        Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
+//        OrderModeJob.init(defaultScheduler);
+//        XunBaoModeJob.init(defaultScheduler);
+//        DuoBaoModeJob.init(defaultScheduler);
+//        defaultScheduler.start();
 //        new DuoBaoModeJob().execute();
+//        new XunBaoModeJob().execute();
 
-//        testMode();
+        testMode();
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
 //        AndroidScreen region = startDevice(DEVICE_1);
-        AndroidScreen region = getRegion(DEVICE_1);
+        AndroidScreen region = DEVICE_1.getRegion(status, true);
 //        DENG_LU.QiDong(region, status, "peace");
 
+//        status.setCurrentUser("peace");
         status.setCurrentUser("peace0ph004");
-        new LianMeng().Done(region, status);
+        new QunYingHui().Done(region, status);
 
         region.close();
 //        stopDevice(DEVICE_1);
