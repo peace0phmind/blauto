@@ -26,7 +26,7 @@ public class OrderModeJob implements Job, TaskJob {
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(OrderModeJob.class).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).withRepeatCount(20)).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).withRepeatCount(30)).build();
 //                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).repeatForever()).build();
 
         try {

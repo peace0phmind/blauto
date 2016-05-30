@@ -52,6 +52,8 @@ public class DengLu implements IDo {
             } else {
                 log.info("current user: {}, want user: {}, num: {}", status.getCurrentUser(), status.getWantUser(), num);
             }
+        } else {
+            QiDong(region, status);
         }
     }
 

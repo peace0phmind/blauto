@@ -61,7 +61,7 @@ public class Status {
         return users.get((index + 1) % users.size());
     }
 
-    public TaskItem getNextUserTask() {
+    public List<TaskItem> getUserTasks() {
         ArrayList<Task> tasks = Lists.newArrayList(Task.values());
         List<TaskItem> taskItems = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(5);
@@ -109,7 +109,7 @@ public class Status {
             return null;
         }
 
-        return sortedTasks.get(0);
+        return sortedTasks;
     }
 
     public List<IDo> getTasks(String userName) {
@@ -268,21 +268,3 @@ class DoLog implements Serializable {
     private Task task;
 }
 
-@Data
-@AllArgsConstructor
-class TaskItem implements Serializable {
-    /**
-     * 用户名
-     */
-    private String userName;
-
-    /**
-     * 任务类型
-     */
-    private Task task;
-
-    /**
-     * 任务可执行时间
-     */
-    private LocalDateTime executableTime;
-}
