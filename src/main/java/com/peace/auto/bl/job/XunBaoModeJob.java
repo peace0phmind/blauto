@@ -44,11 +44,11 @@ public class XunBaoModeJob implements Job, TaskJob {
         Settings.OcrTextRead = true;
 
         try {
-            AndroidScreen region1 = DEVICE_1.startDevice();
-            AndroidScreen region2 = DEVICE_2.startDevice();
+            AndroidScreen region1 = DEVICE_1.getRegion();
+            AndroidScreen region2 = DEVICE_2.getRegion();
 
-            DENG_LU.QiDong(region1, status, "peace");
-            DENG_LU.QiDong(region2, status, "peace0ph001");
+            DENG_LU.checkUser(region1, status, "peace");
+            DENG_LU.checkUser(region2, status, "peace0ph001");
 
             new DuoBao().xunbao(region1, region2, false);
             Thread.sleep(5 * 60 * 1000L);

@@ -1,5 +1,6 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.Common;
@@ -7,6 +8,8 @@ import com.peace.auto.bl.task.IDo;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
+
+import java.util.Iterator;
 
 /**
  * Created by mind on 3/9/16.
@@ -58,8 +61,9 @@ public class QunYingHui implements IDo {
                             }
 
                             Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
-                            if (lingqujiangli != null && isButtonEnable(lingqujiangli)) {
-                                lingqujiangli.click();
+                            if (lingqujiangli != null) {
+                                Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
+                                Lists.newArrayList(all).forEach(x -> x.click());
                             }
 
                             Thread.sleep(1000L);

@@ -63,6 +63,7 @@ public class ShiChang implements IDo {
                 }
             }
 
+            status.Done(Task.SHI_CHANG_CHECK);
             region.click(Common.CLOSE);
         }
 
@@ -71,6 +72,10 @@ public class ShiChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.SHI_CHANG, userName);
+        if (status.canDo(Task.SHI_CHANG, userName)) {
+            return status.canDo(Task.SHI_CHANG_CHECK, userName);
+        }
+
+        return false;
     }
 }

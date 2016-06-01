@@ -92,6 +92,10 @@ public class Status {
                 }
             }
 
+            if (t == Task.SHI_CHANG) {
+                return;
+            }
+
             if (t == Task.SHENG_HUO) {
                 if (LocalTime.now().isBefore(LocalTime.of(14, 0))) {
                     executableTime = localDateTime.withHour(11).withMinute(30);

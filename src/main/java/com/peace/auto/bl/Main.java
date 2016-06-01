@@ -1,8 +1,11 @@
 package com.peace.auto.bl;
 
+import com.peace.auto.bl.common.Device;
+import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
+import com.peace.auto.bl.task.DengLu;
 import com.peace.auto.bl.task.QunYingHui;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +20,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import static com.peace.auto.bl.common.Devices.DENG_LU;
 import static com.peace.auto.bl.common.Devices.DEVICE_1;
 import static com.peace.auto.bl.common.Devices.status;
 
@@ -30,28 +34,29 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-        status.getUserTasks();
+//        status.getUserTasks();
 
-//        killAllBoxSVC();
+        Device.killAllBoxSVC();
 
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
         OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
+//        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
-//        new DuoBaoModeJob().execute();
+
 //        new XunBaoModeJob().execute();
+//        new DuoBaoModeJob().execute();
 
 //        testMode();
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
 //        AndroidScreen region = startDevice(DEVICE_1);
-        AndroidScreen region = DEVICE_1.getRegion(status, true);
-//        DENG_LU.QiDong(region, status, "peace");
+        AndroidScreen region = DEVICE_1.getRegion(true);
 
-//        status.setCurrentUser("peace");
-        status.setCurrentUser("peace0ph004");
+        DENG_LU.checkUser(region, status, "peace");
+
         new QunYingHui().Done(region, status);
 
         region.close();

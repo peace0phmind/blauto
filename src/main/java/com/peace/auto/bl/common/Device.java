@@ -15,10 +15,8 @@ import java.io.InputStreamReader;
  */
 @Slf4j
 public class Device {
-    public static final DengLu DENG_LU = new DengLu();
     private static final String PLAY_PATH = "/Users/mind/Applications/Genymotion.app/Contents/MacOS/player.app/Contents/MacOS/player";
     private static final String HIDE_PLAYER_COMMAND = "tell application \"System Events\" to set visible of application process \"player\" to false";
-
     private static String script = "tell application \"System Events\"\n" +
             "\trepeat with player in (every process whose name is \"player\")\n" +
             "\t\ttell player\n" +
@@ -33,6 +31,7 @@ public class Device {
     private static String closeButton = "close button";
     private static String minimizeButton = "minimize button";
 
+    private static int deviceCount = 0;
 
     private String id;
     private String description;
@@ -44,17 +43,19 @@ public class Device {
         this.description = description;
     }
 
-    public AndroidScreen startGame(Status status) throws IOException, InterruptedException, FindFailed {
-        return startGame(status, false);
+    public static void killAllBoxSVC() throws IOException, InterruptedException {
+        Runtime rt = Runtime.getRuntime();
+
+        rt.exec("killall VBoxSVC");
+
+        Thread.sleep(6000L);
+
+        rt.exec("killall VBoxNetDHCP");
+
+        Thread.sleep(6000L);
     }
 
-    public AndroidScreen startGame(Status status, boolean visible) throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = startDevice(visible);
-        DENG_LU.QiDong(region, status);
-        return region;
-    }
-
-    public AndroidScreen startDevice(boolean visible) throws IOException, InterruptedException {
+    private AndroidScreen startDevice(boolean visible) throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
         String[] args = {"osascript", "-e", String.format(script, description, minimizeButton)};
 
@@ -78,15 +79,11 @@ public class Device {
         return new AndroidScreen(ip.trim());
     }
 
-    public AndroidScreen startDevice() throws IOException, InterruptedException {
-        return startDevice(false);
+    public AndroidScreen getRegion() throws IOException, InterruptedException, FindFailed {
+        return getRegion(false);
     }
 
-    public AndroidScreen getRegion(Status status) throws IOException, InterruptedException, FindFailed {
-        return getRegion(status, false);
-    }
-
-    public AndroidScreen getRegion(Status status, boolean visible) throws IOException, InterruptedException, FindFailed {
+    public AndroidScreen getRegion(boolean visible) throws IOException, InterruptedException, FindFailed {
         if (region != null) {
             return region;
         }
@@ -97,13 +94,15 @@ public class Device {
         String ip = new BufferedReader(new InputStreamReader(exec.getInputStream())).readLine();
 
         if ("No value set!".equals(ip)) {
-            log.info("No value set! Starting game.");
-            region = startGame(status, visible);
+            log.info("No value set! Starting device.");
+            region = startDevice(visible);
         } else {
             ip = ip.replaceAll("Value: ", "") + ":5555";
             log.info("ip: {}", ip);
             region = new AndroidScreen(ip.trim());
         }
+
+        deviceCount += 1;
 
         return region;
     }
@@ -112,19 +111,27 @@ public class Device {
         if (region != null) {
             region.close();
             region = null;
+            deviceCount -= 1;
         }
 
         Runtime rt = Runtime.getRuntime();
-//        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, device.getId()));
 
         String[] args = {"osascript", "-e", String.format(script, description, closeButton)};
         log.info("{}", args[2]);
         rt.exec(args);
 
-        rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
+        Thread.sleep(5000L);
 
-        Thread.sleep(6000L);
+        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, id));
 
-        rt.exec("adb kill-server");
+        if (deviceCount == 0) {
+            log.info("do extra clean");
+
+            rt.exec("adb kill-server");
+
+            // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
+
+            killAllBoxSVC();
+        }
     }
 }

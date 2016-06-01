@@ -25,7 +25,7 @@ import static com.peace.auto.bl.common.Devices.*;
 public class AutoMode implements Job {
 
     public static void init(Scheduler scheduler) {
-        JobDetail job = JobBuilder.newJob(OrderModeJob.class).build();
+        JobDetail job = JobBuilder.newJob(AutoMode.class).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0)).build();
 
         try {
@@ -43,7 +43,7 @@ public class AutoMode implements Job {
 
         boolean bNeedRestart = false;
         try {
-            region = DEVICE_1.getRegion(status);
+            region = DEVICE_1.getRegion();
 
             List<TaskItem> taskItems = status.getUserTasks();
             Map<Boolean, List<TaskItem>> trueForExecuteCollect = taskItems.stream().collect(Collectors.groupingBy(e -> e.getExecutableTime().isBefore(LocalDateTime.now())));
@@ -73,6 +73,7 @@ public class AutoMode implements Job {
 
             if (trueForExecuteCollect.get(false).size() == 0) {
                 addNewTrigger(context, 30 * 60);
+                log.info("wait half an hour for next jobs.");
             } else {
                 TaskItem taskItem = trueForExecuteCollect.get(false).get(0);
                 log.info("Change to user for job: {}", taskItem.getUserName());
@@ -106,14 +107,6 @@ public class AutoMode implements Job {
                 log.error("{}", e);
             }
 
-            try {
-                killAllBoxSVC();
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (InterruptedException e) {
-                log.error("{}", e);
-            }
-
             addNewTrigger(context, 5);
         }
     }
@@ -126,7 +119,6 @@ public class AutoMode implements Job {
             context.getScheduler().scheduleJob(tr);
         } catch (SchedulerException e) {
             log.info("{}", e);
-
         }
     }
 }

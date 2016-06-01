@@ -26,7 +26,7 @@ public class OrderModeJob implements Job, TaskJob {
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(OrderModeJob.class).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).withRepeatCount(30)).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(20).withRepeatCount(30)).build();
 //                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).repeatForever()).build();
 
         try {
@@ -51,15 +51,15 @@ public class OrderModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
-        Settings.OcrTextRead = true;
-
         AndroidScreen region = null;
-
         boolean bNeedRestart = false;
+
         try {
-            region = DEVICE_1.getRegion(status);
+            region = DEVICE_1.getRegion();
 
             for (int i = 0; i < Status.getUserCount(); i++) {
+                DENG_LU.checkUser(region, status, status.getNextLoginName());
+
                 List<IDo> tasks = status.getTasks(status.getCurrentUser());
                 log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
@@ -68,8 +68,6 @@ public class OrderModeJob implements Job, TaskJob {
                         Thread.sleep(3 * 1000L);
                     }
                 }
-
-                DENG_LU.Done(region, status);
             }
         } catch (InterruptedException e) {
             log.error("{}", e);

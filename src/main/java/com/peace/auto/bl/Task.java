@@ -40,7 +40,8 @@ public enum Task {
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 2 * 60 * 60),
     TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
 
-    SHI_CHANG(ShiChang.class, 3, -1, 2 * 60 * 60),
+    SHI_CHANG(ShiChang.class, 3, -1),
+    SHI_CHANG_CHECK(ShiChang.class, 0, -1, 2 * 60 * 60),
 
     LIAN_MENG(LianMeng.class, 1),
     LIAN_MENG_GONG_FENG(LianMeng.class, 1),
@@ -74,7 +75,7 @@ public enum Task {
 
     QUN_YING_HUI(QunYingHui.class, -1),
     QUN_YING_HUI_BAO_MING(QunYingHui.class, 1),
-    QUN_YING_HUI_LING_JIANG(QunYingHui.class, 1),
+    QUN_YING_HUI_LING_JIANG(QunYingHui.class, 2),
 
     SHEN_QI(ShenQi.class, 1),
     SHEN_XIANG_SHENG_JI(ShenQi.class, 3, 3, 8 * 60 * 60);

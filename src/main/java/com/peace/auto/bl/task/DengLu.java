@@ -166,11 +166,11 @@ public class DengLu implements IDo {
         return false;
     }
 
-    public boolean QiDong(Region region, Status status) throws FindFailed, InterruptedException {
+    private boolean QiDong(Region region, Status status) throws FindFailed, InterruptedException {
         return QiDong(region, status, status.getNextLoginName());
     }
 
-    public boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
+    private boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
         status.setWantUser(loginName);
 
         Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);

@@ -52,16 +52,12 @@ public class DuoBaoModeJob implements Job, TaskJob {
     @Override
     public void execute() {
         try {
-            AndroidScreen region1 = DEVICE_1.startDevice();
-            AndroidScreen region2 = DEVICE_2.startDevice();
-            AndroidScreen region3 = DEVICE_3.startDevice();
+            AndroidScreen region1 = DEVICE_1.getRegion();
+            AndroidScreen region2 = DEVICE_2.getRegion();
+            AndroidScreen region3 = DEVICE_3.getRegion();
 
             List<Region> regions = Arrays.asList(region1, region2, region3);
             log.info("{}", regions);
-
-            DENG_LU.QiDong(region1, status, "peace");
-            DENG_LU.QiDong(region2, status, "peace0ph006");
-            DENG_LU.QiDong(region3, status, "peace0ph004");
 
             duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
