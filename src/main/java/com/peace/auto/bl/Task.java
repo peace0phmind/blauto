@@ -78,7 +78,7 @@ public enum Task {
     QUN_YING_HUI_LING_JIANG(QunYingHui.class, 2),
 
     SHEN_QI(ShenQi.class, 1),
-    SHEN_XIANG_SHENG_JI(ShenQi.class, 3, 3, 8 * 60 * 60);
+    SHEN_XIANG_SHENG_JI(ShenQi.class, 0, 0, 8 * 60 * 60);
 
     /**
      * vip user and task

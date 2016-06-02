@@ -7,7 +7,10 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by mind on 4/30/16.
@@ -52,6 +55,7 @@ public class ShenQi implements IDo {
                         shengji.click();
 
                         boolean bjb = false;
+                        List<LocalDateTime> times = new ArrayList<>();
                         for (String shenxiang : Arrays.asList("jianling.png", "moling.png", "paoling.png", "yongling.png")) {
                             Match sx = region.exists(baseDir + shenxiang);
                             if (sx != null) {
@@ -79,12 +83,29 @@ public class ShenQi implements IDo {
                                             }
                                         }
                                     }
+                                } else {
+////                                    String sTime = getWord(daojishi.right(70), "1234567890:");
+//                                    String sTime = getTime(daojishi.right(70), 52);
+//                                    log.info("sTime: {}", sTime);
+//                                    String[] split = sTime.split(":");
+//                                    if (split.length == 3) {
+//                                        times.add(LocalDateTime.now().plusHours(Integer.parseInt(split[0].trim()))
+//                                                .plusMinutes(Integer.parseInt(split[1].trim()))
+//                                                .plusSeconds(Integer.parseInt(split[2].trim())));
+//                                    }
                                 }
                             }
                         }
 
                         if (bjb) {
                             status.Done(Task.SHEN_XIANG_SHENG_JI);
+                        } else {
+//                            if (times.size() > 0) {
+//                                LocalDateTime largerTime = times.stream().sorted((x, y) -> y.compareTo(x)).findFirst().get();
+//                                log.info("Times: {}, largerTime: {}", times, largerTime);
+//                                status.Done(Task.SHEN_XIANG_SHENG_JI, largerTime);
+//                            }
+                            status.Done(Task.SHEN_XIANG_SHENG_JI, LocalDateTime.now().plusMinutes(30));
                         }
                     }
                 }

@@ -46,7 +46,7 @@ public class ShiLianDong extends ZhanBao implements IDo {
                         region.click(Common.QU_XIAO);
                     } else {
                         // 进入成功
-                        if ("peace".equals(status.getCurrentUser())) {
+                        if (status.isPeace()) {
                             status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
                         } else {
                             Match zidongzhandou = region.exists(baseDir + "zidongzhandou.png");

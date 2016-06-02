@@ -46,6 +46,10 @@ public class Status {
         return users.size();
     }
 
+    public boolean isPeace() {
+        return "peace".equals(currentUser);
+    }
+
     public String getNextLoginName() {
         if (currentUser == null && wantUser == null) {
             return users.get(0);

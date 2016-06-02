@@ -1,12 +1,11 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
-import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
-import com.peace.auto.bl.job.XunBaoModeJob;
-import com.peace.auto.bl.task.DengLu;
-import com.peace.auto.bl.task.QunYingHui;
+import com.peace.auto.bl.task.Building;
+import com.peace.auto.bl.task.ShenQi;
+import com.peace.auto.bl.task.ShouGuFang;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -16,13 +15,9 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import static com.peace.auto.bl.common.Devices.DENG_LU;
-import static com.peace.auto.bl.common.Devices.DEVICE_1;
-import static com.peace.auto.bl.common.Devices.status;
+import static com.peace.auto.bl.common.Devices.*;
 
 /**
  * Created by mind on 3/2/16.
@@ -37,7 +32,6 @@ public class Main {
 //        status.getUserTasks();
 
         Device.killAllBoxSVC();
-
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
         OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
@@ -57,51 +51,11 @@ public class Main {
 
         DENG_LU.checkUser(region, status, "peace");
 
-        new QunYingHui().Done(region, status);
+//        new ShouGuFang().Done(region, status);
+        new ShenQi().Done(region, status);
+
 
         region.close();
 //        stopDevice(DEVICE_1);
-    }
-
-
-    private static BufferedImage getBlackWhiteImage(BufferedImage original) {
-        BufferedImage binarized = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
-
-        int red;
-        int newPixel;
-        int threshold = 170;
-
-        for (int i = 0; i < original.getWidth(); i++) {
-            for (int j = 0; j < original.getHeight(); j++) {
-
-                // Get pixels
-                red = new Color(original.getRGB(i, j)).getRed();
-
-                int alpha = new Color(original.getRGB(i, j)).getAlpha();
-
-                if (red > threshold) {
-                    newPixel = 0;
-                } else {
-                    newPixel = 255;
-                }
-                newPixel = colorToRGB(alpha, newPixel, newPixel, newPixel);
-                binarized.setRGB(i, j, newPixel);
-            }
-        }
-
-        return binarized;
-    }
-
-    private static int colorToRGB(int alpha, int red, int green, int blue) {
-        int newPixel = 0;
-        newPixel += alpha;
-        newPixel = newPixel << 8;
-        newPixel += red;
-        newPixel = newPixel << 8;
-        newPixel += green;
-        newPixel = newPixel << 8;
-        newPixel += blue;
-
-        return newPixel;
     }
 }

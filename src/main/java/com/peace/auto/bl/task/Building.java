@@ -6,7 +6,13 @@ import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,12 +53,18 @@ public class Building implements IDo {
             // 购买队列 - 小号没人力了
             Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
             if (kaiqixinduilie != null) {
-                if (kaiqixinduilie.getX() < 400) {
-                    kaiqixinduilie.click();
+                Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
+                while (all.hasNext()) {
+                    kaiqixinduilie = all.next();
 
-                    Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
-                    if (goumaiduilie != null) {
-                        region.click(Common.QUE_DING);
+                    if (status.isPeace() || kaiqixinduilie.getX() < 400) {
+                        kaiqixinduilie.click();
+
+                        Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                        if (goumaiduilie != null) {
+                            region.click(Common.QUE_DING);
+                            Thread.sleep(3000L);
+                        }
                     }
                 }
             }
@@ -81,13 +93,33 @@ public class Building implements IDo {
                         }
                     } while (isButtonEnable(match));
                 }
-            }
 
-            status.Done(Task.BUILDING);
+                status.Done(Task.BUILDING, getBuildingFinishTime(region));
+            }
         }
 
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    private LocalDateTime getBuildingFinishTime(Region region) throws FindFailed {
+        Iterator<Match> all = region.findAll(baseDir + "shengjilengquezhong.png");
+        ArrayList<Match> allTims = Lists.newArrayList(all);
+//        allTims.stream().map(x -> x.below(18)).forEach(x -> x.saveScreenCapture(".", "time"));
+
+        return allTims.stream().map(x -> {
+            String sTime = getTime(x.below(18), 170);
+
+            String[] splitTime = sTime.split(":");
+            LocalDateTime time = LocalDateTime.now().plusMinutes(30);
+
+            if (splitTime.length == 3) {
+                time = LocalDateTime.now().plusHours(Integer.parseInt(splitTime[0].trim()))
+                        .plusMinutes(Integer.parseInt(splitTime[1].trim()))
+                        .plusSeconds(Integer.parseInt(splitTime[2].trim()));
+            }
+            return time;
+        }).sorted((a, b) -> a.compareTo(b)).findFirst().get();
     }
 }

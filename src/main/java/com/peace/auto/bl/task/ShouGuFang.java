@@ -1,5 +1,6 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.Common;
@@ -10,6 +11,8 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -41,43 +44,55 @@ public class ShouGuFang implements IDo {
         }
 
         // 兽骨狩猎
-        if (status.canDo(Task.SHOU_GU_SHOU_LIE)) {
-            region.click(baseDir + "shougushoulie.png");
+//        if (status.canDo(Task.SHOU_GU_SHOU_LIE)) {
+        region.click(baseDir + "shougushoulie.png");
 
-            Match shuaxin = region.exists(baseDir + "shuaxin.png");
-            if (shuaxin != null) {
-                // 需要进行狩猎
-                shoulie:
-                for (int i = 0; i < 40; i++) {
-                    Match daliang = region.exists(baseDir + "daliangniaolong.png");
-                    if (daliang != null) {
-                        Iterator<Match> all = region.findAll(baseDir + "daliangniaolong.png");
-                        while (all.hasNext()) {
-                            Match liewu = all.next();
-                            if (liewu.getScore() > 0.95) {
-                                Color pixelColor = getPixelColor(liewu, 54, 5);
-                                // [r=220,g=117,b=223] 大量
-                                // [r=216,g=202,b=153] 小量
-                                // [r=91,g=71,b=48] 一群
-                                if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 120) {
-                                    liewu.below().click(baseDir + "kaishishoulie.png");
-                                    status.Done(Task.SHOU_GU_SHOU_LIE);
-                                    Thread.sleep(1000L);
-                                    break shoulie;
-                                }
+        Match shuaxin = region.exists(baseDir + "shuaxin.png");
+        if (shuaxin != null) {
+            // 需要进行狩猎
+            shoulie:
+            for (int i = 0; i < 40; i++) {
+                Match daliang = region.exists(baseDir + "daliangniaolong.png");
+                if (daliang != null) {
+                    Iterator<Match> all = region.findAll(baseDir + "daliangniaolong.png");
+                    while (all.hasNext()) {
+                        Match liewu = all.next();
+                        if (liewu.getScore() > 0.95) {
+                            Color pixelColor = getPixelColor(liewu, 54, 5);
+                            // [r=220,g=117,b=223] 大量
+                            // [r=216,g=202,b=153] 小量
+                            // [r=91,g=71,b=48] 一群
+                            if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 120) {
+                                liewu.below().click(baseDir + "kaishishoulie.png");
+                                status.Done(Task.SHOU_GU_SHOU_LIE);
+                                Thread.sleep(1000L);
+                                break shoulie;
                             }
                         }
                     }
-
-                    shuaxin.click();
-                    Thread.sleep(2000L);
                 }
+
+                shuaxin.click();
+                Thread.sleep(2000L);
             }
+        } else {
+            getFinishTime(region);
         }
+//        }
 
         region.click(Common.CLOSE);
 
         return true;
+    }
+
+    private LocalDateTime getFinishTime(Region region) throws FindFailed {
+        Match shouliezhong = region.exists(baseDir + "shouliezhong.png");
+        if (shouliezhong != null) {
+            shouliezhong.left(30).saveScreenCapture(".", "time");
+            log.info("{}", getTime(shouliezhong.left(30), 100));
+        }
+
+        return LocalDateTime.now().plusMinutes(30);
     }
 
     @Override
