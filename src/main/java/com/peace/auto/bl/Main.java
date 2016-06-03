@@ -1,8 +1,10 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
+import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
+import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.Building;
 import com.peace.auto.bl.task.ShenQi;
 import com.peace.auto.bl.task.ShouGuFang;
@@ -16,6 +18,7 @@ import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
+import java.util.Random;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -33,10 +36,10 @@ public class Main {
 
         Device.killAllBoxSVC();
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-        OrderModeJob.init(defaultScheduler);
+//        OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-//        AutoMode.init(defaultScheduler);
+        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
 
 //        new XunBaoModeJob().execute();
@@ -50,9 +53,13 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
         DENG_LU.checkUser(region, status, "peace");
+        Random random = new Random();
 
 //        new ShouGuFang().Done(region, status);
-        new ShenQi().Done(region, status);
+        for (int i = 0; i < 1; i++) {
+            new ShenQi().Done(region, status);
+            Thread.sleep((random.nextInt(20) + 1) * 1000L);
+        }
 
 
         region.close();

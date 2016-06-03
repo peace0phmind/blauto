@@ -101,9 +101,9 @@ public class Status {
             }
 
             if (t == Task.SHENG_HUO) {
-                if (LocalTime.now().isBefore(LocalTime.of(14, 0))) {
+                if (LocalTime.now().isBefore(LocalTime.of(11, 30))) {
                     executableTime = localDateTime.withHour(11).withMinute(30);
-                } else {
+                } else if (LocalTime.now().isBefore(LocalTime.of(20, 30)) && LocalTime.now().isAfter(LocalTime.of(14, 0))) {
                     executableTime = localDateTime.withHour(20).withMinute(30);
                 }
             }

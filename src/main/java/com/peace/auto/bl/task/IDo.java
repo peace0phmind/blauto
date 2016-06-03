@@ -12,7 +12,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Iterator;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/6/16.
@@ -67,8 +70,7 @@ public interface IDo {
 
     /**
      * @param region
-     * @param threshold
-     *   building : threshold = 170
+     * @param threshold building : threshold = 170
      * @return
      */
     default String getTime(Region region, int threshold) {
@@ -78,10 +80,27 @@ public interface IDo {
         TextRecognizer tr = TextRecognizer.getInstance();
         BufferedImage blackWhiteImage = getBlackWhiteImage(simg.getImage(), threshold);
         try {
+            region.saveScreenCapture(".", "time");
             ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%d.png", LocalDateTime.now().getNano())));
         } catch (IOException e) {
         }
         return tr.recognizeWord(blackWhiteImage);
+    }
+
+    default String getTime(Region region, List<Color> foregroundColors) {
+        OCR.setParameter("tessedit_char_whitelist", "0123456789:");
+
+        ScreenImage simg = region.getScreen().capture(region.getRect());
+        TextRecognizer tr = TextRecognizer.getInstance();
+        BufferedImage blackWhiteImage = getBlackWhiteImage(createResizedCopy(simg.getImage(), 2.2f, false), foregroundColors);
+        String ret = tr.recognizeWord(blackWhiteImage);
+        try {
+
+//            region.saveScreenCapture(".", "time");
+            ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%s-%s.png", ret, DateTimeFormatter.ofPattern("yyMMddHHmmssSSS").format(LocalDateTime.now()))));
+        } catch (IOException e) {
+        }
+        return ret;
     }
 
     default Region newRegion(Region region, Rectangle rectangle) {
@@ -104,6 +123,7 @@ public interface IDo {
         int newPixel;
 //     building   int threshold = 170;
 //     shenqi   int threshold = 30;
+        int smooth = 1;
 
         for (int i = 0; i < original.getWidth(); i++) {
             for (int j = 0; j < original.getHeight(); j++) {
@@ -113,7 +133,7 @@ public interface IDo {
 
                 int alpha = new Color(original.getRGB(i, j)).getAlpha();
 
-                if (red > threshold) {
+                if (red > (threshold - smooth) && red < (threshold + smooth)) {
                     newPixel = 0;
                 } else {
                     newPixel = 255;
@@ -124,6 +144,66 @@ public interface IDo {
         }
 
         return binarized;
+    }
+
+    default BufferedImage createResizedCopy(BufferedImage originalImage, float scale,
+                                            boolean preserveAlpha) {
+        int width = (int) (originalImage.getWidth() * scale);
+        int height = (int) (originalImage.getHeight() * scale);
+        int imageType = preserveAlpha ? BufferedImage.TYPE_INT_RGB : BufferedImage.TYPE_INT_ARGB;
+        BufferedImage scaledBI = new BufferedImage(width, height, imageType);
+        Graphics2D g = scaledBI.createGraphics();
+        if (preserveAlpha) {
+            g.setComposite(AlphaComposite.Src);
+        }
+        g.drawImage(originalImage, 0, 0, width, height, null);
+        g.dispose();
+        return scaledBI;
+    }
+
+    default BufferedImage getBlackWhiteImage(BufferedImage original, List<Color> foregroundColors) {
+        BufferedImage binarized = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_BYTE_BINARY);
+
+        int newPixel;
+
+        for (int i = 0; i < original.getWidth(); i++) {
+            for (int j = 0; j < original.getHeight(); j++) {
+
+                // Get pixels
+                Color pixelColor = new Color(original.getRGB(i, j));
+                int alpha = pixelColor.getAlpha();
+
+                if (foregroundColors.stream().anyMatch(x -> towColorLike(x, pixelColor, 0.02f))) {
+                    newPixel = 0;
+                } else {
+                    newPixel = 255;
+                }
+                newPixel = colorToRGB(alpha, newPixel, newPixel, newPixel);
+                binarized.setRGB(i, j, newPixel);
+            }
+        }
+
+        return binarized;
+    }
+
+    default boolean towColorLike(Color baseColor, Color checkColor, float threshold) {
+        int sameColor = 0;
+        if ((checkColor.getRed() < (baseColor.getRed() * (1 + threshold)))
+                && (checkColor.getRed() > (baseColor.getRed() * (1 - threshold)))) {
+            sameColor += 1;
+        }
+
+        if ((checkColor.getBlue() < (baseColor.getBlue() * (1 + threshold)))
+                && (checkColor.getBlue() > (baseColor.getBlue() * (1 - threshold)))) {
+            sameColor += 1;
+        }
+
+        if ((checkColor.getGreen() < (baseColor.getGreen() * (1 + threshold)))
+                && (checkColor.getGreen() > (baseColor.getGreen() * (1 - threshold)))) {
+            sameColor += 1;
+        }
+
+        return sameColor >= 2;
     }
 
     default int colorToRGB(int alpha, int red, int green, int blue) {

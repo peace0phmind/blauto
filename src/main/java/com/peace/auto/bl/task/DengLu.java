@@ -53,7 +53,7 @@ public class DengLu implements IDo {
                 log.info("current user: {}, want user: {}, num: {}", status.getCurrentUser(), status.getWantUser(), num);
             }
         } else {
-            QiDong(region, status);
+            QiDong(region, status, status.getWantUser());
         }
     }
 
@@ -164,10 +164,6 @@ public class DengLu implements IDo {
         }
 
         return false;
-    }
-
-    private boolean QiDong(Region region, Status status) throws FindFailed, InterruptedException {
-        return QiDong(region, status, status.getNextLoginName());
     }
 
     private boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {

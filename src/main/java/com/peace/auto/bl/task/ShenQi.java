@@ -7,6 +7,7 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,14 +86,19 @@ public class ShenQi implements IDo {
                                     }
                                 } else {
 ////                                    String sTime = getWord(daojishi.right(70), "1234567890:");
-//                                    String sTime = getTime(daojishi.right(70), 52);
-//                                    log.info("sTime: {}", sTime);
-//                                    String[] split = sTime.split(":");
-//                                    if (split.length == 3) {
-//                                        times.add(LocalDateTime.now().plusHours(Integer.parseInt(split[0].trim()))
-//                                                .plusMinutes(Integer.parseInt(split[1].trim()))
-//                                                .plusSeconds(Integer.parseInt(split[2].trim())));
-//                                    }
+                                    String sTime = getTime(daojishi.right(70), Arrays.asList(new Color(52, 190, 30),
+                                            new Color(52, 206, 29), new Color(51, 159, 31)));
+                                    log.info("sTime: {}", sTime);
+                                    String[] split = sTime.split(":");
+                                    if (split.length == 3) {
+                                        try {
+                                            times.add(LocalDateTime.now().plusHours(Integer.parseInt(split[0].trim()))
+                                                    .plusMinutes(Integer.parseInt(split[1].trim()))
+                                                    .plusSeconds(Integer.parseInt(split[2].trim())));
+                                        } catch (Exception e) {
+                                            log.info("{}", e);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -105,7 +111,8 @@ public class ShenQi implements IDo {
 //                                log.info("Times: {}, largerTime: {}", times, largerTime);
 //                                status.Done(Task.SHEN_XIANG_SHENG_JI, largerTime);
 //                            }
-                            status.Done(Task.SHEN_XIANG_SHENG_JI, LocalDateTime.now().plusMinutes(30));
+                            // TODO
+//                            status.Done(Task.SHEN_XIANG_SHENG_JI, LocalDateTime.now().plusMinutes(30));
                         }
                     }
                 }
