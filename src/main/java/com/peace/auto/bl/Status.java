@@ -67,9 +67,13 @@ public class Status {
     }
 
     public List<TaskItem> getUserTasks() {
+        return getUserTasks(LocalDateTime.now());
+    }
+
+    public List<TaskItem> getUserTasks(LocalDateTime dateTime) {
         ArrayList<Task> tasks = Lists.newArrayList(Task.values());
         List<TaskItem> taskItems = new ArrayList<>();
-        LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(5);
+        LocalDateTime localDateTime = dateTime.minusMinutes(5);
 
         USERS.forEach(u -> tasks.forEach(t -> {
             // 忽略活跃度和领取任务的任务计算
@@ -102,9 +106,9 @@ public class Status {
             }
 
             if (t == Task.SHENG_HUO) {
-                if (LocalTime.now().isBefore(LocalTime.of(11, 30))) {
+                if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
                     executableTime = localDateTime.withHour(11).withMinute(30);
-                } else if (LocalTime.now().isBefore(LocalTime.of(20, 30)) && LocalTime.now().isAfter(LocalTime.of(14, 0))) {
+                } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
                     executableTime = localDateTime.withHour(20).withMinute(30);
                 }
             }
