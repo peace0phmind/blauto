@@ -39,6 +39,10 @@ public class AutoMode implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
 
+        richang(context);
+    }
+
+    private void richang(JobExecutionContext context) {
         AndroidScreen region = null;
 
         boolean bNeedRestart = false;
@@ -109,6 +113,14 @@ public class AutoMode implements Job {
 
             addNewTrigger(context, 5);
         }
+    }
+
+    private void xunbao(JobExecutionContext context) {
+
+    }
+
+    private void duobao(JobExecutionContext context) {
+
     }
 
     private void addNewTrigger(JobExecutionContext context, long seconds) {

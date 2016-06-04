@@ -74,10 +74,13 @@ public enum Task {
 
     QUN_YING_HUI(QunYingHui.class, -1),
     QUN_YING_HUI_BAO_MING(QunYingHui.class, 1),
-    QUN_YING_HUI_LING_JIANG(QunYingHui.class, 2),
+    QUN_YING_HUI_LING_JIANG(QunYingHui.class, 1),
 
     SHEN_QI(ShenQi.class, 1),
-    SHEN_XIANG_SHENG_JI(ShenQi.class, 0, 0, 8 * 60 * 60);
+    SHEN_XIANG_SHENG_JI(ShenQi.class, 0, 0, 8 * 60 * 60),
+
+    QI_BING_XUN_BAO_PREPARE(DuoBao.class, -1),
+    QI_BING_XUN_BAO(DuoBao.class, -1);
 
     /**
      * vip user and task

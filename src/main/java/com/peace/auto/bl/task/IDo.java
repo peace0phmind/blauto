@@ -79,11 +79,11 @@ public interface IDo {
         ScreenImage simg = region.getScreen().capture(region.getRect());
         TextRecognizer tr = TextRecognizer.getInstance();
         BufferedImage blackWhiteImage = getBlackWhiteImage(simg.getImage(), threshold);
-        try {
-            region.saveScreenCapture(".", "time");
-            ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%d.png", LocalDateTime.now().getNano())));
-        } catch (IOException e) {
-        }
+//        try {
+//            region.saveScreenCapture(".", "time");
+//            ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%d.png", LocalDateTime.now().getNano())));
+//        } catch (IOException e) {
+//        }
         return tr.recognizeWord(blackWhiteImage);
     }
 
@@ -94,12 +94,11 @@ public interface IDo {
         TextRecognizer tr = TextRecognizer.getInstance();
         BufferedImage blackWhiteImage = getBlackWhiteImage(createResizedCopy(simg.getImage(), 2.2f, false), foregroundColors);
         String ret = tr.recognizeWord(blackWhiteImage);
-        try {
-
+//        try {
 //            region.saveScreenCapture(".", "time");
-            ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%s-%s.png", ret, DateTimeFormatter.ofPattern("yyMMddHHmmssSSS").format(LocalDateTime.now()))));
-        } catch (IOException e) {
-        }
+//            ImageIO.write(blackWhiteImage, "png", new File(String.format("/Users/mind/peace/blauto/%s-%s.png", ret, DateTimeFormatter.ofPattern("yyMMddHHmmssSSS").format(LocalDateTime.now()))));
+//        } catch (IOException e) {
+//        }
         return ret;
     }
 

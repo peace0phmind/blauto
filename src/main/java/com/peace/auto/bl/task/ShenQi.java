@@ -82,6 +82,13 @@ public class ShenQi implements IDo {
                                                 region.click(Common.QUE_DING);
                                                 break;
                                             }
+
+                                            Match chongzhi = region.exists(baseDir + "chongzhi.png");
+                                            if (chongzhi != null) {
+                                                clickInside(region, Common.CLOSE);
+                                                Thread.sleep(3000l);
+                                                break;
+                                            }
                                         }
                                     }
                                 } else {

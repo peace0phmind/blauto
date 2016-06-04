@@ -43,6 +43,7 @@ public class ShengYu implements IDo {
                         break shengyuLoop;
                     }
                 } while (isButtonEnable(shengji));
+
             }
 
             status.Done(Task.SHENG_YU);

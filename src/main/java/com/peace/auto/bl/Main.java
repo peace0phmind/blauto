@@ -35,17 +35,20 @@ public class Main {
 //        status.getUserTasks();
 
         Device.killAllBoxSVC();
+        time();
+//        new XunBaoModeJob().execute();
+//        new DuoBaoModeJob().execute();
+
+//        testMode();
+    }
+
+    private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
 //        OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
         AutoMode.init(defaultScheduler);
         defaultScheduler.start();
-
-//        new XunBaoModeJob().execute();
-//        new DuoBaoModeJob().execute();
-
-//        testMode();
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {

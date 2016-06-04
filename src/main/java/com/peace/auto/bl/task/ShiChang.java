@@ -10,6 +10,7 @@ import org.sikuli.script.Location;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 
 /**
@@ -74,6 +75,10 @@ public class ShiChang implements IDo {
     public boolean CanDo(Status status, String userName) {
         if (status.canDo(Task.SHI_CHANG, userName)) {
             return status.canDo(Task.SHI_CHANG_CHECK, userName);
+        }
+
+        if (status.todayFinishCount(Task.SHI_CHANG) == Task.SHI_CHANG.getDayLimit(status.getCurrentUser())) {
+            status.Done(Task.SHI_CHANG_CHECK, LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0));
         }
 
         return false;
