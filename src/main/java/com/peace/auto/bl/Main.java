@@ -44,10 +44,10 @@ public class Main {
 
     private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-//        OrderModeJob.init(defaultScheduler);
+        OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-        AutoMode.init(defaultScheduler);
+//        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 

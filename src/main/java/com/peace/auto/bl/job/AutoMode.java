@@ -63,8 +63,10 @@ public class AutoMode implements Job {
                 log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
                 for (IDo iDo : tasks) {
-                    if (iDo.Done(region, status)) {
-                        Thread.sleep(3 * 1000L);
+                    if (iDo.CanDo(status, status.getCurrentUser())) {
+                        if (iDo.Done(region, status)) {
+                            Thread.sleep(3 * 1000L);
+                        }
                     }
                 }
 

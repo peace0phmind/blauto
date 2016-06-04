@@ -44,7 +44,7 @@ public class OrderModeJob implements Job, TaskJob {
             execute();
         }
 
-        if (isValidTime(LocalTime.of(14, 0), LocalTime.of(21, 0))) {
+        if (isValidTime(LocalTime.of(13, 30), LocalTime.of(21, 0))) {
             execute();
         }
     }
@@ -64,8 +64,10 @@ public class OrderModeJob implements Job, TaskJob {
                 log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
                 for (IDo iDo : tasks) {
-                    if (iDo.Done(region, status)) {
-                        Thread.sleep(3 * 1000L);
+                    if (iDo.CanDo(status, status.getCurrentUser())) {
+                        if (iDo.Done(region, status)) {
+                            Thread.sleep(3 * 1000L);
+                        }
                     }
                 }
             }

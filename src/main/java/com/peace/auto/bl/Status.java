@@ -23,8 +23,7 @@ import java.util.stream.Collectors;
 public class Status {
 
     private static final String LOG_FILE = "./log_map.bin";
-
-    private static final List<String> users = Arrays.asList(
+    private static final List<String> USERS = Arrays.asList(
             "peace",
             "peace0ph001",
             "peace0ph002",
@@ -33,6 +32,8 @@ public class Status {
             "peace0ph007",
             "peace0ph008"
     );
+    private static final List<LocalTime> XUN_BAO_PREPARE = Arrays.asList(LocalTime.of(11, 25), LocalTime.of(13, 50), LocalTime.of(23, 50));
+    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(23, 53, 30));
 
     private String currentUser;
     private String wantUser;
@@ -43,7 +44,7 @@ public class Status {
     }
 
     public static int getUserCount() {
-        return users.size();
+        return USERS.size();
     }
 
     public boolean isPeace() {
@@ -52,17 +53,17 @@ public class Status {
 
     public String getNextLoginName() {
         if (currentUser == null && wantUser == null) {
-            return users.get(0);
+            return USERS.get(0);
         }
 
         String user = currentUser == null ? wantUser : currentUser;
 
-        int index = users.indexOf(user);
+        int index = USERS.indexOf(user);
         if (-1 == index) {
-            return users.get(0);
+            return USERS.get(0);
         }
 
-        return users.get((index + 1) % users.size());
+        return USERS.get((index + 1) % USERS.size());
     }
 
     public List<TaskItem> getUserTasks() {
@@ -70,7 +71,7 @@ public class Status {
         List<TaskItem> taskItems = new ArrayList<>();
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(5);
 
-        users.forEach(u -> tasks.forEach(t -> {
+        USERS.forEach(u -> tasks.forEach(t -> {
             // 忽略活跃度和领取任务的任务计算
             if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
                 return;
@@ -145,17 +146,17 @@ public class Status {
     }
 
     public boolean changeUser(int num) {
-        this.currentUser = users.get(num - 1);
+        this.currentUser = USERS.get(num - 1);
         log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
         return currentUser.equals(wantUser);
     }
 
     public int getCurrentUserIndex() {
-        if (currentUser == null || !users.contains(currentUser)) {
+        if (currentUser == null || !USERS.contains(currentUser)) {
             return 0;
         }
 
-        return users.indexOf(currentUser);
+        return USERS.indexOf(currentUser);
     }
 
     public void Done(Task task) {
