@@ -26,7 +26,7 @@ public class OrderModeJob implements Job, TaskJob {
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(OrderModeJob.class).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(20).withRepeatCount(30)).build();
+                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).withRepeatCount(30)).build();
 //                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(30).repeatForever()).build();
 
         try {
@@ -52,7 +52,6 @@ public class OrderModeJob implements Job, TaskJob {
     @Override
     public void execute() {
         AndroidScreen region = null;
-        boolean bNeedRestart = false;
 
         try {
             region = DEVICE_1.getRegion();
@@ -71,27 +70,17 @@ public class OrderModeJob implements Job, TaskJob {
                     }
                 }
             }
-        } catch (InterruptedException e) {
-            log.error("{}", e);
-            bNeedRestart = true;
-        } catch (IOException e) {
-            log.error("{}", e);
-            bNeedRestart = true;
-        } catch (FindFailed findFailed) {
+        } catch (Exception e) {
+            log.error("region: {}, {}", region, e);
             if (region != null) {
                 region.saveScreenCapture(".", "error");
             }
-            log.error("region: {}, {}", region, findFailed);
-            bNeedRestart = true;
-        }
-
-        if (bNeedRestart) {
             try {
                 DEVICE_1.stopDevice();
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (InterruptedException e) {
-                log.error("{}", e);
+            } catch (IOException e1) {
+                log.error("{}", e1);
+            } catch (InterruptedException e1) {
+                log.error("{}", e1);
             }
         }
     }
