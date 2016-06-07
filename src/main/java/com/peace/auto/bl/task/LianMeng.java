@@ -95,48 +95,53 @@ public class LianMeng implements IDo {
                         if (jinruzhanchang != null) {
                             jinruzhanchang.click();
 
-                            // 尚未报名则进行报名
-                            Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
-                            if (shangweibaom != null) {
-                                region.click(baseDir + "baomingcansai.png");
-                                Thread.sleep(1000L);
+                            Match queding = region.exists(Common.QUE_DING);
+                            if (queding != null) {
+                                queding.click();
+                            } else {
+                                // 尚未报名则进行报名
+                                Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
+                                if (shangweibaom != null) {
+                                    region.click(baseDir + "baomingcansai.png");
+                                    Thread.sleep(1000L);
 
-                                Iterator<Match> all = region.findAll(new Pattern(baseDir + "mengzhanbaomin.png").similar(0.95f));
-                                ArrayList<Match> allBaoMin = Lists.newArrayList(all);
+                                    Iterator<Match> all = region.findAll(new Pattern(baseDir + "mengzhanbaomin.png").similar(0.95f));
+                                    ArrayList<Match> allBaoMin = Lists.newArrayList(all);
 
-                                log.info("{}", allBaoMin);
-                                allBaoMin.get(random.nextInt(allBaoMin.size())).click();
-                                status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                                    log.info("{}", allBaoMin);
+                                    allBaoMin.get(random.nextInt(allBaoMin.size())).click();
+                                    status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
 
-                                Thread.sleep(1000L);
-                                region.click(Common.CLOSE);
-                            }
+                                    Thread.sleep(1000L);
+                                    region.click(Common.CLOSE);
+                                }
 
-                            // 已被淘汰
-                            Match yibeitaotai = region.exists(baseDir + "yibeitaotai.png");
-                            if (yibeitaotai != null) {
-                                status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
-                            }
-
-                            Match benjiepaiming = region.exists(baseDir + "benjiepaihang.png");
-                            if (benjiepaiming != null) {
-                                benjiepaiming.click();
-                                Thread.sleep(1000L);
-
-                                mengzhanlingqujiangli = region.exists(baseDir + "mengzhanlingqujiangli.png");
-                                if (mengzhanlingqujiangli != null) {
-                                    mengzhanlingqujiangli.click();
-
-                                    Match lingquguojiangli = region.exists(baseDir + "lingquguojiangli.png");
-                                    if (lingquguojiangli != null) {
-                                        region.click(Common.QUE_DING);
-                                    }
-
+                                // 已被淘汰
+                                Match yibeitaotai = region.exists(baseDir + "yibeitaotai.png");
+                                if (yibeitaotai != null) {
                                     status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                                 }
 
-                                Thread.sleep(1000L);
-                                clickInside(region, Common.CLOSE);
+                                Match benjiepaiming = region.exists(baseDir + "benjiepaihang.png");
+                                if (benjiepaiming != null) {
+                                    benjiepaiming.click();
+                                    Thread.sleep(1000L);
+
+                                    mengzhanlingqujiangli = region.exists(baseDir + "mengzhanlingqujiangli.png");
+                                    if (mengzhanlingqujiangli != null) {
+                                        mengzhanlingqujiangli.click();
+
+                                        Match lingquguojiangli = region.exists(baseDir + "lingquguojiangli.png");
+                                        if (lingquguojiangli != null) {
+                                            region.click(Common.QUE_DING);
+                                        }
+
+                                        status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                                    }
+
+                                    Thread.sleep(1000L);
+                                    clickInside(region, Common.CLOSE);
+                                }
                             }
 
                             Thread.sleep(1000L);

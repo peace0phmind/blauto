@@ -21,7 +21,7 @@ public class XunBaoModeJob implements Job, TaskJob {
 
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(XunBaoModeJob.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 38, 0)).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(13, 52, 0)).build();
 
         try {
             scheduler.scheduleJob(job, trigger);
@@ -58,21 +58,17 @@ public class XunBaoModeJob implements Job, TaskJob {
 
             new DuoBao().xunbao(region1, region2, false);
             Thread.sleep(3 * 1000L);
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             log.error("{}", e);
-        } catch (IOException e) {
-            log.error("{}", e);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
         } finally {
-            try {
-                DEVICE_1.stopDevice();
-                DEVICE_2.stopDevice();
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (InterruptedException e) {
-                log.error("{}", e);
-            }
+//            try {
+//                DEVICE_1.stopDevice();
+//                DEVICE_2.stopDevice();
+//            } catch (IOException e) {
+//                log.error("{}", e);
+//            } catch (InterruptedException e) {
+//                log.error("{}", e);
+//            }
         }
     }
 }

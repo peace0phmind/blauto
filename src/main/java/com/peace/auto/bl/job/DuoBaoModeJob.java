@@ -78,15 +78,15 @@ public class DuoBaoModeJob implements Job, TaskJob {
         } catch (FindFailed findFailed) {
             log.error("{}", findFailed);
         } finally {
-            try {
-                DEVICE_1.stopDevice();
-                DEVICE_2.stopDevice();
-                DEVICE_3.stopDevice();
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (InterruptedException e) {
-                log.error("{}", e);
-            }
+//            try {
+//                DEVICE_1.stopDevice();
+//                DEVICE_2.stopDevice();
+//                DEVICE_3.stopDevice();
+//            } catch (IOException e) {
+//                log.error("{}", e);
+//            } catch (InterruptedException e) {
+//                log.error("{}", e);
+//            }
         }
     }
 }
