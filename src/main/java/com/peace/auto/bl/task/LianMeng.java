@@ -98,6 +98,7 @@ public class LianMeng implements IDo {
                             Match queding = region.exists(Common.QUE_DING);
                             if (queding != null) {
                                 queding.click();
+                                status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                             } else {
                                 // 尚未报名则进行报名
                                 Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
@@ -142,10 +143,10 @@ public class LianMeng implements IDo {
                                     Thread.sleep(1000L);
                                     clickInside(region, Common.CLOSE);
                                 }
-                            }
 
-                            Thread.sleep(1000L);
-                            region.click(Common.CLOSE);
+                                Thread.sleep(1000L);
+                                region.click(Common.CLOSE);
+                            }
                         }
 
                         Thread.sleep(1000L);

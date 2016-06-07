@@ -6,6 +6,7 @@ import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.Building;
+import com.peace.auto.bl.task.LianMeng;
 import com.peace.auto.bl.task.ShenQi;
 import com.peace.auto.bl.task.ShouGuFang;
 import com.peace.sikuli.monkey.AndroidScreen;
@@ -34,13 +35,13 @@ public class Main {
 
 //        status.getUserTasks();
 
-        Device.killAllBoxSVC();
-        time();
+//        Device.killAllBoxSVC();
+//        time();
 //        new XunBaoModeJob().execute();
 //        new DuoBaoModeJob().execute();
 
 
-//        testMode();
+        testMode();
     }
 
     private static void time() throws SchedulerException {
@@ -56,14 +57,15 @@ public class Main {
 //        AndroidScreen region = startDevice(DEVICE_1);
         AndroidScreen region = DEVICE_1.getRegion(true);
 
-        DENG_LU.checkUser(region, status, "peace");
+//        DENG_LU.checkUser(region, status, "peace");
+        DENG_LU.checkUser(region, status, "peace0ph007");
         Random random = new Random();
 
-//        new ShouGuFang().Done(region, status);
-        for (int i = 0; i < 1; i++) {
-            new ShenQi().Done(region, status);
-            Thread.sleep((random.nextInt(20) + 1) * 1000L);
-        }
+        new LianMeng().Done(region, status);
+//        for (int i = 0; i < 1; i++) {
+//            new ShenQi().Done(region, status);
+//            Thread.sleep((random.nextInt(20) + 1) * 1000L);
+//        }
 
 
         region.close();
