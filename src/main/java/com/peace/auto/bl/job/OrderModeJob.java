@@ -55,11 +55,15 @@ public class OrderModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
+        doTask(status.getNextLoginName());
+    }
+
+    public void doTask(String userName) {
         AndroidScreen region = null;
 
         try {
             region = DEVICE_1.getRegion();
-            DENG_LU.checkUser(region, status, status.getNextLoginName());
+            DENG_LU.checkUser(region, status, userName);
             List<IDo> tasks = status.getTasks(status.getCurrentUser());
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 

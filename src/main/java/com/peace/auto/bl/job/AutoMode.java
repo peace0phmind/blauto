@@ -1,18 +1,14 @@
 package com.peace.auto.bl.job;
 
 import com.peace.auto.bl.TaskItem;
-import com.peace.auto.bl.task.IDo;
-import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-import static com.peace.auto.bl.common.Devices.*;
+import static com.peace.auto.bl.common.Devices.status;
 
 /**
  * Created by mind on 5/28/16.
@@ -53,81 +49,18 @@ public class AutoMode implements Job {
                         break;
                     default:
                         log.info("Do order mode, {}", ti);
-                        new OrderModeJob().execute();
+                        new OrderModeJob().doTask(ti.getUserName());
                         break;
                 }
             } else {
                 Duration duration = Duration.between(LocalDateTime.now(), ti.getExecutableTime());
-                log.info("After {} seconds to do job.", duration.getSeconds());
+                log.info("After {} seconds to do job. {}", duration.getSeconds(), ti);
 
-                addNewTrigger(context, duration.getSeconds());
+                addNewTrigger(context, Math.abs(duration.getSeconds()));
                 break;
             }
 
             userTasks = status.getUserTasks();
-        }
-    }
-
-    private void richang(JobExecutionContext context) {
-        AndroidScreen region = null;
-
-        try {
-            region = DEVICE_1.getRegion();
-
-            List<TaskItem> taskItems = status.getUserTasks();
-            Map<Boolean, List<TaskItem>> trueForExecuteCollect = taskItems.stream().collect(Collectors.groupingBy(e -> e.getExecutableTime().isBefore(LocalDateTime.now())));
-            List<TaskItem> trueForExecuteList = trueForExecuteCollect.get(true);
-            log.info("taskItems: {}, trueForExecuteList: {}", taskItems, trueForExecuteList);
-
-            while (trueForExecuteList.size() > 0) {
-                String userName = trueForExecuteList.get(0).getUserName();
-                log.info("Change to user: {}", userName);
-                DENG_LU.checkUser(region, status, trueForExecuteList.get(0).getUserName());
-
-                List<IDo> tasks = status.getTasks(status.getCurrentUser());
-                log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
-
-                for (IDo iDo : tasks) {
-                    if (iDo.CanDo(status, status.getCurrentUser())) {
-                        if (iDo.Done(region, status)) {
-                            Thread.sleep(3 * 1000L);
-                        }
-                    }
-                }
-
-                // get next task user
-                taskItems = status.getUserTasks();
-                trueForExecuteCollect = taskItems.stream().collect(Collectors.groupingBy(e -> e.getExecutableTime().isBefore(LocalDateTime.now())));
-                trueForExecuteList = trueForExecuteCollect.get(true);
-                log.info("taskItems: {}, trueForExecuteList: {}", taskItems, trueForExecuteList);
-            }
-
-            if (trueForExecuteCollect.get(false).size() == 0) {
-                addNewTrigger(context, 30 * 60);
-                log.info("wait half an hour for next jobs.");
-            } else {
-                TaskItem taskItem = trueForExecuteCollect.get(false).get(0);
-                log.info("Change to user for job: {}", taskItem.getUserName());
-                DENG_LU.checkUser(region, status, taskItem.getUserName());
-
-                Duration duration = Duration.between(LocalDateTime.now(), taskItem.getExecutableTime());
-                log.info("After {} seconds to do job.", duration.getSeconds());
-
-                addNewTrigger(context, duration.getSeconds());
-            }
-        } catch (Exception e) {
-            if (region != null) {
-                region.saveScreenCapture(".", "error");
-            }
-            log.error("region: {}, {}", region, e);
-
-            try {
-                DEVICE_1.stopDevice();
-            } catch (Exception e1) {
-                log.error("{}", e);
-            }
-
-            addNewTrigger(context, 5);
         }
     }
 
