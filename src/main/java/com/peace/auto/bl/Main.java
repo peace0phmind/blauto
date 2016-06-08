@@ -42,49 +42,27 @@ public class Main {
 //        new XunBaoModeJob().execute();
 //        new DuoBaoModeJob().execute();
 
-
 //        testMode();
 //        ttt();
 
-//        log.info("{}", status.todayFinishCount(Task.QI_BING_XUN_BAO_PREPARE, status.peaceName()));
-//        log.info("{}", status.todayFinishCount(Task.QI_BING_XUN_BAO, status.peaceName()));
-    }
-
-    private static void ttt() {
-        LocalDateTime now = LocalDateTime.now();
-        for (int i = 0; i < 200; i++) {
-            List<TaskItem> userTasks = status.getUserTasks(now.plusMinutes(i));
-            for (int j = 0; j < 1; j++) {
-                log.info("{}, {}", now.plusMinutes(i), userTasks.get(j));
-            }
-        }
     }
 
     private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
 //        OrderModeJob.init(defaultScheduler);
-//        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
         AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-//        AndroidScreen region = startDevice(DEVICE_1);
         AndroidScreen region = DEVICE_1.getRegion(true);
 
         DENG_LU.checkUser(region, status, status.peaceName());
 //        DENG_LU.checkUser(region, status, "peace0ph008");
-        Random random = new Random();
 
         new LianMeng().Done(region, status);
-//        for (int i = 0; i < 1; i++) {
-//            new ShenQi().Done(region, status);
-//            Thread.sleep((random.nextInt(20) + 1) * 1000L);
-//        }
-
 
         region.close();
-//        stopDevice(DEVICE_1);
     }
 }

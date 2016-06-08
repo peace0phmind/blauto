@@ -9,6 +9,8 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by mind on 3/3/16.
  */
@@ -38,10 +40,21 @@ public class RenWu implements IDo {
 
         // 收集金币
         if (status.canDo(Task.SHOU_JI_JIN_BI)) {
+            // 点击收起对话框
+            Match duihua = region.exists(Common.BASE_DIR + "guanbiduihua.png");
+            if (duihua != null && duihua.getScore() > 0.95) {
+                duihua.click();
+                log.info("Close dialog!");
+                Thread.sleep(1000L);
+            }
+
             Match jinbi = region.exists(baseDir + "jinbi.png", 0.5);
             if (jinbi != null) {
                 jinbi.click();
                 status.Done(Task.SHOU_JI_JIN_BI);
+            } else {
+                log.info("No jinbi.");
+                status.Done(Task.SHOU_JI_JIN_BI, LocalDateTime.now().plusHours(1));
             }
         }
 

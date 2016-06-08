@@ -8,6 +8,7 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -95,6 +96,8 @@ public class NongChang implements IDo {
                             status.Done(Task.NONG_CHANG_TOU_CAI);
                         }
                     }
+
+                    status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
                 }
 
                 // 喂食
@@ -121,12 +124,19 @@ public class NongChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)
-                && !status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {
-            return false;
+        if (status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)) {
+            return true;
         }
 
-        return true;
+        if (status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {
+            return status.canDo(Task.NONG_CHANG_TOU_CAI_CHECK, userName);
+        }
+
+        if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, userName) == Task.NONG_CHANG_TOU_CAI.getDayLimit(userName)) {
+            status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0));
+        }
+
+        return false;
     }
 
     private void weishi(Region region, Status status) throws FindFailed, InterruptedException {

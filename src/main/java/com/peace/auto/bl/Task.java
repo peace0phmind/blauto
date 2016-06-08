@@ -29,12 +29,13 @@ public enum Task {
     SHOU_GU_SHOU_LIE(ShouGuFang.class, 0, 0, 8 * 60 * 60),
 
     XUN_BAO(XunBao.class, 1),
-    BUILDING(Building.class, 0, 0, 10 * 60),
+    BUILDING(Building.class, 0, 0, 30 * 60),
 
     NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 8 * 60 * 60),
     NONG_CHANG_TOU_CAI(NongChang.class, 1),
+    NONG_CHANG_TOU_CAI_CHECK(NongChang.class, 0, 0, 2 * 60 * 60),
 
-    SHENG_YU(ShengYu.class, 0, 0, 10 * 60),
+    SHENG_YU(ShengYu.class, 0, 0, 30 * 60),
 
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 2 * 60 * 60),
