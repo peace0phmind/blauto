@@ -37,10 +37,10 @@ public class Main {
         Settings.OcrTextRead = true;
 
         Device.killAllBoxSVC();
-        time();
+//        time();
 
 //        new XunBaoModeJob().execute();
-//        new DuoBaoModeJob().execute();
+        new DuoBaoModeJob().execute();
 
 //        testMode();
 //        ttt();

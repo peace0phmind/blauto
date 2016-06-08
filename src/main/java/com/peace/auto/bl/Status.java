@@ -34,14 +34,15 @@ public class Status {
             "peace0ph004",
             "peace0ph006",
             "peace0ph007",
-            "peace0ph008"
+            "peace0ph008",
+            "peace0ph003"
     );
 
 //    private static final List<LocalTime> XUN_BAO_PREPARE = Arrays.asList(LocalTime.of(11, 25), LocalTime.of(13, 50), LocalTime.of(21, 25), LocalTime.of(23, 50));
 //    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
 
     private static final List<LocalTime> XUN_BAO_PREPARE_TIME = Arrays.asList(LocalTime.of(13, 43), LocalTime.of(21, 20), LocalTime.of(23, 43));
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 50, 00), LocalTime.of(21, 30), LocalTime.of(23, 50, 30));
 
     private String currentUser;
     private String wantUser;
@@ -134,12 +135,12 @@ public class Status {
             });
 
             if (peaceName().equals(u)) {
-                long finishCount = todayFinishCount(QI_BING_XUN_BAO_PREPARE, u);
-                if (finishCount < 3) {
-                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO_PREPARE, dateTime.with(XUN_BAO_PREPARE_TIME.get((int) finishCount))));
-                }
+//                long finishCount = todayFinishCount(QI_BING_XUN_BAO_PREPARE, u);
+//                if (finishCount < 3) {
+//                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO_PREPARE, dateTime.with(XUN_BAO_PREPARE_TIME.get((int) finishCount))));
+//                }
 
-                finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
+                long finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
                 if (finishCount < 3) {
                     taskItems.add(new TaskItem(u, QI_BING_XUN_BAO, dateTime.with(QI_BING_XUN_BAO_TIME.get((int) finishCount))));
                 }

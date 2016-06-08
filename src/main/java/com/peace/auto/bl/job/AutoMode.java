@@ -45,7 +45,7 @@ public class AutoMode implements Job {
                         break;
                     case QI_BING_XUN_BAO:
                         log.info("Do xun bao, {}", ti);
-                        new XunBaoModeJob().xunbao();
+                        new XunBaoModeJob().execute();
                         break;
                     default:
                         log.info("Do order mode, {}", ti);

@@ -61,14 +61,17 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
             duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
-            Thread.sleep(10 * 60 * 1000L);
-
-            duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
-            duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
-            Thread.sleep(10 * 60 * 1000L);
+            new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
+            Thread.sleep(9 * 60 * 1000L);
 
             duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph008", "peace0ph007"));
+            new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
+            Thread.sleep(9 * 60 * 1000L);
+
+            duobaoMode(regions, Arrays.asList("peace", "peace0ph003", "peace0ph002"));
+            duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph003", "peace0ph002"));
+            new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
 
         } catch (Exception e) {
             log.error("{}", e);

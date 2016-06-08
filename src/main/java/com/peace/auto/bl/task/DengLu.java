@@ -66,11 +66,11 @@ public class DengLu implements IDo {
 
             Thread.sleep(5000L);
             // 在qq中切换账号
-            Match tianjiazhanghao = region.exists(baseDir + "tianjiazhanghao.png", 20);
-            if (tianjiazhanghao != null) {
+            Match inqiehuanzhanghao = region.exists(baseDir + "inqiehuanzhanghao.png", 20);
+            if (inqiehuanzhanghao != null) {
                 Thread.sleep(3000L);
 
-                List<Match> qqs = Lists.newArrayList(tianjiazhanghao.above().findAll(new Pattern(baseDir + "peace.png").similar(similar)));
+                List<Match> qqs = Lists.newArrayList(region.findAll(new Pattern(baseDir + "peace.png").similar(similar)));
 
                 String lastChar = loginName.substring(loginName.length() - 1);
 
