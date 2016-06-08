@@ -51,7 +51,7 @@ public enum Task {
     HAO_YOU(HaoYou.class, 1),
 
     YING_HUN(YingHun.class, 1),
-    RONG_LIAN(YingHun.class, 1),
+    RONG_LIAN(YingHun.class, 1, -1),
 
     JING_JI_CHANG(JingJiChang.class, 10, 20, 10 * 60),
     JING_JI_CHANG_LING_QU(JingJiChang.class, 1),
@@ -92,7 +92,7 @@ public enum Task {
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_CHANG_CHECK, SHI_LIAN_DONG,
                 HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU, SHENG_LING_QUAN_XIU_LIAN));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
-        put("peace0ph003", Arrays.asList(SHEN_SHOU_WU, XUN_BAO, LIE_CHANG_DA_GUAI));
+        put("peace0ph003", Arrays.asList(SHEN_SHOU_WU, XUN_BAO, LIE_CHANG_DA_GUAI, RONG_LIAN));
     }};
     private int timesPerDay;
     private long finishSecond;

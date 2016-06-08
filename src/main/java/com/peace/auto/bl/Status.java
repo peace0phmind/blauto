@@ -15,6 +15,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.peace.auto.bl.Task.HAI_DI_SHI_JIE;
 import static com.peace.auto.bl.Task.QI_BING_XUN_BAO;
 import static com.peace.auto.bl.Task.QI_BING_XUN_BAO_PREPARE;
 
@@ -94,6 +95,10 @@ public class Status {
 
         USERS.forEach(u -> {
             tasks.forEach(t -> {
+                if (u.equals("peace0ph003") && t == HAI_DI_SHI_JIE) {
+                    return;
+                }
+
                 // 忽略活跃度和领取任务的任务计算
                 if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
                     return;
@@ -168,6 +173,10 @@ public class Status {
         List<Class<? extends IDo>> ret = new ArrayList<>();
 
         Lists.newArrayList(Task.values()).forEach(t -> {
+            if (userName.equals("peace0ph003") && t == HAI_DI_SHI_JIE) {
+                return;
+            }
+            
             if (canDo(t, userName)) {
                 if (!ret.contains(t.getIDoClass())) {
                     ret.add(t.getIDoClass());

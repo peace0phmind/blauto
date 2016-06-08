@@ -173,6 +173,10 @@ public class DuoBao implements IDo {
 
                                     if (t != null) {
                                         t.execute(jiaru2.getRect());
+
+                                        Thread.sleep(6000L);
+                                        region2.click(baseDir + "shuaxin.png");
+                                        Thread.sleep(6000L);
                                     }
                                 }
                             }

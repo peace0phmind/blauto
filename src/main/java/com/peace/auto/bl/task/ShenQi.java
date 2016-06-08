@@ -118,8 +118,7 @@ public class ShenQi implements IDo {
 //                                log.info("Times: {}, largerTime: {}", times, largerTime);
 //                                status.Done(Task.SHEN_XIANG_SHENG_JI, largerTime);
 //                            }
-                            // TODO
-//                            status.Done(Task.SHEN_XIANG_SHENG_JI, LocalDateTime.now().plusMinutes(30));
+                            status.Done(Task.SHEN_XIANG_SHENG_JI, LocalDateTime.now().plusHours(1));
                         }
                     }
                 }
