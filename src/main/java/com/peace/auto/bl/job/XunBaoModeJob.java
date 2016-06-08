@@ -35,7 +35,16 @@ public class XunBaoModeJob implements Job, TaskJob {
         log.info("Do job");
 
         if (isValidTime(LocalTime.of(13, 35), LocalTime.of(14, 0))) {
-            execute();
+            for (int i = 0; i < 3; i++) {
+                execute();
+                try {
+                    if (i < 3 - 1) {
+                        Thread.sleep(5 * 60 * 1000L);
+                    }
+                } catch (InterruptedException e) {
+                    log.error("{}", e);
+                }
+            }
         }
     }
 
@@ -50,25 +59,16 @@ public class XunBaoModeJob implements Job, TaskJob {
             DENG_LU.checkUser(region1, status, "peace");
             DENG_LU.checkUser(region2, status, "peace0ph001");
 
-            new DuoBao().xunbao(region1, region2, false);
-            Thread.sleep(5 * 60 * 1000L);
-
-            new DuoBao().xunbao(region1, region2, false);
-            Thread.sleep(5 * 60 * 1000L);
-
-            new DuoBao().xunbao(region1, region2, false);
-            Thread.sleep(3 * 1000L);
+            new DuoBao().xunbao(region1, region2, false, status.getRoomNo(), null);
         } catch (Exception e) {
             log.error("{}", e);
-        } finally {
-//            try {
-//                DEVICE_1.stopDevice();
-//                DEVICE_2.stopDevice();
-//            } catch (IOException e) {
-//                log.error("{}", e);
-//            } catch (InterruptedException e) {
-//                log.error("{}", e);
-//            }
+
+            try {
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
+            } catch (Exception e1) {
+                log.error("{}", e1);
+            }
         }
     }
 }

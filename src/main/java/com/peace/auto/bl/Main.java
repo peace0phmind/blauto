@@ -33,15 +33,13 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-//        status.getUserTasks();
-
-//        Device.killAllBoxSVC();
-//        time();
+        Device.killAllBoxSVC();
+        time();
 //        new XunBaoModeJob().execute();
 //        new DuoBaoModeJob().execute();
 
 
-        testMode();
+//        testMode();
     }
 
     private static void time() throws SchedulerException {
@@ -57,8 +55,8 @@ public class Main {
 //        AndroidScreen region = startDevice(DEVICE_1);
         AndroidScreen region = DEVICE_1.getRegion(true);
 
-//        DENG_LU.checkUser(region, status, "peace");
-        DENG_LU.checkUser(region, status, "peace0ph007");
+        DENG_LU.checkUser(region, status, "peace");
+//        DENG_LU.checkUser(region, status, "peace0ph008");
         Random random = new Random();
 
         new LianMeng().Done(region, status);

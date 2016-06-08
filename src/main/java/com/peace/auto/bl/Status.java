@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 @Data
 public class Status {
 
+    private static final Random ROOM_NO_RANDOM = new Random();
     private static final String LOG_FILE = "./log_map.bin";
     private static final List<String> USERS = Arrays.asList(
             "peace",
@@ -49,6 +50,10 @@ public class Status {
 
     public boolean isPeace() {
         return "peace".equals(currentUser);
+    }
+
+    public int getRoomNo() {
+        return ROOM_NO_RANDOM.nextInt(36) + 12 + 1;
     }
 
     public String getNextLoginName() {
@@ -117,7 +122,6 @@ public class Status {
         }));
 
         List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> x.getExecutableTime().compareTo(y.getExecutableTime())).collect(Collectors.toList());
-        sortedTasks.forEach(x -> log.info("{}", x));
         if (sortedTasks == null) {
             return null;
         }
@@ -139,12 +143,9 @@ public class Status {
         return ret.stream().map(x -> {
             try {
                 return x.newInstance();
-            } catch (InstantiationException e) {
-                log.info("{}", e);
-            } catch (IllegalAccessException e) {
+            } catch (Exception e) {
                 log.info("{}", e);
             }
-
             return null;
         }).filter(Objects::nonNull).filter(x -> x.CanDo(this, userName)).collect(Collectors.toList());
     }

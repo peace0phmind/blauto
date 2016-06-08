@@ -41,11 +41,15 @@ public class OrderModeJob implements Job, TaskJob {
         log.info("Do job.");
 
         if (isValidTime(LocalTime.of(0, 15), LocalTime.of(13, 0))) {
-            execute();
+            for (int i = 0; i < Status.getUserCount(); i++) {
+                execute();
+            }
         }
 
         if (isValidTime(LocalTime.of(14, 0), LocalTime.of(23, 0))) {
-            execute();
+            for (int i = 0; i < Status.getUserCount(); i++) {
+                execute();
+            }
         }
     }
 
@@ -55,18 +59,14 @@ public class OrderModeJob implements Job, TaskJob {
 
         try {
             region = DEVICE_1.getRegion();
+            DENG_LU.checkUser(region, status, status.getNextLoginName());
+            List<IDo> tasks = status.getTasks(status.getCurrentUser());
+            log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-            for (int i = 0; i < Status.getUserCount(); i++) {
-                DENG_LU.checkUser(region, status, status.getNextLoginName());
-
-                List<IDo> tasks = status.getTasks(status.getCurrentUser());
-                log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
-
-                for (IDo iDo : tasks) {
-                    if (iDo.CanDo(status, status.getCurrentUser())) {
-                        if (iDo.Done(region, status)) {
-                            Thread.sleep(3 * 1000L);
-                        }
+            for (IDo iDo : tasks) {
+                if (iDo.CanDo(status, status.getCurrentUser())) {
+                    if (iDo.Done(region, status)) {
+                        Thread.sleep(3 * 1000L);
                     }
                 }
             }
@@ -77,9 +77,7 @@ public class OrderModeJob implements Job, TaskJob {
             }
             try {
                 DEVICE_1.stopDevice();
-            } catch (IOException e1) {
-                log.error("{}", e1);
-            } catch (InterruptedException e1) {
+            } catch (Exception e1) {
                 log.error("{}", e1);
             }
         }

@@ -37,7 +37,7 @@ public class DuoBaoModeJob implements Job, TaskJob {
         DENG_LU.checkUser(regions.get(1), status, users.get(1));
         DENG_LU.checkUser(regions.get(2), status, users.get(2));
 
-        new DuoBao().duobao(regions.get(0), regions.get(1), regions.get(2));
+        new DuoBao().duobao(regions.get(0), regions.get(1), regions.get(2), status.getRoomNo());
     }
 
     @Override
@@ -70,23 +70,15 @@ public class DuoBaoModeJob implements Job, TaskJob {
             duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph008", "peace0ph007"));
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             log.error("{}", e);
-            e.printStackTrace();
-        } catch (IOException e) {
-            log.error("{}", e);
-        } catch (FindFailed findFailed) {
-            log.error("{}", findFailed);
-        } finally {
-//            try {
-//                DEVICE_1.stopDevice();
-//                DEVICE_2.stopDevice();
-//                DEVICE_3.stopDevice();
-//            } catch (IOException e) {
-//                log.error("{}", e);
-//            } catch (InterruptedException e) {
-//                log.error("{}", e);
-//            }
+            try {
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
+                DEVICE_3.stopDevice();
+            } catch (Exception e1) {
+                log.error("{}", e1);
+            }
         }
     }
 }

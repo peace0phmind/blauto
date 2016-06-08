@@ -39,13 +39,13 @@ public class AutoMode implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
 
-        richang(context);
+//        richang(context);
+
     }
 
     private void richang(JobExecutionContext context) {
         AndroidScreen region = null;
 
-        boolean bNeedRestart = false;
         try {
             region = DEVICE_1.getRegion();
 
@@ -90,31 +90,24 @@ public class AutoMode implements Job {
 
                 addNewTrigger(context, duration.getSeconds());
             }
-        } catch (InterruptedException e) {
-            log.error("{}", e);
-            bNeedRestart = true;
-        } catch (IOException e) {
-            log.error("{}", e);
-            bNeedRestart = true;
-        } catch (FindFailed findFailed) {
+        } catch (Exception e) {
             if (region != null) {
                 region.saveScreenCapture(".", "error");
             }
-            log.error("region: {}, {}", region, findFailed);
-            bNeedRestart = true;
-        }
+            log.error("region: {}, {}", region, e);
 
-        if (bNeedRestart) {
             try {
                 DEVICE_1.stopDevice();
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (InterruptedException e) {
+            } catch (Exception e1) {
                 log.error("{}", e);
             }
 
             addNewTrigger(context, 5);
         }
+    }
+
+    private void orderMode(JobExecutionContext context) {
+        new OrderModeJob().execute();
     }
 
     private void xunbao(JobExecutionContext context) {
