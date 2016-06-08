@@ -118,7 +118,7 @@ public class Status {
                     }
                 }
 
-                if (t == Task.SHI_CHANG) {
+                if (t == Task.SHI_CHANG || t == Task.NONG_CHANG_TOU_CAI) {
                     return;
                 }
 

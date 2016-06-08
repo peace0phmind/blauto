@@ -66,7 +66,7 @@ public class AutoMode implements Job {
 
     private void addNewTrigger(JobExecutionContext context, long seconds) {
         Trigger tr = TriggerBuilder.newTrigger().forJob(context.getJobDetail())
-                .startAt(DateBuilder.futureDate((int) seconds, DateBuilder.IntervalUnit.SECOND)).build();
+                .startAt(DateBuilder.futureDate((int) seconds + 1, DateBuilder.IntervalUnit.SECOND)).build();
 
         try {
             context.getScheduler().scheduleJob(tr);
