@@ -89,7 +89,7 @@ public class Status {
     public List<TaskItem> getUserTasks(LocalDateTime dateTime) {
         ArrayList<Task> tasks = Lists.newArrayList(Task.values());
         List<TaskItem> taskItems = new ArrayList<>();
-        LocalDateTime localDateTime = dateTime.minusMinutes(5);
+        LocalDateTime localDateTime = dateTime.withHour(0).withMinute(20).withSecond(0);
 
         USERS.forEach(u -> {
             tasks.forEach(t -> {
