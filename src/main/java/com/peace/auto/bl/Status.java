@@ -220,7 +220,7 @@ public class Status {
         return todayFinishCount(task, currentUser);
     }
 
-    private long todayFinishCount(Task task, String userName) {
+    public long todayFinishCount(Task task, String userName) {
         LocalDateTime today = LocalDate.now().atStartOfDay();
         return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
     }

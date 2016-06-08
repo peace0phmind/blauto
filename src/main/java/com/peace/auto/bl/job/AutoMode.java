@@ -1,20 +1,13 @@
 package com.peace.auto.bl.job;
 
-import com.google.common.base.MoreObjects;
 import com.peace.auto.bl.TaskItem;
-import com.peace.auto.bl.task.DengLu;
 import com.peace.auto.bl.task.IDo;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.sikuli.script.FindFailed;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -51,16 +44,16 @@ public class AutoMode implements Job {
             if (LocalDateTime.now().isAfter(ti.getExecutableTime())) {
                 switch (ti.getTask()) {
                     case QI_BING_XUN_BAO_PREPARE:
-                        log.info("Do xun bao prepare");
+                        log.info("Do xun bao prepare, {}", ti);
                         new XunBaoModeJob().prepare();
                         break;
                     case QI_BING_XUN_BAO:
-                        log.info("Do xun bao");
+                        log.info("Do xun bao, {}", ti);
                         new XunBaoModeJob().xunbao();
                         break;
                     default:
-                        log.info("Do order mode");
-                        orderMode(context);
+                        log.info("Do order mode, {}", ti);
+                        new OrderModeJob().execute();
                         break;
                 }
             } else {
@@ -136,14 +129,6 @@ public class AutoMode implements Job {
 
             addNewTrigger(context, 5);
         }
-    }
-
-    private void orderMode(JobExecutionContext context) {
-        new OrderModeJob().execute();
-    }
-
-    private void duobao(JobExecutionContext context) {
-
     }
 
     private void addNewTrigger(JobExecutionContext context, long seconds) {

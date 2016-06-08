@@ -36,8 +36,8 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-//        Device.killAllBoxSVC();
-//        time();
+        Device.killAllBoxSVC();
+        time();
 
 //        new XunBaoModeJob().execute();
 //        new DuoBaoModeJob().execute();
@@ -45,6 +45,9 @@ public class Main {
 
 //        testMode();
 //        ttt();
+
+//        log.info("{}", status.todayFinishCount(Task.QI_BING_XUN_BAO_PREPARE, status.peaceName()));
+//        log.info("{}", status.todayFinishCount(Task.QI_BING_XUN_BAO, status.peaceName()));
     }
 
     private static void ttt() {
