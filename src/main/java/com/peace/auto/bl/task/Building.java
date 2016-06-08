@@ -36,6 +36,20 @@ public class Building implements IDo {
             2,
             9);
 
+    private static List<Integer> peaceBuildingIds = Arrays.asList(
+            12,
+            11,
+            10,
+            1,
+            3,
+            6,
+            5,
+            8,
+            4,
+            7,
+            2,
+            9);
+
     String baseDir = Common.BASE_DIR + "building/";
 
     public boolean CanDo(Status status, String userName) {
@@ -75,8 +89,9 @@ public class Building implements IDo {
                 List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
 
                 List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+                List<Integer> ids = status.isPeace() ? peaceBuildingIds : buildingIds;
                 buildLoop:
-                for (Integer bid : buildingIds) {
+                for (Integer bid : ids) {
                     Match match = sorted.get(bid - 1);
 
                     if (!isButtonEnable(match)) {

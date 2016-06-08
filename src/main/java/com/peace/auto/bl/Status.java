@@ -15,9 +15,7 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.peace.auto.bl.Task.HAI_DI_SHI_JIE;
-import static com.peace.auto.bl.Task.QI_BING_XUN_BAO;
-import static com.peace.auto.bl.Task.QI_BING_XUN_BAO_PREPARE;
+import static com.peace.auto.bl.Task.*;
 
 /**
  * Created by mind on 3/21/16.
@@ -136,6 +134,17 @@ public class Status {
                     }
                 }
 
+                if (t == CHU_ZHENG_YE_GUAI || t == LIAN_BING_CHANG || t == SHI_LIAN_DONG) {
+                    Optional<LocalDateTime> first = Arrays.asList(CHU_ZHENG_YE_GUAI,
+                            Task.LIAN_BING_CHANG,
+                            Task.SHI_LIAN_DONG).stream().map(x -> getLastFinishTime(x, u))
+                            .filter(Objects::nonNull)
+                            .sorted((a, b) -> b.compareTo(a)).findFirst();
+                    if (first.isPresent()) {
+                        executableTime = first.get();
+                    }
+                }
+
                 taskItems.add(new TaskItem(u, t, executableTime));
             });
 
@@ -176,7 +185,7 @@ public class Status {
             if (userName.equals("peace0ph003") && t == HAI_DI_SHI_JIE) {
                 return;
             }
-            
+
             if (canDo(t, userName)) {
                 if (!ret.contains(t.getIDoClass())) {
                     ret.add(t.getIDoClass());
