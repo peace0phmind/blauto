@@ -19,6 +19,9 @@ import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 import static com.peace.auto.bl.common.Devices.*;
@@ -33,21 +36,33 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-        Device.killAllBoxSVC();
-        time();
+//        Device.killAllBoxSVC();
+//        time();
+
 //        new XunBaoModeJob().execute();
 //        new DuoBaoModeJob().execute();
 
 
 //        testMode();
+//        ttt();
+    }
+
+    private static void ttt() {
+        LocalDateTime now = LocalDateTime.now();
+        for (int i = 0; i < 200; i++) {
+            List<TaskItem> userTasks = status.getUserTasks(now.plusMinutes(i));
+            for (int j = 0; j < 1; j++) {
+                log.info("{}, {}", now.plusMinutes(i), userTasks.get(j));
+            }
+        }
     }
 
     private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-        OrderModeJob.init(defaultScheduler);
+//        OrderModeJob.init(defaultScheduler);
 //        XunBaoModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-//        AutoMode.init(defaultScheduler);
+        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 
@@ -55,7 +70,7 @@ public class Main {
 //        AndroidScreen region = startDevice(DEVICE_1);
         AndroidScreen region = DEVICE_1.getRegion(true);
 
-        DENG_LU.checkUser(region, status, "peace");
+        DENG_LU.checkUser(region, status, status.peaceName());
 //        DENG_LU.checkUser(region, status, "peace0ph008");
         Random random = new Random();
 

@@ -23,7 +23,7 @@ public class DuoBao implements IDo {
 
     @Override
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        return xunbao(region, false);
+        return true;
     }
 
     @Override
@@ -161,11 +161,11 @@ public class DuoBao implements IDo {
                             Match jiaru1 = getFirstJiaRu(region1);
                             if (jiaru1 != null) {
                                 jiaru1.click();
-                                Thread.sleep(1000L);
+                                Thread.sleep(500L);
 
                                 region2.click(baseDir + "shuaxin.png");
 
-                                Thread.sleep(3000L);
+                                Thread.sleep(2000L);
 
                                 Match jiaru2 = getFirstJiaRu(region2);
                                 if (jiaru2 != null) {

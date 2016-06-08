@@ -1,5 +1,6 @@
 package com.peace.auto.bl.job;
 
+import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.DuoBao;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -50,16 +51,42 @@ public class XunBaoModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
-        Settings.OcrTextRead = true;
+        prepare();
+        xunbao();
+    }
 
+    public void prepare() {
         try {
             AndroidScreen region1 = DEVICE_1.getRegion();
             AndroidScreen region2 = DEVICE_2.getRegion();
 
-            DENG_LU.checkUser(region1, status, "peace");
+            DENG_LU.checkUser(region1, status, status.peaceName());
             DENG_LU.checkUser(region2, status, "peace0ph001");
 
+            status.setCurrentUser(status.peaceName());
+            status.Done(Task.QI_BING_XUN_BAO_PREPARE);
+
+        } catch (Exception e) {
+            log.error("{}", e);
+
+            try {
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
+            } catch (Exception e1) {
+                log.error("{}", e1);
+            }
+        }
+    }
+
+    public void xunbao() {
+        try {
+            AndroidScreen region1 = DEVICE_1.getRegion();
+            AndroidScreen region2 = DEVICE_2.getRegion();
+
             new DuoBao().xunbao(region1, region2, false, status.getRoomNo(), null);
+
+            status.setCurrentUser(status.peaceName());
+            status.Done(Task.QI_BING_XUN_BAO);
         } catch (Exception e) {
             log.error("{}", e);
 

@@ -80,13 +80,16 @@ public enum Task {
     SHEN_XIANG_SHENG_JI(ShenQi.class, 0, 0, 8 * 60 * 60),
 
     QI_BING_XUN_BAO_PREPARE(DuoBao.class, -1),
-    QI_BING_XUN_BAO(DuoBao.class, -1);
+    QI_BING_XUN_BAO(DuoBao.class, -1),
+
+    QI_BING_DUO_BAO(DuoBao.class, -1);
 
     /**
      * vip user and task
      */
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
-        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_CHANG_CHECK, SHI_LIAN_DONG, HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU, SHENG_LING_QUAN_XIU_LIAN));
+        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_CHANG_CHECK, SHI_LIAN_DONG,
+                HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU, SHENG_LING_QUAN_XIU_LIAN));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
     }};
     private int timesPerDay;

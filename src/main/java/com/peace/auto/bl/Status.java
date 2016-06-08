@@ -15,6 +15,9 @@ import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static com.peace.auto.bl.Task.QI_BING_XUN_BAO;
+import static com.peace.auto.bl.Task.QI_BING_XUN_BAO_PREPARE;
+
 /**
  * Created by mind on 3/21/16.
  */
@@ -33,8 +36,12 @@ public class Status {
             "peace0ph007",
             "peace0ph008"
     );
-    private static final List<LocalTime> XUN_BAO_PREPARE = Arrays.asList(LocalTime.of(11, 25), LocalTime.of(13, 50), LocalTime.of(23, 50));
-    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(23, 53, 30));
+
+//    private static final List<LocalTime> XUN_BAO_PREPARE = Arrays.asList(LocalTime.of(11, 25), LocalTime.of(13, 50), LocalTime.of(21, 25), LocalTime.of(23, 50));
+//    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
+
+    private static final List<LocalTime> XUN_BAO_PREPARE_TIME = Arrays.asList(LocalTime.of(13, 43), LocalTime.of(21, 20), LocalTime.of(23, 43));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
 
     private String currentUser;
     private String wantUser;
@@ -49,7 +56,11 @@ public class Status {
     }
 
     public boolean isPeace() {
-        return "peace".equals(currentUser);
+        return peaceName().equals(currentUser);
+    }
+
+    public String peaceName() {
+        return "peace";
     }
 
     public int getRoomNo() {
@@ -80,48 +91,71 @@ public class Status {
         List<TaskItem> taskItems = new ArrayList<>();
         LocalDateTime localDateTime = dateTime.minusMinutes(5);
 
-        USERS.forEach(u -> tasks.forEach(t -> {
-            // 忽略活跃度和领取任务的任务计算
-            if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
-                return;
-            }
-
-            int dayLimit = t.getDayLimit(u);
-
-            if (dayLimit < 0) {
-                return;
-            }
-
-            if (dayLimit > 0) {
-                if (todayFinishCount(t, u) >= dayLimit) {
+        USERS.forEach(u -> {
+            tasks.forEach(t -> {
+                // 忽略活跃度和领取任务的任务计算
+                if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
                     return;
                 }
-            }
 
-            LocalDateTime executableTime = localDateTime;
-            if (t.getFinishSecond() > 0) {
-                LocalDateTime lastFinishTime = getLastFinishTime(t, u);
-                if (lastFinishTime != null) {
-                    executableTime = lastFinishTime;
+                int dayLimit = t.getDayLimit(u);
+
+                if (dayLimit < 0) {
+                    return;
+                }
+
+                if (dayLimit > 0) {
+                    if (todayFinishCount(t, u) >= dayLimit) {
+                        return;
+                    }
+                }
+
+                LocalDateTime executableTime = localDateTime;
+                if (t.getFinishSecond() > 0) {
+                    LocalDateTime lastFinishTime = getLastFinishTime(t, u);
+                    if (lastFinishTime != null) {
+                        executableTime = lastFinishTime;
+                    }
+                }
+
+                if (t == Task.SHI_CHANG) {
+                    return;
+                }
+
+                if (t == Task.SHENG_HUO) {
+                    if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
+                        executableTime = localDateTime.withHour(11).withMinute(30);
+                    } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
+                        executableTime = localDateTime.withHour(20).withMinute(30);
+                    }
+                }
+
+                taskItems.add(new TaskItem(u, t, executableTime));
+            });
+
+            if (peaceName().equals(u)) {
+                long finishCount = todayFinishCount(QI_BING_XUN_BAO_PREPARE, u);
+                if (finishCount < 3) {
+                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO_PREPARE, dateTime.with(XUN_BAO_PREPARE_TIME.get((int) finishCount))));
+                }
+
+                finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
+                if (finishCount < 3) {
+                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO, dateTime.with(QI_BING_XUN_BAO_TIME.get((int) finishCount))));
                 }
             }
+        });
 
-            if (t == Task.SHI_CHANG) {
-                return;
+        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> {
+            if (x.getTask() == QI_BING_XUN_BAO_PREPARE || x.getTask() == QI_BING_XUN_BAO) {
+                return x.getExecutableTime().compareTo(dateTime.plusMinutes(20));
             }
 
-            if (t == Task.SHENG_HUO) {
-                if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
-                    executableTime = localDateTime.withHour(11).withMinute(30);
-                } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
-                    executableTime = localDateTime.withHour(20).withMinute(30);
-                }
+            if (y.getTask() == QI_BING_XUN_BAO_PREPARE || y.getTask() == QI_BING_XUN_BAO) {
+                return y.getExecutableTime().compareTo(dateTime.plusMinutes(20)) * -1;
             }
-
-            taskItems.add(new TaskItem(u, t, executableTime));
-        }));
-
-        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> x.getExecutableTime().compareTo(y.getExecutableTime())).collect(Collectors.toList());
+            return x.getExecutableTime().compareTo(y.getExecutableTime());
+        }).collect(Collectors.toList());
         if (sortedTasks == null) {
             return null;
         }
@@ -154,14 +188,6 @@ public class Status {
         this.currentUser = USERS.get(num - 1);
         log.info("num: {}, currentUser:{}, wantUser:{}", num, currentUser, wantUser);
         return currentUser.equals(wantUser);
-    }
-
-    public int getCurrentUserIndex() {
-        if (currentUser == null || !USERS.contains(currentUser)) {
-            return 0;
-        }
-
-        return USERS.indexOf(currentUser);
     }
 
     public void Done(Task task) {

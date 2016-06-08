@@ -1,5 +1,6 @@
 package com.peace.auto.bl.job;
 
+import com.google.common.base.MoreObjects;
 import com.peace.auto.bl.TaskItem;
 import com.peace.auto.bl.task.DengLu;
 import com.peace.auto.bl.task.IDo;
@@ -11,6 +12,9 @@ import org.sikuli.script.FindFailed;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -39,8 +43,36 @@ public class AutoMode implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
 
-//        richang(context);
+        List<TaskItem> userTasks = status.getUserTasks();
 
+        while (userTasks != null && userTasks.size() > 0) {
+            TaskItem ti = userTasks.get(0);
+
+            if (LocalDateTime.now().isAfter(ti.getExecutableTime())) {
+                switch (ti.getTask()) {
+                    case QI_BING_XUN_BAO_PREPARE:
+                        log.info("Do xun bao prepare");
+                        new XunBaoModeJob().prepare();
+                        break;
+                    case QI_BING_XUN_BAO:
+                        log.info("Do xun bao");
+                        new XunBaoModeJob().xunbao();
+                        break;
+                    default:
+                        log.info("Do order mode");
+                        orderMode(context);
+                        break;
+                }
+            } else {
+                Duration duration = Duration.between(LocalDateTime.now(), ti.getExecutableTime());
+                log.info("After {} seconds to do job.", duration.getSeconds());
+
+                addNewTrigger(context, duration.getSeconds());
+                break;
+            }
+
+            userTasks = status.getUserTasks();
+        }
     }
 
     private void richang(JobExecutionContext context) {
@@ -85,7 +117,7 @@ public class AutoMode implements Job {
                 log.info("Change to user for job: {}", taskItem.getUserName());
                 DENG_LU.checkUser(region, status, taskItem.getUserName());
 
-                Duration duration = Duration.between(taskItem.getExecutableTime(), LocalDateTime.now());
+                Duration duration = Duration.between(LocalDateTime.now(), taskItem.getExecutableTime());
                 log.info("After {} seconds to do job.", duration.getSeconds());
 
                 addNewTrigger(context, duration.getSeconds());
@@ -108,10 +140,6 @@ public class AutoMode implements Job {
 
     private void orderMode(JobExecutionContext context) {
         new OrderModeJob().execute();
-    }
-
-    private void xunbao(JobExecutionContext context) {
-
     }
 
     private void duobao(JobExecutionContext context) {
