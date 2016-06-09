@@ -166,7 +166,7 @@ public class TianSheng implements IDo {
                         }
 
                         if (bJingYing) {
-                            Match cishushangxian = region.exists(baseDir + "cishudadaoshangxian.png");
+                            Match cishushangxian = region.exists(baseDir + "cishudadaoshangxian.png", 1);
                             if (cishushangxian != null) {
                                 Thread.sleep(500L);
                                 region.click(Common.QUE_DING);
