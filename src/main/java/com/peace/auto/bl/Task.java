@@ -38,7 +38,7 @@ public enum Task {
     SHENG_YU(ShengYu.class, 0, 0, 30 * 60),
 
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
-    TIAN_SHEN_YUAN_GU(TianSheng.class, -1, -1, 2 * 60 * 60),
+    TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 2 * 60 * 60),
     TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
 
     SHI_CHANG(ShiChang.class, 3, -1),

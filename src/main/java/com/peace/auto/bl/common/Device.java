@@ -127,7 +127,7 @@ public class Device {
         if (deviceCount == 0) {
             log.info("do extra clean");
 
-            rt.exec("adb kill-server");
+//            rt.exec("adb kill-server");
 
             // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
 

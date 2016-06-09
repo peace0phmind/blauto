@@ -23,6 +23,8 @@ import java.util.Optional;
 public class TianSheng implements IDo {
     String baseDir = Common.BASE_DIR + "tiansheng/";
 
+    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
+
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         Match tiansheng = region.exists(baseDir + "tiansheng.png", 3);
         if (tiansheng != null && tiansheng.getScore() > 0.9) {
@@ -58,59 +60,10 @@ public class TianSheng implements IDo {
                 }
             }
 
+            // 远古战场
             if (status.canDo(Task.TIAN_SHEN_YUAN_GU)) {
-                // 远古战场
-                Match yuanguzhanchang = region.exists(baseDir + "yuanguzhanchang.png");
-                if (yuanguzhanchang != null) {
-                    yuanguzhanchang.click();
-                    Thread.sleep(1000L);
-
-                    Match right = region.exists(baseDir + "right.png");
-                    while (right != null) {
-                        right.click();
-                        Thread.sleep(500L);
-                        right = region.exists(baseDir + "right.png");
-                    }
-
-                    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
-
-                    Match sanxing = region.exists(sanxingpng);
-                    if (sanxing == null) {
-                        Match left = region.exists(baseDir + "left.png");
-                        if (left != null) {
-                            left.click();
-                            Thread.sleep(500L);
-                        } else {
-                            return true;
-                        }
-                    }
-
-                    sanxing = region.exists(sanxingpng);
-                    if (sanxing != null) {
-                        List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
-
-                        Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
-                        if (lastsanxing.isPresent()) {
-                            Match sx = lastsanxing.get();
-                            log.info("{}", sx);
-                            sx.click();
-                            Thread.sleep(500L);
-
-                            for (int i = 0; i < 25; i++) {
-                                region.click(baseDir + "saodang.png");
-                                Match shenglibugou = region.exists(baseDir + "shenglibugou.png", 1);
-                                if (shenglibugou != null) {
-                                    Thread.sleep(500L);
-                                    region.click(Common.QUE_DING);
-                                    status.Done(Task.TIAN_SHEN_YUAN_GU);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                    Thread.sleep(500L);
-                    region.click(Common.CLOSE);
+                if (!yuangu(region, status, true)) {
+                    yuangu(region, status, false);
                 }
             }
 
@@ -121,27 +74,9 @@ public class TianSheng implements IDo {
                     tianshendaluandou.click();
                     Thread.sleep(1000L);
 
-                    Match right = region.exists(baseDir + "right.png");
-                    while (right != null) {
-                        right.click();
-                        Thread.sleep(500L);
-                        right = region.exists(baseDir + "right.png");
-                    }
-
-                    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
+                    findLastFinishPage(region);
 
                     Match sanxing = region.exists(sanxingpng);
-                    if (sanxing == null) {
-                        Match left = region.exists(baseDir + "left.png");
-                        if (left != null) {
-                            left.click();
-                            Thread.sleep(500L);
-                        } else {
-                            return true;
-                        }
-                    }
-
-                    sanxing = region.exists(sanxingpng);
                     if (sanxing != null) {
                         List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
 
@@ -191,5 +126,79 @@ public class TianSheng implements IDo {
         }
 
         return true;
+    }
+
+    private boolean yuangu(Region region, Status status, boolean bJingYing) throws InterruptedException, FindFailed {
+        boolean ret = false;
+
+        Match yuanguzhanchang = region.exists(baseDir + "yuanguzhanchang.png");
+        if (yuanguzhanchang != null) {
+            yuanguzhanchang.click();
+            Thread.sleep(1000L);
+
+            if (bJingYing) {
+                region.click(baseDir + "jingying.png");
+                Thread.sleep(1000L);
+            }
+
+            findLastFinishPage(region);
+
+            Match sanxing = region.exists(sanxingpng);
+            if (sanxing != null) {
+                List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
+
+                Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
+                if (lastsanxing.isPresent()) {
+                    Match sx = lastsanxing.get();
+                    log.info("{}", sx);
+                    sx.click();
+                    Thread.sleep(500L);
+
+                    for (int i = 0; i < 25; i++) {
+                        region.click(baseDir + "saodang.png");
+                        Match shenglibugou = region.exists(baseDir + "shenglibugou.png", 1);
+                        if (shenglibugou != null) {
+                            Thread.sleep(500L);
+                            region.click(Common.QUE_DING);
+                            status.Done(Task.TIAN_SHEN_YUAN_GU);
+                            ret = true;
+                            break;
+                        }
+
+                        if (bJingYing) {
+                            Match cishushangxian = region.exists(baseDir + "cishudadaoshangxian.png");
+                            if (cishushangxian != null) {
+                                Thread.sleep(500L);
+                                region.click(Common.QUE_DING);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            Thread.sleep(500L);
+            region.click(Common.CLOSE);
+        }
+
+        return ret;
+    }
+
+    private void findLastFinishPage(Region region) throws InterruptedException {
+        Match right = region.exists(baseDir + "right.png");
+        while (right != null) {
+            right.click();
+            Thread.sleep(500L);
+            right = region.exists(baseDir + "right.png");
+        }
+
+        Match sanxing = region.exists(sanxingpng);
+        if (sanxing == null) {
+            Match left = region.exists(baseDir + "left.png");
+            if (left != null) {
+                left.click();
+                Thread.sleep(500L);
+            }
+        }
     }
 }
