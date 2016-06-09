@@ -9,6 +9,8 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
+
 /**
  * Created by mind on 3/5/16.
  */
@@ -71,6 +73,8 @@ public class ShengLingQuan implements IDo {
                             region.click(Common.QUE_DING);
                             status.Done(Task.SHENG_LING_QUAN_XIU_LIAN);
                         }
+                    } else {
+                        status.Done(Task.SHENG_LING_QUAN_XIU_LIAN, Status.nextCheck());
                     }
                 }
             }

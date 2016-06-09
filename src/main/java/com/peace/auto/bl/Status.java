@@ -55,6 +55,14 @@ public class Status {
         return USERS.size();
     }
 
+    public static LocalDateTime nextCheck() {
+        return LocalDateTime.now().plusMinutes(30);
+    }
+
+    public static LocalDateTime nextDayCheck() {
+        return LocalDateTime.now().plusDays(1).withHour(0).withMinute(20).withSecond(0);
+    }
+
     public boolean isPeace() {
         return peaceName().equals(currentUser);
     }
@@ -115,7 +123,7 @@ public class Status {
                 }
 
                 LocalDateTime executableTime = localDateTime;
-                if (t.getFinishSecond() > 0) {
+                if (t.getFinishSecond(todayFinishCount(t, u)) > 0) {
                     LocalDateTime lastFinishTime = getLastFinishTime(t, u);
                     if (lastFinishTime != null) {
                         executableTime = lastFinishTime;
@@ -210,7 +218,7 @@ public class Status {
     }
 
     public void Done(Task task) {
-        Done(task, LocalDateTime.now().plusSeconds(task.getFinishSecond()));
+        Done(task, LocalDateTime.now().plusSeconds(task.getFinishSecond(todayFinishCount(task, currentUser))));
     }
 
     public void Done(Task task, LocalDateTime finishTime) {
@@ -239,9 +247,9 @@ public class Status {
         return todayFinishCount(task, currentUser);
     }
 
-    public long todayFinishCount(Task task, String userName) {
+    public int todayFinishCount(Task task, String userName) {
         LocalDateTime today = LocalDate.now().atStartOfDay();
-        return getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
+        return (int) getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
     }
 
     public boolean canDo(Task task) {
@@ -261,7 +269,7 @@ public class Status {
             }
         }
 
-        if (task.getFinishSecond() != 0) {
+        if (task.getFinishSecond(todayFinishCount(task, userName)) != 0) {
             LocalDateTime lastFinishTime = getLastFinishTime(task, userName);
             if (lastFinishTime == null) {
                 return true;

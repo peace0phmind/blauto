@@ -54,7 +54,7 @@ public class RenWu implements IDo {
                 status.Done(Task.SHOU_JI_JIN_BI);
             } else {
                 log.info("No jinbi.");
-                status.Done(Task.SHOU_JI_JIN_BI, LocalDateTime.now().plusHours(1));
+                status.Done(Task.SHOU_JI_JIN_BI, Status.nextCheck());
             }
         }
 

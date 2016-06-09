@@ -78,7 +78,7 @@ public class ShiChang implements IDo {
         }
 
         if (status.todayFinishCount(Task.SHI_CHANG, userName) == Task.SHI_CHANG.getDayLimit(userName)) {
-            status.Done(Task.SHI_CHANG_CHECK, LocalDateTime.now().plusDays(1).withHour(0).withMinute(0).withSecond(0));
+            status.Done(Task.SHI_CHANG_CHECK, Status.nextDayCheck());
         }
 
         return false;

@@ -57,12 +57,12 @@ public enum Task {
     JING_JI_CHANG_LING_QU(JingJiChang.class, 1),
 
     SHENG_LING_QUAN_MIAN_FEI(ShengLingQuan.class, 1),
-    SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 1, -1, 24 * 60 * 60),
+    SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 0, -1, 24 * 60 * 60),
     SHENG_LING_QUAN_XI_LIAN(ShengLingQuan.class, 0, 0, 2 * 60 * 60),
 
 
     YUE_KA(RenWu.class, 1),
-    LI_BAO(RenWu.class, 5, 5, 30 * 60),
+    LI_BAO(RenWu.class, 5, 5, Arrays.asList(30 * 60, 30 * 60, 60 * 60, 60 * 60)),
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
     LIN_QU_REN_WU(RenWu.class, 0),
 
@@ -95,7 +95,7 @@ public enum Task {
         put("peace0ph003", Arrays.asList(SHEN_SHOU_WU, XUN_BAO, LIE_CHANG_DA_GUAI, RONG_LIAN));
     }};
     private int timesPerDay;
-    private long finishSecond;
+    private List<Integer> finishSeconds;
     private int masterTimesPerDay;
     private Class<? extends IDo> iDoClass;
 
@@ -112,6 +112,10 @@ public enum Task {
         init(iDoClass, timesPerDay, masterTimesPerDay, finishSecond);
     }
 
+    Task(Class<? extends IDo> iDoClass, int timesPerDay, int masterTimesPerDay, List<Integer> finishSeconds) {
+        init(iDoClass, timesPerDay, masterTimesPerDay, finishSeconds);
+    }
+
     public int getDayLimit(String userName) {
         List<Task> tasks = vipUser.get(userName);
         if (tasks != null && tasks.size() > 0) {
@@ -123,10 +127,22 @@ public enum Task {
         return timesPerDay;
     }
 
+    public int getFinishSecond(int count) {
+        if (finishSeconds.size() > 1 && count < finishSeconds.size()) {
+            return finishSeconds.get(count);
+        }
+
+        return finishSeconds.get(0);
+    }
+
     private void init(Class<? extends IDo> iDoClass, int timesPerDay, int masterTimesPerDay, int finishSecond) {
+        init(iDoClass, timesPerDay, masterTimesPerDay, Arrays.asList(finishSecond));
+    }
+
+    private void init(Class<? extends IDo> iDoClass, int timesPerDay, int masterTimesPerDay, List<Integer> finishSeconds) {
         this.iDoClass = iDoClass;
         this.timesPerDay = timesPerDay;
-        this.finishSecond = finishSecond;
+        this.finishSeconds = finishSeconds;
         this.masterTimesPerDay = masterTimesPerDay;
     }
 }

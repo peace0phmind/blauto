@@ -127,7 +127,7 @@ public class Building implements IDo {
             String sTime = getTime(x.below(18), 170);
 
             String[] splitTime = sTime.split(":");
-            LocalDateTime time = LocalDateTime.now().plusMinutes(30);
+            LocalDateTime time = Status.nextCheck();
 
             if (splitTime.length == 3) {
                 time = LocalDateTime.now().plusHours(Integer.parseInt(splitTime[0].trim()))

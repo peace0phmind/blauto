@@ -11,6 +11,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,8 @@ public class TianSheng implements IDo {
                         }
 
                         status.Done(Task.TIAN_SHEN_QI_DAO);
+                    } else {
+                        status.Done(Task.TIAN_SHEN_QI_DAO, Status.nextCheck());
                     }
 
                     region.click(Common.CLOSE);
@@ -163,10 +166,12 @@ public class TianSheng implements IDo {
                             Thread.sleep(500L);
                             region.click(baseDir + "xiaoclose.png");
                         }
-
-                        Thread.sleep(500L);
-                        region.click(Common.CLOSE);
+                    } else {
+                        status.Done(Task.TIAN_SHEN_LUAN_DOU, Status.nextDayCheck());
                     }
+
+                    Thread.sleep(500L);
+                    region.click(Common.CLOSE);
                 }
             }
 

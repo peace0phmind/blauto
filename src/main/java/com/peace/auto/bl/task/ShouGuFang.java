@@ -77,7 +77,7 @@ public class ShouGuFang implements IDo {
                 }
             } else {
                 getFinishTime(region);
-                status.Done(Task.SHOU_GU_SHOU_LIE, LocalDateTime.now().plusHours(1));
+                status.Done(Task.SHOU_GU_SHOU_LIE, Status.nextCheck());
             }
         }
 
@@ -93,7 +93,7 @@ public class ShouGuFang implements IDo {
             log.info("{}", getTime(shouliezhong.left(30), 100));
         }
 
-        return LocalDateTime.now().plusMinutes(30);
+        return Status.nextCheck();
     }
 
     @Override
