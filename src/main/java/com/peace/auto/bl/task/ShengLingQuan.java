@@ -52,10 +52,7 @@ public class ShengLingQuan implements IDo {
                     }
                 }
 
-                LocalDateTime next = LocalDateTime.now().withMinute(0).withSecond(5);
-                next = next.plusHours(next.getHour() % 2 == 0 ? 2 : 1);
-
-                status.Done(Task.SHENG_LING_QUAN_XI_LIAN, next);
+                status.Done(Task.SHENG_LING_QUAN_XI_LIAN, Status.nextRefresh());
             }
 
             // 高级修炼

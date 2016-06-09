@@ -64,7 +64,7 @@ public class ShiChang implements IDo {
                 }
             }
 
-            status.Done(Task.SHI_CHANG_CHECK);
+            status.Done(Task.SHI_CHANG_CHECK, Status.nextRefresh());
             region.click(Common.CLOSE);
         }
 

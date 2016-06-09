@@ -59,6 +59,11 @@ public class Status {
         return LocalDateTime.now().plusMinutes(30);
     }
 
+    public static LocalDateTime nextRefresh() {
+        LocalDateTime next = LocalDateTime.now().withMinute(0).withSecond(5).withNano(0);
+        return next.plusHours(next.getHour() % 2 == 0 ? 2 : 1);
+    }
+
     public static LocalDateTime nextDayCheck() {
         return LocalDateTime.now().plusDays(1).withHour(0).withMinute(20).withSecond(0);
     }
