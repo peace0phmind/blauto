@@ -5,10 +5,7 @@ import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
-import com.peace.auto.bl.task.Building;
-import com.peace.auto.bl.task.LianMeng;
-import com.peace.auto.bl.task.ShenQi;
-import com.peace.auto.bl.task.ShouGuFang;
+import com.peace.auto.bl.task.*;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.DisallowConcurrentExecution;
@@ -45,7 +42,6 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 
 //        testMode();
-//        ttt();
 
     }
 
@@ -60,10 +56,10 @@ public class Main {
     private static void testMode() throws IOException, InterruptedException, FindFailed {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
-        DENG_LU.checkUser(region, status, status.peaceName());
-//        DENG_LU.checkUser(region, status, "peace0ph008");
+//        DENG_LU.checkUser(region, status, status.peaceName());
+        DENG_LU.checkUser(region, status, "peace0ph004");
 
-        new LianMeng().Done(region, status);
+        new HaiDiShiJie().Done(region, status);
 
         region.close();
     }

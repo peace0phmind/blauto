@@ -44,6 +44,7 @@ public class ShiLianDong extends ZhanBao implements IDo {
                     Match wancheng = region.exists(baseDir + "jihuiwancheng.png");
                     if (wancheng != null) {
                         region.click(Common.QU_XIAO);
+                        status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
                     } else {
                         // 进入成功
                         if (status.isPeace()) {

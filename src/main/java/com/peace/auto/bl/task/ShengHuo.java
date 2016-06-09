@@ -81,13 +81,14 @@ public class ShengHuo implements IDo {
                 Match quedingduoqu = region.exists(baseDir + "quedingduoqu.png", 6);
                 if (quedingduoqu != null) {
                     region.click(Common.QUE_DING);
-                    status.Done(Task.SHENG_HUO);
-                    ret = true;
-                }
 
-                Match duoquwan = region.exists(baseDir + "duoquwan.png");
-                if (duoquwan != null) {
-                    region.click(Common.QUE_DING);
+                    Match duoquwan = region.exists(baseDir + "duoquwan.png");
+                    if (duoquwan != null) {
+                        region.click(Common.QUE_DING);
+                    } else {
+                        status.Done(Task.SHENG_HUO);
+                        ret = true;
+                    }
                 }
             }
 

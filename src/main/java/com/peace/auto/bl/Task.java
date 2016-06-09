@@ -38,7 +38,7 @@ public enum Task {
     SHENG_YU(ShengYu.class, 0, 0, 30 * 60),
 
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
-    TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 2 * 60 * 60),
+    TIAN_SHEN_YUAN_GU(TianSheng.class, -1, -1, 2 * 60 * 60),
     TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
 
     SHI_CHANG(ShiChang.class, 3, -1),
@@ -57,7 +57,7 @@ public enum Task {
     JING_JI_CHANG_LING_QU(JingJiChang.class, 1),
 
     SHENG_LING_QUAN_MIAN_FEI(ShengLingQuan.class, 1),
-    SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 0, -1, 24 * 60 * 60),
+    SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 0, 0, 24 * 60 * 60),
     SHENG_LING_QUAN_XI_LIAN(ShengLingQuan.class, 0, 0, 2 * 60 * 60),
 
 
@@ -69,7 +69,10 @@ public enum Task {
     MEI_RI_JIANG_LI(JiangLi.class, 2),
     HUO_YUE_DU(JiangLi.class, 0),
 
-    HAI_DI_SHI_JIE(HaiDiShiJie.class, 1, 3),
+
+    HAI_DI_SHI_JIE(HaiDiShiJie.class, -1),
+    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
+    HAI_DI_SHI_JIE_TIAO_ZHAN(HaiDiShiJie.class, 1),
 
     SHENG_HUO(ShengHuo.class, 3, 3, 15 * 60),
 
@@ -90,8 +93,8 @@ public enum Task {
      */
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_CHANG_CHECK, SHI_LIAN_DONG,
-                HAI_DI_SHI_JIE, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU, SHENG_LING_QUAN_XIU_LIAN));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE, TIAN_SHEN_LUAN_DOU));
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, TIAN_SHEN_LUAN_DOU));
         put("peace0ph003", Arrays.asList(SHEN_SHOU_WU, XUN_BAO, LIE_CHANG_DA_GUAI, RONG_LIAN));
     }};
     private int timesPerDay;
