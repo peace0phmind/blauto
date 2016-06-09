@@ -92,10 +92,12 @@ public enum Task {
      * vip user and task
      */
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
-        put("peace", Arrays.asList(JING_JI_CHANG, SHI_CHANG, SHI_CHANG_CHECK, SHI_LIAN_DONG,
+        put("peace", Arrays.asList(JING_JI_CHANG, SHI_LIAN_DONG,
+//                SHI_CHANG, SHI_CHANG_CHECK,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, TIAN_SHEN_LUAN_DOU));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, TIAN_SHEN_LUAN_DOU));
         put("peace0ph003", Arrays.asList(SHEN_SHOU_WU, XUN_BAO, LIE_CHANG_DA_GUAI, RONG_LIAN));
+        put("peace0ph008", Arrays.asList(SHEN_SHOU_WU, XUN_BAO));
     }};
     private int timesPerDay;
     private List<Integer> finishSeconds;

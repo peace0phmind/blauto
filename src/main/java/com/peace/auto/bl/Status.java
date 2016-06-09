@@ -41,7 +41,7 @@ public class Status {
 //    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
 
     private static final List<LocalTime> XUN_BAO_PREPARE_TIME = Arrays.asList(LocalTime.of(13, 43), LocalTime.of(21, 20), LocalTime.of(23, 43));
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 50, 00), LocalTime.of(21, 30), LocalTime.of(23, 50, 30));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 50, 0), LocalTime.of(21, 30), LocalTime.of(23, 50, 0));
 
     private String currentUser;
     private String wantUser;

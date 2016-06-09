@@ -57,52 +57,6 @@ public class DengLu implements IDo {
         }
     }
 
-    private boolean qiehuanzhanghao(Region region, Status status) throws FindFailed, InterruptedException {
-        String loginName = status.getWantUser();
-
-        Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
-        if (qiehuanzhanghao != null) {
-            qiehuanzhanghao.click();
-
-            Thread.sleep(5000L);
-            // 在qq中切换账号
-            Match inqiehuanzhanghao = region.exists(baseDir + "inqiehuanzhanghao.png", 20);
-            if (inqiehuanzhanghao != null) {
-                Thread.sleep(3000L);
-
-                List<Match> qqs = Lists.newArrayList(region.findAll(new Pattern(baseDir + "peace.png").similar(similar)));
-
-                String lastChar = loginName.substring(loginName.length() - 1);
-
-                Optional<Match> firstqq = qqs.stream().filter(x -> {
-                    String text = getWord(x);
-//                    log.info("{}, {}", text, text.length());
-                    return lastChar.equals(text.substring(text.length() - 1));
-                }).findFirst();
-
-                // 点击账号
-                if (firstqq.isPresent()) {
-                    Match qq = firstqq.get();
-                    log.info("登录: {}", getWord(qq));
-                    qq.click();
-
-                    // 进入部落
-                    return jinrubuluo(region, status);
-                } else {
-                    region.click(baseDir + "qqdenglu.png");
-                    Thread.sleep(1000L);
-
-                    region.click(baseDir + "denglu.png");
-
-                    // 进入部落
-                    return jinrubuluo(region, status);
-                }
-            }
-        }
-
-        return false;
-    }
-
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
         Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
         int i = 0;
@@ -188,13 +142,58 @@ public class DengLu implements IDo {
     }
 
     private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {
-        Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 5);
+        Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
         if (qqhaoyouwan != null) {
             qqhaoyouwan.click();
 
-            Thread.sleep(6000L);
+            Thread.sleep(3000L);
 
-            return qiehuanzhanghao(region, status);
+            qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 3);
+            if (qqhaoyouwan != null) {
+                qqhaoyouwan.click();
+            }
+
+            String loginName = status.getWantUser();
+
+            Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
+            if (qiehuanzhanghao != null) {
+                qiehuanzhanghao.click();
+
+                Thread.sleep(5000L);
+                // 在qq中切换账号
+                Match inqiehuanzhanghao = region.exists(baseDir + "inqiehuanzhanghao.png", 20);
+                if (inqiehuanzhanghao != null) {
+                    Thread.sleep(3000L);
+
+                    List<Match> qqs = Lists.newArrayList(region.findAll(new Pattern(baseDir + "peace.png").similar(similar)));
+
+                    String lastChar = loginName.substring(loginName.length() - 1);
+
+                    Optional<Match> firstqq = qqs.stream().filter(x -> {
+                        String text = getWord(x);
+//                    log.info("{}, {}", text, text.length());
+                        return lastChar.equals(text.substring(text.length() - 1));
+                    }).findFirst();
+
+                    // 点击账号
+                    if (firstqq.isPresent()) {
+                        Match qq = firstqq.get();
+                        log.info("登录: {}", getWord(qq));
+                        qq.click();
+
+                        // 进入部落
+                        return jinrubuluo(region, status);
+                    } else {
+                        region.click(baseDir + "qqdenglu.png");
+                        Thread.sleep(1000L);
+
+                        region.click(baseDir + "denglu.png");
+
+                        // 进入部落
+                        return jinrubuluo(region, status);
+                    }
+                }
+            }
         }
 
         return false;
