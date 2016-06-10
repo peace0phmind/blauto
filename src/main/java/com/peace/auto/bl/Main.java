@@ -42,7 +42,6 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 
 //        testMode();
-
     }
 
     private static void time() throws SchedulerException {

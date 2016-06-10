@@ -167,10 +167,10 @@ public class Status {
 //                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO_PREPARE, dateTime.with(XUN_BAO_PREPARE_TIME.get((int) finishCount))));
 //                }
 
-                long finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
-                if (finishCount < 3) {
-                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO, dateTime.with(QI_BING_XUN_BAO_TIME.get((int) finishCount))));
-                }
+//                long finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
+//                if (finishCount < 3) {
+//                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO, dateTime.with(QI_BING_XUN_BAO_TIME.get((int) finishCount))));
+//                }
             }
         });
 
