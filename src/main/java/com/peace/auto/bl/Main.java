@@ -1,5 +1,6 @@
 package com.peace.auto.bl;
 
+import com.peace.auto.bl.common.Device;
 import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.sikuli.monkey.AndroidScreen;
@@ -25,8 +26,8 @@ public class Main {
         Settings.OcrTextRead = true;
         log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
-//        Device.killAllBoxSVC();
-//        time();
+        Device.killAllBoxSVC();
+        time();
 
 //        new XunBaoModeJob().execute(null);
 //        new OrderModeJob().execute(null);

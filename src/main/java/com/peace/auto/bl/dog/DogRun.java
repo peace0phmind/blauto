@@ -3,7 +3,11 @@ package com.peace.auto.bl.dog;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 
+import java.io.File;
+import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 /**
  * Created by mind on 6/11/16.
@@ -12,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 @DisallowConcurrentExecution
 public class DogRun implements InterruptableJob {
 
+    private ProcessBuilder processBuilder;
     private Process run;
     private boolean _interrupted = false;
 
@@ -29,10 +34,16 @@ public class DogRun implements InterruptableJob {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
+//                run = Runtime.getRuntime().exec(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
+        if (processBuilder == null) {
+            processBuilder = new ProcessBuilder(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
+            processBuilder.redirectOutput(new File(String.format("target/output-%s.log", LocalDateTime.now().format(ISO_LOCAL_DATE))));
+        }
+
         try {
             while (!_interrupted) {
                 log.info("Begin run process.");
-                run = Runtime.getRuntime().exec(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
+                run = processBuilder.start();
                 run.waitFor();
                 log.info("End of process");
             }
