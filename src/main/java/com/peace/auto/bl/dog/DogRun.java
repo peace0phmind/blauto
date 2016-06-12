@@ -37,7 +37,10 @@ public class DogRun implements InterruptableJob {
 //                run = Runtime.getRuntime().exec(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
         if (processBuilder == null) {
             processBuilder = new ProcessBuilder(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
-            processBuilder.redirectOutput(new File(String.format("target/output.%s.log", LocalDateTime.now().format(ISO_LOCAL_DATE))));
+            processBuilder.redirectErrorStream(true);
+
+            File log = new File(String.format("target/output.%s.log", LocalDateTime.now().format(ISO_LOCAL_DATE)));
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.appendTo(log));
         }
 
         try {
