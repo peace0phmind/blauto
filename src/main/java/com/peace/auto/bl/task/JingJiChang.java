@@ -9,6 +9,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -29,6 +30,7 @@ public class JingJiChang implements IDo {
 
             Match injingjichang = region.exists(baseDir + "injingjichang.png", 30);
             if (injingjichang != null) {
+                Thread.sleep(1000L);
                 // 每天首次执行,领取奖励
                 if (status.canDo(Task.JING_JI_CHANG_LING_QU)) {
                     Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
@@ -39,11 +41,15 @@ public class JingJiChang implements IDo {
                 }
 
                 // 挑战
+                Thread.sleep(1000L);
                 region.click(baseDir + "tiaozhan.png");
+                Thread.sleep(1000L);
+
                 Match jingjivip = region.exists(baseDir + "jingjivip.png");
                 if (jingjivip != null) {
                     // 结束了
                     jingjivip.above().click(Common.CLOSE);
+                    status.Done(Task.JING_JI_CHANG, LocalDateTime.now());
                 } else {
                     // 没有结束
                     Match queding = region.exists(baseDir + "queding.png", 3);

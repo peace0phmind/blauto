@@ -7,6 +7,7 @@ import com.peace.auto.bl.task.IDo;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+import org.quartz.simpl.SystemPropertyInstanceIdGenerator;
 import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
@@ -40,16 +41,8 @@ public class OrderModeJob implements Job, TaskJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
 
-        if (isValidTime(LocalTime.of(0, 15), LocalTime.of(13, 0))) {
-            for (int i = 0; i < Status.getUserCount(); i++) {
-                execute();
-            }
-        }
-
-        if (isValidTime(LocalTime.of(14, 0), LocalTime.of(23, 0))) {
-            for (int i = 0; i < Status.getUserCount(); i++) {
-                execute();
-            }
+        for (int i = 0; i < Status.getUserCount(); i++) {
+            execute();
         }
     }
 
@@ -84,6 +77,8 @@ public class OrderModeJob implements Job, TaskJob {
             } catch (Exception e1) {
                 log.error("{}", e1);
             }
+
+            System.exit(-1);
         }
     }
 }

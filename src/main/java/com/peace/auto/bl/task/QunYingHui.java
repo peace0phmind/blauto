@@ -5,6 +5,7 @@ import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.Common;
 import com.peace.auto.bl.task.IDo;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 /**
  * Created by mind on 3/9/16.
  */
+@Slf4j
 public class QunYingHui implements IDo {
     String baseDir = Common.BASE_DIR + "qunyinghui/";
 
@@ -61,15 +63,17 @@ public class QunYingHui implements IDo {
                             }
 
                             Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
-                            if (lingqujiangli != null) {
+                            if (lingqujiangli != null && lingqujiangli.getScore() > 0.8f) {
                                 Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
                                 Lists.newArrayList(all).forEach(x -> x.click());
                                 Thread.sleep(3000L);
+                            } else {
+                                log.info("lingqujiagli: {}", lingqujiangli);
                             }
 
                             Thread.sleep(1000L);
                         }
-                        
+
                         status.Done(Task.QUN_YING_HUI_LING_JIANG);
                     }
 

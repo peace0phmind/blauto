@@ -5,10 +5,9 @@ import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
-import com.peace.auto.bl.task.*;
+import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.impl.StdSchedulerFactory;
@@ -16,10 +15,6 @@ import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -27,18 +22,19 @@ import static com.peace.auto.bl.common.Devices.*;
  * Created by mind on 3/2/16.
  */
 @Slf4j
-@DisallowConcurrentExecution
 public class Main {
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
+        log.info("Begin auto mode");
 
 //        status.getUserTasks().forEach(x -> log.info("{}", x));
 
         Device.killAllBoxSVC();
         time();
 
-//        new XunBaoModeJob().execute();
+//        new XunBaoModeJob().execute(null);
+//        new OrderModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
 
 //        testMode();

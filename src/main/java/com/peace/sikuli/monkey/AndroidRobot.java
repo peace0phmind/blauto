@@ -83,6 +83,9 @@ public class AndroidRobot implements IRobot {
 
     public boolean isLandscape() {
         String orientation = _device.shell("dumpsys input");
+        if (orientation == null || orientation.trim().length() == 0) {
+            throw new RuntimeException("Run command: dumpsys input error.");
+        }
         String[] split = orientation.split("\r\n");
         Optional<String> stringOptional = Arrays.asList(split).stream().filter(x -> x.contains("SurfaceOrientation:")).findFirst();
         if (stringOptional.isPresent()) {

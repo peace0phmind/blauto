@@ -35,16 +35,14 @@ public class XunBaoModeJob implements Job, TaskJob {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job");
 
-        if (isValidTime(LocalTime.of(13, 35), LocalTime.of(14, 0))) {
-            for (int i = 0; i < 3; i++) {
-                execute();
-                try {
-                    if (i < 3 - 1) {
-                        Thread.sleep(5 * 60 * 1000L);
-                    }
-                } catch (InterruptedException e) {
-                    log.error("{}", e);
+        for (int i = 0; i < 3; i++) {
+            execute();
+            try {
+                if (i < 3 - 1) {
+                    Thread.sleep(5 * 60 * 1000L);
                 }
+            } catch (InterruptedException e) {
+                log.error("{}", e);
             }
         }
     }

@@ -19,6 +19,7 @@ public class AutoMode implements Job {
 
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(AutoMode.class).build();
+//        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.tomorrowAt(0, 15, 0)).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0)).build();
 
         try {
