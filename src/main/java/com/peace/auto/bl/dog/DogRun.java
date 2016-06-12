@@ -1,12 +1,9 @@
 package com.peace.auto.bl.dog;
 
 import lombok.extern.slf4j.Slf4j;
-import org.omg.SendingContext.RunTime;
 import org.quartz.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by mind on 6/11/16.
@@ -35,13 +32,7 @@ public class DogRun implements InterruptableJob {
         try {
             while (!_interrupted) {
                 log.info("Begin run process.");
-                run = Runtime.getRuntime().exec(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Main"});
-
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(run.getInputStream()));
-//                for (int i = 0; i < 50; i++) {
-//                    log.info("py: {}", bufferedReader.readLine());
-//                }
-
+                run = Runtime.getRuntime().exec(new String[]{"java", "-cp", "bl-1.0-SNAPSHOT.jar", "com.peace.auto.bl.Auto"});
                 run.waitFor();
                 log.info("End of process");
             }
@@ -55,7 +46,19 @@ public class DogRun implements InterruptableJob {
         _interrupted = true;
 
         if (run != null) {
-            run.destroyForcibly();
+            run.destroy();
+            log.info("destroy job");
+
+            try {
+                if (!run.waitFor(120, TimeUnit.SECONDS)) {
+                    log.info("force destroy job");
+                    run.destroyForcibly();
+                }
+            } catch (InterruptedException e) {
+                log.error("force destroy job, {}", e);
+                run.destroyForcibly();
+            }
+
             run = null;
         }
     }

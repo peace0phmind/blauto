@@ -45,14 +45,9 @@ public class Device {
 
     public static void killAllBoxSVC() throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
-
+        // rt.exec("adb kill-server");
         rt.exec("killall VBoxSVC");
-
-        Thread.sleep(6000L);
-
-        rt.exec("killall VBoxNetDHCP");
-
-        Thread.sleep(6000L);
+//        rt.exec("killall VBoxNetDHCP");
     }
 
     private AndroidScreen startDevice(boolean visible) throws IOException, InterruptedException {
@@ -112,26 +107,22 @@ public class Device {
             region.close();
             region = null;
             deviceCount -= 1;
-        }
 
-        Runtime rt = Runtime.getRuntime();
+            Runtime rt = Runtime.getRuntime();
 
-        String[] args = {"osascript", "-e", String.format(script, description, closeButton)};
-        log.info("{}", args[2]);
-        rt.exec(args);
+            String[] args = {"osascript", "-e", String.format(script, description, closeButton)};
+            log.info("{}", args[2]);
+            rt.exec(args);
 
-        Thread.sleep(5000L);
+            Thread.sleep(5000L);
 
-        rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, id));
+            rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, id));
 
-        if (deviceCount == 0) {
-            log.info("do extra clean");
-
-//            rt.exec("adb kill-server");
-
-            // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
-
-            killAllBoxSVC();
+            if (deviceCount == 0) {
+                log.info("do extra clean");
+                // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
+                killAllBoxSVC();
+            }
         }
     }
 }
