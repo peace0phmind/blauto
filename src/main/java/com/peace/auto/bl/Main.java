@@ -2,6 +2,7 @@ package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
 import com.peace.auto.bl.job.AutoMode;
+import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -27,11 +28,10 @@ public class Main {
         log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
         Device.killAllBoxSVC();
-        time();
+//        time();
 
 //        new XunBaoModeJob().execute(null);
-//        new OrderModeJob().execute(null);
-//        new DuoBaoModeJob().execute();
+        new DuoBaoModeJob().execute();
 
 //        testMode();
     }
@@ -40,7 +40,7 @@ public class Main {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
 //        OrderModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-        AutoMode.init(defaultScheduler);
+//        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 

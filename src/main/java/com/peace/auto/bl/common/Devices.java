@@ -11,9 +11,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 public class Devices {
-    public static final Device DEVICE_1 = new Device("3e08a7ca-d763-44e3-88a8-ce4c1831a1f9", "Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800");
-    public static final Device DEVICE_2 = new Device("efc444e7-aeb9-4ce4-8993-9e777ed033d9", "Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800_1");
-    public static final Device DEVICE_3 = new Device("e10a2c0d-b1cd-40b2-be65-5b714fa9fea1", "Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800_2");
+//    public static final Device DEVICE = new Device("efc444e7-aeb9-4ce4-8993-9e777ed033d9", "Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800_1");
+    public static final Device DEVICE_1 = new Device("a2e70946-cb12-4e1f-a172-34ab5e06f745", "device1");
+    public static final Device DEVICE_2 = new Device("0a8f9229-849b-47a9-bc34-6803143d1a5c", "device2");
+    public static final Device DEVICE_3 = new Device("868472e5-e924-4700-838d-f7a6aabc37c9", "device3");
     public static final Status status = new Status();
     public static final DengLu DENG_LU = new DengLu();
 }

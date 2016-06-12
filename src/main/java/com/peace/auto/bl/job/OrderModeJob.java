@@ -69,10 +69,10 @@ public class OrderModeJob implements Job, TaskJob {
             }
         } catch (Exception e) {
             log.error("region: {}, {}", region, e);
-            if (region != null) {
-                region.saveScreenCapture(".", "error");
-            }
             try {
+                if (region != null) {
+                    region.saveScreenCapture(".", "error");
+                }
                 DEVICE_1.stopDevice();
             } catch (Exception e1) {
                 log.error("{}", e1);

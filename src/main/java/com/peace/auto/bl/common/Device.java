@@ -45,9 +45,11 @@ public class Device {
 
     public static void killAllBoxSVC() throws IOException, InterruptedException {
         Runtime rt = Runtime.getRuntime();
-        // rt.exec("adb kill-server");
+        rt.exec("adb kill-server");
         rt.exec("killall VBoxSVC");
-//        rt.exec("killall VBoxNetDHCP");
+        rt.exec("killall VBoxNetDHCP");
+
+        Thread.sleep(6000L);
     }
 
     private AndroidScreen startDevice(boolean visible) throws IOException, InterruptedException {
@@ -118,11 +120,11 @@ public class Device {
 
             rt.exec(String.format("%s -x --vm-name %s", PLAY_PATH, id));
 
-            if (deviceCount == 0) {
-                log.info("do extra clean");
-                // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
-                killAllBoxSVC();
-            }
+//            if (deviceCount == 0) {
+//                log.info("do extra clean");
+//                // rt.exec(String.format("VBoxManage controlvm %s poweroff", id));
+//                killAllBoxSVC();
+//            }
         }
     }
 }

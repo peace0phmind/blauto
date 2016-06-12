@@ -49,7 +49,7 @@ public class AutoMode implements Job {
                         new XunBaoModeJob().execute();
                         break;
                     default:
-                        log.info("Do order mode, {}", ti);
+                        log.info("Do task, {}", ti);
                         new OrderModeJob().doTask(ti.getUserName());
                         break;
                 }
