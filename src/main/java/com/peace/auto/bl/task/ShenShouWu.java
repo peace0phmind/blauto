@@ -37,13 +37,16 @@ public class ShenShouWu implements IDo {
 
             Match weishi = region.find(baseDir + "chujishicai.png").below().find(baseDir + "doweishi.png");
             if (weishi != null) {
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i < Task.SHEN_SHOU_WU.getDayLimit(status.getCurrentUser()); i++) {
                     weishi.click();
+                    status.Done(Task.SHEN_SHOU_WU);
 
                     Match noweishi = region.exists(baseDir + "noweishi.png", 0.5);
                     if (noweishi != null) {
                         region.click(Common.QUE_DING);
-                        status.Done(Task.SHEN_SHOU_WU);
+                        for (int j = 0; j < (Task.SHEN_SHOU_WU.getDayLimit(status.getCurrentUser()) - i - 1); j++) {
+                            status.Done(Task.SHEN_SHOU_WU);
+                        }
                         break;
                     }
                 }

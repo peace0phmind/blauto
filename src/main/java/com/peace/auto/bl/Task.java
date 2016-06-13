@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 public enum Task {
 
-    SHEN_SHOU_WU(ShenShouWu.class, 1, -1),
+    SHEN_SHOU_WU(ShenShouWu.class, 20, 5),
 
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
@@ -96,7 +96,8 @@ public enum Task {
                 SHI_CHANG, SHI_CHANG_CHECK,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG));
-        put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN));
+        put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN, SHEN_SHOU_WU));
+        put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
     }};
     private int timesPerDay;
     private List<Integer> finishSeconds;
