@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 /**
  * Created by mind on 3/7/16.
@@ -17,6 +19,16 @@ public class DengLu implements IDo {
     String baseDir = Common.BASE_DIR + "denglu/";
 
     private float similar = 0.5f;
+
+    private Properties properties = new Properties();
+
+    public DengLu() {
+        try {
+            properties.load(getClass().getResourceAsStream("password.properties"));
+        } catch (IOException e) {
+            log.error("Load password error. {}", e);
+        }
+    }
 
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         status.setWantUser(userName);
@@ -58,6 +70,26 @@ public class DengLu implements IDo {
     }
 
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
+        Match tianjiazhangzhao = region.exists(baseDir + "tianjiazhanghao.png", 6);
+        if (tianjiazhangzhao != null) {
+
+            Match username = region.exists(baseDir + "username.png");
+            if (username != null) {
+                username.type(properties.getProperty(String.format("%s_username", status.getCurrentUser())));
+                Thread.sleep(3000L);
+            }
+
+            Match password = region.exists(baseDir + "password.png");
+            if (password != null) {
+                password.type(properties.getProperty(String.format("%s_password", status.getCurrentUser())));
+                Thread.sleep(2000L);
+            }
+
+            region.click(baseDir + "tianjiazhanghaodenglu.png");
+            Thread.sleep(3000L);
+        }
+
+
         Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
         int i = 0;
         while (jinrubuluo == null) {
@@ -151,6 +183,13 @@ public class DengLu implements IDo {
             qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 3);
             if (qqhaoyouwan != null) {
                 qqhaoyouwan.click();
+            }
+
+            // 如果默认登录,则跳转到切换账号
+            Match tianjiazhanghao = region.exists(baseDir + "tianjiazhanghao.png", 10);
+            if (tianjiazhanghao != null) {
+                region.click(baseDir + "qqdenglu.png");
+                Thread.sleep(1000L);
             }
 
             String loginName = status.getWantUser();
