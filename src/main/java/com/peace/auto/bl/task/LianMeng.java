@@ -145,14 +145,14 @@ public class LianMeng implements IDo {
                                     clickInside(region, Common.CLOSE);
                                 }
 
-                                // 联盟报名则忽略此次操作
-                                Match lianmengbaoming = region.exists(baseDir + "lianmengbaoming.png", 1);
-                                if (lianmengbaoming != null) {
-                                    status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
-                                }
-
                                 Thread.sleep(1000L);
                                 region.click(Common.CLOSE);
+                            }
+                        } else {
+                            // 联盟报名则忽略此次操作
+                            Match lianmengbaoming = region.exists(baseDir + "lianmengbaoming.png", 1);
+                            if (lianmengbaoming != null) {
+                                status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                             }
                         }
 
