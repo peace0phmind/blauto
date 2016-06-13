@@ -30,6 +30,8 @@ public class AndroidRobot implements IRobot {
         _device = dev;
     }
 
+    private int errorCount = 0;
+
     private static void sleep(float seconds) {
         try {
             Thread.sleep((long) (seconds * 1000));
@@ -84,7 +86,12 @@ public class AndroidRobot implements IRobot {
     public boolean isLandscape() {
         String orientation = _device.shell("dumpsys input");
         if (orientation == null || orientation.trim().length() == 0) {
-            throw new RuntimeException("Run command: dumpsys input error.");
+            log.info("Run command: dumpsys input error.");
+            if (errorCount++ > 10) {
+                System.exit(-1);
+            } else {
+                throw new RuntimeException("Run command: dumpsys input error.");
+            }
         }
         String[] split = orientation.split("\r\n");
         Optional<String> stringOptional = Arrays.asList(split).stream().filter(x -> x.contains("SurfaceOrientation:")).findFirst();
