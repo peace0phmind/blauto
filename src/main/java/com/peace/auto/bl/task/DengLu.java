@@ -22,6 +22,8 @@ public class DengLu implements IDo {
 
     private Properties properties = new Properties();
 
+    private Pattern tianjiazhanghaoPattern = new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f);
+
     public DengLu() {
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("password.properties"));
@@ -70,8 +72,8 @@ public class DengLu implements IDo {
     }
 
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
-        Match tianjiazhangzhao = region.exists(baseDir + "tianjiazhanghao.png", 6);
-        if (tianjiazhangzhao != null) {
+        Match tianjiazhangzhao = region.exists(tianjiazhanghaoPattern, 6);
+        if (tianjiazhangzhao != null && tianjiazhangzhao.getScore() > 0.95f) {
 
             Match username = region.exists(baseDir + "username.png");
             Match password = region.exists(baseDir + "password.png");
@@ -98,8 +100,7 @@ public class DengLu implements IDo {
             Thread.sleep(3000L);
         }
 
-
-        Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 6);
+        Match jinrubuluo = region.exists(baseDir + "jinrubuluo.png", 30);
         int i = 0;
         while (jinrubuluo == null) {
             i++;
@@ -195,7 +196,7 @@ public class DengLu implements IDo {
             }
 
             // 如果默认登录,则跳转到切换账号
-            Match tianjiazhanghao = region.exists(baseDir + "tianjiazhanghao.png", 10);
+            Match tianjiazhanghao = region.exists(tianjiazhanghaoPattern, 10);
             if (tianjiazhanghao != null) {
                 region.click(baseDir + "qqdenglu.png");
                 Thread.sleep(1000L);
