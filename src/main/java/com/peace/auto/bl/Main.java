@@ -32,9 +32,9 @@ public class Main {
 //        time();
 
 //        new XunBaoModeJob().execute(null);
-//        new DuoBaoModeJob().execute();
+        new DuoBaoModeJob().execute();
 
-        testMode();
+//        testMode();
     }
 
     private static void time() throws SchedulerException {

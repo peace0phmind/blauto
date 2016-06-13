@@ -75,13 +75,13 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
         } catch (Exception e) {
             log.error("{}", e);
-            try {
-                DEVICE_1.stopDevice();
-                DEVICE_2.stopDevice();
-                DEVICE_3.stopDevice();
-            } catch (Exception e1) {
-                log.error("{}", e1);
-            }
+//            try {
+//                DEVICE_1.stopDevice();
+//                DEVICE_2.stopDevice();
+//                DEVICE_3.stopDevice();
+//            } catch (Exception e1) {
+//                log.error("{}", e1);
+//            }
         }
     }
 }
