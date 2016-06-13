@@ -2,6 +2,7 @@ package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
+import com.peace.sikuli.monkey.AndroidRobot;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
@@ -198,6 +199,14 @@ public class DengLu implements IDo {
             if (tianjiazhanghao != null) {
                 region.click(baseDir + "qqdenglu.png");
                 Thread.sleep(1000L);
+            }
+
+            Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f), 10);
+            if (zhengzaidenglu != null) {
+                doRobot(region, (robot) -> {
+                    log.info("use robot press back");
+                    robot.pressBack();
+                });
             }
 
             String loginName = status.getWantUser();

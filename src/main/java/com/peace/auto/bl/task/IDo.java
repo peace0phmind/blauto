@@ -1,7 +1,9 @@
 package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
+import com.peace.auto.bl.DoRobot;
 import com.peace.auto.bl.Status;
+import com.peace.sikuli.monkey.AndroidRobot;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.natives.OCR;
@@ -35,6 +37,13 @@ public interface IDo {
         }
 
         return false;
+    }
+
+    default void doRobot(Region region, DoRobot r) {
+        IRobot robot = region.getScreen().getRobot();
+        if (robot instanceof AndroidRobot && r != null) {
+            r.doRobot((AndroidRobot) robot);
+        }
     }
 
     default boolean isButtonEnable(Region region) {
