@@ -21,4 +21,6 @@ public interface Common {
     String RI_CHANG = BASE_DIR + "richang.png";
 
     String QU_XIAO = BASE_DIR + "quxiao.png";
+
+    Pattern RONG_YAO = new Pattern(BASE_DIR + "huoderongyao.png").similar(0.8f);
 }

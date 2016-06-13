@@ -123,6 +123,7 @@ public class LianMeng implements IDo {
                                     status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                                 }
 
+                                // 本届排名则进入获取声望奖励
                                 Match benjiepaiming = region.exists(baseDir + "benjiepaihang.png");
                                 if (benjiepaiming != null) {
                                     benjiepaiming.click();
@@ -142,6 +143,12 @@ public class LianMeng implements IDo {
 
                                     Thread.sleep(1000L);
                                     clickInside(region, Common.CLOSE);
+                                }
+
+                                // 联盟报名则忽略此次操作
+                                Match lianmengbaoming = region.exists(baseDir + "lianmengbaoming.png", 1);
+                                if (lianmengbaoming != null) {
+                                    status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                                 }
 
                                 Thread.sleep(1000L);

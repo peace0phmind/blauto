@@ -3,6 +3,7 @@ package com.peace.auto.bl.task;
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.sikuli.monkey.AndroidScreen;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.natives.OCR;
 import org.sikuli.script.*;
 
@@ -25,6 +26,16 @@ public interface IDo {
     boolean Done(Region region, Status status) throws FindFailed, InterruptedException;
 
     boolean CanDo(Status status, String userName);
+
+    default boolean checkRongYao(Region region) throws FindFailed {
+        Match rongYao = region.exists(Common.RONG_YAO, 1);
+        if (rongYao != null) {
+            clickInside(region, Common.CLOSE);
+            return true;
+        }
+
+        return false;
+    }
 
     default boolean isButtonEnable(Region region) {
         return isButtonEnable(region, 0, 0);

@@ -56,7 +56,10 @@ public class JingJiChang implements IDo {
                     if (queding != null) {
                         queding.click();
 
-                        Match guankan = region.exists(baseDir + "guankan.png", 3);
+                        Thread.sleep(6000L);
+                        checkRongYao(region);
+
+                        Match guankan = region.exists(baseDir + "guankan.png", 6);
                         if (guankan != null) {
                             region.click(Common.QU_XIAO);
 

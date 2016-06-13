@@ -101,6 +101,9 @@ public class Building implements IDo {
                     do {
                         match.click();
 
+                        // 检查荣耀
+                        checkRongYao(region);
+
                         Match end = region.exists(baseDir + "end.png", 0.5);
                         if (end != null) {
                             region.click(Common.QUE_DING);
