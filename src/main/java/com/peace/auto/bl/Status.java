@@ -162,7 +162,11 @@ public class Status {
                 }
 
                 if (t == Task.QI_BING_LING_TU) {
-                    executableTime = dateTime.with(LocalTime.of(5, 0));
+                    if (dateTime.toLocalTime().isBefore(LocalTime.of(12, 0))) {
+                        executableTime = dateTime.with(LocalTime.of(5, 0));
+                    } else {
+                        return;
+                    }
                 }
 
                 taskItems.add(new TaskItem(u, t, executableTime));

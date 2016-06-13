@@ -3,6 +3,7 @@ package com.peace.auto.bl;
 import com.peace.auto.bl.common.Device;
 import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
+import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.auto.bl.task.LianMeng;
 import com.peace.sikuli.monkey.AndroidScreen;
@@ -31,8 +32,8 @@ public class Main {
 //        Device.killAllBoxSVC();
 //        time();
 
-//        new XunBaoModeJob().execute(null);
-        new DuoBaoModeJob().execute();
+        new XunBaoModeJob().execute(null);
+//        new DuoBaoModeJob().execute();
 
 //        testMode();
     }
@@ -41,7 +42,7 @@ public class Main {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
 //        OrderModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-//        AutoMode.init(defaultScheduler);
+        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 
