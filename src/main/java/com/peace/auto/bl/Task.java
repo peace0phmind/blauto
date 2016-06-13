@@ -60,15 +60,8 @@ public enum Task {
     SHENG_LING_QUAN_XIU_LIAN(ShengLingQuan.class, 0, 0, 24 * 60 * 60),
     SHENG_LING_QUAN_XI_LIAN(ShengLingQuan.class, 0, 0, 2 * 60 * 60),
 
-
-    YUE_KA(RenWu.class, 1),
-    LI_BAO(RenWu.class, 5, 5, Arrays.asList(30 * 60, 30 * 60, 60 * 60, 60 * 60)),
-    SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
-    LIN_QU_REN_WU(RenWu.class, 0),
-
     MEI_RI_JIANG_LI(JiangLi.class, 2),
     HUO_YUE_DU(JiangLi.class, 0),
-
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, -1),
     HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
@@ -83,10 +76,15 @@ public enum Task {
     SHEN_QI(ShenQi.class, 1),
     SHEN_XIANG_SHENG_JI(ShenQi.class, 0, 0, 8 * 60 * 60),
 
+    YUE_KA(RenWu.class, 1),
+    LI_BAO(RenWu.class, 5, 5, Arrays.asList(30 * 60, 30 * 60, 60 * 60, 60 * 60)),
+    SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
+    LIN_QU_REN_WU(RenWu.class, 0),
+
     QI_BING_XUN_BAO_PREPARE(DuoBao.class, -1),
     QI_BING_XUN_BAO(DuoBao.class, -1),
-
-    QI_BING_DUO_BAO(DuoBao.class, -1);
+    QI_BING_DUO_BAO(DuoBao.class, -1),
+    QI_BING_LING_TU(DuoBao.class, 1);
 
     /**
      * vip user and task

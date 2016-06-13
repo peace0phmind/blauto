@@ -8,7 +8,7 @@ import java.awt.*;
  * Created by mind on 6/8/16.
  */
 @FunctionalInterface
-public interface TaskExecute {
+public interface ExecuteTask {
 
     void execute(Rectangle rectangle) throws FindFailed, InterruptedException;
 }

@@ -14,7 +14,7 @@ public class Devices {
 //    public static final Device DEVICE = new Device("efc444e7-aeb9-4ce4-8993-9e777ed033d9", "Samsung Galaxy S2 - 4.1.1 - API 16 - 480x800_1");
     public static final Device DEVICE_1 = new Device("4c7824f6-fcd4-4027-955d-c94b299c44ec", "device1");
     public static final Device DEVICE_2 = new Device("d11a2220-e8b9-480e-851e-b62e6953dadc", "device2");
-    public static final Device DEVICE_3 = new Device("868472e5-e924-4700-838d-f7a6aabc37c9", "device3");
+    public static final Device DEVICE_3 = new Device("8e415fa8-fabd-4429-9c62-4ee3a6b3e9b3", "device3");
     public static final Status status = new Status();
     public static final DengLu DENG_LU = new DengLu();
 }

@@ -2,7 +2,7 @@ package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
-import com.peace.auto.bl.TaskExecute;
+import com.peace.auto.bl.ExecuteTask;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -89,7 +89,7 @@ public class DuoBao implements IDo {
         return true;
     }
 
-    public void xunbao(Region region1, Region region2, boolean tuOnly, int roomNo, TaskExecute t) throws InterruptedException, FindFailed {
+    public void xunbao(Region region1, Region region2, boolean tuOnly, int roomNo, ExecuteTask t) throws InterruptedException, FindFailed {
         LocalTime now = LocalTime.now();
         if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
                 || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {

@@ -111,8 +111,15 @@ public class Status {
                 }
 
                 // 忽略活跃度和领取任务的任务计算
-                if (t == Task.HUO_YUE_DU || t == Task.LIN_QU_REN_WU) {
-                    return;
+                // 忽略市场和农场偷菜的任务计算
+                switch (t) {
+                    case HUO_YUE_DU:
+                    case LIN_QU_REN_WU:
+                    case SHI_CHANG:
+                    case NONG_CHANG_TOU_CAI:
+                        return;
+                    default:
+                        break;
                 }
 
                 int dayLimit = t.getDayLimit(u);
@@ -135,10 +142,6 @@ public class Status {
                     }
                 }
 
-                if (t == Task.SHI_CHANG || t == Task.NONG_CHANG_TOU_CAI) {
-                    return;
-                }
-
                 if (t == Task.SHENG_HUO) {
                     if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
                         executableTime = localDateTime.withHour(11).withMinute(30);
@@ -156,6 +159,10 @@ public class Status {
                     if (first.isPresent()) {
                         executableTime = first.get();
                     }
+                }
+
+                if (t == Task.QI_BING_LING_TU) {
+                    executableTime = dateTime.with(LocalTime.of(5, 0));
                 }
 
                 taskItems.add(new TaskItem(u, t, executableTime));
@@ -227,9 +234,13 @@ public class Status {
     }
 
     public void Done(Task task, LocalDateTime finishTime) {
+        Done(task, finishTime, currentUser);
+    }
+
+    public void Done(Task task, LocalDateTime finishTime, String username) {
         LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
 
-        List<DoLog> userLogs = getLogs(currentUser);
+        List<DoLog> userLogs = getLogs(username);
         userLogs.add(new DoLog(LocalDateTime.now(), finishTime, task));
         userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
         saveObjects();
