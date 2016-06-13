@@ -24,7 +24,7 @@ public class DengLu implements IDo {
 
     public DengLu() {
         try {
-            properties.load(getClass().getResourceAsStream("password.properties"));
+            properties.load(getClass().getClassLoader().getResourceAsStream("password.properties"));
         } catch (IOException e) {
             log.error("Load password error. {}", e);
         }
@@ -74,14 +74,23 @@ public class DengLu implements IDo {
         if (tianjiazhangzhao != null) {
 
             Match username = region.exists(baseDir + "username.png");
+            Match password = region.exists(baseDir + "password.png");
+
             if (username != null) {
-                username.type(properties.getProperty(String.format("%s_username", status.getCurrentUser())));
+                username.type(properties.getProperty(String.format("%s.username", status.getWantUser())));
                 Thread.sleep(3000L);
             }
 
-            Match password = region.exists(baseDir + "password.png");
             if (password != null) {
-                password.type(properties.getProperty(String.format("%s_password", status.getCurrentUser())));
+                password.click();
+                Thread.sleep(1000L);
+
+                Match cleanPassword = region.exists(baseDir + "cleanpassword.png");
+                if (cleanPassword != null) {
+                    cleanPassword.click();
+                }
+
+                password.type(properties.getProperty(String.format("%s.password", status.getWantUser())));
                 Thread.sleep(2000L);
             }
 

@@ -105,6 +105,7 @@ public class AndroidRobot implements IRobot {
         return _model;
     }
 
+
     public int type(String text) {
         _device.type(text);
         return 1;
