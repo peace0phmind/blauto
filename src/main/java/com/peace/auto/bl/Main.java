@@ -30,9 +30,9 @@ public class Main {
         log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
 //        Device.killAllBoxSVC();
-//        time();
+        time();
 
-        new XunBaoModeJob().execute(null);
+//        new XunBaoModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
 
 //        testMode();
