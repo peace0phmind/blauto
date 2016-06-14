@@ -1,6 +1,7 @@
 package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
+import com.jcabi.aspects.Loggable;
 import com.peace.auto.bl.Status;
 import com.peace.sikuli.monkey.AndroidRobot;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +32,13 @@ public class DengLu implements IDo {
         }
     }
 
+    @Loggable(Loggable.DEBUG)
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         status.setWantUser(userName);
         checkUser(region, status);
     }
 
+    @Loggable(Loggable.DEBUG)
     public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {
@@ -70,6 +73,7 @@ public class DengLu implements IDo {
         }
     }
 
+    @Loggable(Loggable.DEBUG)
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
         Match tianjiazhangzhao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 6);
         if (tianjiazhangzhao != null && tianjiazhangzhao.getScore() > 0.95f) {
@@ -131,15 +135,18 @@ public class DengLu implements IDo {
         return false;
     }
 
+    @Loggable(Loggable.DEBUG)
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         return Done(region, status, status.getNextLoginName());
     }
 
     @Override
+    @Loggable(Loggable.DEBUG)
     public boolean CanDo(Status status, String userName) {
         return true;
     }
 
+    @Loggable(Loggable.DEBUG)
     public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
         status.setWantUser(loginName);
         log.info("reboot to user: {}", loginName);
@@ -161,6 +168,7 @@ public class DengLu implements IDo {
         return false;
     }
 
+    @Loggable(Loggable.DEBUG)
     private boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
         status.setWantUser(loginName);
 
@@ -183,6 +191,7 @@ public class DengLu implements IDo {
         }
     }
 
+    @Loggable(Loggable.DEBUG)
     private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
         if (qqhaoyouwan != null) {
