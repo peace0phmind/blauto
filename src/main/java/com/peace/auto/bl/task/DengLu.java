@@ -41,7 +41,7 @@ public class DengLu implements IDo {
     }
 
     public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("{}", status.getCurrentUser());
+        log.debug("want user: {}", status.getWantUser());
 
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {
@@ -77,7 +77,7 @@ public class DengLu implements IDo {
     }
 
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("{}", status.getCurrentUser());
+        log.debug("want user: {}", status.getWantUser());
 
         Match tianjiazhangzhao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 6);
         if (tianjiazhangzhao != null && tianjiazhangzhao.getScore() > 0.95f) {
@@ -140,7 +140,7 @@ public class DengLu implements IDo {
     }
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("{}", status.getCurrentUser());
+        log.debug("want user: {}", status.getWantUser());
 
         return Done(region, status, status.getNextLoginName());
     }
@@ -196,7 +196,7 @@ public class DengLu implements IDo {
     }
 
     private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {
-        log.debug("{}", status.getCurrentUser());
+        log.debug("want user: {}", status.getWantUser());
 
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
         if (qqhaoyouwan != null) {
