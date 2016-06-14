@@ -128,6 +128,10 @@ public class NongChang implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
+        if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, userName) == Task.NONG_CHANG_TOU_CAI.getDayLimit(userName)) {
+            status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
+        }
+
         if (status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)) {
             return true;
         }
@@ -141,10 +145,6 @@ public class NongChang implements IDo {
 
         if (status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {
             return status.canDo(Task.NONG_CHANG_TOU_CAI_CHECK, userName);
-        }
-
-        if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, userName) == Task.NONG_CHANG_TOU_CAI.getDayLimit(userName)) {
-            status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
         }
 
         return false;

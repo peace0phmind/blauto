@@ -6,6 +6,7 @@ import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.HaiDiShiJie;
 import com.peace.auto.bl.task.LianMeng;
+import com.peace.auto.bl.task.NongChang;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Scheduler;
@@ -30,12 +31,12 @@ public class Main {
         log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
 //        Device.killAllBoxSVC();
-        time();
+//        time();
 
 //        new XunBaoModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
 
-//        testMode();
+        testMode();
     }
 
     private static void time() throws SchedulerException {
@@ -50,9 +51,10 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        DENG_LU.checkUser(region, status, "peace");
+        DENG_LU.checkUser(region, status, "peace0ph002");
 
-        new LianMeng().Done(region, status);
+        new NongChang().CanDo(status, "peace0ph002");
+        new NongChang().Done(region, status);
 
         region.close();
     }
