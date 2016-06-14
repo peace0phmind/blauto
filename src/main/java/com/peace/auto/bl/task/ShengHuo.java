@@ -60,8 +60,8 @@ public class ShengHuo implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         LocalTime now = LocalTime.now();
-        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(14, 0)))
-                || (now.isAfter(LocalTime.of(20, 30)) && now.isBefore(LocalTime.of(23, 0))))) {
+        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 59)))
+                || (now.isAfter(LocalTime.of(20, 30)) && now.isBefore(LocalTime.of(22, 59))))) {
             return false;
         }
 
