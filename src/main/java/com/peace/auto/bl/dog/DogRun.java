@@ -22,8 +22,7 @@ public class DogRun implements InterruptableJob {
 
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(DogRun.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0))
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).withRepeatCount(30)).build();
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0)).build();
 
         try {
             scheduler.scheduleJob(job, trigger);

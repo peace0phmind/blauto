@@ -61,6 +61,7 @@ public class YingHun implements IDo {
                             if (putongronglian != null) {
                                 for (int i = 0; i < 1000; i++) {
                                     putongronglian.click();
+                                    checkRongYao(region);
                                     Match xiuliancishu = region.exists(baseDir + "xiuliancishu.png", 0.5);
                                     if (xiuliancishu != null) {
                                         region.click(Common.QUE_DING);

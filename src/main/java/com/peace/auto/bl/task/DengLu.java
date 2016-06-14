@@ -177,9 +177,10 @@ public class DengLu implements IDo {
             }
 
             return chongxindenglu(region, status);
+        } else {
+            log.error("no bl");
+            throw new RuntimeException("no bl");
         }
-
-        return false;
     }
 
     private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {

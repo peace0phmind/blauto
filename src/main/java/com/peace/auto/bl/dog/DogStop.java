@@ -33,6 +33,10 @@ public class DogStop implements Job {
                 JobDetail jobDetail = first.get().getJobDetail();
                 log.info("Interrupt job: {}", jobDetail);
                 context.getScheduler().interrupt(jobDetail.getKey());
+
+                // set next job start
+                Trigger tr = TriggerBuilder.newTrigger().forJob(jobDetail).startAt(DateBuilder.tomorrowAt(0, 15, 0)).build();
+                scheduler.scheduleJob(tr);
             }
         } catch (SchedulerException e) {
             log.info("{}", e);

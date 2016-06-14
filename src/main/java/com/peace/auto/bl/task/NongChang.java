@@ -31,6 +31,10 @@ public class NongChang implements IDo {
             Match shouhuo = region.exists(baseDir + "shouhuo.png", 0.5);
             if (shouhuo != null) {
                 shouhuo.click();
+
+                if (status.todayFinishCount(Task.NONG_CHANG_ZHONG_ZHI) != 0) {
+                    status.Done(Task.NONG_CHANG_SHOU_CAI);
+                }
             }
 
             Thread.sleep(6000L);
@@ -126,6 +130,13 @@ public class NongChang implements IDo {
     public boolean CanDo(Status status, String userName) {
         if (status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)) {
             return true;
+        }
+
+        if (status.canDo(Task.NONG_CHANG_SHOU_CAI, userName)) {
+            LocalDateTime lastFinishTime = status.getLastFinishTime(Task.NONG_CHANG_ZHONG_ZHI, userName);
+            if (lastFinishTime != null) {
+                return lastFinishTime.isBefore(LocalDateTime.now());
+            }
         }
 
         if (status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {

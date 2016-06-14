@@ -150,6 +150,10 @@ public class Status {
                     }
                 }
 
+                if (t == Task.NONG_CHANG_SHOU_CAI) {
+                    executableTime = getLastFinishTime(Task.NONG_CHANG_ZHONG_ZHI, u);
+                }
+
                 if (t == CHU_ZHENG_YE_GUAI || t == LIAN_BING_CHANG || t == SHI_LIAN_DONG) {
                     Optional<LocalDateTime> first = Arrays.asList(CHU_ZHENG_YE_GUAI,
                             Task.LIAN_BING_CHANG,

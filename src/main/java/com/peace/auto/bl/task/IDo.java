@@ -30,7 +30,7 @@ public interface IDo {
     boolean CanDo(Status status, String userName);
 
     default boolean checkRongYao(Region region) throws FindFailed {
-        Match rongYao = region.exists(Common.RONG_YAO, 1);
+        Match rongYao = region.exists(Common.RONG_YAO, 0.5);
         if (rongYao != null) {
             clickInside(region, Common.CLOSE);
             return true;
