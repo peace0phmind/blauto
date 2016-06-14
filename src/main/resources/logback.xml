@@ -21,7 +21,7 @@
     </appender>
 
     <logger name="com.peace.auto.bl.task.DengLu" level="DEBUG"/>
-    
+
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="ASYNC_FILE"/>
