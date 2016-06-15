@@ -31,10 +31,6 @@ public class DuoBao implements IDo {
         return true;
     }
 
-    public boolean xunbao(Region region) throws InterruptedException, FindFailed {
-        return xunbao(region, true);
-    }
-
     public boolean duobao(Region region, Region region1, Region region2, int roomNo) throws FindFailed, InterruptedException {
         LocalTime now = LocalTime.now();
         if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
@@ -90,10 +86,12 @@ public class DuoBao implements IDo {
     }
 
     public void xunbao(Region region1, Region region2, boolean tuOnly, int roomNo, ExecuteTask t) throws InterruptedException, FindFailed {
-        LocalTime now = LocalTime.now();
-        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
-                || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
-            return;
+        if (!tuOnly) {
+            LocalTime now = LocalTime.now();
+            if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
+                    || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
+                return;
+            }
         }
 
         region1.click(Common.RI_CHANG);
@@ -191,99 +189,6 @@ public class DuoBao implements IDo {
             Thread.sleep(500L);
             region1.click(Common.CLOSE);
             region2.click(Common.CLOSE);
-        }
-    }
-
-    private boolean xunbao(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
-        LocalTime now = LocalTime.now();
-        if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
-                || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
-            return false;
-        }
-
-        region.click(Common.RI_CHANG);
-
-        Thread.sleep(3000L);
-
-        Match tiaozhan = region.exists(baseDir + "tiaozhan.png", 10);
-        if (tiaozhan != null) {
-            tiaozhan.click();
-
-            Thread.sleep(3000L);
-
-            Match duobao = region.exists(baseDir + "duobaoqibing.png", 20);
-            if (duobao != null) {
-                duobao.click();
-
-                region.click(baseDir + "duobaoqibingjingru.png");
-
-                // 领取宝图
-                Match baotu = region.exists(baseDir + "lingqubaotu.png");
-                if (baotu != null) {
-                    baotu.click();
-                    Thread.sleep(1000L);
-
-                    Match kaishi = region.exists(baseDir + "kaishixunbao.png");
-                    if (kaishi != null) {
-                        kaishi.click();
-                    }
-                }
-
-                Thread.sleep(2000L);
-
-                Match chazhao = region.exists(baseDir + "chazhaofangjian.png");
-                if (chazhao != null) {
-                    // 持续寻宝
-                    if (keepXunbao) {
-                        while (true) {
-                            jiaru(region, keepXunbao);
-                            Color color = getPixelColor(region, 656, 100);
-                            if (Math.abs(color.getRed() - 173) < 3
-                                    && Math.abs(color.getGreen() - 54) < 3
-                                    && Math.abs(color.getBlue() - 45) < 3) {
-                                break;
-                            }
-                        }
-                    } else {
-                        Match shurufangjian = region.exists(baseDir + "shurufangjianhaoma.png");
-                        if (shurufangjian != null) {
-                            shurufangjian.type("31");
-                        }
-                        chazhao.click();
-
-                        Thread.sleep(2000L);
-                        jiaru(region, keepXunbao);
-                    }
-                }
-
-                Thread.sleep(3000L);
-                region.click(Common.CLOSE);
-            }
-            Thread.sleep(500L);
-            region.click(Common.CLOSE);
-        }
-
-        return true;
-    }
-
-    private void jiaru(Region region, boolean keepXunbao) throws FindFailed, InterruptedException {
-        Match ru = region.exists(baseDir + "jiaru.png", 60);
-        if (ru != null) {
-            if (keepXunbao) {
-                Thread.sleep(5000L);
-                Match queding = region.exists(Common.QUE_DING);
-                if (queding != null && queding.getScore() > 0.9) {
-                    region.click(Common.QUE_DING);
-                    Thread.sleep(1000L);
-                }
-            }
-
-            Match firstJiaRu = getFirstJiaRu(region);
-
-            if (firstJiaRu != null) {
-                firstJiaRu.click();
-                Thread.sleep(1000L);
-            }
         }
     }
 

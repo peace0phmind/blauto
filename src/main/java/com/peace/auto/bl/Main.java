@@ -30,13 +30,13 @@ public class Main {
         Settings.OcrTextRead = true;
         log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
-//        Device.killAllBoxSVC();
+        Device.killAllBoxSVC();
 //        time();
 
-//        new XunBaoModeJob().execute(null);
+        new XunBaoModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
 
-        testMode();
+//        testMode();
     }
 
     private static void time() throws SchedulerException {
