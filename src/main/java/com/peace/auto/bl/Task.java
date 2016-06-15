@@ -40,7 +40,7 @@ public enum Task {
 
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 2 * 60 * 60),
-    TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
+    TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, -1, 4 * 60 * 60),
 
     SHI_CHANG(ShiChang.class, 3, -1),
     SHI_CHANG_CHECK(ShiChang.class, 0, -1, 2 * 60 * 60),
@@ -95,7 +95,7 @@ public enum Task {
                 SHI_CHANG, SHI_CHANG_CHECK,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG));
-        put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN, SHEN_SHOU_WU));
+        put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN, SHEN_SHOU_WU, TIAN_SHEN_LUAN_DOU));
         put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
     }};
     private int timesPerDay;

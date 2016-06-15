@@ -81,6 +81,7 @@ public class RenWu implements IDo {
         // 领取任务
         if (status.canDo(Task.LIN_QU_REN_WU)) {
             Match renwu = region.exists(baseDir + "renwu.png", 0.5);
+            log.info("{}", renwu);
             if (renwu != null) {
                 renwu.click();
 
@@ -109,7 +110,11 @@ public class RenWu implements IDo {
                 }
 
                 status.Done(Task.LIN_QU_REN_WU);
-                region.click(Common.CLOSE);
+                try {
+                    region.click(Common.CLOSE);
+                } catch (Exception e) {
+                    renwu.saveScreenCapture(".", "renwu");
+                }
             }
         }
 
