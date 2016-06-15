@@ -51,10 +51,11 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        DENG_LU.checkUser(region, status, "peace0ph002");
+        DENG_LU.checkUser(region, status, "peace");
 
-        new NongChang().CanDo(status, "peace0ph002");
-        new NongChang().Done(region, status);
+        if (new NongChang().CanDo(status, "peace")) {
+            new NongChang().Done(region, status);
+        }
 
         region.close();
     }

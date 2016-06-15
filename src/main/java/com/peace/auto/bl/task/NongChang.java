@@ -3,8 +3,6 @@ package com.peace.auto.bl.task;
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
-import com.peace.auto.bl.task.Common;
-import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
@@ -135,10 +133,16 @@ public class NongChang implements IDo {
             status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
         }
 
-        if (status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)) {
-            return true;
+        if (!status.canDo(Task.NONG_CHANG_ZHONG_ZHI, userName)
+                && !canShouCai(status, userName)
+                && !canTouCai(status, userName)) {
+            return false;
         }
 
+        return true;
+    }
+
+    private boolean canShouCai(Status status, String userName) {
         if (status.canDo(Task.NONG_CHANG_SHOU_CAI, userName)) {
             LocalDateTime lastFinishTime = status.getLastFinishTime(Task.NONG_CHANG_ZHONG_ZHI, userName);
             if (lastFinishTime != null) {
@@ -146,6 +150,10 @@ public class NongChang implements IDo {
             }
         }
 
+        return false;
+    }
+
+    private boolean canTouCai(Status status, String userName) {
         if (status.canDo(Task.NONG_CHANG_TOU_CAI, userName)) {
             return status.canDo(Task.NONG_CHANG_TOU_CAI_CHECK, userName);
         }

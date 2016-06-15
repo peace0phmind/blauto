@@ -119,7 +119,6 @@ public class RenWu implements IDo {
         }
 
         return true;
-
     }
 
     @Override
