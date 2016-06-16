@@ -1,11 +1,7 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
-import com.peace.auto.bl.job.AutoMode;
-import com.peace.auto.bl.job.DuoBaoModeJob;
-import com.peace.auto.bl.job.XunBaoModeJob;
-import com.peace.auto.bl.task.HaiDiShiJie;
-import com.peace.auto.bl.task.LianMeng;
+import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.task.NongChang;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -28,22 +24,22 @@ public class Main {
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
-        log.info("Begin auto mode, {}", ManagementFactory.getRuntimeMXBean().getName());
 
         Device.killAllBoxSVC();
-//        time();
+        time();
 
-        new XunBaoModeJob().execute(null);
+//        new XunBaoModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
 
 //        testMode();
+//        System.exit(0);
     }
 
     private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-//        OrderModeJob.init(defaultScheduler);
+        OrderModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-        AutoMode.init(defaultScheduler);
+//        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 

@@ -7,6 +7,7 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.time.LocalDateTime;
@@ -80,7 +81,7 @@ public class RenWu implements IDo {
 
         // 领取任务
         if (status.canDo(Task.LIN_QU_REN_WU)) {
-            Match renwu = region.exists(baseDir + "renwu.png", 0.5);
+            Match renwu = region.exists(new Pattern(baseDir + "renwu.png").similar(0.9f), 0.5);
             log.info("{}", renwu);
             if (renwu != null) {
                 renwu.click();
@@ -113,7 +114,9 @@ public class RenWu implements IDo {
                 try {
                     region.click(Common.CLOSE);
                 } catch (Exception e) {
+                    log.error("{}", e);
                     renwu.saveScreenCapture(".", "renwu");
+                    region.saveScreenCapture(".", "renwu-all");
                 }
             }
         }

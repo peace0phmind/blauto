@@ -82,9 +82,8 @@ public enum Task {
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
     LIN_QU_REN_WU(RenWu.class, 0),
 
-    QI_BING_XUN_BAO_PREPARE(DuoBao.class, -1),
-    QI_BING_XUN_BAO(DuoBao.class, -1),
-    QI_BING_DUO_BAO(DuoBao.class, -1),
+    QI_BING_XUN_BAO(DuoBao.class, -1, -1),
+    QI_BING_DUO_BAO(DuoBao.class, -1, -1),
     QI_BING_LING_TU(DuoBao.class, 1);
 
     /**
@@ -93,11 +92,13 @@ public enum Task {
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK,
-                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG));
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
+                QI_BING_XUN_BAO, QI_BING_DUO_BAO));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO));
         put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN, SHEN_SHOU_WU, TIAN_SHEN_LUAN_DOU));
         put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
     }};
+
     private int timesPerDay;
     private List<Integer> finishSeconds;
     private int masterTimesPerDay;

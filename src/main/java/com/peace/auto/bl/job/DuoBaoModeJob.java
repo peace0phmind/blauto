@@ -51,10 +51,14 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
+        AndroidScreen region1;
+        AndroidScreen region2;
+        AndroidScreen region3;
+
         try {
-            AndroidScreen region1 = DEVICE_1.getRegion();
-            AndroidScreen region2 = DEVICE_2.getRegion();
-            AndroidScreen region3 = DEVICE_3.getRegion();
+            region1 = DEVICE_1.getRegion();
+            region2 = DEVICE_2.getRegion();
+            region3 = DEVICE_3.getRegion();
 
             List<Region> regions = Arrays.asList(region1, region2, region3);
             log.info("{}", regions);
@@ -75,13 +79,13 @@ public class DuoBaoModeJob implements Job, TaskJob {
 
         } catch (Exception e) {
             log.error("{}", e);
-//            try {
-//                DEVICE_1.stopDevice();
-//                DEVICE_2.stopDevice();
-//                DEVICE_3.stopDevice();
-//            } catch (Exception e1) {
-//                log.error("{}", e1);
-//            }
+            try {
+                DEVICE_1.stopDevice();
+                DEVICE_2.stopDevice();
+                DEVICE_3.stopDevice();
+            } catch (Exception e1) {
+                log.error("{}", e1);
+            }
         }
     }
 }

@@ -62,8 +62,6 @@ public class XunBaoModeJob implements Job, TaskJob {
             DENG_LU.checkUser(region2, status, "peace0ph001");
 
             status.setCurrentUser(status.peaceName());
-            status.Done(Task.QI_BING_XUN_BAO_PREPARE);
-
         } catch (Exception e) {
             log.error("{}", e);
 

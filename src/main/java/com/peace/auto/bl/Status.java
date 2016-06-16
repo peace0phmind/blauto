@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -25,7 +26,7 @@ import static com.peace.auto.bl.Task.*;
 public class Status {
 
     private static final Random ROOM_NO_RANDOM = new Random();
-    private static final String LOG_FILE = "./log_map.bin";
+
     private static final List<String> USERS = Arrays.asList(
             "peace",
             "peace0ph001",
@@ -37,18 +38,20 @@ public class Status {
             "peace0ph003"
     );
 
-//    private static final List<LocalTime> XUN_BAO_PREPARE = Arrays.asList(LocalTime.of(11, 25), LocalTime.of(13, 50), LocalTime.of(21, 25), LocalTime.of(23, 50));
-//    private static final List<LocalTime> QI_BING_XUN_BAO = Arrays.asList(LocalTime.of(11, 30), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
-
-    private static final List<LocalTime> XUN_BAO_PREPARE_TIME = Arrays.asList(LocalTime.of(13, 43), LocalTime.of(21, 20), LocalTime.of(23, 43));
     private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 50, 0), LocalTime.of(21, 30), LocalTime.of(23, 50, 0));
 
     private String currentUser;
     private String wantUser;
-    private Map<String, List<DoLog>> logMap = new HashMap<>();
+
+    private Connection conn;
 
     public Status() {
-        loadObjects();
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/blauto", "blauto", "blauto");
+        } catch (Exception e) {
+            log.error("{}", e);
+        }
     }
 
     public static int getUserCount() {
@@ -152,6 +155,9 @@ public class Status {
 
                 if (t == Task.NONG_CHANG_SHOU_CAI) {
                     executableTime = getLastFinishTime(Task.NONG_CHANG_ZHONG_ZHI, u);
+                    if (executableTime == null) {
+                        return;
+                    }
                 }
 
                 if (t == CHU_ZHENG_YE_GUAI || t == LIAN_BING_CHANG || t == SHI_LIAN_DONG) {
@@ -173,32 +179,16 @@ public class Status {
                     }
                 }
 
+                if (executableTime == null) {
+                    log.info("executableTime is null: {}, {}", u, t);
+                }
                 taskItems.add(new TaskItem(u, t, executableTime));
             });
-
-            if (peaceName().equals(u)) {
-//                long finishCount = todayFinishCount(QI_BING_XUN_BAO_PREPARE, u);
-//                if (finishCount < 3) {
-//                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO_PREPARE, dateTime.with(XUN_BAO_PREPARE_TIME.get((int) finishCount))));
-//                }
-
-//                long finishCount = todayFinishCount(QI_BING_XUN_BAO, u);
-//                if (finishCount < 3) {
-//                    taskItems.add(new TaskItem(u, QI_BING_XUN_BAO, dateTime.with(QI_BING_XUN_BAO_TIME.get((int) finishCount))));
-//                }
-            }
         });
 
-        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) -> {
-            if (x.getTask() == QI_BING_XUN_BAO_PREPARE || x.getTask() == QI_BING_XUN_BAO) {
-                return x.getExecutableTime().compareTo(dateTime.plusMinutes(20));
-            }
-
-            if (y.getTask() == QI_BING_XUN_BAO_PREPARE || y.getTask() == QI_BING_XUN_BAO) {
-                return y.getExecutableTime().compareTo(dateTime.plusMinutes(20)) * -1;
-            }
-            return x.getExecutableTime().compareTo(y.getExecutableTime());
-        }).collect(Collectors.toList());
+        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) ->
+                x.getExecutableTime().compareTo(y.getExecutableTime())
+        ).collect(Collectors.toList());
         if (sortedTasks == null) {
             return null;
         }
@@ -245,13 +235,19 @@ public class Status {
         Done(task, finishTime, currentUser);
     }
 
-    public void Done(Task task, LocalDateTime finishTime, String username) {
-        LocalDateTime threeDaysAgo = LocalDateTime.now().minusDays(3);
+    public void Done(Task task, LocalDateTime finishTime, String userName) {
+        String insertSql = "INSERT INTO do_log(user_name, task_type, execute_time, finish_time) VALUES(?, ?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+            int i = 1;
+            stmt.setString(i++, userName);
+            stmt.setString(i++, task.toString());
+            stmt.setTimestamp(i++, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setTimestamp(i++, Timestamp.valueOf(finishTime));
 
-        List<DoLog> userLogs = getLogs(username);
-        userLogs.add(new DoLog(LocalDateTime.now(), finishTime, task));
-        userLogs.removeIf(x -> x.getExecuteTime().isBefore(threeDaysAgo));
-        saveObjects();
+            stmt.execute();
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
     }
 
     public LocalDateTime getLastFinishTime(Task task) {
@@ -259,12 +255,23 @@ public class Status {
     }
 
     public LocalDateTime getLastFinishTime(Task task, String userName) {
-        Optional<DoLog> lastFinishTime = getLogs(userName).stream().filter(x -> x.getTask() == task).sorted((x, y) -> y.getFinishTime().compareTo(x.getFinishTime())).findFirst();
-        if (lastFinishTime.isPresent()) {
-            return lastFinishTime.get().getFinishTime();
-        } else {
-            return null;
+        String sql = "SELECT MAX(finish_time) FROM do_log WHERE user_name = ? AND task_type = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            int i = 1;
+            stmt.setString(i++, userName);
+            stmt.setString(i++, task.toString());
+
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getTimestamp(1).toLocalDateTime();
+                }
+            }
+        } catch (SQLException e) {
+            log.error("{}", e);
         }
+
+        return null;
     }
 
     public long todayFinishCount(Task task) {
@@ -272,8 +279,22 @@ public class Status {
     }
 
     public int todayFinishCount(Task task, String userName) {
-        LocalDateTime today = LocalDate.now().atStartOfDay();
-        return (int) getLogs(userName).stream().filter(x -> x.getTask() == task && x.getExecuteTime().isAfter(today)).count();
+        String sql = "SELECT COUNT(1) FROM do_log WHERE user_name = ? AND task_type = ? AND execute_time > ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            int i = 1;
+            stmt.setString(i++, userName);
+            stmt.setString(i++, task.toString());
+            stmt.setTimestamp(i++, Timestamp.valueOf(LocalDate.now().atStartOfDay()));
+
+            ResultSet resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
+
+        return 0;
     }
 
     public boolean canDo(Task task) {
@@ -304,58 +325,4 @@ public class Status {
 
         return true;
     }
-
-    private List<DoLog> getLogs(String userName) {
-        List<DoLog> doLogs = logMap.get(userName);
-        if (doLogs == null) {
-            doLogs = new ArrayList<>();
-            logMap.put(userName, doLogs);
-        }
-
-        return doLogs;
-    }
-
-    private void saveObjects() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(LOG_FILE))) {
-            oos.writeObject(logMap);
-            oos.flush();
-        } catch (IOException e) {
-            log.error("Save Objects exception: {}", e);
-        }
-    }
-
-    private void loadObjects() {
-        if (Files.exists(Paths.get(LOG_FILE))) {
-            try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(LOG_FILE))) {
-                logMap = (Map<String, List<DoLog>>) ois.readObject();
-            } catch (FileNotFoundException e) {
-                log.error("{}", e);
-            } catch (IOException e) {
-                log.error("{}", e);
-            } catch (ClassNotFoundException e) {
-                log.error("{}", e);
-            }
-        }
-    }
 }
-
-@Data
-@AllArgsConstructor
-class DoLog implements Serializable {
-
-    /**
-     * 执行时间
-     */
-    private LocalDateTime executeTime;
-
-    /**
-     * 完成时间
-     */
-    private LocalDateTime finishTime;
-
-    /**
-     * 任务类型
-     */
-    private Task task;
-}
-

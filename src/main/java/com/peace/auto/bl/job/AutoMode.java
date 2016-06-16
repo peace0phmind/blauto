@@ -49,10 +49,6 @@ public class AutoMode implements Job {
                         lingTu("peace0ph008", "peace0ph007");
                         lingTu("peace0ph003", "peace0ph002");
                         break;
-                    case QI_BING_XUN_BAO_PREPARE:
-                        log.info("Do xun bao prepare, {}", ti);
-                        new XunBaoModeJob().prepare();
-                        break;
                     case QI_BING_XUN_BAO:
                         log.info("Do xun bao, {}", ti);
                         new XunBaoModeJob().execute();
