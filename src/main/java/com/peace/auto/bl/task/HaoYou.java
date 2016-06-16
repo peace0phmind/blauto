@@ -42,19 +42,12 @@ public class HaoYou implements IDo {
 
                 Thread.sleep(1000L);
 
-                Match quanbulingqu = region.exists(baseDir + "quanbulingqu.png");
-                if (quanbulingqu != null) {
-                    quanbulingqu.click();
-                    Thread.sleep(500L);
-                }
+                quanBuLingQu(region);
 
                 region.click(baseDir + "guyong.png");
                 Thread.sleep(1000L);
-                quanbulingqu = region.exists(baseDir + "quanbulingqu.png");
-                if (quanbulingqu != null) {
-                    quanbulingqu.click();
-                    Thread.sleep(500L);
-                }
+
+                quanBuLingQu(region);
 
                 region.click(baseDir + "hujiao.png");
                 Thread.sleep(1000L);
@@ -65,6 +58,11 @@ public class HaoYou implements IDo {
 
                     allqingtashangxian.stream().sorted((a, b) -> b.y - a.y).forEach(x -> {
                         x.click();
+                        try {
+                            Thread.sleep(500L);
+                        } catch (InterruptedException e) {
+                            log.error("{}", e);
+                        }
                     });
                 }
 
@@ -85,5 +83,17 @@ public class HaoYou implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         return status.canDo(Task.HAO_YOU, userName);
+    }
+
+    private void quanBuLingQu(Region region) throws FindFailed, InterruptedException {
+        Match quanbulingqu = region.exists(baseDir + "quanbulingqu.png");
+        if (quanbulingqu != null) {
+            quanbulingqu.click();
+            Match shangxian = region.exists(baseDir + "aixinshangxian.png", 1);
+            if (shangxian != null) {
+                Thread.sleep(1000L);
+                region.click(Common.QUE_DING);
+            }
+        }
     }
 }

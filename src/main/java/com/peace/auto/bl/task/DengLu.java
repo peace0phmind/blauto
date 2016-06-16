@@ -251,6 +251,7 @@ public class DengLu implements IDo {
                         Match qq = firstqq.get();
                         log.info("登录: {}", getWord(qq));
                         qq.click();
+                        // TODO
 
                         // 进入部落
                         return jinrubuluo(region, status);

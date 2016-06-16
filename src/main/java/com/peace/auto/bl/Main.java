@@ -1,7 +1,10 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
+import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
+import com.peace.auto.bl.job.XunBaoModeJob;
+import com.peace.auto.bl.task.ChuZheng;
 import com.peace.auto.bl.task.NongChang;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -25,13 +28,13 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-        Device.killAllBoxSVC();
-        time();
+//        Device.killAllBoxSVC();
+//        time();
 
-//        new XunBaoModeJob().execute(null);
 //        new DuoBaoModeJob().execute();
+//        new XunBaoModeJob().execute(null);
 
-//        testMode();
+        testMode();
 //        System.exit(0);
     }
 
@@ -47,10 +50,10 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        DENG_LU.checkUser(region, status, "peace");
+        DENG_LU.checkUser(region, status, "peace0ph001");
 
-        if (new NongChang().CanDo(status, "peace")) {
-            new NongChang().Done(region, status);
+        if (new ChuZheng().CanDo(status, "peace0ph001")) {
+            new ChuZheng().Done(region, status);
         }
 
         region.close();

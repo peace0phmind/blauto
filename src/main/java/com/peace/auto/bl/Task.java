@@ -22,7 +22,7 @@ public enum Task {
     SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
 
-    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
+    LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
     LIE_CHANG_DA_GUAI(LieChang.class, 1, -1, 24 * 60 * 60),
 
     SHOU_GU_JIA_GONG(ShouGuFang.class, 4),

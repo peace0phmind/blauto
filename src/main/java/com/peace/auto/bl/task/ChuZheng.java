@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -91,12 +92,6 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                     chuzhenganniu.click();
 
-                    Match huolibuzu = region.exists(baseDir + "huolibuzu.png");
-                    if (huolibuzu != null) {
-                        region.click(Common.QUE_DING);
-                        status.Done(Task.CHU_ZHENG_YE_GUAI);
-                    }
-
                     Match zidongbubing = region.exists(baseDir + "zidongbubing.png");
                     if (zidongbubing != null) {
                         zidongbubing.click();
@@ -113,7 +108,15 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                         region.click(baseDir + "quedingchuzheng.png");
 
-                        status.Done(Task.CHU_ZHENG_YE_GUAI);
+                        Match huolibuzu = region.exists(baseDir + "huolibuzu.png");
+                        log.info("{}", huolibuzu);
+                        if (huolibuzu != null) {
+                            Thread.sleep(1000L);
+                            region.click(Common.QUE_DING);
+                            status.Done(Task.CHU_ZHENG_YE_GUAI, LocalDateTime.now());
+                        } else {
+                            status.Done(Task.CHU_ZHENG_YE_GUAI);
+                        }
                     }
 
                     Thread.sleep(1000L);

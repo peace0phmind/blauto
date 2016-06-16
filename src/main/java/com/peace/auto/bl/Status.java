@@ -2,13 +2,9 @@ package com.peace.auto.bl;
 
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.task.IDo;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -49,6 +45,7 @@ public class Status {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/blauto", "blauto", "blauto");
+            log.info("Connection is auto commit: {}", conn.getAutoCommit());
         } catch (Exception e) {
             log.error("{}", e);
         }
@@ -186,14 +183,9 @@ public class Status {
             });
         });
 
-        List<TaskItem> sortedTasks = taskItems.stream().sorted((x, y) ->
+        return taskItems.stream().sorted((x, y) ->
                 x.getExecutableTime().compareTo(y.getExecutableTime())
         ).collect(Collectors.toList());
-        if (sortedTasks == null) {
-            return null;
-        }
-
-        return sortedTasks;
     }
 
     public List<IDo> getTasks(String userName) {
@@ -264,7 +256,10 @@ public class Status {
 
             try (ResultSet resultSet = stmt.executeQuery()) {
                 if (resultSet.next()) {
-                    return resultSet.getTimestamp(1).toLocalDateTime();
+                    Timestamp timestamp = resultSet.getTimestamp(1);
+                    if (timestamp != null) {
+                        return timestamp.toLocalDateTime();
+                    }
                 }
             }
         } catch (SQLException e) {
