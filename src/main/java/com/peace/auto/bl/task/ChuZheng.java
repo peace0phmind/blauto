@@ -108,7 +108,7 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                         region.click(baseDir + "quedingchuzheng.png");
 
-                        Match huolibuzu = region.exists(baseDir + "huolibuzu.png");
+                        Match huolibuzu = region.exists(new Pattern(baseDir + "huolibuzu.png").similar(0.9f));
                         log.info("{}", huolibuzu);
                         if (huolibuzu != null) {
                             Thread.sleep(1000L);
