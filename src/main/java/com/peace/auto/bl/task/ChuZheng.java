@@ -112,8 +112,8 @@ public class ChuZheng extends ZhanBao implements IDo {
                         log.info("{}", huolibuzu);
                         if (huolibuzu != null) {
                             Thread.sleep(1000L);
-                            region.click(Common.QUE_DING);
                             status.Done(Task.CHU_ZHENG_YE_GUAI, LocalDateTime.now());
+                            region.click(Common.QUE_DING);
                         } else {
                             status.Done(Task.CHU_ZHENG_YE_GUAI);
                         }
