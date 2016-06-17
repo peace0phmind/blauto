@@ -64,20 +64,22 @@ public class Building implements IDo {
         Match inbuluo = region.exists(baseDir + "buluodating.png", 10);
 
         if (inbuluo != null) {
-            // 购买队列 - 小号没人力了
-            Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
-            if (kaiqixinduilie != null) {
-                Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
-                while (all.hasNext()) {
-                    kaiqixinduilie = all.next();
+            if (status.canDo(Task.BUILDING_DUI_LIE)) {
+                Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
+                if (kaiqixinduilie != null) {
+                    Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
+                    while (all.hasNext()) {
+                        kaiqixinduilie = all.next();
 
-                    if (status.isPeace() || kaiqixinduilie.getX() < 400) {
-                        kaiqixinduilie.click();
+                        if (status.isPeace() || kaiqixinduilie.getX() < 400) {
+                            kaiqixinduilie.click();
+                            status.Done(Task.BUILDING_DUI_LIE);
 
-                        Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
-                        if (goumaiduilie != null) {
-                            region.click(Common.QUE_DING);
-                            Thread.sleep(3000L);
+                            Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                            if (goumaiduilie != null) {
+                                region.click(Common.QUE_DING);
+                                Thread.sleep(3000L);
+                            }
                         }
                     }
                 }

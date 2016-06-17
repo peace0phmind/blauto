@@ -117,6 +117,7 @@ public class Status {
                     case LIN_QU_REN_WU:
                     case SHI_CHANG:
                     case NONG_CHANG_TOU_CAI:
+                    case BUILDING_DUI_LIE:
                         return;
                     default:
                         break;
