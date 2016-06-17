@@ -48,6 +48,7 @@ public class DengLu implements IDo {
             touxiang.click();
 
             Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png", 6);
+            log.info("{}", qiuzhangxinxi);
             if (qiuzhangxinxi == null) {
                 touxiang.click();
                 qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png", 6);
@@ -80,10 +81,13 @@ public class DengLu implements IDo {
         log.debug("want user: {}", status.getWantUser());
 
         Match tianjiazhangzhao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 6);
+        log.debug("{}", tianjiazhangzhao);
         if (tianjiazhangzhao != null && tianjiazhangzhao.getScore() > 0.95f) {
 
             Match username = region.exists(baseDir + "username.png");
             Match password = region.exists(baseDir + "password.png");
+            log.debug("{}", username);
+            log.debug("{}", password);
 
             if (username != null) {
                 username.type(properties.getProperty(String.format("%s.username", status.getWantUser())));
@@ -157,10 +161,12 @@ public class DengLu implements IDo {
         region.click(Common.MENU);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
+        log.debug("{}", peizhi);
         if (peizhi != null) {
             peizhi.click();
 
             Match tuichudenglu = region.exists(baseDir + "tuichudenglu.png");
+            log.debug("{}", tuichudenglu);
             if (tuichudenglu != null) {
                 tuichudenglu.click();
 
@@ -177,6 +183,7 @@ public class DengLu implements IDo {
         status.setWantUser(loginName);
 
         Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);
+        log.debug("{}", bl);
         if (bl != null) {
             bl.click();
 
@@ -184,6 +191,7 @@ public class DengLu implements IDo {
 
             Match close = region.exists(Common.CLOSE);
             while (close != null) {
+                log.debug("{}", close);
                 close.click();
                 close = region.exists(Common.CLOSE);
             }
@@ -199,24 +207,28 @@ public class DengLu implements IDo {
         log.debug("want user: {}", status.getWantUser());
 
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
+        log.debug("{}", qqhaoyouwan);
         if (qqhaoyouwan != null) {
             qqhaoyouwan.click();
 
             Thread.sleep(3000L);
 
             qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 3);
+            log.debug("{}", qqhaoyouwan);
             if (qqhaoyouwan != null) {
                 qqhaoyouwan.click();
             }
 
             // 如果默认登录,则跳转到切换账号
             Match tianjiazhanghao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 10);
+            log.debug("{}", tianjiazhanghao);
             if (tianjiazhanghao != null) {
                 region.click(baseDir + "qqdenglu.png");
                 Thread.sleep(1000L);
             }
 
             Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f), 10);
+            log.debug("{}", zhengzaidenglu);
             if (zhengzaidenglu != null) {
                 doRobot(region, (robot) -> {
                     log.info("use robot press back");
@@ -227,12 +239,14 @@ public class DengLu implements IDo {
             String loginName = status.getWantUser();
 
             Match qiehuanzhanghao = region.exists(baseDir + "qiehuanzhanghao.png", 10);
+            log.debug("{}", qiehuanzhanghao);
             if (qiehuanzhanghao != null) {
                 qiehuanzhanghao.click();
 
                 Thread.sleep(5000L);
                 // 在qq中切换账号
                 Match inqiehuanzhanghao = region.exists(baseDir + "inqiehuanzhanghao.png", 20);
+                log.debug("{}", inqiehuanzhanghao);
                 if (inqiehuanzhanghao != null) {
                     Thread.sleep(3000L);
 

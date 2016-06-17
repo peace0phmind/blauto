@@ -7,6 +7,7 @@ import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,6 +49,11 @@ public class AutoMode implements Job {
                         lingTu("peace0ph006", "peace0ph004");
                         lingTu("peace0ph008", "peace0ph007");
                         lingTu("peace0ph003", "peace0ph002");
+                        try {
+                            DEVICE_2.stopDevice();
+                        } catch (Exception e) {
+                            log.error("{}", e);
+                        }
                         break;
                     case QI_BING_XUN_BAO:
                         log.info("Do xun bao, {}", ti);
