@@ -24,13 +24,19 @@ public class ShouGuFang implements IDo {
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         // 进入兽骨坊
-        region.doubleClick(baseDir + "shougufang.png");
+        Match shougufang = region.exists(baseDir + "shougufang.png", 10);
+        log.debug("{}", shougufang);
+        if (shougufang != null) {
+            shougufang.doubleClick();
+        }
+
         Match inshougufang = region.exists(baseDir + "inshougufang.png", 10);
         if (inshougufang == null) {
 
-            Match shougufang = region.exists(baseDir + "shougufang.png", 0.5);
+            shougufang = region.exists(baseDir + "shougufang.png", 0.5);
             if (shougufang != null) {
-                region.doubleClick(baseDir + "shougufang.png");
+//                region.doubleClick(baseDir + "shougufang.png");
+                shougufang.doubleClick();
                 inshougufang = region.exists(baseDir + "inshougufang.png", 10);
                 if (inshougufang == null) {
                     return false;
