@@ -29,7 +29,7 @@ public enum Task {
     SHOU_GU_SHOU_LIE(ShouGuFang.class, 0, 0, 8 * 60 * 60),
 
     XUN_BAO(XunBao.class, 1, -1),
-    BUILDING(Building.class, 0, 0, 30 * 60),
+    BUILDING(Building.class, -1, 0, 30 * 60),
     BUILDING_DUI_LIE(Building.class, -1, 0),
 
     NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 8 * 60 * 60),
@@ -94,9 +94,9 @@ public enum Task {
         put("peace", Arrays.asList(JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
-                QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE));
-        put("peace0ph003", Arrays.asList(LIE_CHANG_DA_GUAI, RONG_LIAN, SHEN_SHOU_WU, TIAN_SHEN_LUAN_DOU));
+                QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
+        put("peace0ph003", Arrays.asList(RONG_LIAN, SHEN_SHOU_WU));
         put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
     }};
 
