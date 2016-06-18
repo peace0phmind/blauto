@@ -21,35 +21,39 @@ public class ShengYu implements IDo {
     String baseDir = Common.BASE_DIR + "shengyu/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        region.doubleClick(baseDir + "shengyu.png");
+        Match shengyu = region.exists(baseDir + "shengyu.png", 10);
+        log.debug("{}", shengyu);
+        if (shengyu != null) {
+            shengyu.click();
 
-        Match inshengyu = region.exists(baseDir + "inshengyu.png", 10);
-        if (inshengyu != null) {
-            List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
-            List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+            Match inshengyu = region.exists(baseDir + "inshengyu.png", 10);
+            if (inshengyu != null) {
+                List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
+                List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
 
-            shengyuLoop:
-            for (Match shengji : sorted) {
-                if (!isButtonEnable(shengji)) {
-                    continue;
+                shengyuLoop:
+                for (Match shengji : sorted) {
+                    if (!isButtonEnable(shengji)) {
+                        continue;
+                    }
+
+                    do {
+                        shengji.click();
+
+                        Match end = region.exists(baseDir + "shengyuend.png", 0.5);
+                        if (end != null) {
+                            region.click(Common.QUE_DING);
+                            break shengyuLoop;
+                        }
+                    } while (isButtonEnable(shengji));
+
                 }
 
-                do {
-                    shengji.click();
-
-                    Match end = region.exists(baseDir + "shengyuend.png", 0.5);
-                    if (end != null) {
-                        region.click(Common.QUE_DING);
-                        break shengyuLoop;
-                    }
-                } while (isButtonEnable(shengji));
-
+                status.Done(Task.SHENG_YU);
             }
 
-            status.Done(Task.SHENG_YU);
+            region.click(Common.CLOSE);
         }
-
-        region.click(Common.CLOSE);
 
         return true;
     }

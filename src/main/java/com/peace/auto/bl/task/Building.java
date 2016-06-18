@@ -57,68 +57,72 @@ public class Building implements IDo {
     }
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        region.doubleClick(baseDir + "building.png");
+        Match building = region.exists(baseDir + "building.png", 10);
+        log.debug("{}", building);
+        if (building != null) {
+            building.click();
 
-        Thread.sleep(1000L);
+            Thread.sleep(1000L);
 
-        Match inbuluo = region.exists(baseDir + "buluodating.png", 10);
+            Match inbuluo = region.exists(baseDir + "buluodating.png", 10);
 
-        if (inbuluo != null) {
-            if (status.canDo(Task.BUILDING_DUI_LIE)) {
-                Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
-                if (kaiqixinduilie != null) {
-                    Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
-                    while (all.hasNext()) {
-                        kaiqixinduilie = all.next();
+            if (inbuluo != null) {
+                if (status.canDo(Task.BUILDING_DUI_LIE)) {
+                    Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
+                    if (kaiqixinduilie != null) {
+                        Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
+                        while (all.hasNext()) {
+                            kaiqixinduilie = all.next();
 
-                        if (status.isPeace() || kaiqixinduilie.getX() < 400) {
-                            kaiqixinduilie.click();
-                            status.Done(Task.BUILDING_DUI_LIE);
+                            if (status.isPeace() || kaiqixinduilie.getX() < 400) {
+                                kaiqixinduilie.click();
+                                status.Done(Task.BUILDING_DUI_LIE);
 
-                            Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
-                            if (goumaiduilie != null) {
-                                region.click(Common.QUE_DING);
-                                Thread.sleep(3000L);
+                                Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                                if (goumaiduilie != null) {
+                                    region.click(Common.QUE_DING);
+                                    Thread.sleep(3000L);
+                                }
                             }
                         }
                     }
                 }
-            }
 
-            // 升级
-            Match inbuluodating = region.exists(baseDir + "inbuluodating.png", 3);
-            if (inbuluodating != null) {
-                List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
+                // 升级
+                Match inbuluodating = region.exists(baseDir + "inbuluodating.png", 3);
+                if (inbuluodating != null) {
+                    List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
 
-                List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
-                List<Integer> ids = status.isPeace() ? peaceBuildingIds : buildingIds;
-                buildLoop:
-                for (Integer bid : ids) {
-                    Match match = sorted.get(bid - 1);
+                    List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+                    List<Integer> ids = status.isPeace() ? peaceBuildingIds : buildingIds;
+                    buildLoop:
+                    for (Integer bid : ids) {
+                        Match match = sorted.get(bid - 1);
 
-                    if (!isButtonEnable(match)) {
-                        continue;
+                        if (!isButtonEnable(match)) {
+                            continue;
+                        }
+
+                        do {
+                            match.click();
+
+                            // 检查荣耀
+                            checkRongYao(region);
+
+                            Match end = region.exists(baseDir + "end.png", 0.5);
+                            if (end != null) {
+                                region.click(Common.QUE_DING);
+                                break buildLoop;
+                            }
+                        } while (isButtonEnable(match));
                     }
 
-                    do {
-                        match.click();
-
-                        // 检查荣耀
-                        checkRongYao(region);
-
-                        Match end = region.exists(baseDir + "end.png", 0.5);
-                        if (end != null) {
-                            region.click(Common.QUE_DING);
-                            break buildLoop;
-                        }
-                    } while (isButtonEnable(match));
+                    status.Done(Task.BUILDING, getBuildingFinishTime(region));
                 }
-
-                status.Done(Task.BUILDING, getBuildingFinishTime(region));
             }
-        }
 
-        region.click(Common.CLOSE);
+            region.click(Common.CLOSE);
+        }
 
         return true;
     }
