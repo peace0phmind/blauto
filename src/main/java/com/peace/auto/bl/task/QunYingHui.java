@@ -63,15 +63,12 @@ public class QunYingHui implements IDo {
                             }
 
                             Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
+                            log.info("lingqujiagli: {}", lingqujiangli);
                             if (lingqujiangli != null && lingqujiangli.getScore() > 0.8f) {
                                 Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
                                 Lists.newArrayList(all).forEach(x -> x.click());
                                 Thread.sleep(3000L);
-                            } else {
-                                log.info("lingqujiagli: {}", lingqujiangli);
                             }
-
-                            Thread.sleep(1000L);
                         }
 
                         status.Done(Task.QUN_YING_HUI_LING_JIANG);
