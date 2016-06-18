@@ -63,7 +63,7 @@ public class QunYingHui implements IDo {
                             }
 
                             Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
-                            log.info("lingqujiagli: {}", lingqujiangli);
+                            log.info("lingqujiagli: {}, {}", lingqujiangli, isButtonEnable(lingqujiangli));
                             if (lingqujiangli != null && lingqujiangli.getScore() > 0.8f) {
                                 Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
                                 Lists.newArrayList(all).forEach(x -> x.click());
