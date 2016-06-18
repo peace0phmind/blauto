@@ -26,8 +26,9 @@ public class TianSheng implements IDo {
     Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        Match tiansheng = region.exists(baseDir + "tiansheng.png", 3);
-        if (tiansheng != null && tiansheng.getScore() > 0.9) {
+        Match tiansheng = region.exists(new Pattern(baseDir + "tiansheng.png").similar(0.9f), 10);
+        log.info("{}", tiansheng);
+        if (tiansheng != null) {
             tiansheng.click();
             Thread.sleep(100L);
 
@@ -67,6 +68,7 @@ public class TianSheng implements IDo {
                 }
             }
 
+            // TODO 单独测试一下天神乱斗的情况,看是否有close不掉的问题,注意——单独
             if (status.canDo(Task.TIAN_SHEN_LUAN_DOU)) {
                 // 天神大乱斗
                 Match tianshendaluandou = region.exists(baseDir + "tianshendaluandou.png");
