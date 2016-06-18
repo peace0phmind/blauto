@@ -73,7 +73,12 @@ public class OrderModeJob implements Job, TaskJob {
                 if (region != null) {
                     String currentUser = status.getCurrentUser();
                     if (currentUser == null || currentUser.trim().equals("")) {
-                        currentUser = "error";
+                        String wantUser = status.getWantUser();
+                        if (wantUser == null || wantUser.trim().equals("")) {
+                            currentUser = "error";
+                        } else {
+                            currentUser = wantUser + "-w";
+                        }
                     }
                     region.saveScreenCapture(".", currentUser);
                 }

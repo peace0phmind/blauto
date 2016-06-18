@@ -242,7 +242,6 @@ public class DengLu implements IDo {
             log.debug("{}", qiehuanzhanghao);
             if (qiehuanzhanghao != null) {
                 qiehuanzhanghao.click();
-
                 Thread.sleep(5000L);
                 // 在qq中切换账号
                 Match inqiehuanzhanghao = region.exists(baseDir + "inqiehuanzhanghao.png", 20);
@@ -265,7 +264,24 @@ public class DengLu implements IDo {
                         Match qq = firstqq.get();
                         log.info("登录: {}", getWord(qq));
                         qq.click();
-                        // TODO
+
+                        Match wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png");
+                        log.debug("{}", wangluoyichang);
+                        if (wangluoyichang != null) {
+                            region.click(baseDir + "wangluoyichangqueding.png");
+                            Thread.sleep(3000L);
+
+                            log.info("Login again: {}", getWord(qq));
+                            qq.click();
+                        }
+
+                        wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png");
+                        log.debug("{}", wangluoyichang);
+                        if (wangluoyichang != null) {
+                            region.click(baseDir + "qqdenglu.png");
+                            Thread.sleep(1000L);
+                            reLoginForError(region, status);
+                        }
 
                         // 进入部落
                         return jinrubuluo(region, status);
@@ -278,10 +294,36 @@ public class DengLu implements IDo {
                         // 进入部落
                         return jinrubuluo(region, status);
                     }
+                } else {
+                    // 切换账号的按钮是灰的,需要单独处理。
+                    reLoginForError(region, status);
                 }
             }
         }
 
         return false;
+    }
+
+    private boolean reLoginForError(Region region, Status status) throws InterruptedException, FindFailed {
+        log.debug("{}", status.getWantUser());
+        Match fanhui = region.exists(baseDir + "fanhui.png");
+        log.debug("{}", fanhui);
+        if (fanhui != null) {
+            fanhui.click();
+            Thread.sleep(3000L);
+
+            region.saveScreenCapture(".", status.getWantUser() + "-debug");
+            Match queding = region.exists(Common.QUE_DING);
+            log.debug("{}", queding);
+            if (queding != null) {
+                queding.click();
+                Thread.sleep(3000L);
+
+                region.saveScreenCapture(".", status.getWantUser() + "-debug");
+                return chongxindenglu(region, status);
+            }
+        }
+
+        return true;
     }
 }
