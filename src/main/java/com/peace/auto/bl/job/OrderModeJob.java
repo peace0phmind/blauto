@@ -71,7 +71,11 @@ public class OrderModeJob implements Job, TaskJob {
             log.error("region: {}, {}", region, e);
             try {
                 if (region != null) {
-                    region.saveScreenCapture(".", "error");
+                    String currentUser = status.getCurrentUser();
+                    if (currentUser == null || currentUser.trim().equals("")) {
+                        currentUser = "error";
+                    }
+                    region.saveScreenCapture(".", currentUser);
                 }
                 DEVICE_1.stopDevice();
             } catch (Exception e1) {
