@@ -8,6 +8,7 @@ import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.util.Iterator;
@@ -62,9 +63,10 @@ public class QunYingHui implements IDo {
                                 lingqu.click();
                             }
 
-                            Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png");
-                            log.info("lingqujiagli: {}, {}", lingqujiangli, isButtonEnable(lingqujiangli));
-                            if (lingqujiangli != null && lingqujiangli.getScore() > 0.8f) {
+                            Match lingqujiangli = region.exists(new Pattern(baseDir + "lingqujiangli.png").similar(0.9f));
+                            log.info("lingqujiagli: {}", lingqujiangli);
+                            if (lingqujiangli != null) {
+                                log.info("lingqujiagli: {}", isButtonEnable(lingqujiangli));
                                 Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
                                 Lists.newArrayList(all).forEach(x -> x.click());
                                 Thread.sleep(3000L);

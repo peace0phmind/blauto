@@ -6,6 +6,7 @@ import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.ChuZheng;
 import com.peace.auto.bl.task.NongChang;
+import com.peace.auto.bl.task.QunYingHui;
 import com.peace.auto.bl.task.TianSheng;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -51,10 +52,10 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        DENG_LU.checkUser(region, status, "peace0ph003");
+        DENG_LU.checkUser(region, status, "peace");
 
-        if (new ChuZheng().CanDo(status, "peace0ph003")) {
-            new TianSheng().Done(region, status);
+        if (new QunYingHui().CanDo(status, "peace")) {
+            new QunYingHui().Done(region, status);
         }
 
         region.close();
