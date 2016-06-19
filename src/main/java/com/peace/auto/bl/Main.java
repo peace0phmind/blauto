@@ -4,10 +4,7 @@ import com.peace.auto.bl.common.Device;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
-import com.peace.auto.bl.task.ChuZheng;
-import com.peace.auto.bl.task.NongChang;
-import com.peace.auto.bl.task.QunYingHui;
-import com.peace.auto.bl.task.TianSheng;
+import com.peace.auto.bl.task.*;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Scheduler;
@@ -17,7 +14,6 @@ import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -54,8 +50,8 @@ public class Main {
 //        DENG_LU.checkUser(region, status, status.peaceName());
         DENG_LU.checkUser(region, status, "peace");
 
-        if (new QunYingHui().CanDo(status, "peace")) {
-            new QunYingHui().Done(region, status);
+        if (new XunBao().CanDo(status, "peace")) {
+            new XunBao().Done(region, status);
         }
 
         region.close();

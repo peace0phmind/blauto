@@ -3,8 +3,6 @@ package com.peace.auto.bl.task;
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
-import com.peace.auto.bl.task.Common;
-import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
@@ -22,11 +20,12 @@ public class XunBao implements IDo {
     String baseDir = Common.BASE_DIR + "xunbao/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-
         Match xunbao = region.exists(baseDir + "xunbao.png", 10);
 
         log.debug("{}", xunbao);
         if (xunbao != null) {
+            xunbao.click();
+
             Match inbaoshiwu = region.exists(baseDir + "inbaoshiwu.png", 10);
             if (inbaoshiwu == null) {
                 return false;
