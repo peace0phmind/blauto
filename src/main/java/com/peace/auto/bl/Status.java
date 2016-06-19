@@ -106,10 +106,6 @@ public class Status {
 
         USERS.forEach(u -> {
             tasks.forEach(t -> {
-                if (u.equals("peace0ph003") && (t == HAI_DI_SHI_JIE_TIAO_ZHAN || t == HAI_DI_SHI_JIE_SAO_DANG)) {
-                    return;
-                }
-
                 // 忽略活跃度和领取任务的任务计算
                 // 忽略市场和农场偷菜的任务计算
                 switch (t) {
@@ -193,10 +189,6 @@ public class Status {
         List<Class<? extends IDo>> ret = new ArrayList<>();
 
         Lists.newArrayList(Task.values()).forEach(t -> {
-            if (userName.equals("peace0ph003") && (t == HAI_DI_SHI_JIE_TIAO_ZHAN || t == HAI_DI_SHI_JIE_SAO_DANG)) {
-                return;
-            }
-
             if (canDo(t, userName)) {
                 if (!ret.contains(t.getIDoClass())) {
                     ret.add(t.getIDoClass());
