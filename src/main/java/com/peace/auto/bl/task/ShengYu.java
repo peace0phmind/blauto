@@ -10,6 +10,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,27 @@ public class ShengYu implements IDo {
         log.debug("{}", shengyu);
         if (shengyu != null) {
             shengyu.click();
+
+            // peace 开启新队列
+            if (status.isPeace()) {
+                Match kaiqixinduilie = region.exists(baseDir + "kaiqixinduilie.png", 3);
+                if (kaiqixinduilie != null) {
+                    Iterator<Match> all = region.findAll(baseDir + "kaiqixinduilie.png");
+                    while (all.hasNext()) {
+                        kaiqixinduilie = all.next();
+
+                        if (kaiqixinduilie.getX() < 400) {
+                            kaiqixinduilie.click();
+
+                            Match goumaiduilie = region.exists(baseDir + "goumaiduilie.png", 3);
+                            if (goumaiduilie != null) {
+                                region.click(Common.QUE_DING);
+                                Thread.sleep(3000L);
+                            }
+                        }
+                    }
+                }
+            }
 
             Match inshengyu = region.exists(baseDir + "inshengyu.png", 10);
             if (inshengyu != null) {

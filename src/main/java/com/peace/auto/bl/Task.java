@@ -98,6 +98,7 @@ public enum Task {
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph003", Arrays.asList(RONG_LIAN, SHEN_SHOU_WU));
         put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
+        put("peace0ph002", Arrays.asList(SHEN_SHOU_WU));
     }};
 
     private int timesPerDay;

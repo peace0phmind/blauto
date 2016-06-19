@@ -50,8 +50,8 @@ public class Main {
 //        DENG_LU.checkUser(region, status, status.peaceName());
         DENG_LU.checkUser(region, status, "peace");
 
-        if (new XunBao().CanDo(status, "peace")) {
-            new XunBao().Done(region, status);
+        if (new ShengYu().CanDo(status, "peace")) {
+            new ShengYu().Done(region, status);
         }
 
         region.close();
