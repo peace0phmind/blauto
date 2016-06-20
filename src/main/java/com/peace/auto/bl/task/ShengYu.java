@@ -62,6 +62,9 @@ public class ShengYu implements IDo {
                     do {
                         shengji.click();
 
+                        // 检查荣耀
+                        checkRongYao(region);
+
                         Match end = region.exists(baseDir + "shengyuend.png", 0.5);
                         if (end != null) {
                             region.click(Common.QUE_DING);
