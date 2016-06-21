@@ -265,7 +265,7 @@ public class DengLu implements IDo {
                         log.info("登录: {}", getWord(qq));
                         qq.click();
 
-                        Match wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png");
+                        Match wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png", 10);
                         log.debug("{}", wangluoyichang);
                         if (wangluoyichang != null) {
                             region.click(baseDir + "wangluoyichangqueding.png");
