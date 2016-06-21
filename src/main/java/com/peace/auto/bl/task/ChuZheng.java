@@ -61,9 +61,9 @@ public class ChuZheng extends ZhanBao implements IDo {
                     return chuZhengYeGuai(region, status, userZhanLi);
                 }
 
-                if (status.canDo(Task.CHU_ZHENG_DI_DUI)) {
-                    return chuZhengDiDui(region, status);
-                }
+//                if (status.canDo(Task.CHU_ZHENG_DI_DUI)) {
+//                    return chuZhengDiDui(region, status);
+//                }
             }
 
             return true;
@@ -72,8 +72,26 @@ public class ChuZheng extends ZhanBao implements IDo {
         return false;
     }
 
-    private boolean chuZhengDiDui(Region region, Status status) {
-        region.exists(baseDir + "");
+    private boolean chuZhengDiDui(Region region, Status status) throws InterruptedException, FindFailed {
+        Match diduishili = region.exists(baseDir + "diduishili.png");
+        if (diduishili != null) {
+            diduishili.click();
+            Thread.sleep(1000L);
+
+            Match shoucangdebuluo = region.exists(baseDir + "shoucangdebuluo.png");
+            if (shoucangdebuluo != null) {
+                shoucangdebuluo.click();
+                Thread.sleep(1000L);
+
+                Match zhengchang = region.exists(baseDir + "zhengchang.png");
+                if (zhengchang != null) {
+                    Iterator<Match> zhengchangs = region.findAll(baseDir + "zhengchang.png");
+                }
+
+
+                return true;
+            }
+        }
         return false;
     }
 
