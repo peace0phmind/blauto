@@ -27,6 +27,7 @@ public class ChuZheng extends ZhanBao implements IDo {
 
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.CHU_ZHENG_YE_GUAI, userName)
+                && !status.canDo(Task.CHU_ZHENG_DI_DUI, userName)
                 && !super.canDo(status, userName)) {
             return false;
         }
@@ -56,72 +57,12 @@ public class ChuZheng extends ZhanBao implements IDo {
                 chuzheng.click();
                 Thread.sleep(3000L);
 
-                Match chuzhenganniu = region.exists(baseDir + "chuzhenganniu.png");
-                if (chuzhenganniu != null) {
-                    String diren = direns.get(LocalDate.now().getDayOfYear() % 4);
+                if (status.canDo(Task.CHU_ZHENG_YE_GUAI)) {
+                    return chuZhengYeGuai(region, status, userZhanLi);
+                }
 
-                    region.click(baseDir + diren);
-                    Thread.sleep(1000L);
-
-                    // 选择大于战力的第二个
-                    while (true) {
-                        Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.90f));
-                        ArrayList<Match> matches = Lists.newArrayList(all);
-                        if (matches.size() < 3) {
-                            log.error("list size is {}.", matches.size());
-                            return false;
-                        }
-
-                        List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
-
-                        Match match = sortedList.get(0);
-                        Region left = match.left(60);
-
-                        int cankaozhanli = getNumber(left);
-                        log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
-                        if (cankaozhanli < userZhanLi) {
-                            move(match, match.getCenter().above(51), 1000);
-                            Thread.sleep(500L);
-                        } else {
-                            sortedList.get(2).click();
-                            break;
-                        }
-                    }
-
-                    Thread.sleep(1000L);
-
-                    chuzhenganniu.click();
-
-                    Match zidongbubing = region.exists(baseDir + "zidongbubing.png");
-                    if (zidongbubing != null) {
-                        zidongbubing.click();
-                        Thread.sleep(500L);
-
-                        for (int i = 0; i < 5; i++) {
-                            region.click(baseDir + "tianjiacishu.png");
-                            Thread.sleep(500L);
-                        }
-
-                        region.click(baseDir + "quanbubuman.png");
-
-                        Thread.sleep(500L);
-
-                        region.click(baseDir + "quedingchuzheng.png");
-
-                        Match huolibuzu = region.exists(new Pattern(baseDir + "huolibuzu.png").similar(0.9f));
-                        log.info("{}", huolibuzu);
-                        if (huolibuzu != null) {
-                            Thread.sleep(1000L);
-                            status.Done(Task.CHU_ZHENG_YE_GUAI, LocalDateTime.now());
-                            region.click(Common.QUE_DING);
-                        } else {
-                            status.Done(Task.CHU_ZHENG_YE_GUAI);
-                        }
-                    }
-
-                    Thread.sleep(1000L);
-                    // 出征成功, 点击close
-                    region.click(Common.CLOSE);
+                if (status.canDo(Task.CHU_ZHENG_DI_DUI)) {
+                    return chuZhengDiDui(region, status);
                 }
             }
 
@@ -129,5 +70,82 @@ public class ChuZheng extends ZhanBao implements IDo {
         }
 
         return false;
+    }
+
+    private boolean chuZhengDiDui(Region region, Status status) {
+        region.exists(baseDir + "");
+        return false;
+    }
+
+    private boolean chuZhengYeGuai(Region region, Status status, int userZhanLi) throws FindFailed, InterruptedException {
+        Match chuzhenganniu = region.exists(baseDir + "chuzhenganniu.png");
+        if (chuzhenganniu != null) {
+            String diren = direns.get(LocalDate.now().getDayOfYear() % 4);
+
+            region.click(baseDir + diren);
+            Thread.sleep(1000L);
+
+            // 选择大于战力的第二个
+            while (true) {
+                Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.90f));
+                ArrayList<Match> matches = Lists.newArrayList(all);
+                if (matches.size() < 3) {
+                    log.error("list size is {}.", matches.size());
+                    return false;
+                }
+
+                List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
+
+                Match match = sortedList.get(0);
+                Region left = match.left(60);
+
+                int cankaozhanli = getNumber(left);
+                log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
+                if (cankaozhanli < userZhanLi) {
+                    move(match, match.getCenter().above(51), 1000);
+                    Thread.sleep(500L);
+                } else {
+                    sortedList.get(2).click();
+                    break;
+                }
+            }
+
+            Thread.sleep(1000L);
+
+            chuzhenganniu.click();
+
+            Match zidongbubing = region.exists(baseDir + "zidongbubing.png");
+            if (zidongbubing != null) {
+                zidongbubing.click();
+                Thread.sleep(500L);
+
+                for (int i = 0; i < 5; i++) {
+                    region.click(baseDir + "tianjiacishu.png");
+                    Thread.sleep(500L);
+                }
+
+                region.click(baseDir + "quanbubuman.png");
+
+                Thread.sleep(500L);
+
+                region.click(baseDir + "quedingchuzheng.png");
+
+                Match huolibuzu = region.exists(new Pattern(baseDir + "huolibuzu.png").similar(0.9f));
+                log.info("{}", huolibuzu);
+                if (huolibuzu != null) {
+                    Thread.sleep(1000L);
+                    status.Done(Task.CHU_ZHENG_YE_GUAI, LocalDateTime.now());
+                    region.click(Common.QUE_DING);
+                } else {
+                    status.Done(Task.CHU_ZHENG_YE_GUAI);
+                }
+            }
+
+            Thread.sleep(1000L);
+            // 出征成功, 点击close
+            region.click(Common.CLOSE);
+        }
+
+        return true;
     }
 }

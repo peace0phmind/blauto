@@ -22,7 +22,8 @@ abstract public class ZhanBao {
         LocalDateTime now = LocalDateTime.now();
         return Arrays.asList(Task.CHU_ZHENG_YE_GUAI,
                 Task.LIAN_BING_CHANG,
-                Task.SHI_LIAN_DONG).stream().allMatch(x -> {
+                Task.SHI_LIAN_DONG,
+                Task.CHU_ZHENG_DI_DUI).stream().allMatch(x -> {
             LocalDateTime lastFinishTime = status.getLastFinishTime(x, userName);
             if (lastFinishTime == null) {
                 return true;

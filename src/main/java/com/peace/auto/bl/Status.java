@@ -154,10 +154,11 @@ public class Status {
                     }
                 }
 
-                if (t == CHU_ZHENG_YE_GUAI || t == LIAN_BING_CHANG || t == SHI_LIAN_DONG) {
+                if (t == CHU_ZHENG_YE_GUAI || t == LIAN_BING_CHANG || t == SHI_LIAN_DONG || t == CHU_ZHENG_DI_DUI) {
                     Optional<LocalDateTime> first = Arrays.asList(CHU_ZHENG_YE_GUAI,
                             Task.LIAN_BING_CHANG,
-                            Task.SHI_LIAN_DONG).stream().map(x -> getLastFinishTime(x, u))
+                            Task.SHI_LIAN_DONG,
+                            Task.CHU_ZHENG_DI_DUI).stream().map(x -> getLastFinishTime(x, u))
                             .filter(Objects::nonNull)
                             .sorted((a, b) -> b.compareTo(a)).findFirst();
                     if (first.isPresent()) {
