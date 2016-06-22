@@ -66,6 +66,15 @@ public class AutoMode implements Job {
                         break;
                 }
             } else {
+                switch (ti.getTask()) {
+                    case QI_BING_XUN_BAO:
+                        log.info("Prepare xun bao, {}", ti);
+                        new XunBaoModeJob().prepare();
+                        break;
+                    default:
+                        break;
+                }
+
                 Duration duration = Duration.between(LocalDateTime.now(), ti.getExecutableTime());
                 try {
                     DENG_LU.checkUser(DEVICE_1.getRegion(), status, ti.getUserName());

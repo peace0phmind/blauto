@@ -34,7 +34,9 @@ public class Status {
             "peace0ph003"
     );
 
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 50, 0), LocalTime.of(21, 30), LocalTime.of(23, 50, 0));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 54, 0), LocalTime.of(22, 0), LocalTime.of(23, 54, 0));
+
+    private static int XUN_BAO_PREPARE_MINUTES = 15;
 
     private String currentUser;
     private String wantUser;
@@ -174,6 +176,15 @@ public class Status {
                     }
                 }
 
+                if (t == QI_BING_XUN_BAO) {
+                    Optional<LocalTime> first = QI_BING_XUN_BAO_TIME.stream().filter(x -> x.isAfter(dateTime.toLocalTime())).findFirst();
+                    if (first.isPresent()) {
+                        executableTime = dateTime.with(first.get());
+                    } else {
+                        return;
+                    }
+                }
+
                 if (executableTime == null) {
                     log.info("executableTime is null: {}, {}", u, t);
                 }
@@ -181,9 +192,28 @@ public class Status {
             });
         });
 
-        return taskItems.stream().sorted((x, y) ->
-                x.getExecutableTime().compareTo(y.getExecutableTime())
-        ).collect(Collectors.toList());
+        return taskItems.stream().sorted((x, y) -> {
+            if ((x.getTask() != QI_BING_XUN_BAO && y.getTask() != QI_BING_XUN_BAO)
+                    || ((x.getTask() == QI_BING_XUN_BAO && y.getTask() == QI_BING_XUN_BAO))) {
+                return x.getExecutableTime().compareTo(y.getExecutableTime());
+            } else {
+                if (x.getTask() == QI_BING_XUN_BAO) {
+                    LocalDateTime xunBaoPrepare = x.getExecutableTime().minusMinutes(XUN_BAO_PREPARE_MINUTES);
+                    if (xunBaoPrepare.isBefore(dateTime)) {
+                        return -1;
+                    } else {
+                        return xunBaoPrepare.compareTo(y.getExecutableTime());
+                    }
+                } else {
+                    LocalDateTime xunBaoPrepare = y.getExecutableTime().minusMinutes(XUN_BAO_PREPARE_MINUTES);
+                    if (xunBaoPrepare.isBefore(dateTime)) {
+                        return 1;
+                    } else {
+                        return x.getExecutableTime().compareTo(xunBaoPrepare);
+                    }
+                }
+            }
+        }).collect(Collectors.toList());
     }
 
     public List<IDo> getTasks(String userName) {

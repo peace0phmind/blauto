@@ -178,7 +178,7 @@ public class LianMeng implements IDo {
                             region.saveScreenCapture(".", "debug");
                             queding.click();
                             Thread.sleep(1000L);
-                            
+
                             juanxian(region, 1);
                             Thread.sleep(3000L);
 

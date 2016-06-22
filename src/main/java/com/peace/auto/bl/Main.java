@@ -14,6 +14,7 @@ import org.sikuli.basics.Settings;
 import org.sikuli.script.FindFailed;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -32,8 +33,9 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 //        new XunBaoModeJob().execute(null);
 
-        testMode();
+//        testMode();
 //        System.exit(0);
+        testGetTask();
     }
 
     private static void time() throws SchedulerException {
@@ -42,6 +44,13 @@ public class Main {
 //        DuoBaoModeJob.init(defaultScheduler);
 //        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
+    }
+
+    private static void testGetTask() {
+        LocalDateTime now = LocalDateTime.now().withHour(11).withMinute(0);
+        for (int i = 0; i < 1000; i++) {
+            log.info("{}, {}", now.plusMinutes(i), status.getUserTasks(now.plusMinutes(i)).get(0));
+        }
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
