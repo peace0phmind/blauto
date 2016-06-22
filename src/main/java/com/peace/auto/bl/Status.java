@@ -186,10 +186,9 @@ public class Status {
                 }
 
                 if (t == QI_BING_DUO_BAO) {
-                    if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
-                        executableTime = localDateTime.withHour(11).withMinute(30);
-                    } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
-                        executableTime = localDateTime.withHour(20).withMinute(30);
+                    LocalDateTime beginTime = localDateTime.withHour(11).withMinute(40);
+                    if (executableTime == null || (executableTime != null && executableTime.isBefore(beginTime))) {
+                        executableTime = beginTime;
                     }
                 }
 

@@ -71,6 +71,10 @@ public class AutoMode implements Job {
                         log.info("Do xun bao, {}", ti);
 //                        new XunBaoModeJob().execute();
                         break;
+                    case QI_BING_DUO_BAO:
+                        log.info("Do duo bao, {}", ti);
+                        new DuoBaoModeJob().duobao(ti.getUserName());
+                        break;
                     default:
                         log.info("Do task, {}", ti);
                         new OrderModeJob().doTask(ti.getUserName());
