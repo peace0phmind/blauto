@@ -1,6 +1,7 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.common.Device;
+import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.job.DuoBaoModeJob;
 import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.job.XunBaoModeJob;
@@ -35,14 +36,15 @@ public class Main {
 
 //        testMode();
 //        System.exit(0);
-        testGetTask();
+//        testGetTask();
+        time();
     }
 
     private static void time() throws SchedulerException {
         Scheduler defaultScheduler = StdSchedulerFactory.getDefaultScheduler();
-        OrderModeJob.init(defaultScheduler);
+//        OrderModeJob.init(defaultScheduler);
 //        DuoBaoModeJob.init(defaultScheduler);
-//        AutoMode.init(defaultScheduler);
+        AutoMode.init(defaultScheduler);
         defaultScheduler.start();
     }
 

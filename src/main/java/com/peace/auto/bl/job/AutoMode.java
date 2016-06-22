@@ -20,10 +20,13 @@ import static com.peace.auto.bl.common.Devices.*;
  */
 @Slf4j
 @DisallowConcurrentExecution
+@PersistJobDataAfterExecution
 public class AutoMode implements Job {
 
+    private static final String XUN_BAO_KEY = Task.QI_BING_XUN_BAO.toString();
+
     public static void init(Scheduler scheduler) {
-        JobDetail job = JobBuilder.newJob(AutoMode.class).build();
+        JobDetail job = JobBuilder.newJob(AutoMode.class).usingJobData(XUN_BAO_KEY, false).build();
         Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(0, 15, 0)).build();
 
         try {
@@ -36,6 +39,14 @@ public class AutoMode implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
+
+        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+
+        if (jobDataMap.getBoolean(XUN_BAO_KEY)) {
+            log.info("Do xun bao");
+            new XunBaoModeJob().xunbao();
+            jobDataMap.put(XUN_BAO_KEY, false);
+        }
 
         List<TaskItem> userTasks = status.getUserTasks();
 
@@ -58,7 +69,7 @@ public class AutoMode implements Job {
                         break;
                     case QI_BING_XUN_BAO:
                         log.info("Do xun bao, {}", ti);
-                        new XunBaoModeJob().execute();
+//                        new XunBaoModeJob().execute();
                         break;
                     default:
                         log.info("Do task, {}", ti);
@@ -66,24 +77,21 @@ public class AutoMode implements Job {
                         break;
                 }
             } else {
-                switch (ti.getTask()) {
-                    case QI_BING_XUN_BAO:
-                        log.info("Prepare xun bao, {}", ti);
-                        new XunBaoModeJob().prepare();
-                        break;
-                    default:
-                        break;
+                if (ti.getTask() == Task.QI_BING_XUN_BAO) {
+                    log.info("Prepare xun bao, {}", ti);
+                    new XunBaoModeJob().prepare();
+                    jobDataMap.put(XUN_BAO_KEY, true);
+                } else {
+                    try {
+                        DENG_LU.checkUser(DEVICE_1.getRegion(), status, ti.getUserName());
+                    } catch (Exception e) {
+                        log.info("{}", e);
+                    }
                 }
 
                 Duration duration = Duration.between(LocalDateTime.now(), ti.getExecutableTime());
-                try {
-                    DENG_LU.checkUser(DEVICE_1.getRegion(), status, ti.getUserName());
-                } catch (Exception e) {
-                    log.info("{}", e);
-                }
-                log.info("After {} seconds to do job. {}", duration.getSeconds(), ti);
-
                 addNewTrigger(context, Math.abs(duration.getSeconds()));
+                log.info("After {} seconds to do job. {}", duration.getSeconds(), ti);
                 break;
             }
 
