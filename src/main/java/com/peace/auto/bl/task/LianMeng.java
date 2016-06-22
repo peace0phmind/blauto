@@ -171,12 +171,21 @@ public class LianMeng implements IDo {
                     Match lingqu = region.exists(baseDir + "lingqu.png", 5);
                     // 每天领取一次福利,并且进行一次捐赠
                     if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
-                        juanxian(region, 1);
-                        Thread.sleep(3000L);
-
-                        fuli.click();
-                        Thread.sleep(2000L);
                         lingqu.click();
+
+                        Match queding = region.exists(Common.QUE_DING);
+                        if (queding != null) {
+                            region.saveScreenCapture(".", "debug");
+                            queding.click();
+                            Thread.sleep(1000L);
+                        } else {
+                            juanxian(region, 1);
+                            Thread.sleep(3000L);
+
+                            fuli.click();
+                            Thread.sleep(2000L);
+                            lingqu.click();
+                        }
 
                         status.Done(Task.LIAN_MENG_FU_LI);
                     }

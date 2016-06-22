@@ -38,6 +38,26 @@ public class LieChang implements IDo {
                 Thread.sleep(500L);
             }
 
+            // 每天强制征收
+            if (status.canDo(Task.LIE_CHANG_QIANG_ZHENG)) {
+                Match qiangzhizhengshou = region.exists(baseDir + "qiangzhizhengshou.png");
+                if (qiangzhizhengshou != null && isButtonEnable(qiangzhizhengshou, 10, 10)) {
+                    qiangzhizhengshou.click();
+
+                    Thread.sleep(1000L);
+
+                    region.click(baseDir + "zhengshouanniu.png");
+
+                    Thread.sleep(1000L);
+
+                    region.click(Common.CLOSE);
+
+                    status.Done(Task.LIE_CHANG_QIANG_ZHENG);
+                }
+
+                Thread.sleep(500L);
+            }
+
             // 打怪
             if (status.canDo(Task.LIE_CHANG_DA_GUAI)) {
 
@@ -103,7 +123,8 @@ public class LieChang implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.LIE_CHANG_ZHENG_SHOU, userName)
-                && !status.canDo(Task.LIE_CHANG_DA_GUAI, userName)) {
+                && !status.canDo(Task.LIE_CHANG_DA_GUAI, userName)
+                && !status.canDo(Task.LIE_CHANG_QIANG_ZHENG, userName)) {
             return false;
         }
 

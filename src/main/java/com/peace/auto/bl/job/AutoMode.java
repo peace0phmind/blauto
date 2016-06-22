@@ -47,9 +47,9 @@ public class AutoMode implements Job {
                     case QI_BING_LING_TU:
                         log.info("Do ling tu, {}", ti);
                         lingTu("peace", "peace0ph001");
-                        lingTu("peace0ph006", "peace0ph004");
-                        lingTu("peace0ph008", "peace0ph007");
-                        lingTu("peace0ph003", "peace0ph002");
+                        lingTu("peace0ph002", "peace0ph003");
+                        lingTu("peace0ph004", "peace0ph006");
+                        lingTu("peace0ph007", "peace0ph008");
                         try {
                             DEVICE_2.stopDevice();
                         } catch (Exception e) {

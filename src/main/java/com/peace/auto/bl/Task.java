@@ -23,14 +23,15 @@ public enum Task {
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
     CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -1, 2 * 20 * 60),
 
-    LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
+    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
+    LIE_CHANG_QIANG_ZHENG(LieChang.class, 1, -1),
     LIE_CHANG_DA_GUAI(LieChang.class, 1, -1, 24 * 60 * 60),
 
     SHOU_GU_JIA_GONG(ShouGuFang.class, 4),
     SHOU_GU_SHOU_LIE(ShouGuFang.class, 0, 0, 8 * 60 * 60),
 
     XUN_BAO(XunBao.class, 1, -1),
-    BUILDING(Building.class, -1, 0, 30 * 60),
+    BUILDING(Building.class, 0, 0, 30 * 60),
     BUILDING_DUI_LIE(Building.class, -1, 0),
 
     NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 8 * 60 * 60),
@@ -94,7 +95,7 @@ public enum Task {
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(CHU_ZHENG_DI_DUI, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK,
-                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, LIE_CHANG_QIANG_ZHENG,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph003", Arrays.asList(RONG_LIAN, SHEN_SHOU_WU));

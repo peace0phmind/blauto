@@ -86,9 +86,15 @@ public class ChuZheng extends ZhanBao implements IDo {
                 Match zhengchang = region.exists(baseDir + "zhengchang.png");
                 if (zhengchang != null) {
                     Iterator<Match> zhengchangs = region.findAll(baseDir + "zhengchang.png");
+
+                    ArrayList<Match> matches = Lists.newArrayList(zhengchangs);
+                    matches.forEach(x -> {
+                        x.getCenter().left(260).click();
+                    });
                 }
 
 
+                region.click(Common.CLOSE);
                 return true;
             }
         }

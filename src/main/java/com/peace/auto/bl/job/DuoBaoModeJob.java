@@ -63,10 +63,10 @@ public class DuoBaoModeJob implements Job, TaskJob {
             List<Region> regions = Arrays.asList(region1, region2, region3);
             log.info("{}", regions);
 
-//            duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
-//            duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
-//            new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
-//            Thread.sleep(9 * 60 * 1000L);
+            duobaoMode(regions, Arrays.asList("peace", "peace0ph006", "peace0ph004"));
+            duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph006", "peace0ph004"));
+            new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
+            Thread.sleep(9 * 60 * 1000L);
 
             duobaoMode(regions, Arrays.asList("peace", "peace0ph008", "peace0ph007"));
             duobaoMode(regions, Arrays.asList("peace0ph001", "peace0ph008", "peace0ph007"));
