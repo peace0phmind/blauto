@@ -34,9 +34,9 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 //        new XunBaoModeJob().execute(null);
 
-//        testMode();
+        testMode();
 //        System.exit(0);
-        testGetTask();
+//        testGetTask();
 //        time();
     }
 
@@ -59,12 +59,12 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace0ph003";
+        String user = "peace";
         DENG_LU.checkUser(region, status, user);
 
-        if (new LieChang().CanDo(status, user)) {
-            new LieChang().Done(region, status);
-        }
+//        if (new LieChang().CanDo(status, user)) {
+//            new LieChang().Done(region, status);
+//        }
 
         region.close();
     }
