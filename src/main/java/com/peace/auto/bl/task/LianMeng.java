@@ -173,10 +173,10 @@ public class LianMeng implements IDo {
                     if (lingqu != null && isButtonEnable(lingqu, 5, 5)) {
                         lingqu.click();
 
-                        Match queding = region.exists(Common.QUE_DING);
-                        if (queding != null) {
+                        Match gongxiandubugou = region.exists(baseDir + "gongxiandubugou.png");
+                        if (gongxiandubugou != null) {
                             region.saveScreenCapture(".", "debug");
-                            queding.click();
+                            region.click(Common.QUE_DING);
                             Thread.sleep(1000L);
 
                             juanxian(region, 1);
