@@ -220,18 +220,27 @@ public class DengLu implements IDo {
             }
 
             // 如果默认登录,则跳转到切换账号
-            Match tianjiazhanghao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 10);
+            Match tianjiazhanghao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f));
             log.debug("{}", tianjiazhanghao);
             if (tianjiazhanghao != null) {
                 region.click(baseDir + "qqdenglu.png");
                 Thread.sleep(1000L);
             }
 
-            Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f), 10);
+            Match zhengzaihuoququanxian = region.exists(new Pattern(baseDir + "zhengzaihuoququanxian.png").similar(0.9f));
+            log.debug("{}", zhengzaihuoququanxian);
+            if (zhengzaihuoququanxian != null) {
+                doRobot(region, (robot) -> {
+                    log.info("use robot press back for zhengzaihuoququanxian");
+                    robot.pressBack();
+                });
+            }
+
+            Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f));
             log.debug("{}", zhengzaidenglu);
             if (zhengzaidenglu != null) {
                 doRobot(region, (robot) -> {
-                    log.info("use robot press back");
+                    log.info("use robot press back for zhengzaidenglu");
                     robot.pressBack();
                 });
             }
