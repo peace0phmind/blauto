@@ -36,8 +36,8 @@ public class Main {
 
 //        testMode();
 //        System.exit(0);
-//        testGetTask();
-        time();
+        testGetTask();
+//        time();
     }
 
     private static void time() throws SchedulerException {

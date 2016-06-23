@@ -28,16 +28,16 @@ public class DuoBao implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return true;
-    }
-
-    public boolean duobao(Region region, Region region1, Region region2, int roomNo) throws FindFailed, InterruptedException {
         LocalTime now = LocalTime.now();
         if (!((now.isAfter(LocalTime.of(11, 30)) && now.isBefore(LocalTime.of(13, 55)))
                 || (now.isAfter(LocalTime.of(21, 30)) && now.isBefore(LocalTime.of(23, 55))))) {
             return false;
         }
 
+        return true;
+    }
+
+    public boolean duobao(Region region, Region region1, Region region2, int roomNo) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
         Thread.sleep(3000L);

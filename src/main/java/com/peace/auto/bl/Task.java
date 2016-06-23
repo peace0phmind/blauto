@@ -86,7 +86,7 @@ public enum Task {
     LIN_QU_REN_WU(RenWu.class, 0),
 
     QI_BING_XUN_BAO(DuoBao.class, -1, 3),
-    QI_BING_DUO_BAO(DuoBao.class, -1, -1),
+    QI_BING_DUO_BAO(DuoBao.class, -1, 3),
     QI_BING_LING_TU(DuoBao.class, 1);
 
     /**
