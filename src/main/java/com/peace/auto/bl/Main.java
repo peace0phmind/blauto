@@ -34,9 +34,9 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 //        new XunBaoModeJob().execute(null);
 
-        testMode();
+//        testMode();
 //        System.exit(0);
-//        testGetTask();
+        testGetTask();
 //        time();
     }
 
@@ -49,10 +49,12 @@ public class Main {
     }
 
     private static void testGetTask() {
-        LocalDateTime now = LocalDateTime.now().withHour(11).withMinute(0);
-        for (int i = 0; i < 1000; i++) {
-            log.info("{}, {}", now.plusMinutes(i), status.getUserTasks(now.plusMinutes(i)).get(0));
-        }
+//        LocalDateTime now = LocalDateTime.now().withHour(11).withMinute(0);
+//        for (int i = 0; i < 1000; i++) {
+//            log.info("{}, {}", now.plusMinutes(i), status.getUserTasks(now.plusMinutes(i)).get(0));
+//        }
+
+        status.getUserTasks(LocalDateTime.now());
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
