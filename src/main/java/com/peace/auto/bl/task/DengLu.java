@@ -25,6 +25,10 @@ public class DengLu implements IDo {
 
     private Properties properties = new Properties();
 
+    public String getPassword() {
+        return properties.getProperty("password");
+    }
+
     public DengLu() {
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("password.properties"));

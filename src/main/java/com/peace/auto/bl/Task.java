@@ -32,7 +32,7 @@ public enum Task {
 
     XUN_BAO(XunBao.class, 1, -1),
     BUILDING(Building.class, 0, 0, 30 * 60),
-    BUILDING_DUI_LIE(Building.class, -1, 0),
+    BUILDING_DUI_LIE(Building.class, 0, 0),
 
     NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 8 * 60 * 60),
     NONG_CHANG_SHOU_CAI(NongChang.class, 2),

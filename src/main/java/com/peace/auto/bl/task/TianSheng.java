@@ -13,6 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
+import static com.peace.auto.bl.common.Devices.DENG_LU;
+
 /**
  * Created by mind on 3/6/16.
  */
@@ -47,6 +49,16 @@ public class TianSheng implements IDo {
                             Match mf = all.next();
                             mf.below().click(baseDir + "qidaoanniu.png");
                             Thread.sleep(500L);
+
+                            Match shurumima = region.exists(baseDir + "shurumima.png", 6);
+                            if (shurumima != null) {
+                                Thread.sleep(3000L);
+                                shurumima.type(DENG_LU.getPassword());
+                                Thread.sleep(2000L);
+                                region.click(Common.QUE_DING);
+                                Thread.sleep(1000L);
+                                mf.below().click(baseDir + "qidaoanniu.png");
+                            }
                         }
 
                         status.Done(Task.TIAN_SHEN_QI_DAO);
