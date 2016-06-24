@@ -175,7 +175,7 @@ public class LianMeng implements IDo {
 
                         Match gongxiandubugou = region.exists(baseDir + "gongxiandubugou.png");
                         if (gongxiandubugou != null) {
-                            region.saveScreenCapture(".", "debug");
+                            Thread.sleep(1000L);
                             region.click(Common.QUE_DING);
                             Thread.sleep(1000L);
 
