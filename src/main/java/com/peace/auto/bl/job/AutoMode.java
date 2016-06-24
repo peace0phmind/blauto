@@ -6,9 +6,7 @@ import com.peace.auto.bl.task.DuoBao;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.sikuli.script.FindFailed;
 
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;

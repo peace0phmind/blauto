@@ -4,11 +4,17 @@ import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.script.*;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
+import org.sikuli.script.Region;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**

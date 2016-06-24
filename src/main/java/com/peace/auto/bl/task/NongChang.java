@@ -4,7 +4,9 @@ import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
-import org.sikuli.script.*;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Match;
+import org.sikuli.script.Region;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

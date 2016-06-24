@@ -1,16 +1,16 @@
 package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
-import com.peace.auto.bl.Status;
 import com.peace.auto.bl.ExecuteTask;
+import com.peace.auto.bl.Status;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
-import java.awt.*;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

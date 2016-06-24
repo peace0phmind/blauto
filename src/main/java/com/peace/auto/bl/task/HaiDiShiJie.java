@@ -1,13 +1,10 @@
 package com.peace.auto.bl.task;
 
-import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
-
-import java.util.Iterator;
 
 /**
  * Created by mind on 5/14/16.

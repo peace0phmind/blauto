@@ -2,8 +2,6 @@ package com.peace.auto.bl.task;
 
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
-import com.peace.auto.bl.task.Common;
-import com.peace.auto.bl.task.IDo;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;

@@ -1,18 +1,11 @@
 package com.peace.auto.bl.job;
 
 import com.peace.auto.bl.Status;
-import com.peace.auto.bl.common.Device;
-import com.peace.auto.bl.common.Devices;
 import com.peace.auto.bl.task.IDo;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.quartz.simpl.SystemPropertyInstanceIdGenerator;
-import org.sikuli.basics.Settings;
-import org.sikuli.script.FindFailed;
 
-import java.io.IOException;
-import java.time.LocalTime;
 import java.util.List;
 
 import static com.peace.auto.bl.common.Devices.*;

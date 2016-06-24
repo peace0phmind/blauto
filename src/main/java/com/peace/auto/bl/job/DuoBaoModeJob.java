@@ -1,18 +1,13 @@
 package com.peace.auto.bl.job;
 
-import com.google.common.collect.Lists;
 import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.DuoBao;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.sikuli.script.FindFailed;
-import org.sikuli.script.Region;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

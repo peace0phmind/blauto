@@ -6,7 +6,6 @@ import org.sikuli.basics.Debug;
 import org.sikuli.script.*;
 
 import java.awt.*;
-import java.util.TreeMap;
 
 public class AndroidScreen extends AndroidRegion implements IScreen {
 

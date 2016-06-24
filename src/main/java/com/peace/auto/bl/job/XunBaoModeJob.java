@@ -5,11 +5,6 @@ import com.peace.auto.bl.task.DuoBao;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.sikuli.basics.Settings;
-import org.sikuli.script.FindFailed;
-
-import java.io.IOException;
-import java.time.LocalTime;
 
 import static com.peace.auto.bl.common.Devices.*;
 

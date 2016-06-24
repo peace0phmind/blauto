@@ -2,8 +2,6 @@ package com.peace.auto.bl.task;
 
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
-import com.peace.auto.bl.task.Common;
-import com.peace.auto.bl.task.IDo;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;

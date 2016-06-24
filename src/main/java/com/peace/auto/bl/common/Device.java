@@ -1,7 +1,5 @@
 package com.peace.auto.bl.common;
 
-import com.peace.auto.bl.Status;
-import com.peace.auto.bl.task.DengLu;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;

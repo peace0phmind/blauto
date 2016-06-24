@@ -5,20 +5,13 @@ import com.peace.auto.bl.DoRobot;
 import com.peace.auto.bl.Status;
 import com.peace.sikuli.monkey.AndroidRobot;
 import com.peace.sikuli.monkey.AndroidScreen;
-import lombok.extern.slf4j.Slf4j;
 import org.sikuli.natives.OCR;
 import org.sikuli.script.*;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/6/16.
