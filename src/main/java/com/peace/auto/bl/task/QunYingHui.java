@@ -65,8 +65,12 @@ public class QunYingHui implements IDo {
                             log.info("lingqujiagli: {}", lingqujiangli);
                             if (lingqujiangli != null) {
                                 log.info("lingqujiagli: {}", isButtonEnable(lingqujiangli));
-                                Iterator<Match> all = region.findAll(baseDir + "lingqujiangli.png");
-                                Lists.newArrayList(all).forEach(x -> x.click());
+                                Iterator<Match> all = region.findAll(new Pattern(baseDir + "lingqujiangli.png").similar(0.9f));
+                                Lists.newArrayList(all).forEach(x -> {
+                                    if (isButtonEnable(x)) {
+                                        x.click();
+                                    }
+                                });
                                 Thread.sleep(3000L);
                             }
                         }
