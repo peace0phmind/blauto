@@ -98,7 +98,7 @@ public enum Task {
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, LIE_CHANG_QIANG_ZHENG,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
-        put("peace0ph003", Arrays.asList(RONG_LIAN, SHEN_SHOU_WU));
+        put("peace0ph003", Arrays.asList(SHEN_SHOU_WU));
         put("peace0ph008", Arrays.asList(SHEN_SHOU_WU));
         put("peace0ph002", Arrays.asList(SHEN_SHOU_WU));
     }};

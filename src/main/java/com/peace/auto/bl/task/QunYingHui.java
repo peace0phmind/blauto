@@ -64,7 +64,7 @@ public class QunYingHui implements IDo {
                             Match lingqujiangli = region.exists(new Pattern(baseDir + "lingqujiangli.png").similar(0.9f));
                             log.info("lingqujiagli: {}", lingqujiangli);
                             if (lingqujiangli != null) {
-                                log.info("lingqujiagli: {}", isButtonEnable(lingqujiangli));
+                                log.info("lingqujiagli: {}", isButtonEnable(lingqujiangli), isButtonEnable(lingqujiangli, 10, 10));
                                 Iterator<Match> all = region.findAll(new Pattern(baseDir + "lingqujiangli.png").similar(0.9f));
                                 Lists.newArrayList(all).forEach(x -> {
                                     if (isButtonEnable(x)) {
