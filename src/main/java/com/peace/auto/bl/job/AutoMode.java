@@ -45,6 +45,7 @@ public class AutoMode implements Job {
             log.info("Do xun bao");
             new XunBaoModeJob().xunbao();
             jobDataMap.put(XUN_BAO_KEY, false);
+            System.exit(-1);
         }
 
         List<TaskItem> userTasks = status.getUserTasks();
@@ -66,11 +67,7 @@ public class AutoMode implements Job {
                         lingTu("peace0ph002", "peace0ph003");
                         lingTu("peace0ph004", "peace0ph006");
                         lingTu("peace0ph007", "peace0ph008");
-                        try {
-                            DEVICE_2.stopDevice();
-                        } catch (Exception e) {
-                            log.error("{}", e);
-                        }
+                        System.exit(-1);
                         break;
                     case QI_BING_XUN_BAO:
                         log.info("Do xun bao, {}", ti);
@@ -79,6 +76,10 @@ public class AutoMode implements Job {
                     case QI_BING_DUO_BAO:
                         log.info("Do duo bao, {}", ti);
                         new DuoBaoModeJob().duobao(ti.getUserName());
+                        if (status.todayFinishCount(Task.QI_BING_DUO_BAO, status.peaceName()) == 3
+                                && status.todayFinishCount(Task.QI_BING_DUO_BAO, "peace0ph001") == 3) {
+                            System.exit(-1);
+                        }
                         break;
                     default:
                         log.info("Do task, {}", ti);
