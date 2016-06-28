@@ -10,6 +10,7 @@ import org.quartz.*;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -49,7 +50,13 @@ public class AutoMode implements Job {
         List<TaskItem> userTasks = status.getUserTasks();
 
         while (userTasks != null && userTasks.size() > 0) {
-            TaskItem ti = userTasks.get(0);
+            TaskItem ti;
+            Optional<TaskItem> first = userTasks.stream().filter(x -> x.getTask() == Task.QI_BING_DUO_BAO).findFirst();
+            if (first.isPresent()) {
+                ti = first.get();
+            } else {
+                ti = userTasks.get(0);
+            }
 
             if (LocalDateTime.now().isAfter(ti.getExecutableTime())) {
                 switch (ti.getTask()) {
