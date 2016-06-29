@@ -26,11 +26,12 @@ public class DogStop implements Job {
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Stop job.");
+        JobDetail jobDetail = null;
+        Scheduler scheduler = context.getScheduler();
         try {
-            Scheduler scheduler = context.getScheduler();
             Optional<JobExecutionContext> first = scheduler.getCurrentlyExecutingJobs().stream().filter(x -> DogRun.class.getName().equals(x.getJobDetail().getJobClass().getName())).findFirst();
             if (first.isPresent()) {
-                JobDetail jobDetail = first.get().getJobDetail();
+                jobDetail = first.get().getJobDetail();
                 log.info("Interrupt job: {}", jobDetail);
                 context.getScheduler().interrupt(jobDetail.getKey());
 
@@ -39,7 +40,18 @@ public class DogStop implements Job {
                 scheduler.scheduleJob(tr);
             }
         } catch (SchedulerException e) {
-            log.info("{}", e);
+            log.error("{}", e);
+            if (e instanceof JobPersistenceException) {
+                log.info("Job persistence exception");
+                if (jobDetail != null) {
+                    try {
+                        Trigger tr = TriggerBuilder.newTrigger().startAt(DateBuilder.tomorrowAt(0, 15, 0)).build();
+                        scheduler.scheduleJob(jobDetail, tr);
+                    } catch (SchedulerException e1) {
+                        log.error("{}", e);
+                    }
+                }
+            }
         }
     }
 }
