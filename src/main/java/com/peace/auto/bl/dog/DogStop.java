@@ -32,12 +32,12 @@ public class DogStop implements Job {
             Optional<JobExecutionContext> first = scheduler.getCurrentlyExecutingJobs().stream().filter(x -> DogRun.class.getName().equals(x.getJobDetail().getJobClass().getName())).findFirst();
             if (first.isPresent()) {
                 jobDetail = first.get().getJobDetail();
-                log.info("Interrupt job: {}", jobDetail);
-                context.getScheduler().interrupt(jobDetail.getKey());
-
                 // set next job start
                 Trigger tr = TriggerBuilder.newTrigger().forJob(jobDetail).startAt(DateBuilder.tomorrowAt(0, 15, 0)).build();
                 scheduler.scheduleJob(tr);
+
+                log.info("Interrupt job: {}", jobDetail);
+                context.getScheduler().interrupt(jobDetail.getKey());
             }
         } catch (SchedulerException e) {
             log.error("{}", e);
@@ -46,7 +46,7 @@ public class DogStop implements Job {
                 if (jobDetail != null) {
                     try {
                         Trigger tr = TriggerBuilder.newTrigger().startAt(DateBuilder.tomorrowAt(0, 15, 0)).build();
-                        scheduler.scheduleJob(jobDetail, tr);
+                        scheduler.scheduleJob(JobBuilder.newJob(DogRun.class).build(), tr);
                     } catch (SchedulerException e1) {
                         log.error("{}", e);
                     }
