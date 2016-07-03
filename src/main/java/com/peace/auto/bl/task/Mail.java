@@ -43,6 +43,7 @@ public class Mail implements IDo {
                     } else {
                         Match xin = region.exists(baseDir + "xincheckbox.png");
                         if (xin == null) {
+                            status.Done(Task.CLEAR_MAIL);
                             break;
                         } else {
                             Iterator<Match> all = region.findAll(baseDir + "xincheckbox.png");
