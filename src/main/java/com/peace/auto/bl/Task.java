@@ -18,9 +18,11 @@ public enum Task {
 
     SHEN_SHOU_WU(ShenShouWu.class, 20, 5),
 
+    CLEAR_MAIL(Mail.class, 3, 3, 6 * 60 * 60),
+
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),
-//    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
-    SHI_LIAN_DONG(ShiLianDong.class, 2, 2, 45 * 60),
+    //    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
+    SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
     CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -1, 2 * 20 * 60),
 
@@ -69,8 +71,8 @@ public enum Task {
     HUO_YUE_DU(JiangLi.class, 0),
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, -1),
-//    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
-    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 1),
+    //    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
+    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 2),
     HAI_DI_SHI_JIE_TIAO_ZHAN(HaiDiShiJie.class, 1),
 
     SHENG_HUO(ShengHuo.class, 3, 3, 15 * 60),
