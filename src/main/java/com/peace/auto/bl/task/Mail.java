@@ -59,6 +59,11 @@ public class Mail implements IDo {
                                 region.click(Common.QUE_DING);
                             }
 
+                            Match lingqufujian = region.exists(baseDir + "lingqufujian.png");
+                            if (lingqufujian != null) {
+                                region.click(Common.QUE_DING);
+                            }
+
                             Thread.sleep(1000L);
                         }
                     }
