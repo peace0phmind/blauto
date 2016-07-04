@@ -6,6 +6,7 @@ import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.util.List;
@@ -73,8 +74,11 @@ public class LieChang implements IDo {
 
                         Thread.sleep(1000L);
 
-                        Match baopokuangren = region.exists(baseDir + "baopokuangren.png");
-                        if (baopokuangren != null && baopokuangren.getScore() > 0.95) {
+                        region.saveScreenCapture(".", "ttt-" + status.getCurrentUser());
+                        log.info("save image ok.");
+
+                        Match peacemianfei = region.exists(new Pattern(baseDir + "peacemianfei.png").similar(0.95f));
+                        if (peacemianfei != null) {
                             region.click(baseDir + "kaishizhandou.png");
 
                             Match dianjijixu = region.exists(baseDir + "dianjipingmujixu.png", 10);
