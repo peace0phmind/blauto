@@ -48,9 +48,13 @@ public class AutoMode implements Job {
             System.exit(-1);
         }
 
-        List<TaskItem> userTasks = status.getUserTasks();
+        while (true) {
+            List<TaskItem> userTasks = status.getUserTasks();
+            if (userTasks == null || userTasks.size() <= 0) {
+                log.error("Task is empty {}.", userTasks);
+                break;
+            }
 
-        while (userTasks != null && userTasks.size() > 0) {
             TaskItem ti;
             Optional<TaskItem> first = userTasks.stream().filter(x -> x.getTask() == Task.QI_BING_DUO_BAO).findFirst();
             if (first.isPresent()) {
@@ -100,12 +104,16 @@ public class AutoMode implements Job {
                 }
 
                 Duration duration = Duration.between(LocalDateTime.now(), ti.getExecutableTime());
-                addNewTrigger(context, Math.abs(duration.getSeconds()));
-                log.info("After {} seconds to do job. {}", duration.getSeconds(), ti);
+                long delaySeconds = duration.getSeconds();
+                if (delaySeconds <= 0) {
+                    log.info("Time delay is negative {}. {}", delaySeconds, ti);
+                    continue;
+                }
+
+                addNewTrigger(context, delaySeconds);
+                log.info("After {} seconds to do job. {}", delaySeconds, ti);
                 break;
             }
-
-            userTasks = status.getUserTasks();
         }
     }
 
