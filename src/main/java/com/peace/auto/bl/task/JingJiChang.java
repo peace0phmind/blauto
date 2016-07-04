@@ -1,5 +1,6 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,10 @@ import org.sikuli.script.Region;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/5/16.
@@ -40,7 +45,10 @@ public class JingJiChang implements IDo {
 
                 // 挑战
                 Thread.sleep(1000L);
-                region.click(baseDir + "tiaozhan.png");
+                Iterator<Match> all = region.findAll(baseDir + "tiaozhan.png");
+                List<Match> tiaozhans = Lists.newArrayList(all).stream().sorted((x, y) -> x.getX() - y.getX()).collect(Collectors.toList());
+                log.info("Tiao zhan size: {}", tiaozhans.size());
+                tiaozhans.get((int) status.todayFinishCount(Task.JING_JI_CHANG) % tiaozhans.size()).click();
                 Thread.sleep(1000L);
 
                 Match jingjivip = region.exists(baseDir + "jingjivip.png");
