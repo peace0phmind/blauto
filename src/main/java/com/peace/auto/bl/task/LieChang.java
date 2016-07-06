@@ -73,10 +73,7 @@ public class LieChang implements IDo {
                         region.click(baseDir + "kaishichuangguan.png");
 
                         Thread.sleep(1000L);
-
-                        region.saveScreenCapture(".", "ttt-" + status.getCurrentUser());
-                        log.info("save image ok.");
-
+                        
                         Match peacemianfei = region.exists(new Pattern(baseDir + "peacemianfei.png").similar(0.95f));
                         if (peacemianfei != null) {
                             region.click(baseDir + "kaishizhandou.png");
