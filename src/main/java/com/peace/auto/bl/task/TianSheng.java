@@ -22,7 +22,7 @@ import static com.peace.auto.bl.common.Devices.DENG_LU;
 public class TianSheng implements IDo {
     String baseDir = Common.BASE_DIR + "tiansheng/";
 
-    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.6f);
+    Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.7f);
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         Match tiansheng = region.exists(new Pattern(baseDir + "tiansheng.png").similar(0.9f), 10);

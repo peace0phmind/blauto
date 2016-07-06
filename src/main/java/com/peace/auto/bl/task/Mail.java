@@ -1,16 +1,20 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
  * Created by mind on 7/3/16.
  */
+@Slf4j
 public class Mail implements IDo {
     String baseDir = Common.BASE_DIR + "mail/";
 
@@ -27,28 +31,21 @@ public class Mail implements IDo {
             Match shanchu = region.exists(baseDir + "shanchu.png");
             if (shanchu != null) {
 
-                while (true) {
+                for (int i = 0; i < 10; i++) {
+                    log.info("Do {} times check mail.", i);
+
                     Match huixingzhen = region.exists(baseDir + "huixingzhen.png");
                     if (huixingzhen != null) {
-                        huixingzhen.click();
-                        Thread.sleep(1000L);
-
-                        Match shouqu = region.exists(baseDir + "shouqu.png");
-                        if (shouqu != null) {
-                            shouqu.click();
-                            Thread.sleep(1000L);
-                        }
-
-                        region.click(baseDir + "fanhui.png");
+                        readMail(region, huixingzhen);
                     } else {
                         Match xin = region.exists(baseDir + "xincheckbox.png");
                         if (xin == null) {
-                            status.Done(Task.CLEAR_MAIL);
                             break;
                         } else {
                             Iterator<Match> all = region.findAll(baseDir + "xincheckbox.png");
-                            while (all.hasNext()) {
-                                all.next().click();
+                            ArrayList<Match> allMailCheckBox = Lists.newArrayList(all);
+                            for (Match mailCheckBox : allMailCheckBox) {
+                                mailCheckBox.click();
                                 Thread.sleep(500L);
                             }
 
@@ -62,6 +59,11 @@ public class Mail implements IDo {
                             Match lingqufujian = region.exists(baseDir + "lingqufujian.png");
                             if (lingqufujian != null) {
                                 region.click(Common.QUE_DING);
+                                Thread.sleep(1000L);
+
+                                for (Match mailCheckBox : allMailCheckBox) {
+                                    readMail(region, mailCheckBox.left(100));
+                                }
                             }
 
                             Thread.sleep(1000L);
@@ -69,6 +71,7 @@ public class Mail implements IDo {
                     }
                 }
 
+                status.Done(Task.CLEAR_MAIL);
 
                 Thread.sleep(500L);
                 region.click(Common.CLOSE);
@@ -76,6 +79,20 @@ public class Mail implements IDo {
         }
 
         return false;
+    }
+
+    private void readMail(Region region, Region mail) throws InterruptedException, FindFailed {
+        mail.click();
+        Thread.sleep(2000L);
+
+        Match shouqu = region.exists(baseDir + "shouqu.png");
+        if (shouqu != null) {
+            shouqu.click();
+            Thread.sleep(1000L);
+        }
+
+        region.click(baseDir + "fanhui.png");
+        Thread.sleep(2000L);
     }
 
     @Override
