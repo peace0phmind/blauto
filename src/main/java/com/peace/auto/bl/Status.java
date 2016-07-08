@@ -34,7 +34,7 @@ public class Status {
             "peace0ph003"
     );
 
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(13, 54, 0), LocalTime.of(22, 25), LocalTime.of(23, 54, 0));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(21, 30), LocalTime.of(23, 54, 0));
 
     private static int XUN_BAO_PREPARE_MINUTES = 15;
 
@@ -186,11 +186,11 @@ public class Status {
                 }
 
                 if (t == QI_BING_DUO_BAO) {
-                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(11, 30)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
+                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(11, 40)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
                         return;
                     }
                     if (todayFinishCount(Task.QI_BING_DUO_BAO, u) == 0) {
-                        executableTime = localDateTime.withHour(11).withMinute(30);
+                        executableTime = localDateTime.withHour(11).withMinute(40);
                     }
                 }
 
