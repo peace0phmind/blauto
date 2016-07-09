@@ -49,12 +49,7 @@ public class Mail implements IDo {
                                 Thread.sleep(500L);
                             }
 
-                            region.click(baseDir + "shanchu.png");
-
-                            Match querenshanchu = region.exists(baseDir + "querenshanchu.png");
-                            if (querenshanchu != null) {
-                                region.click(Common.QUE_DING);
-                            }
+                            deleteMail(region);
 
                             Match lingqufujian = region.exists(baseDir + "lingqufujian.png");
                             if (lingqufujian != null) {
@@ -64,6 +59,8 @@ public class Mail implements IDo {
                                 for (Match mailCheckBox : allMailCheckBox) {
                                     readMail(region, mailCheckBox.left(100));
                                 }
+
+                                deleteMail(region);
                             }
 
                             Thread.sleep(1000L);
@@ -79,6 +76,15 @@ public class Mail implements IDo {
         }
 
         return false;
+    }
+
+    private void deleteMail(Region region) throws FindFailed {
+        region.click(baseDir + "shanchu.png");
+
+        Match querenshanchu = region.exists(baseDir + "querenshanchu.png");
+        if (querenshanchu != null) {
+            region.click(Common.QUE_DING);
+        }
     }
 
     private void readMail(Region region, Region mail) throws InterruptedException, FindFailed {

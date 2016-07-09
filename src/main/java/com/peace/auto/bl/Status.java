@@ -194,6 +194,10 @@ public class Status {
                     }
                 }
 
+                if (t == CHU_ZHENG_DI_DUI) {
+
+                }
+
                 if (executableTime == null) {
                     log.info("executableTime is null: {}, {}", u, t);
                 }
