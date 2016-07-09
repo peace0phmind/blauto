@@ -1,6 +1,7 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.AutoMode;
+import com.peace.auto.bl.task.ChuZheng;
 import com.peace.auto.bl.task.TianSheng;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -54,14 +55,14 @@ public class Main {
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = DEVICE_1.getRegion(true);
+        AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace0ph002";
+        String user = "peace";
         DENG_LU.checkUser(region, status, user);
 
-        if (new TianSheng().CanDo(status, user)) {
-            new TianSheng().Done(region, status);
+        if (new ChuZheng().CanDo(status, user)) {
+            new ChuZheng().Done(region, status);
         }
 
         region.close();

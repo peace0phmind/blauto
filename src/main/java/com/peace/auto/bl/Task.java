@@ -24,8 +24,8 @@ public enum Task {
     //    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
-    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, 6, 2 * 20 * 60),
-    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, 0, 30 * 60),
+    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -1, 2 * 20 * 60),
+    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
 
     LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
