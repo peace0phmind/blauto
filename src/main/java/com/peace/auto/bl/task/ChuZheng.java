@@ -32,13 +32,26 @@ public class ChuZheng extends ZhanBao implements IDo {
     );
 
     public boolean CanDo(Status status, String userName) {
-        if (!status.canDo(Task.CHU_ZHENG_YE_GUAI, userName)
-                && !status.canDo(Task.CHU_ZHENG_DI_DUI, userName)
-                && !super.canDo(status, userName)) {
-            return false;
+        if (super.canDo(status, userName)
+                && (status.canDo(Task.CHU_ZHENG_YE_GUAI, userName)
+                || canChuZhengDiDui(status, userName)
+                || status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK, userName))) {
+            return true;
         }
 
-        return true;
+        return false;
+    }
+
+    private boolean canChuZhengDiDui(Status status, String userName) {
+        LocalDateTime now = LocalDateTime.now();
+        if (status.canDo(Task.CHU_ZHENG_DI_DUI, userName)) {
+            LocalDateTime fightEnd = status.getLastFinishTime(Task.CHU_ZHENG_DI_DUI_CAN_FIGHT, userName);
+            if (fightEnd != null && now.isBefore(fightEnd) && now.isAfter(fightEnd.minusDays(2))) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
@@ -67,9 +80,12 @@ public class ChuZheng extends ZhanBao implements IDo {
                     return chuZhengYeGuai(region, status, userZhanLi);
                 }
 
-//                if (status.canDo(Task.CHU_ZHENG_DI_DUI)) {
-//                    return chuZhengDiDui(region, status);
-//                }
+                if (canChuZhengDiDui(status, status.getCurrentUser()) || status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK)) {
+                    return chuZhengDiDui(region, status);
+                }
+
+                Thread.sleep(1000L);
+                region.click(Common.CLOSE);
             }
 
             return true;
@@ -89,17 +105,61 @@ public class ChuZheng extends ZhanBao implements IDo {
                 shoucangdebuluo.click();
                 Thread.sleep(1000L);
 
-                Match zhengchang = region.exists(baseDir + "zhengchang.png");
-                if (zhengchang != null) {
-                    Iterator<Match> zhengchangs = region.findAll(baseDir + "zhengchang.png");
+                if (status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK)) {
+                    Match zhengchang = region.exists(baseDir + "zhengchang.png");
 
-                    ArrayList<Match> matches = Lists.newArrayList(zhengchangs);
-                    matches.forEach(x -> {
-                        x.getCenter().left(260).click();
-                    });
+                    if (zhengchang != null) {
+                        ArrayList<Match> zhengchangs = Lists.newArrayList(region.findAll(baseDir + "zhengchang.png"));
+                        if (zhengchangs.size() != 6) {
+                            status.Done(Task.CHU_ZHENG_DI_DUI_CHECK);
+                        } else {
+                            for (Match zc : zhengchangs) {
+                                zc.left(800).click();
+                                Match xuanzhan = region.exists(baseDir + "xuanzhan.png", 10);
+                                if (xuanzhan != null) {
+                                    xuanzhan.click();
+
+                                    Match xuanzhanok = region.exists(baseDir + "xuanzhanchenggong.png");
+                                    if (xuanzhanok != null) {
+                                        region.click(Common.QUE_DING);
+                                    }
+
+                                    clickInside(region, Common.CLOSE);
+                                    Thread.sleep(1000L);
+                                }
+                            }
+
+                            LocalDateTime fightEnd = LocalDateTime.now().plusHours(1).plusDays(2);
+                            status.Done(Task.CHU_ZHENG_DI_DUI_CHECK, fightEnd);
+                            status.Done(Task.CHU_ZHENG_DI_DUI_CAN_FIGHT, fightEnd);
+                        }
+                    }
                 }
 
+                // 可以出征敌对
+                if (canChuZhengDiDui(status, status.getCurrentUser())) {
+                    ArrayList<Match> kezhandous = Lists.newArrayList(region.findAll(baseDir + "kezhandou.png"));
+                    List<Match> matches = kezhandous.stream().sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+                    Match kezhandou = matches.get((int) (status.todayFinishCount(Task.CHU_ZHENG_DI_DUI) % matches.size()));
+                    kezhandou.click();
 
+                    Thread.sleep(1000L);
+
+                    Match chuzhen = region.exists(baseDir + "chuzhenganniu.png", 10);
+                    if (chuzhen != null) {
+                        chuzhen.click();
+
+                        Match quanbubuman = region.exists(baseDir + "quanbubuman.png");
+                        if (quanbubuman != null) {
+                            quanbubuman.click();
+
+                            region.click(baseDir + "quedingchuzheng.png");
+                            status.Done(Task.CHU_ZHENG_DI_DUI);
+                        }
+                    }
+                }
+
+                Thread.sleep(3000L);
                 region.click(Common.CLOSE);
                 return true;
             }

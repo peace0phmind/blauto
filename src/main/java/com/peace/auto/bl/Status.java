@@ -195,7 +195,10 @@ public class Status {
                 }
 
                 if (t == CHU_ZHENG_DI_DUI) {
-
+                    LocalDateTime fightEnd = getLastFinishTime(Task.CHU_ZHENG_DI_DUI_CAN_FIGHT, u);
+                    if (!(fightEnd != null && dateTime.isBefore(fightEnd) && dateTime.isAfter(fightEnd.minusDays(2)))) {
+                        return;
+                    }
                 }
 
                 if (executableTime == null) {
