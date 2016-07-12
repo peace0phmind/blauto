@@ -138,16 +138,28 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                 // 可以出征敌对
                 if (canChuZhengDiDui(status, status.getCurrentUser())) {
+                    Thread.sleep(1000L);
+
                     ArrayList<Match> kezhandous = Lists.newArrayList(region.findAll(baseDir + "kezhandou.png"));
                     List<Match> matches = kezhandous.stream().sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
                     Match kezhandou = matches.get((int) (status.todayFinishCount(Task.CHU_ZHENG_DI_DUI) % matches.size()));
                     kezhandou.click();
 
-                    Thread.sleep(1000L);
+                    Thread.sleep(3000L);
 
                     Match chuzhen = region.exists(baseDir + "chuzhenganniu.png", 10);
                     if (chuzhen != null) {
                         chuzhen.click();
+
+                        Match xuanzechuzhenduixiang = region.exists(baseDir + "xuanzechuzhenduixiang.png");
+                        if (xuanzechuzhenduixiang != null) {
+                            log.info("Xuan ze chu zhen dui xiang.");
+                            region.click(Common.QUE_DING);
+                            kezhandou.click();
+                            Thread.sleep(1000L);
+                            chuzhen.click();
+                            Thread.sleep(1000L);
+                        }
 
                         Match quanbubuman = region.exists(baseDir + "quanbubuman.png");
                         if (quanbubuman != null) {
