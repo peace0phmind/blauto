@@ -98,7 +98,7 @@ public class ChuZheng extends ZhanBao implements IDo {
         Match diduishili = region.exists(baseDir + "diduishili.png");
         if (diduishili != null) {
             diduishili.click();
-            Thread.sleep(1000L);
+            Thread.sleep(6000L);
 
             Match shoucangdebuluo = region.exists(baseDir + "shoucangdebuluo.png");
             if (shoucangdebuluo != null) {
