@@ -103,7 +103,7 @@ public class ChuZheng extends ZhanBao implements IDo {
             Match shoucangdebuluo = region.exists(baseDir + "shoucangdebuluo.png");
             if (shoucangdebuluo != null) {
                 shoucangdebuluo.click();
-                Thread.sleep(1000L);
+                Thread.sleep(3000L);
 
                 if (status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK)) {
                     Match zhengchang = region.exists(baseDir + "zhengchang.png");
@@ -138,20 +138,27 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                 // 可以出征敌对
                 if (canChuZhengDiDui(status, status.getCurrentUser())) {
-                    Thread.sleep(1000L);
 
                     ArrayList<Match> kezhandous = Lists.newArrayList(region.findAll(baseDir + "kezhandou.png"));
                     List<Match> matches = kezhandous.stream().sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
                     Match kezhandou = matches.get((int) (status.todayFinishCount(Task.CHU_ZHENG_DI_DUI) % matches.size()));
+
+                    log.info("Matches: {}", matches);
+
+                    kezhandou.click();
+
+                    Thread.sleep(1000L);
                     kezhandou.click();
 
                     Thread.sleep(3000L);
 
                     Match chuzhen = region.exists(baseDir + "chuzhenganniu.png", 10);
+                    log.info("{}", chuzhen);
                     if (chuzhen != null) {
                         chuzhen.click();
 
                         Match xuanzechuzhenduixiang = region.exists(baseDir + "xuanzechuzhenduixiang.png");
+                        log.info("{}", xuanzechuzhenduixiang);
                         if (xuanzechuzhenduixiang != null) {
                             log.info("Xuan ze chu zhen dui xiang.");
                             region.click(Common.QUE_DING);
