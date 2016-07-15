@@ -29,7 +29,7 @@ public enum Task {
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
 
     LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
-    LIE_CHANG_QIANG_ZHENG(LieChang.class, 1, -1),
+    LIE_CHANG_QIANG_ZHENG(LieChang.class, 3, -1),
     LIE_CHANG_DA_GUAI(LieChang.class, 1, -1, 24 * 60 * 60),
 
     SHOU_GU_JIA_GONG(ShouGuFang.class, 4),
