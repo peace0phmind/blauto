@@ -52,6 +52,10 @@ public class LieChang implements IDo {
                     region.click(Common.CLOSE);
 
                     status.Done(Task.LIE_CHANG_QIANG_ZHENG);
+                } else {
+                    status.Done(Task.LIE_CHANG_QIANG_ZHENG);
+                    status.Done(Task.LIE_CHANG_QIANG_ZHENG);
+                    status.Done(Task.LIE_CHANG_QIANG_ZHENG);
                 }
 
                 Thread.sleep(500L);
