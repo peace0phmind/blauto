@@ -75,7 +75,7 @@ public class Mail implements IDo {
             }
         }
 
-        return false;
+        return true;
     }
 
     private void deleteMail(Region region) throws FindFailed {

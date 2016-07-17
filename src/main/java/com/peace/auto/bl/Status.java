@@ -1,7 +1,7 @@
 package com.peace.auto.bl;
 
 import com.google.common.collect.Lists;
-import com.peace.auto.bl.task.IDo;
+import com.peace.auto.bl.task.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -201,6 +201,17 @@ public class Status {
                     }
                 }
 
+                if (t == EXCHANGE_CODE) {
+                    List<ExchangeCode> exchangeCodes = getExchangeableCodes(dateTime, u);
+                    if (exchangeCodes.size() == 0) {
+                        return;
+                    }
+                    Optional<ExchangeCode> first = exchangeCodes.stream().sorted((x, y) -> x.getBeginTime().compareTo(y.getBeginTime())).findFirst();
+                    if (first.isPresent()) {
+                        executableTime = first.get().getBeginTime();
+                    }
+                }
+
                 if (executableTime == null) {
                     log.info("executableTime is null: {}, {}", u, t);
                 }
@@ -282,6 +293,49 @@ public class Status {
         }
     }
 
+    public void CodeExchanged(int codeId, String userName) {
+        String insertSql = "INSERT INTO exchange_code_log(code_id, user_name, execute_time) VALUES(?, ?, ?)";
+        try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+            int i = 1;
+            stmt.setInt(i++, codeId);
+            stmt.setString(i++, userName);
+            stmt.setTimestamp(i++, Timestamp.valueOf(LocalDateTime.now()));
+
+            stmt.execute();
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
+    }
+
+    public List<ExchangeCode> getExchangeableCodes(LocalDateTime dateTime, String userName) {
+        String selectSql = "SELECT ec.id, ec.code, ec.begin_time, ec.end_time, ecl.execute_time FROM exchange_code ec " +
+                "LEFT JOIN exchange_code_log ecl ON ec.id = ecl.code_id AND ecl.user_name = ? " +
+                "WHERE ? < ec.end_time AND ecl.execute_time IS NULL";
+
+        List<ExchangeCode> ret = new ArrayList<>();
+        try (PreparedStatement stmt = conn.prepareStatement(selectSql)) {
+            int i = 1;
+            stmt.setString(i++, userName);
+            stmt.setTimestamp(i++, Timestamp.valueOf(dateTime));
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    ret.add(new ExchangeCode(
+                            resultSet.getInt("id"),
+                            resultSet.getString("code"),
+                            getLocalDateTime(resultSet.getTimestamp("begin_time")),
+                            getLocalDateTime(resultSet.getTimestamp("end_time")),
+                            getLocalDateTime(resultSet.getTimestamp("execute_time"))
+                    ));
+                }
+            }
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
+
+        return ret;
+    }
+
     public LocalDateTime getLastFinishTime(Task task) {
         return getLastFinishTime(task, currentUser);
     }
@@ -359,5 +413,12 @@ public class Status {
         }
 
         return true;
+    }
+
+    private LocalDateTime getLocalDateTime(Timestamp timestamp) {
+        if (timestamp == null) {
+            return null;
+        }
+        return timestamp.toLocalDateTime();
     }
 }

@@ -18,6 +18,8 @@ public enum Task {
 
     SHEN_SHOU_WU(ShenShouWu.class, 20, 5),
 
+    EXCHANGE_CODE(ExchangeCodeTask.class, 0),
+
     CLEAR_MAIL(Mail.class, 3, 3, 6 * 60 * 60),
 
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),

@@ -2,6 +2,7 @@ package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.AutoMode;
 import com.peace.auto.bl.task.ChuZheng;
+import com.peace.auto.bl.task.ExchangeCodeTask;
 import com.peace.auto.bl.task.TianSheng;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,8 @@ public class Main {
 
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
+
+//        status.getUserTasks().forEach(x -> log.info("{}", x));
 
 //        Device.killAllBoxSVC();
 //        time();
@@ -61,8 +64,8 @@ public class Main {
         String user = "peace";
         DENG_LU.checkUser(region, status, user);
 
-        if (new ChuZheng().CanDo(status, user)) {
-            new ChuZheng().Done(region, status);
+        if (new ExchangeCodeTask().CanDo(status, user)) {
+            new ExchangeCodeTask().Done(region, status);
         }
 
         region.close();
