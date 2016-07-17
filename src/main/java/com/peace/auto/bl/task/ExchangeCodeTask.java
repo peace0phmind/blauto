@@ -71,6 +71,10 @@ public class ExchangeCodeTask implements IDo {
 
     @Override
     public boolean CanDo(Status status, String userName) {
-        return status.canDo(Task.EXCHANGE_CODE, userName);
+        if (status.canDo(Task.EXCHANGE_CODE, userName)) {
+            return status.getExchangeableCodes(LocalDateTime.now(), userName).size() > 0;
+        }
+
+        return false;
     }
 }
