@@ -34,7 +34,7 @@ public class Status {
             "peace0ph003"
     );
 
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(13, 54, 0), LocalTime.of(21, 30), LocalTime.of(23, 54, 0));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
 
     private static int XUN_BAO_PREPARE_MINUTES = 15;
 
