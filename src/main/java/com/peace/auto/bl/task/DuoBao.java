@@ -169,6 +169,9 @@ public class DuoBao implements IDo {
                                 if (jiaru2 != null) {
                                     jiaru2.click();
 
+                                    region1.saveScreenCapture(".", "duobao1");
+                                    region2.saveScreenCapture(".", "duobao2");
+
                                     if (t != null) {
                                         t.execute(jiaru2.getRect());
 
