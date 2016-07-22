@@ -177,12 +177,14 @@ public class Status {
                 }
 
                 if (t == QI_BING_XUN_BAO) {
-                    Optional<LocalTime> first = QI_BING_XUN_BAO_TIME.stream().filter(x -> x.isAfter(dateTime.toLocalTime())).findFirst();
-                    if (first.isPresent()) {
-                        executableTime = dateTime.with(first.get());
-                    } else {
-                        return;
-                    }
+                    int coundIndex = todayFinishCount(QI_BING_XUN_BAO, u);
+                    executableTime = dateTime.with(QI_BING_XUN_BAO_TIME.get(coundIndex));
+//                    Optional<LocalTime> first = QI_BING_XUN_BAO_TIME.stream().filter(x -> x.isAfter(dateTime.toLocalTime())).findFirst();
+//                    if (first.isPresent()) {
+//                        executableTime = dateTime.with(first.get());
+//                    } else {
+//                        return;
+//                    }
                 }
 
                 if (t == QI_BING_DUO_BAO) {
