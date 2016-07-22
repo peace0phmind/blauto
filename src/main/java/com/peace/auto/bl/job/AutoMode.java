@@ -107,7 +107,7 @@ public class AutoMode implements Job {
                 long delaySeconds = duration.getSeconds();
                 if (delaySeconds <= 0) {
                     log.info("Time delay is negative {}. {}", delaySeconds, ti);
-                    continue;
+                    delaySeconds = 0;
                 }
 
                 addNewTrigger(context, delaySeconds);
