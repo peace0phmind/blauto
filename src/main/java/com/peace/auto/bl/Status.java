@@ -142,6 +142,12 @@ public class Status {
                 }
 
                 if (t == Task.SHENG_HUO) {
+                    LocalTime localTime = dateTime.toLocalTime();
+                    if (!((localTime.isAfter(LocalTime.of(11, 30)) && localTime.isBefore(LocalTime.of(13, 59)))
+                            || (localTime.isAfter(LocalTime.of(20, 30)) && localTime.isBefore(LocalTime.of(22, 59))))) {
+                        return;
+                    }
+                    
                     if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
                         executableTime = localDateTime.withHour(11).withMinute(30);
                     } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
@@ -177,14 +183,14 @@ public class Status {
                 }
 
                 if (t == QI_BING_XUN_BAO) {
-                    int coundIndex = todayFinishCount(QI_BING_XUN_BAO, u);
-                    executableTime = dateTime.with(QI_BING_XUN_BAO_TIME.get(coundIndex));
-//                    Optional<LocalTime> first = QI_BING_XUN_BAO_TIME.stream().filter(x -> x.isAfter(dateTime.toLocalTime())).findFirst();
-//                    if (first.isPresent()) {
-//                        executableTime = dateTime.with(first.get());
-//                    } else {
-//                        return;
-//                    }
+//                    int coundIndex = todayFinishCount(QI_BING_XUN_BAO, u);
+//                    executableTime = dateTime.with(QI_BING_XUN_BAO_TIME.get(coundIndex));
+                    Optional<LocalTime> first = QI_BING_XUN_BAO_TIME.stream().filter(x -> x.isAfter(dateTime.toLocalTime())).findFirst();
+                    if (first.isPresent()) {
+                        executableTime = dateTime.with(first.get());
+                    } else {
+                        return;
+                    }
                 }
 
                 if (t == QI_BING_DUO_BAO) {
