@@ -147,7 +147,7 @@ public class Status {
                             || (localTime.isAfter(LocalTime.of(20, 30)) && localTime.isBefore(LocalTime.of(22, 59))))) {
                         return;
                     }
-                    
+
                     if (dateTime.toLocalTime().isBefore(LocalTime.of(11, 30))) {
                         executableTime = localDateTime.withHour(11).withMinute(30);
                     } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
