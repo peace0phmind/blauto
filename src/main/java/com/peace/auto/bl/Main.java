@@ -26,7 +26,7 @@ public class Main {
     public static void main(String[] args) throws FindFailed, InterruptedException, IOException, SchedulerException {
         Settings.OcrTextRead = true;
 
-        status.getUserTasks().forEach(x -> log.info("{}", x));
+//        status.getUserTasks().forEach(x -> log.info("{}", x));
 
 //        Device.killAllBoxSVC();
 //        time();
@@ -34,7 +34,7 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 //        new XunBaoModeJob().execute(null);
 
-//        testMode();
+        testMode();
 //        System.exit(0);
 //        testGetTask();
 //        time();
@@ -58,7 +58,7 @@ public class Main {
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = DEVICE_2.getRegion(true);
+        AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
         String user = "peace";

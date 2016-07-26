@@ -46,6 +46,7 @@ public class DengLu implements IDo {
 
     public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
         log.debug("want user: {}", status.getWantUser());
+//        newRegion(region, new Rectangle(134, 385, 8, 14)).saveScreenCapture(".", "ttt");
 
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {
@@ -65,7 +66,7 @@ public class DengLu implements IDo {
 
 //            ScreenImage simg = region.getScreen().capture();
 //            TextRecognizer tr = TextRecognizer.getInstance();
-            int num = getNumber(newRegion(region, new Rectangle(134, 390, 8, 14)));
+            int num = getNumber(newRegion(region, new Rectangle(134, 385, 8, 14)));
 
             region.click(Common.CLOSE);
             Thread.sleep(1000L);
