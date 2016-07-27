@@ -93,9 +93,9 @@ public enum Task {
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
     LIN_QU_REN_WU(RenWu.class, 0),
 
-    QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 50),
-    QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
-    QI_BING_LING_TU(DuoBao.class, 1);
+    QI_BING_XUN_BAO(DuoBao.class, -1, -3, 5 * 50),
+    QI_BING_DUO_BAO(DuoBao.class, -1, -3, 10 * 60),
+    QI_BING_LING_TU(DuoBao.class, -1);
 
     /**
      * vip user and task
