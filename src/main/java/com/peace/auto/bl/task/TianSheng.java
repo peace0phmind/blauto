@@ -77,6 +77,44 @@ public class TianSheng implements IDo {
                 }
             }
 
+            if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN)) {
+                Match huishi = region.exists(baseDir + "huishi.png");
+                if (huishi != null) {
+                    huishi.click();
+                    Thread.sleep(3000L);
+
+                    Match huoqushenhun = region.exists(baseDir + "huoqushenhun.png");
+                    if (huoqushenhun != null) {
+                        huoqushenhun.click();
+                        Thread.sleep(3000L);
+
+                        Match mianfeizhaohuan = region.exists(baseDir + "mianfeizhaohuan.png");
+                        if (mianfeizhaohuan != null) {
+                            Iterator<Match> all = region.findAll(baseDir + "mianfeizhaohuan.png");
+                            while (all.hasNext()) {
+                                Match next = all.next();
+                                next.below().click(baseDir + "zhaohuanyici.png");
+
+                                Match queding = region.exists(Common.QUE_DING);
+                                if (queding != null) {
+                                    queding.click();
+                                    Thread.sleep(3000l);
+                                }
+                            }
+
+                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN);
+                        } else {
+                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, Status.nextCheck());
+                        }
+
+                        region.click(Common.CLOSE);
+                    }
+
+                    Thread.sleep(1000L);
+                    region.click(Common.CLOSE);
+                }
+            }
+
             // TODO 单独测试一下天神乱斗的情况,看是否有close不掉的问题,注意——单独
             if (status.canDo(Task.TIAN_SHEN_LUAN_DOU)) {
                 // 天神大乱斗
@@ -132,7 +170,8 @@ public class TianSheng implements IDo {
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.TIAN_SHEN_QI_DAO, userName)
                 && !status.canDo(Task.TIAN_SHEN_YUAN_GU, userName)
-                && !status.canDo(Task.TIAN_SHEN_LUAN_DOU, userName)) {
+                && !status.canDo(Task.TIAN_SHEN_LUAN_DOU, userName)
+                && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, userName)) {
             return false;
         }
 

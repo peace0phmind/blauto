@@ -61,23 +61,23 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace";
+        String user = "peace0ph001";
 
         DENG_LU.checkUser(region, status, user);
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
         log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-        for (IDo iDo : tasks) {
-            if (iDo.CanDo(status, status.getCurrentUser())) {
-                if (iDo.Done(region, status)) {
-                    Thread.sleep(3 * 1000L);
-                }
-            }
-        }
-
-//        if (new Mail().CanDo(status, user)) {
-//            new Mail().Done(region, status);
+//        for (IDo iDo : tasks) {
+//            if (iDo.CanDo(status, status.getCurrentUser())) {
+//                if (iDo.Done(region, status)) {
+//                    Thread.sleep(3 * 1000L);
+//                }
+//            }
 //        }
+
+        if (new TianSheng().CanDo(status, user)) {
+            new TianSheng().Done(region, status);
+        }
 
         region.close();
     }
