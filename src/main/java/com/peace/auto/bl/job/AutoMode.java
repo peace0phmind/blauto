@@ -87,7 +87,7 @@ public class AutoMode implements Job {
                         break;
                     default:
                         log.info("Do task, {}", ti);
-                        new OrderModeJob().doTask(ti.getUserName());
+                        new OrderModeJob().doTask(DEVICE_1, ti.getUserName());
                         break;
                 }
             } else {

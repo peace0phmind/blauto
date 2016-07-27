@@ -1,6 +1,7 @@
 package com.peace.auto.bl.job;
 
 import com.peace.auto.bl.Status;
+import com.peace.auto.bl.common.Device;
 import com.peace.auto.bl.task.IDo;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -41,14 +42,14 @@ public class OrderModeJob implements Job, TaskJob {
 
     @Override
     public void execute() {
-        doTask(status.getNextLoginName());
+        doTask(DEVICE_1, status.getNextLoginName());
     }
 
-    public void doTask(String userName) {
+    public void doTask(Device device, String userName) {
         AndroidScreen region = null;
 
         try {
-            region = DEVICE_1.getRegion();
+            region = device.getRegion();
             DENG_LU.checkUser(region, status, userName);
             List<IDo> tasks = status.getTasks(status.getCurrentUser());
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
@@ -75,7 +76,7 @@ public class OrderModeJob implements Job, TaskJob {
                     }
                     region.saveScreenCapture(".", currentUser);
                 }
-                DEVICE_1.stopDevice();
+                device.stopDevice();
             } catch (Exception e1) {
                 log.error("{}", e1);
             }

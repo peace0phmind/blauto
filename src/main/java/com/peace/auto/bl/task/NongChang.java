@@ -28,7 +28,7 @@ public class NongChang implements IDo {
 
         if (innongchang != null) {
             // 收获
-            Match shouhuo = region.exists(baseDir + "shouhuo.png", 0.5);
+            Match shouhuo = region.exists(baseDir + "shouhuo.png", 6);
             if (shouhuo != null) {
                 shouhuo.click();
 

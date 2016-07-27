@@ -110,7 +110,7 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                     if (zhengchang != null) {
                         ArrayList<Match> zhengchangs = Lists.newArrayList(region.findAll(baseDir + "zhengchang.png"));
-                        if (zhengchangs.size() != 6) {
+                        if (zhengchangs.size() != 4) {
                             status.Done(Task.CHU_ZHENG_DI_DUI_CHECK);
                         } else {
                             for (Match zc : zhengchangs) {

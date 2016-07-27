@@ -85,6 +85,11 @@ public class Mail implements IDo {
         if (querenshanchu != null) {
             region.click(Common.QUE_DING);
         }
+
+        Match querenshanchuyidu = region.exists(baseDir + "querenshanchuyidu.png");
+        if (querenshanchuyidu != null) {
+            region.click(Common.QUE_DING);
+        }
     }
 
     private void readMail(Region region, Region mail, Status status) throws InterruptedException, FindFailed {
