@@ -83,7 +83,6 @@ public enum Task {
 
     SHENG_HUO(ShengHuo.class, 3, 3, 15 * 60),
 
-    QUN_YING_HUI(QunYingHui.class, 1),
     QUN_YING_HUI_BAO_MING(QunYingHui.class, 1),
     QUN_YING_HUI_LING_JIANG(QunYingHui.class, 1),
 
