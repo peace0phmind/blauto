@@ -61,7 +61,7 @@ public class Main {
         AndroidScreen region = DEVICE_1.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace0ph001";
+        String user = "peace";
 
         DENG_LU.checkUser(region, status, user);
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
@@ -75,8 +75,8 @@ public class Main {
 //            }
 //        }
 
-        if (new TianSheng().CanDo(status, user)) {
-            new TianSheng().Done(region, status);
+        if (new Building().CanDo(status, user)) {
+            new Building().Done(region, status);
         }
 
         region.close();

@@ -92,7 +92,7 @@ public class Building implements IDo {
                 if (inbuluodating != null) {
                     List<Match> list = Lists.newArrayList(region.findAll(baseDir + "shengji.png"));
 
-                    List<Match> sorted = list.stream().sorted((x, y) -> x.getX() - y.getX()).sorted((x, y) -> x.getY() - y.getY()).collect(Collectors.toList());
+                    List<Match> sorted = list.stream().sorted((x, y) -> x.getX() / 100 - y.getX() / 100).sorted((x, y) -> x.getY() / 100 - y.getY() / 100).collect(Collectors.toList());
                     List<Integer> ids = status.isPeace() ? peaceBuildingIds : buildingIds;
                     buildLoop:
                     for (Integer bid : ids) {

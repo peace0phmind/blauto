@@ -88,9 +88,10 @@ public class TianSheng implements IDo {
                         huoqushenhun.click();
                         Thread.sleep(3000L);
 
-                        Match mianfeizhaohuan = region.exists(baseDir + "mianfeizhaohuan.png");
+                        Pattern mfzh = new Pattern(baseDir + "mianfeizhaohuan.png").similar(0.9f);
+                        Match mianfeizhaohuan = region.exists(mfzh);
                         if (mianfeizhaohuan != null) {
-                            Iterator<Match> all = region.findAll(baseDir + "mianfeizhaohuan.png");
+                            Iterator<Match> all = region.findAll(mfzh);
                             while (all.hasNext()) {
                                 Match next = all.next();
                                 next.below().click(baseDir + "zhaohuanyici.png");
