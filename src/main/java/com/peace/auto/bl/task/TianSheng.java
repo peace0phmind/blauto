@@ -31,8 +31,10 @@ public class TianSheng implements IDo {
             tiansheng.click();
             Thread.sleep(100L);
 
-            if (status.canDo(Task.TIAN_SHEN_QI_DAO)) {
+            if (status.canDo(Task.TIAN_SHEN_QI_DAO) || status.canDo(Task.TIAN_SHEN_QI_DAO_GAO_JI)) {
                 // 祈祷
+                boolean bQidao = false;
+                boolean bGaoJiQiDao = false;
                 Match qidao = region.exists(baseDir + "qidao.png", 3);
                 if (qidao != null) {
                     qidao.click();
@@ -59,11 +61,23 @@ public class TianSheng implements IDo {
                                 Thread.sleep(1000L);
                                 mf.below().click(baseDir + "qidaoanniu.png");
                             }
-                        }
 
-                        status.Done(Task.TIAN_SHEN_QI_DAO);
-                    } else {
+                            if (mf.getX() > 400) {
+                                bGaoJiQiDao = true;
+                                status.Done(Task.TIAN_SHEN_QI_DAO_GAO_JI);
+                            } else {
+                                bQidao = true;
+                                status.Done(Task.TIAN_SHEN_QI_DAO);
+                            }
+                        }
+                    }
+
+                    if (status.canDo(Task.TIAN_SHEN_QI_DAO) && !bQidao) {
                         status.Done(Task.TIAN_SHEN_QI_DAO, Status.nextCheck());
+                    }
+
+                    if (status.canDo(Task.TIAN_SHEN_QI_DAO_GAO_JI) && !bGaoJiQiDao) {
+                        status.Done(Task.TIAN_SHEN_QI_DAO_GAO_JI, Status.nextCheck());
                     }
 
                     region.click(Common.CLOSE);
@@ -77,7 +91,9 @@ public class TianSheng implements IDo {
                 }
             }
 
-            if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN)) {
+            if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI)) {
+                boolean bShenHun = false;
+                boolean bGaoJiShenHun = false;
                 Match huishi = region.exists(baseDir + "huishi.png");
                 if (huishi != null) {
                     huishi.click();
@@ -101,11 +117,23 @@ public class TianSheng implements IDo {
                                     queding.click();
                                     Thread.sleep(3000l);
                                 }
-                            }
 
-                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN);
-                        } else {
+                                if (next.getX() > 400) {
+                                    bGaoJiShenHun = true;
+                                    status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI);
+                                } else {
+                                    bShenHun = true;
+                                    status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN);
+                                }
+                            }
+                        }
+
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) && !bShenHun) {
                             status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, Status.nextCheck());
+                        }
+
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI) && !bGaoJiShenHun) {
+                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI, Status.nextCheck());
                         }
 
                         region.click(Common.CLOSE);
@@ -170,8 +198,10 @@ public class TianSheng implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.TIAN_SHEN_QI_DAO, userName)
+                && !status.canDo(Task.TIAN_SHEN_QI_DAO_GAO_JI, userName)
                 && !status.canDo(Task.TIAN_SHEN_YUAN_GU, userName)
                 && !status.canDo(Task.TIAN_SHEN_LUAN_DOU, userName)
+                && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI, userName)
                 && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, userName)) {
             return false;
         }

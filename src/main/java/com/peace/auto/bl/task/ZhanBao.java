@@ -2,6 +2,7 @@ package com.peace.auto.bl.task;
 
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
+import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
@@ -13,6 +14,7 @@ import java.util.Arrays;
 /**
  * Created by mind on 3/12/16.
  */
+@Slf4j
 abstract public class ZhanBao {
 
     private String baseDir = Common.BASE_DIR + "zhanbao/";
@@ -39,18 +41,22 @@ abstract public class ZhanBao {
 
         boolean ret = false;
         // 先查看是否有战报
-        region.click(Common.MENU);
+        Match menu = region.exists(Common.MENU, 6);
+        log.info("Menu: {}", menu);
+        if (menu != null) {
+            menu.click();
 
-        Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
-        if (zhanbao != null) {
-            zhanbao.click();
+            Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
+            if (zhanbao != null) {
+                zhanbao.click();
 
-            Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
-            if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
-                ret = true;
+                Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
+                if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
+                    ret = true;
+                }
+
+                region.click(Common.CLOSE);
             }
-
-            region.click(Common.CLOSE);
         }
 
         return ret;

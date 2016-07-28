@@ -16,7 +16,12 @@ public class ShiLianDong extends ZhanBao implements IDo {
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         if (canFight(region, status)) {
-            region.click(Common.RI_CHANG);
+            Match richang = region.exists(Common.RI_CHANG, 6);
+            if (richang != null) {
+                richang.click();
+            } else {
+                return false;
+            }
 
             Thread.sleep(3000L);
 
