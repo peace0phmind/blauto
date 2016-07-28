@@ -54,7 +54,7 @@ public class JingJiChang implements IDo {
                 Match jingjivip = region.exists(baseDir + "jingjivip.png");
                 if (jingjivip != null) {
                     // 结束了
-                    jingjivip.above().click(Common.CLOSE);
+                    clickInside(region, Common.CLOSE);
                     status.Done(Task.JING_JI_CHANG, LocalDateTime.now());
                 } else {
                     // 没有结束
