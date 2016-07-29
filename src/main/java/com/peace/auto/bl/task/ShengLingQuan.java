@@ -15,73 +15,77 @@ public class ShengLingQuan implements IDo {
     String baseDir = Common.BASE_DIR + "shenglingquan/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        region.click(Common.RI_CHANG);
+        Match richang = region.exists(Common.RI_CHANG);
+        if (richang != null) {
+            richang.click();
 
-        Thread.sleep(3000L);
+            Thread.sleep(3000L);
 
-        Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
-        if (shenglingquan != null) {
-            shenglingquan.click();
+            Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
+            if (shenglingquan != null) {
+                shenglingquan.click();
 
-            // 神灵泉
-            if (status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
-                putongxilian(region);
+                // 神灵泉
+                if (status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
+                    putongxilian(region);
 
-                if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
-                    region.click(baseDir + "dingjishenshui.png");
+                    if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
+                        region.click(baseDir + "dingjishenshui.png");
 
-                    Match zhixingmianfeicaozuo = region.exists(baseDir + "zhixingmianfeicaozuo.png", 6);
-                    if (zhixingmianfeicaozuo != null) {
-                        Thread.sleep(2000L);
-                        Match queding = region.exists(Common.QUE_DING, 10);
-                        if (queding != null) {
+                        Match zhixingmianfeicaozuo = region.exists(baseDir + "zhixingmianfeicaozuo.png", 6);
+                        if (zhixingmianfeicaozuo != null) {
                             Thread.sleep(2000L);
-                            region.click(Common.QUE_DING);
+                            Match queding = region.exists(Common.QUE_DING, 10);
+                            if (queding != null) {
+                                Thread.sleep(2000L);
+                                region.click(Common.QUE_DING);
+                                status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
+                            }
+
+                            Thread.sleep(2000L);
+                            putongxilian(region);
+                        } else {
+                            region.click(Common.QU_XIAO);
                             status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                         }
-
-                        Thread.sleep(2000L);
-                        putongxilian(region);
-                    } else {
-                        region.click(Common.QU_XIAO);
-                        status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                     }
+
+                    status.Done(Task.SHENG_LING_QUAN_XI_LIAN, Status.nextRefresh());
                 }
 
-                status.Done(Task.SHENG_LING_QUAN_XI_LIAN, Status.nextRefresh());
-            }
+                // 高级修炼
+                if (status.canDo(Task.SHENG_LING_QUAN_XIU_LIAN)) {
+                    Match xiulian = region.exists(baseDir + "xiulian.png", 3);
+                    if (xiulian != null) {
+                        xiulian.click();
 
-            // 高级修炼
-            if (status.canDo(Task.SHENG_LING_QUAN_XIU_LIAN)) {
-                Match xiulian = region.exists(baseDir + "xiulian.png", 3);
-                if (xiulian != null) {
-                    xiulian.click();
+                        Match kaishixiulian = region.exists(baseDir + "kaishixiulian.png", 3);
+                        if (kaishixiulian != null && kaishixiulian.getScore() > 0.95) {
+                            Thread.sleep(1000L);
+                            region.click(baseDir + "gaojixiulian.png");
+                            Thread.sleep(1000L);
+                            region.click(baseDir + "kaishixiulian.png");
 
-                    Match kaishixiulian = region.exists(baseDir + "kaishixiulian.png", 3);
-                    if (kaishixiulian != null && kaishixiulian.getScore() > 0.95) {
-                        Thread.sleep(1000L);
-                        region.click(baseDir + "gaojixiulian.png");
-                        Thread.sleep(1000L);
-                        region.click(baseDir + "kaishixiulian.png");
-
-                        Match goumai = region.exists(baseDir + "goumai.png", 3);
-                        if (goumai != null) {
-                            region.click(Common.QUE_DING);
-                            status.Done(Task.SHENG_LING_QUAN_XIU_LIAN);
+                            Match goumai = region.exists(baseDir + "goumai.png", 3);
+                            if (goumai != null) {
+                                region.click(Common.QUE_DING);
+                                status.Done(Task.SHENG_LING_QUAN_XIU_LIAN);
+                            }
+                        } else {
+                            status.Done(Task.SHENG_LING_QUAN_XIU_LIAN, Status.nextCheck());
                         }
-                    } else {
-                        status.Done(Task.SHENG_LING_QUAN_XIU_LIAN, Status.nextCheck());
                     }
                 }
+
+                region.click(Common.CLOSE);
+                Thread.sleep(500L);
             }
 
             region.click(Common.CLOSE);
-            Thread.sleep(500L);
+            return true;
         }
 
-        region.click(Common.CLOSE);
-
-        return true;
+        return false;
     }
 
     @Override
