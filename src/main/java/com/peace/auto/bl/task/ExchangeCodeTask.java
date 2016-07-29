@@ -45,13 +45,15 @@ public class ExchangeCodeTask implements IDo {
 
                         if (exchangeableCodes.size() > 0) {
                             for (ExchangeCode ec : exchangeableCodes) {
-                                shuru.type(ec.getCode());
-                                Thread.sleep(1000L);
-                                region.click(baseDir + "fasong.png");
+                                if (ec.getBeginTime().isBefore(LocalDateTime.now())) {
+                                    shuru.type(ec.getCode());
+                                    Thread.sleep(1000L);
+                                    region.click(baseDir + "fasong.png");
 
-                                // exchange code done
-                                status.CodeExchanged(ec.getId(), status.getCurrentUser());
-                                Thread.sleep(1000L);
+                                    // exchange code done
+                                    status.CodeExchanged(ec.getId(), status.getCurrentUser());
+                                    Thread.sleep(1000L);
+                                }
                             }
                         }
                     }
