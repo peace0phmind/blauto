@@ -198,7 +198,7 @@ public class Status {
                         return;
                     }
                     if (todayFinishCount(Task.QI_BING_DUO_BAO, u) == 0) {
-                        executableTime = localDateTime.withHour(11).withMinute(40);
+                        executableTime = localDateTime.withHour(13).withMinute(10);
                     }
                 }
 
