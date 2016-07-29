@@ -194,7 +194,7 @@ public class Status {
                 }
 
                 if (t == QI_BING_DUO_BAO) {
-                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(11, 40)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
+                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(13, 5)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
                         return;
                     }
                     if (todayFinishCount(Task.QI_BING_DUO_BAO, u) == 0) {
