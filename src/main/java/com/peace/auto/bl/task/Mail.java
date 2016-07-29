@@ -20,7 +20,13 @@ public class Mail implements IDo {
 
     @Override
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        region.click(Common.MENU);
+        Match menu = region.exists(Common.MENU);
+        if (menu != null) {
+            menu.click();
+            Thread.sleep(3000L);
+        } else {
+            return false;
+        }
 
         Match xinfeng = region.exists(baseDir + "xinfeng.png");
         if (xinfeng != null) {

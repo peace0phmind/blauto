@@ -25,16 +25,16 @@ public class DengLu implements IDo {
 
     private Properties properties = new Properties();
 
-    public String getPassword() {
-        return properties.getProperty("password");
-    }
-
     public DengLu() {
         try {
             properties.load(getClass().getClassLoader().getResourceAsStream("password.properties"));
         } catch (IOException e) {
             log.error("Load password error. {}", e);
         }
+    }
+
+    public String getPassword() {
+        return properties.getProperty("password");
     }
 
     public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
@@ -194,7 +194,7 @@ public class DengLu implements IDo {
 
             Thread.sleep(10 * 1000L);
 
-            Match close = region.exists(Common.CLOSE);
+            Match close = region.exists(Common.CLOSE, 10);
             while (close != null) {
                 log.debug("{}", close);
                 close.click();

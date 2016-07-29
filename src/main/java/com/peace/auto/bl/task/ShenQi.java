@@ -30,7 +30,7 @@ public class ShenQi implements IDo {
             Match shenqi = region.exists(baseDir + "shenqi.png");
             if (shenqi != null) {
                 shenqi.click();
-                Thread.sleep(1000L);
+                Thread.sleep(6000L);
 
                 // 神器召唤
                 if (status.canDo(Task.SHEN_QI)) {

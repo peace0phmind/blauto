@@ -67,17 +67,17 @@ public class Main {
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
         log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-//        for (IDo iDo : tasks) {
-//            if (iDo.CanDo(status, status.getCurrentUser())) {
-//                if (iDo.Done(region, status)) {
-//                    Thread.sleep(3 * 1000L);
-//                }
-//            }
-//        }
-
-        if (new Building().CanDo(status, user)) {
-            new Building().Done(region, status);
+        for (IDo iDo : tasks) {
+            if (iDo.CanDo(status, status.getCurrentUser())) {
+                if (iDo.Done(region, status)) {
+                    Thread.sleep(3 * 1000L);
+                }
+            }
         }
+
+//        if (new Building().CanDo(status, user)) {
+//            new Building().Done(region, status);
+//        }
 
         region.close();
     }
