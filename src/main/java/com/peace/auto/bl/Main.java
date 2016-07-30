@@ -61,23 +61,23 @@ public class Main {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace0ph001";
+        String user = "peace";
 
         DENG_LU.checkUser(region, status, user);
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
         log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-//        for (IDo iDo : tasks) {
-//            if (iDo.CanDo(status, status.getCurrentUser())) {
-//                if (iDo.Done(region, status)) {
-//                    Thread.sleep(3 * 1000L);
-//                }
-//            }
-//        }
-
-        if (new ShiChang().CanDo(status, user)) {
-            new ShiChang().Done(region, status);
+        for (IDo iDo : tasks) {
+            if (iDo.CanDo(status, status.getCurrentUser())) {
+                if (iDo.Done(region, status)) {
+                    Thread.sleep(3 * 1000L);
+                }
+            }
         }
+
+//        if (new ShiChang().CanDo(status, user)) {
+//            new ShiChang().Done(region, status);
+//        }
 
         region.close();
     }
