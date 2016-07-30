@@ -110,7 +110,7 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                     if (zhengchang != null) {
                         ArrayList<Match> zhengchangs = Lists.newArrayList(region.findAll(baseDir + "zhengchang.png"));
-                        if (zhengchangs.size() != 4) {
+                        if (zhengchangs.size() != 6) {
                             status.Done(Task.CHU_ZHENG_DI_DUI_CHECK);
                         } else {
                             for (Match zc : zhengchangs) {
@@ -157,6 +157,8 @@ public class ChuZheng extends ZhanBao implements IDo {
                     if (chuzhen != null) {
                         chuzhen.click();
 
+                        Thread.sleep(1000L);
+
                         Match xuanzechuzhenduixiang = region.exists(baseDir + "xuanzechuzhenduixiang.png");
                         log.info("{}", xuanzechuzhenduixiang);
                         if (xuanzechuzhenduixiang != null) {
@@ -171,6 +173,8 @@ public class ChuZheng extends ZhanBao implements IDo {
                         Match quanbubuman = region.exists(baseDir + "quanbubuman.png");
                         if (quanbubuman != null) {
                             quanbubuman.click();
+
+                            Thread.sleep(1000L);
 
                             region.click(baseDir + "quedingchuzheng.png");
                             status.Done(Task.CHU_ZHENG_DI_DUI);

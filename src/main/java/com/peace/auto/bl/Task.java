@@ -26,9 +26,9 @@ public enum Task {
     //    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
-    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -6, 2 * 20 * 60),
-    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
-    CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
+    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, 6, 2 * 20 * 60),
+    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, 1, 30 * 60),
+    CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, 1),  // a tag
 
     LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
     LIE_CHANG_QIANG_ZHENG(LieChang.class, 3, -1),
@@ -94,7 +94,7 @@ public enum Task {
     YUE_KA(RenWu.class, 1),
     LI_BAO(RenWu.class, 5, 5, Arrays.asList(30 * 60, 30 * 60, 60 * 60, 60 * 60)),
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
-    LIN_QU_REN_WU(RenWu.class, 0),
+    LIN_QU_REN_WU(RenWu.class, -1),
 
     QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 50),
     QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
