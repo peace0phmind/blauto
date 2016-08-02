@@ -3,6 +3,7 @@ package com.peace.auto.bl;
 import com.google.common.collect.Lists;
 import com.peace.auto.bl.task.*;
 import lombok.Data;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -23,7 +24,7 @@ public class Status {
 
     private static final Random ROOM_NO_RANDOM = new Random();
 
-    private static final List<String> USERS = Arrays.asList(
+    public static final List<String> USERS = Arrays.asList(
             "peace",
             "peace0ph001",
             "peace0ph002",

@@ -200,7 +200,7 @@ public class ChuZheng extends ZhanBao implements IDo {
 
             // 选择大于战力的第二个
             while (true) {
-                Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.90f));
+                Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
                 ArrayList<Match> matches = Lists.newArrayList(all);
                 if (matches.size() < 3) {
                     log.error("list size is {}.", matches.size());

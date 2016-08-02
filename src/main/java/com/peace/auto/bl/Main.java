@@ -61,7 +61,7 @@ public class Main {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkUser(region, status, status.peaceName());
-        String user = "peace";
+        String user = Status.USERS.get(1);
 
         DENG_LU.checkUser(region, status, user);
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
