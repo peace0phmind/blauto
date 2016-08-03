@@ -55,12 +55,15 @@ public class ShouGuFang implements IDo {
                 shoulie:
                 for (int i = 0; i < 40; i++) {
                     Match daliang = region.exists(baseDir + "daliangniaolong.png");
+                    log.info("{}", daliang);
                     if (daliang != null) {
                         Iterator<Match> all = region.findAll(baseDir + "daliangniaolong.png");
                         while (all.hasNext()) {
                             Match liewu = all.next();
+                            log.info("{}", liewu);
                             if (liewu.getScore() > 0.95) {
                                 Color pixelColor = getPixelColor(liewu, 54, 5);
+                                log.info("Color is: {}", pixelColor);
                                 // [r=220,g=117,b=223] 大量
                                 // [r=216,g=202,b=153] 小量
                                 // [r=91,g=71,b=48] 一群
