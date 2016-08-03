@@ -39,6 +39,7 @@ public class ShengHuo implements IDo {
                 Match lingqu = region.exists(baseDir + "lingqu.png", 6);
                 if (lingqu != null && isButtonEnable(lingqu)) {
                     lingqu.click();
+                    Thread.sleep(3000L);
                 }
 
                 if (!duoqu(region, status, "langguo.png")) {
