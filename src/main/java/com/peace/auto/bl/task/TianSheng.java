@@ -193,6 +193,9 @@ public class TianSheng implements IDo {
 
             Thread.sleep(500L);
             region.click(Common.CLOSE);
+
+            Thread.sleep(1500L);
+            region.click(Common.CLOSE);
         }
 
         return true;
