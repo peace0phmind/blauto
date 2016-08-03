@@ -48,7 +48,7 @@ public class ShengHuo implements IDo {
 
                 region.click(Common.CLOSE);
 
-                Thread.sleep(1000L);
+                Thread.sleep(3000L);
 
                 region.click(Common.CLOSE);
             }
@@ -91,9 +91,9 @@ public class ShengHuo implements IDo {
                 }
             }
 
-            Thread.sleep(1000L);
+            Thread.sleep(3000L);
             region.click(baseDir + "fanhui.png");
-            Thread.sleep(1000L);
+            Thread.sleep(3000L);
         }
 
         return ret;
