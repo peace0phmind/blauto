@@ -25,6 +25,9 @@ public class TianSheng implements IDo {
     Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.7f);
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
+        region.click(Common.RI_CHANG);
+        Thread.sleep(6000L);
+
         Match tiansheng = region.exists(new Pattern(baseDir + "tiansheng.png").similar(0.9f), 10);
         log.info("{}", tiansheng);
         if (tiansheng != null) {
