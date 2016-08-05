@@ -7,6 +7,8 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
+import java.time.LocalTime;
+
 /**
  * Created by mind on 3/5/16.
  */
@@ -27,7 +29,7 @@ public class ShengLingQuan implements IDo {
 
                 // 神灵泉
                 if (status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
-                    putongxilian(region);
+                    putongxilian(region, true);
 
                     if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
                         region.click(baseDir + "dingjishenshui.png");
@@ -43,11 +45,15 @@ public class ShengLingQuan implements IDo {
                             }
 
                             Thread.sleep(2000L);
-                            putongxilian(region);
+                            putongxilian(region, true);
                         } else {
                             region.click(Common.QU_XIAO);
                             status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                         }
+                    }
+
+                    if (LocalTime.now().isAfter(LocalTime.of(22, 0))) {
+                        putongxilian(region, false);
                     }
 
                     status.Done(Task.SHENG_LING_QUAN_XI_LIAN, Status.nextRefresh());
@@ -98,17 +104,23 @@ public class ShengLingQuan implements IDo {
         return true;
     }
 
-    private void putongxilian(Region region) throws FindFailed, InterruptedException {
-        Match shengpin = region.exists(baseDir + "shengpin");
-        while (shengpin != null && shengpin.getScore() > 0.95) {
-            region.click(baseDir + "putongxiulian.png");
-            Match end = region.exists(baseDir + "xilianend.png", 1);
-            if (end != null) {
-                Thread.sleep(1000L);
-                region.click(Common.QUE_DING);
-                break;
+    private void putongxilian(Region region, boolean needShengping) throws FindFailed, InterruptedException {
+        Match shengpin = null;
+        for (int i = 0; i < 60; i++) {
+            if (needShengping) {
+                shengpin = region.exists(baseDir + "shengpin", 3);
             }
-            shengpin = region.exists(baseDir + "shengpin", 3);
+
+            if (!needShengping
+                    || (needShengping && shengpin != null && shengpin.getScore() > 0.95)) {
+                region.click(baseDir + "putongxiulian.png");
+                Match end = region.exists(baseDir + "xilianend.png", 1);
+                if (end != null) {
+                    Thread.sleep(1000L);
+                    region.click(Common.QUE_DING);
+                    break;
+                }
+            }
         }
     }
 }
