@@ -115,6 +115,7 @@ public class DengLu implements IDo {
             Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png", 6);
             log.info("{}", qiuzhangxinxi);
             if (qiuzhangxinxi == null) {
+                Thread.sleep(6000L);
                 touxiang.click();
                 qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png", 6);
             }
