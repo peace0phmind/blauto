@@ -50,7 +50,7 @@ public class OrderModeJob implements Job, TaskJob {
 
         try {
             region = device.getRegion();
-            DENG_LU.checkUser(region, status, userName);
+            DENG_LU.checkAndChangeUser(region, status, userName);
             List<IDo> tasks = status.getTasks(status.getCurrentUser());
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 

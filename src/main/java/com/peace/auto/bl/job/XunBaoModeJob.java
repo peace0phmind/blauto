@@ -53,8 +53,8 @@ public class XunBaoModeJob implements Job, TaskJob {
             AndroidScreen region1 = DEVICE_1.getRegion();
             AndroidScreen region2 = DEVICE_2.getRegion();
 
-            DENG_LU.checkUser(region1, status, status.peaceName());
-            DENG_LU.checkUser(region2, status, "peace0ph001");
+            DENG_LU.checkAndChangeUser(region1, status, status.peaceName());
+            DENG_LU.checkAndChangeUser(region2, status, "peace0ph001");
 
             status.setCurrentUser(status.peaceName());
         } catch (Exception e) {

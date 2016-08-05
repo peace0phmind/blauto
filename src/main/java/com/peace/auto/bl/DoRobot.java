@@ -1,6 +1,7 @@
 package com.peace.auto.bl;
 
 import com.peace.sikuli.monkey.AndroidRobot;
+import org.sikuli.script.FindFailed;
 
 /**
  * Created by mind on 6/13/16.

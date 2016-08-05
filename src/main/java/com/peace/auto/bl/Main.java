@@ -1,7 +1,6 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.AutoMode;
-import com.peace.auto.bl.job.OrderModeJob;
 import com.peace.auto.bl.task.*;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -60,10 +59,10 @@ public class Main {
     private static void testMode() throws IOException, InterruptedException, FindFailed {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
-//        DENG_LU.checkUser(region, status, status.peaceName());
+//        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
         String user = Status.USERS.get(7);
 
-        DENG_LU.checkUser(region, status, user);
+        DENG_LU.checkAndChangeUser(region, status, user);
         List<IDo> tasks = status.getTasks(status.getCurrentUser());
         log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 

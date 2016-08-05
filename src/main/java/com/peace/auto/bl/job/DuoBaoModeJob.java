@@ -51,9 +51,9 @@ public class DuoBaoModeJob implements Job, TaskJob {
             String user1 = duobaoList.get(count).get(0);
             String user2 = duobaoList.get(count).get(1);
 
-            DENG_LU.checkUser(region1, status, userName);
-            DENG_LU.checkUser(region2, status, user1);
-            DENG_LU.checkUser(region3, status, user2);
+            DENG_LU.checkAndChangeUser(region1, status, userName);
+            DENG_LU.checkAndChangeUser(region2, status, user1);
+            DENG_LU.checkAndChangeUser(region3, status, user2);
 
             boolean ok = new DuoBao().duobao(region1, region2, region3, status.getRoomNo());
             status.Done(Task.QI_BING_XUN_BAO, LocalDateTime.now(), user1);

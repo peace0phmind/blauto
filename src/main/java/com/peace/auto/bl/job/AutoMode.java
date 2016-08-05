@@ -97,7 +97,7 @@ public class AutoMode implements Job {
                     jobDataMap.put(XUN_BAO_KEY, true);
                 } else {
                     try {
-                        DENG_LU.checkUser(DEVICE_1.getRegion(), status, ti.getUserName());
+                        DENG_LU.checkAndChangeUser(DEVICE_1.getRegion(), status, ti.getUserName());
                     } catch (Exception e) {
                         log.info("{}", e);
                     }
@@ -126,8 +126,8 @@ public class AutoMode implements Job {
             AndroidScreen region1 = DEVICE_1.getRegion();
             AndroidScreen region2 = DEVICE_2.getRegion();
 
-            DENG_LU.checkUser(region1, status, user1);
-            DENG_LU.checkUser(region2, status, user2);
+            DENG_LU.checkAndChangeUser(region1, status, user1);
+            DENG_LU.checkAndChangeUser(region2, status, user2);
 
             new DuoBao().xunbao(region1, region2, true, status.getRoomNo(), null);
 

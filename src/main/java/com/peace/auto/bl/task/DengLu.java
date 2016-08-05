@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import static com.peace.auto.bl.common.Devices.status;
+
 /**
  * Created by mind on 3/7/16.
  */
@@ -37,20 +39,78 @@ public class DengLu implements IDo {
         return properties.getProperty("password");
     }
 
-    public void checkUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
+    public void checkAndChangeUser(Region region, Status status, String userName) throws FindFailed, InterruptedException {
         log.debug("userName: {}", userName);
-
         status.setWantUser(userName);
-        checkUser(region, status);
+
+        if (checkUser(region, status)) {
+            return;
+        } else {
+            for (int i = 0; i < 10; i++) {
+                boolean bSuccessToDengLu = false;
+                Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
+                if (touxiang != null) {
+                    // 在游戏主界面,重新登录
+                    bSuccessToDengLu = tuiChu(region);
+                } else {
+                    bSuccessToDengLu = qiDong(region);
+                }
+
+                if (bSuccessToDengLu) {
+                    if (dengLu(region, status)) {
+                        // 检查是否登录成功?成功则返回
+                        Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
+                        Thread.sleep(6000l);
+                        if (dating != null && checkUser(region, status)) {
+                            log.info("login ok");
+                            return;
+                        }
+                    }
+                }
+
+                // 登录失败,则退出软件重新登录
+                doRobot(region, (robot) -> {
+                    try {
+                        robot.pressBack();
+                        Thread.sleep(1000L);
+                        region.saveScreenCapture(".", "tuichu");
+
+                        Match querentuichu = region.exists(baseDir + "quedingtuichu.png");
+                        if (querentuichu == null) {
+                            robot.pressBack();
+                            Thread.sleep(1000L);
+                            region.saveScreenCapture(".", "tuichu");
+                        }
+
+                        querentuichu = region.exists(baseDir + "quedingtuichu.png");
+                        if (querentuichu == null) {
+                            robot.pressBack();
+                            Thread.sleep(1000L);
+                            region.saveScreenCapture(".", "tuichu");
+                        }
+
+                        region.click(baseDir + "queren.png");
+                        Thread.sleep(5000L);
+                    } catch (Exception e) {
+                        log.error("{}", e);
+                    }
+                });
+
+            }
+
+            // 多次都没有成功,退出系统
+            log.error("login error, want user: {}, current user:{}", status.getWantUser(), status.getCurrentUser());
+            System.exit(-1);
+        }
     }
 
-    public void checkUser(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("want user: {}", status.getWantUser());
+    private boolean checkUser(Region region, Status status) throws FindFailed, InterruptedException {
 //        newRegion(region, new Rectangle(134, 385, 8, 14)).saveScreenCapture(".", "ttt");
 
         Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
         if (touxiang != null) {
             touxiang.click();
+            Thread.sleep(1000L);
 
             Match qiuzhangxinxi = region.exists(Common.BASE_DIR + "qiuzhangxinxi.png", 6);
             log.info("{}", qiuzhangxinxi);
@@ -61,7 +121,7 @@ public class DengLu implements IDo {
 
             if (qiuzhangxinxi == null) {
                 log.error("get user info error.");
-                return;
+                return false;
             }
 
 //            ScreenImage simg = region.getScreen().capture();
@@ -71,23 +131,16 @@ public class DengLu implements IDo {
             region.click(Common.CLOSE);
             Thread.sleep(1000L);
 
-            if (!status.changeUser(num)) {
-                new DengLu().Done(region, status, status.getWantUser());
-                checkUser(region, status);
-            } else {
-                log.info("current user: {}, want user: {}, num: {}", status.getCurrentUser(), status.getWantUser(), num);
-            }
-        } else {
-            QiDong(region, status, status.getWantUser());
+            return status.changeUser(num);
         }
+
+        return false;
     }
 
     private boolean jinrubuluo(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("want user: {}", status.getWantUser());
-
-        Match tianjiazhangzhao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 6);
-        log.debug("{}", tianjiazhangzhao);
-        if (tianjiazhangzhao != null && tianjiazhangzhao.getScore() > 0.95f) {
+        Match tianjiazhanghao = region.exists(new Pattern(baseDir + "tianjiazhanghao.png").similar(0.95f), 6);
+        log.debug("{}", tianjiazhanghao);
+        if (tianjiazhanghao != null && tianjiazhanghao.getScore() > 0.95f) {
 
             Match username = region.exists(baseDir + "username.png");
             Match password = region.exists(baseDir + "password.png");
@@ -127,20 +180,14 @@ public class DengLu implements IDo {
             }
 
             if (i > 10) {
-                return chongxindenglu(region, status);
+                return false;
             }
         }
 
         if (jinrubuluo != null) {
             jinrubuluo.click();
             log.info("click jinrubuluo");
-
-            Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
-            if (dating != null) {
-                checkUser(region, status);
-                log.info("login ok");
-                return true;
-            }
+            return true;
         }
 
         log.info("jinrubuluo is null");
@@ -149,20 +196,14 @@ public class DengLu implements IDo {
     }
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        log.debug("want user: {}", status.getWantUser());
-
-        return Done(region, status, status.getNextLoginName());
+        throw new UnsupportedOperationException();
     }
 
-    @Override
     public boolean CanDo(Status status, String userName) {
-        return true;
+        throw new UnsupportedOperationException();
     }
 
-    public boolean Done(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
-        status.setWantUser(loginName);
-        log.info("reboot to user: {}", loginName);
-
+    private boolean tuiChu(Region region) throws FindFailed, InterruptedException {
         region.click(Common.MENU);
 
         Match peizhi = region.exists(baseDir + "peizhi.png");
@@ -174,19 +215,15 @@ public class DengLu implements IDo {
             log.debug("{}", tuichudenglu);
             if (tuichudenglu != null) {
                 tuichudenglu.click();
-
-                return chongxindenglu(region, status);
+                Thread.sleep(1000L);
+                return true;
             }
         }
 
         return false;
     }
 
-    private boolean QiDong(Region region, Status status, String loginName) throws FindFailed, InterruptedException {
-        log.debug("{}", loginName);
-
-        status.setWantUser(loginName);
-
+    private boolean qiDong(Region region) throws FindFailed, InterruptedException {
         Match bl = region.exists(Common.BASE_DIR + "bl.png", 10);
         log.debug("{}", bl);
         if (bl != null) {
@@ -201,16 +238,13 @@ public class DengLu implements IDo {
                 close = region.exists(Common.CLOSE);
             }
 
-            return chongxindenglu(region, status);
-        } else {
-            log.error("no bl");
-            throw new RuntimeException("no bl");
+            return true;
         }
+
+        return false;
     }
 
-    private boolean chongxindenglu(Region region, Status status) throws InterruptedException, FindFailed {
-        log.debug("want user: {}", status.getWantUser());
-
+    private boolean dengLu(Region region, Status status) throws InterruptedException, FindFailed {
         Match qqhaoyouwan = region.exists(baseDir + "qqhaoyouwan.png", 10);
         log.debug("{}", qqhaoyouwan);
         if (qqhaoyouwan != null) {
@@ -232,23 +266,7 @@ public class DengLu implements IDo {
                 Thread.sleep(1000L);
             }
 
-            Match zhengzaihuoququanxian = region.exists(new Pattern(baseDir + "zhengzaihuoququanxian.png").similar(0.9f));
-            log.debug("{}", zhengzaihuoququanxian);
-            if (zhengzaihuoququanxian != null) {
-                doRobot(region, (robot) -> {
-                    log.info("use robot press back for zhengzaihuoququanxian");
-                    robot.pressBack();
-                });
-            }
-
-            Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f));
-            log.debug("{}", zhengzaidenglu);
-            if (zhengzaidenglu != null) {
-                doRobot(region, (robot) -> {
-                    log.info("use robot press back for zhengzaidenglu");
-                    robot.pressBack();
-                });
-            }
+            isNetworkOk(region);
 
             String loginName = status.getWantUser();
 
@@ -279,63 +297,67 @@ public class DengLu implements IDo {
                         log.info("登录: {}", getWord(qq));
                         qq.click();
 
-                        Match wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png", 10);
-                        log.debug("{}", wangluoyichang);
-                        if (wangluoyichang != null) {
-                            region.click(baseDir + "wangluoyichangqueding.png");
+                        for (int i = 0; i < 10; i++) {
                             Thread.sleep(3000L);
-
-                            log.info("Login again: {}", getWord(qq));
+                            if (isNetworkOk(region)) { // 进入部落
+                                return jinrubuluo(region, status);
+                            }
+                            Thread.sleep(1000L);
                             qq.click();
                         }
-
-                        wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png");
-                        log.debug("{}", wangluoyichang);
-                        if (wangluoyichang != null) {
-                            region.click(baseDir + "qqdenglu.png");
-                            Thread.sleep(1000L);
-                            reLoginForError(region, status);
-                        }
-
-                        // 进入部落
-                        return jinrubuluo(region, status);
                     } else {
                         region.click(baseDir + "qqdenglu.png");
                         Thread.sleep(1000L);
 
                         region.click(baseDir + "denglu.png");
 
-                        // 进入部落
-                        return jinrubuluo(region, status);
+                        for (int i = 0; i < 10; i++) {
+                            Thread.sleep(3000L);
+                            if (isNetworkOk(region)) { // 进入部落
+                                return jinrubuluo(region, status);
+                            }
+                            Thread.sleep(1000L);
+                            region.click(baseDir + "denglu.png");
+                        }
                     }
-                } else {
-                    // 切换账号的按钮是灰的,需要单独处理。
-                    reLoginForError(region, status);
                 }
+
+                return false;
             }
         }
 
         return false;
     }
 
-    private boolean reLoginForError(Region region, Status status) throws InterruptedException, FindFailed {
-        log.debug("{}", status.getWantUser());
-        Match fanhui = region.exists(baseDir + "fanhui.png");
-        log.debug("{}", fanhui);
-        if (fanhui != null) {
-            fanhui.click();
-            Thread.sleep(3000L);
+    private boolean isNetworkOk(Region region) throws FindFailed, InterruptedException {
+        Match zhengzaihuoququanxian = region.exists(new Pattern(baseDir + "zhengzaihuoququanxian.png").similar(0.9f), 1);
+        log.debug("{}", zhengzaihuoququanxian);
+        if (zhengzaihuoququanxian != null) {
+            doRobot(region, (robot) -> {
+                log.info("use robot press back for zhengzaihuoququanxian");
+                robot.pressBack();
+            });
 
-            region.saveScreenCapture(".", status.getWantUser() + "-debug");
-            Match queding = region.exists(Common.QUE_DING);
-            log.debug("{}", queding);
-            if (queding != null) {
-                queding.click();
-                Thread.sleep(3000L);
+            return false;
+        }
 
-                region.saveScreenCapture(".", status.getWantUser() + "-debug");
-                return chongxindenglu(region, status);
-            }
+        Match zhengzaidenglu = region.exists(new Pattern(baseDir + "zhengzaidenglu.png").similar(0.9f), 1);
+        log.debug("{}", zhengzaidenglu);
+        if (zhengzaidenglu != null) {
+            doRobot(region, (robot) -> {
+                log.info("use robot press back for zhengzaidenglu");
+                robot.pressBack();
+            });
+
+            return false;
+        }
+
+        Match wangluoyichang = region.exists(baseDir + "wangluoyichangqingshaohouchongshi.png", 1);
+        log.debug("{}", wangluoyichang);
+        if (wangluoyichang != null) {
+            region.click(baseDir + "wangluoyichangqueding.png");
+
+            return false;
         }
 
         return true;
