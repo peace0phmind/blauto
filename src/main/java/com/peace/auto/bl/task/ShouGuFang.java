@@ -67,7 +67,7 @@ public class ShouGuFang implements IDo {
                                 // [r=220,g=117,b=223] 大量
                                 // [r=216,g=202,b=153] 小量
                                 // [r=91,g=71,b=48] 一群
-                                if (pixelColor.getRed() > 200 && pixelColor.getGreen() < 120) {
+                                if (pixelColor.getRed() > 180 && pixelColor.getGreen() < 120) {
                                     liewu.below().click(baseDir + "kaishishoulie.png");
                                     status.Done(Task.SHOU_GU_SHOU_LIE);
                                     Thread.sleep(1000L);

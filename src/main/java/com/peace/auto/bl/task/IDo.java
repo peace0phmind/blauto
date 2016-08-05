@@ -70,7 +70,6 @@ public interface IDo {
     default void clickInside(Region region, Pattern pattern) throws FindFailed {
         Iterator<Match> all = region.findAll(pattern);
         Lists.newArrayList(all).stream().sorted((a, b) -> a.x - b.x).findFirst().get().click();
-
     }
 
     default String getWord(Region region) {
