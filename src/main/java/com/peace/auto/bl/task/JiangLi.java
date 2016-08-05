@@ -5,6 +5,7 @@ import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 /**
@@ -15,7 +16,7 @@ public class JiangLi implements IDo {
     String baseDir = Common.BASE_DIR + "jiangli/";
 
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        region.click(baseDir + "jiangli.png");
+        region.click(new Pattern(baseDir + "jiangli.png").similar(0.9f));
 
         Match injiangli = region.exists(baseDir + "injiangli.png", 20);
         if (injiangli == null) {
