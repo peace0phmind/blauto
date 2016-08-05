@@ -23,7 +23,7 @@ public class ShiLianDong extends ZhanBao implements IDo {
                 return false;
             }
 
-            Thread.sleep(3000L);
+            Thread.sleep(6000L);
 
             Match shiliandong = region.exists(baseDir + "shiliandong.png", 10);
             if (shiliandong != null && shiliandong.getScore() > 0.95) {

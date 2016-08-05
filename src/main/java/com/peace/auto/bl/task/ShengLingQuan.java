@@ -21,7 +21,7 @@ public class ShengLingQuan implements IDo {
         if (richang != null) {
             richang.click();
 
-            Thread.sleep(3000L);
+            Thread.sleep(6000L);
 
             Match shenglingquan = region.exists(baseDir + "shenglingquan.png", 30);
             if (shenglingquan != null) {

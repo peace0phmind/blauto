@@ -29,7 +29,7 @@ public class LianBingChang extends ZhanBao implements IDo {
             // 再进行练兵
             region.click(Common.RI_CHANG);
 
-            Thread.sleep(3000L);
+            Thread.sleep(6000L);
 
             Match lianbingchang = region.exists(baseDir + "lianbingchang.png");
             if (lianbingchang != null && lianbingchang.getScore() > 0.95) {

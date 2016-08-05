@@ -25,7 +25,7 @@ public class JingJiChang implements IDo {
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
-        Thread.sleep(3000L);
+        Thread.sleep(6000L);
 
         Match jingjichang = region.exists(baseDir + "jingjichang.png", 10);
         if (jingjichang != null && jingjichang.getScore() > 0.95) {

@@ -21,7 +21,7 @@ public class QunYingHui implements IDo {
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
-        Thread.sleep(3000L);
+        Thread.sleep(6000L);
 
         Match tiaozhan = region.exists(baseDir + "tiaozhan.png");
         if (tiaozhan != null) {

@@ -40,7 +40,7 @@ public class DuoBao implements IDo {
     public boolean duobao(Region region, Region region1, Region region2, int roomNo) throws FindFailed, InterruptedException {
         region.click(Common.RI_CHANG);
 
-        Thread.sleep(3000L);
+        Thread.sleep(6000L);
 
         Match tiaozhan = region.exists(baseDir + "tiaozhan.png", 10);
         if (tiaozhan != null) {
@@ -97,7 +97,7 @@ public class DuoBao implements IDo {
         region1.click(Common.RI_CHANG);
         region2.click(Common.RI_CHANG);
 
-        Thread.sleep(3000L);
+        Thread.sleep(6000L);
 
         Match tiaozhan1 = region1.exists(baseDir + "tiaozhan.png", 10);
         Match tiaozhan2 = region2.exists(baseDir + "tiaozhan.png", 10);
