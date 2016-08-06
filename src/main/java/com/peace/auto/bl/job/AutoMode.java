@@ -9,6 +9,7 @@ import org.quartz.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,8 +40,11 @@ public class AutoMode implements Job {
     public void execute(JobExecutionContext context) throws JobExecutionException {
         log.info("Do job.");
 
-        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
+        if (LocalTime.now().isBefore(LocalTime.of(3, 0))) {
+            new OrderModeJob().execute(context);
+        }
 
+        JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
         if (jobDataMap.getBoolean(XUN_BAO_KEY)) {
             log.info("Do xun bao");
             new XunBaoModeJob().xunbao();

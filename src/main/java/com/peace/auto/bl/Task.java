@@ -102,7 +102,7 @@ public enum Task {
 
     QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 60),
     QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
-    QI_BING_LING_TU(DuoBao.class, -1);
+    QI_BING_LING_TU(DuoBao.class, 1);
 
     /**
      * vip user and task

@@ -33,7 +33,7 @@ public class OrderModeJob implements Job, TaskJob {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        log.info("Do job.");
+        log.info("Do order job.");
 
         for (int i = 0; i < Status.getUserCount(); i++) {
             execute();
@@ -56,6 +56,7 @@ public class OrderModeJob implements Job, TaskJob {
 
             for (IDo iDo : tasks) {
                 if (iDo.CanDo(status, status.getCurrentUser())) {
+                    status.Begin(iDo);
                     if (iDo.Done(region, status)) {
                         Thread.sleep(3 * 1000L);
                     }

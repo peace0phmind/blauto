@@ -22,8 +22,6 @@ import static com.peace.auto.bl.Task.*;
 @Data
 public class Status {
 
-    private static final Random ROOM_NO_RANDOM = new Random();
-
     public static final List<String> USERS = Arrays.asList(
             "peace",
             "peace0ph001",
@@ -34,7 +32,7 @@ public class Status {
             "peace0ph008",
             "peace0ph003"
     );
-
+    private static final Random ROOM_NO_RANDOM = new Random();
     private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
 
     private static int XUN_BAO_PREPARE_MINUTES = 15;
@@ -71,12 +69,12 @@ public class Status {
         return LocalDateTime.now().plusDays(1).withHour(0).withMinute(20).withSecond(0);
     }
 
-    public boolean isPeace() {
-        return peaceName().equals(currentUser);
-    }
-
     public static String peaceName() {
         return "peace";
+    }
+
+    public boolean isPeace() {
+        return peaceName().equals(currentUser);
     }
 
     public int getRoomNo() {
@@ -288,18 +286,27 @@ public class Status {
     }
 
     public void Done(Task task, LocalDateTime finishTime, String userName) {
+        logDoLog(task.toString(), finishTime, userName);
+    }
+
+    private void logDoLog(String taskInfo, LocalDateTime finishTime, String userName) {
         String insertSql = "INSERT INTO do_log(user_name, task_type, execute_time, finish_time) VALUES(?, ?, ?, ?)";
         try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
             int i = 1;
             stmt.setString(i++, userName);
-            stmt.setString(i++, task.toString());
+            stmt.setString(i++, taskInfo);
             stmt.setTimestamp(i++, Timestamp.valueOf(LocalDateTime.now()));
-            stmt.setTimestamp(i++, Timestamp.valueOf(finishTime));
+            stmt.setTimestamp(i++, finishTime == null ? null : Timestamp.valueOf(finishTime));
 
             stmt.execute();
         } catch (SQLException e) {
             log.error("{}", e);
         }
+
+    }
+
+    public void Begin(IDo iDo) {
+        logDoLog("Begin_" + iDo.getClass().getSimpleName(), null, currentUser);
     }
 
     public void CodeExchanged(int codeId, String userName) {
