@@ -305,6 +305,10 @@ public class TianSheng implements IDo {
 
                             region.click();
                             Match tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
+                            if (tiaoguo == null) {
+                                region.click();
+                                tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
+                            }
                             if (tiaoguo != null) {
                                 tiaoguo.click();
                                 Thread.sleep(3000L);
