@@ -74,8 +74,8 @@ public class Main {
 //            }
 //        }
 
-        if (new TianSheng().CanDo(status, user)) {
-            new TianSheng().Done(region, status);
+        if (new NongChang().CanDo(status, user)) {
+            new NongChang().Done(region, status);
         }
 
         region.close();
