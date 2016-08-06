@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 public enum Task {
 
-    SHEN_SHOU_WU(ShenShouWu.class, 20, 5),
+    SHEN_SHOU_WU(ShenShouWu.class, -1, 20),
 
     EXCHANGE_CODE(ExchangeCodeTask.class, 0),
 
@@ -26,11 +26,11 @@ public enum Task {
     //    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
-//    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, 6, 2 * 20 * 60),
+    //    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, 6, 2 * 20 * 60),
     CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -6, 2 * 20 * 60),
-//    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, 1, 30 * 60),
+    //    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, 1, 30 * 60),
     CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
-//    CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, 1),  // a tag
+    //    CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, 1),  // a tag
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
 
     LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
@@ -109,11 +109,10 @@ public enum Task {
      */
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put("peace", Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
-                SHI_CHANG, SHI_CHANG_CHECK,
+                SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, LIE_CHANG_QIANG_ZHENG,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
-        put("peace0ph003", Arrays.asList(SHEN_SHOU_WU));
     }};
 
     private int timesPerDay;
