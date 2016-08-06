@@ -85,41 +85,20 @@ public class NongChang implements IDo {
 
                 Thread.sleep(1000L);
 
-                // 偷菜
-                if (status.canDo(Task.NONG_CHANG_TOU_CAI)) {
-                    Match zhai = region.exists(baseDir + "zhai.png");
-                    if (zhai != null) {
-                        zhai.click();
-                        Thread.sleep(1000L);
+                qiTaNongChang(region, status);
 
-                        Match zhaiqu = region.exists(baseDir + "zhaiqu.png");
-                        if (zhaiqu != null) {
-                            zhaiqu.click();
-                            Thread.sleep(1000L);
+                // peace 翻2页,其他翻1页。
+                for (int i = 0; i < (status.isPeace() ? 2 : 1); i++) {
+                    ArrayList<Match> allRen = Lists.newArrayList(region.findAll(baseDir + "rentou.png"));
+                    Optional<Match> lastRen = allRen.stream().sorted((a, b) -> b.x - a.x).findFirst();
+                    if (lastRen.isPresent()) {
+                        Match lr = lastRen.get();
+                        move(lr, lr.getCenter().left(800), 1000);
 
-                            status.Done(Task.NONG_CHANG_TOU_CAI);
-                        }
+                        Thread.sleep(3000L);
+
+                        qiTaNongChang(region, status);
                     }
-
-                    if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, status.getCurrentUser()) == Task.NONG_CHANG_TOU_CAI.getDayLimit(status.getCurrentUser())) {
-                        status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
-                    } else {
-                        status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
-                    }
-                }
-
-                // 喂食
-                weishi(region, status);
-
-                ArrayList<Match> allRen = Lists.newArrayList(region.findAll(baseDir + "rentou.png"));
-                Optional<Match> lastRen = allRen.stream().sorted((a, b) -> b.x - a.x).findFirst();
-                if (lastRen.isPresent()) {
-                    Match lr = lastRen.get();
-                    move(lr, lr.getCenter().left(800), 1000);
-
-                    Thread.sleep(3000L);
-
-                    weishi(region, status);
                 }
             }
         }
@@ -160,7 +139,33 @@ public class NongChang implements IDo {
         return false;
     }
 
-    private void weishi(Region region, Status status) throws FindFailed, InterruptedException {
+    private void qiTaNongChang(Region region, Status status) throws FindFailed, InterruptedException {
+        // 采摘
+        Match zhai = region.exists(baseDir + "zhai.png");
+        if (zhai != null) {
+            Iterator<Match> all = region.findAll(baseDir + "zhai.png");
+            while (all.hasNext()) {
+                all.next().click();
+                Thread.sleep(1000L);
+
+                Match zhaiqu = region.exists(baseDir + "zhaiqu.png");
+                if (zhaiqu != null) {
+                    zhaiqu.click();
+                    Thread.sleep(1000L);
+
+                    status.Done(Task.NONG_CHANG_TOU_CAI);
+                }
+            }
+
+            if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, status.getCurrentUser()) >= Task.NONG_CHANG_TOU_CAI.getDayLimit(status.getCurrentUser())) {
+                status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
+            } else {
+                status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
+            }
+        }
+
+
+        // 喂食
         Match wei = region.exists(baseDir + "wei.png");
         if (wei != null) {
             Iterator<Match> all = region.findAll(baseDir + "wei.png");

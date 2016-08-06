@@ -31,8 +31,8 @@ public class Status {
             "peace0ph004",
             "peace0ph006",
             "peace0ph007",
-            "peace0ph008"
-//            "peace0ph003"
+            "peace0ph008",
+            "peace0ph003"
     );
 
     private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
