@@ -75,7 +75,7 @@ public class Status {
         return peaceName().equals(currentUser);
     }
 
-    public String peaceName() {
+    public static String peaceName() {
         return "peace";
     }
 

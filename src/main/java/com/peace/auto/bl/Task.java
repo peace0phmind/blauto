@@ -100,7 +100,7 @@ public enum Task {
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
     LIN_QU_REN_WU(RenWu.class, -1),
 
-    QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 50),
+    QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 60),
     QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
     QI_BING_LING_TU(DuoBao.class, -1);
 
@@ -108,7 +108,7 @@ public enum Task {
      * vip user and task
      */
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
-        put("peace", Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
+        put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, LIE_CHANG_QIANG_ZHENG,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));

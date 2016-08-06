@@ -56,7 +56,16 @@ public class NongChang implements IDo {
                         Optional<Match> lastzhongzhi = zhongzhis.stream().sorted((x, y) -> y.getX() - x.getX()).findFirst();
                         if (lastzhongzhi.isPresent()) {
                             lastzhongzhi.get().click();
-                            status.Done(Task.NONG_CHANG_ZHONG_ZHI);
+                            if (status.isPeace()) {
+                                status.Done(Task.NONG_CHANG_ZHONG_ZHI, LocalDateTime.now().plusHours(10));
+                                Status.USERS.forEach(x -> {
+                                    if (!Status.peaceName().equals(x)) {
+                                        status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, LocalDateTime.now().plusHours(9), x);
+                                    }
+                                });
+                            } else {
+                                status.Done(Task.NONG_CHANG_ZHONG_ZHI);
+                            }
                         }
                     }
                 }
@@ -78,7 +87,7 @@ public class NongChang implements IDo {
                 weishi.click();
             }
 
-
+            // 其他农场
             Match qitanongchang = region.exists(baseDir + "qitanongchang.png");
             if (qitanongchang != null) {
                 qitanongchang.click();
@@ -163,7 +172,6 @@ public class NongChang implements IDo {
                 status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
             }
         }
-
 
         // 喂食
         Match wei = region.exists(baseDir + "wei.png");
