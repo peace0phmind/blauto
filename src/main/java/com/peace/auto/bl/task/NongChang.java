@@ -167,10 +167,12 @@ public class NongChang implements IDo {
             }
         }
 
-        if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, status.getCurrentUser()) >= Task.NONG_CHANG_TOU_CAI.getDayLimit(status.getCurrentUser())) {
-            status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
-        } else {
-            status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
+        if (status.canDo(Task.NONG_CHANG_TOU_CAI_CHECK)) {
+            if (status.todayFinishCount(Task.NONG_CHANG_TOU_CAI, status.getCurrentUser()) >= Task.NONG_CHANG_TOU_CAI.getDayLimit(status.getCurrentUser())) {
+                status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, Status.nextDayCheck());
+            } else {
+                status.Done(Task.NONG_CHANG_TOU_CAI_CHECK);
+            }
         }
 
         // 喂食
