@@ -29,7 +29,9 @@ public class ShengLingQuan implements IDo {
 
                 // 神灵泉
                 if (status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
+                    log.info("begin xi lian");
                     putongxilian(region, true);
+                    log.info("end xi lian");
 
                     if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
                         region.click(baseDir + "dingjishenshui.png");
@@ -51,6 +53,7 @@ public class ShengLingQuan implements IDo {
                             status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                         }
                     }
+                    log.info("end mianfei");
 
                     if (status.isPeace() && LocalTime.now().isAfter(LocalTime.of(22, 0))) {
                         putongxilian(region, false);
