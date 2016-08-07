@@ -8,6 +8,12 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 /**
  * Created by mind on 3/3/16.
  */
@@ -77,43 +83,59 @@ public class RenWu implements IDo {
 
         // 领取任务
         if (status.canDo(Task.LIN_QU_REN_WU)) {
-            Match renwu = region.exists(new Pattern(baseDir + "renwu.png").similar(0.9f), 0.5);
-            log.info("{}", renwu);
-            if (renwu != null) {
-                renwu.click();
+            Pattern renwuPattern = new Pattern(baseDir + "renwu.png").similar(0.9f);
+            try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "renwu_*.png")) {
+                for (Path path : paths) {
+                    Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f));
+                    if (p == null) {
+                        continue;
+                    }
 
-                Thread.sleep(2000L);
+                    Match renwu = p.right().exists(renwuPattern, 0.5);
+                    log.info("{}", renwu);
+                    if (renwu != null) {
+                        renwu.click();
 
-                // wait 10 seconds, for check if in task list
-                Match renwulingqu = region.exists(baseDir + "renwulingqu.png", 3);
+                        Thread.sleep(2000L);
 
-                if (renwulingqu != null) {
-                    for (int i = 0; i < 20; i++) {
+                        // wait 10 seconds, for check if in task list
+                        Match renwulingqu = region.exists(baseDir + "renwulingqu.png", 3);
 
-                        if (renwulingqu == null) {
-                            break;
-                        } else {
-                            renwulingqu.click();
+                        if (renwulingqu != null) {
+                            for (int i = 0; i < 20; i++) {
 
-                            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-                            if (lingqu != null) {
-                                lingqu.click();
-                                Thread.sleep(2000L);
+                                if (renwulingqu == null) {
+                                    break;
+                                } else {
+                                    renwulingqu.click();
+
+                                    Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+                                    if (lingqu != null) {
+                                        lingqu.click();
+                                        Thread.sleep(2000L);
+                                    }
+                                }
+
+                                renwulingqu = region.exists(baseDir + "renwulingqu.png", 0.5);
                             }
                         }
 
-                        renwulingqu = region.exists(baseDir + "renwulingqu.png", 0.5);
+                        status.Done(Task.LIN_QU_REN_WU);
+                        try {
+                            region.click(Common.CLOSE);
+                        } catch (Exception e) {
+                            log.error("{}", e);
+                            renwu.saveScreenCapture(".", "renwu");
+                            region.saveScreenCapture(".", "renwu-all");
+                        }
                     }
                 }
+            } catch (IOException e) {
+                log.error("{}", e);
+            }
 
-                status.Done(Task.LIN_QU_REN_WU);
-                try {
-                    region.click(Common.CLOSE);
-                } catch (Exception e) {
-                    log.error("{}", e);
-                    renwu.saveScreenCapture(".", "renwu");
-                    region.saveScreenCapture(".", "renwu-all");
-                }
+            if (region.exists(renwuPattern) != null) {
+                region.saveScreenCapture(".", "unknown-renwu-" + status.getCurrentUser());
             }
         }
 

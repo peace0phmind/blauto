@@ -99,7 +99,7 @@ public enum Task {
     YUE_KA(RenWu.class, 1),
     LI_BAO(RenWu.class, 5, 5, Arrays.asList(30 * 60, 30 * 60, 60 * 60, 60 * 60)),
     SHOU_JI_JIN_BI(RenWu.class, 0, 0, 3 * 60 * 60),
-    LIN_QU_REN_WU(RenWu.class, -1),
+    LIN_QU_REN_WU(RenWu.class, 0),
 
     QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 60),
     QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
