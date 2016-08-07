@@ -83,59 +83,51 @@ public class RenWu implements IDo {
 
         // 领取任务
         if (status.canDo(Task.LIN_QU_REN_WU)) {
-            Pattern renwuPattern = new Pattern(baseDir + "renwu.png").similar(0.9f);
-            try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "renwu_*.png")) {
-                for (Path path : paths) {
-                    Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f));
-                    if (p == null) {
-                        continue;
-                    }
+            Match renwu = region.exists(baseDir + "renwu.png", 0.5);
+            log.info("{}", renwu);
+            if (renwu != null) {
+                renwu.click();
+                Thread.sleep(2000L);
 
-                    Match renwu = p.right().exists(renwuPattern, 0.5);
-                    log.info("{}", renwu);
-                    if (renwu != null) {
-                        renwu.click();
+                Pattern renwuPattern = new Pattern(baseDir + "renwulingqu.png").similar(0.95f);
 
-                        Thread.sleep(2000L);
+                try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "renwu_*.png")) {
+                    for (Path path : paths) {
+                        Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f));
+                        if (p == null) {
+                            continue;
+                        }
 
-                        // wait 10 seconds, for check if in task list
-                        Match renwulingqu = region.exists(baseDir + "renwulingqu.png", 3);
-
+                        Match renwulingqu = p.right().exists(renwuPattern, 3);
                         if (renwulingqu != null) {
-                            for (int i = 0; i < 20; i++) {
+                            renwulingqu.click();
+                            Thread.sleep(1000L);
 
-                                if (renwulingqu == null) {
-                                    break;
-                                } else {
-                                    renwulingqu.click();
-
-                                    Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-                                    if (lingqu != null) {
-                                        lingqu.click();
-                                        Thread.sleep(2000L);
-                                    }
-                                }
-
-                                renwulingqu = region.exists(baseDir + "renwulingqu.png", 0.5);
+                            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+                            if (lingqu != null) {
+                                lingqu.click();
+                                Thread.sleep(3000L);
                             }
                         }
 
                         status.Done(Task.LIN_QU_REN_WU);
-                        try {
-                            region.click(Common.CLOSE);
-                        } catch (Exception e) {
-                            log.error("{}", e);
-                            renwu.saveScreenCapture(".", "renwu");
-                            region.saveScreenCapture(".", "renwu-all");
-                        }
                     }
+                } catch (IOException e) {
+                    log.error("{}", e);
                 }
-            } catch (IOException e) {
-                log.error("{}", e);
-            }
 
-            if (region.exists(renwuPattern) != null) {
-                region.saveScreenCapture(".", "unknown-renwu-" + status.getCurrentUser());
+                if (region.exists(renwuPattern) != null && status.canDo(Task.LIN_QU_REN_WU_UNKNOWN)) {
+                    region.saveScreenCapture(".", "unknown-renwu-" + status.getCurrentUser());
+                    status.Done(Task.LIN_QU_REN_WU_UNKNOWN, Status.nextDayCheck());
+                }
+
+                try {
+                    region.click(Common.CLOSE);
+                } catch (Exception e) {
+                    log.error("{}", e);
+                    renwu.saveScreenCapture(".", "renwu");
+                    region.saveScreenCapture(".", "renwu-all");
+                }
             }
         }
 

@@ -57,7 +57,7 @@ public class Main {
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = DEVICE_1.getRegion(true);
+        AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
         String user = Status.USERS.get(0);
@@ -74,8 +74,8 @@ public class Main {
 //            }
 //        }
 
-        if (new TianSheng().CanDo(status, user)) {
-            new TianSheng().Done(region, status);
+        if (new RenWu().CanDo(status, user)) {
+            new RenWu().Done(region, status);
         }
 
         region.close();
