@@ -5,6 +5,7 @@ import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
+import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
 import java.time.LocalTime;
@@ -29,9 +30,7 @@ public class ShengLingQuan implements IDo {
 
                 // 神灵泉
                 if (status.canDo(Task.SHENG_LING_QUAN_XI_LIAN)) {
-                    log.info("begin xi lian");
                     putongxilian(region, true);
-                    log.info("end xi lian");
 
                     if (status.canDo(Task.SHENG_LING_QUAN_MIAN_FEI)) {
                         region.click(baseDir + "dingjishenshui.png");
@@ -53,7 +52,6 @@ public class ShengLingQuan implements IDo {
                             status.Done(Task.SHENG_LING_QUAN_MIAN_FEI);
                         }
                     }
-                    log.info("end mianfei");
 
                     if (status.isPeace() && LocalTime.now().isAfter(LocalTime.of(22, 0))) {
                         putongxilian(region, false);
@@ -111,18 +109,20 @@ public class ShengLingQuan implements IDo {
         Match shengpin = null;
         for (int i = 0; i < 60; i++) {
             if (needShengping) {
-                shengpin = region.exists(baseDir + "shengpin", 3);
+                shengpin = region.exists(new Pattern(baseDir + "shengpin").similar(0.95f), 3);
             }
 
-            if (!needShengping
-                    || (needShengping && shengpin != null && shengpin.getScore() > 0.95)) {
+            if (!needShengping || (needShengping && shengpin != null)) {
                 region.click(baseDir + "putongxiulian.png");
-                Match end = region.exists(baseDir + "xilianend.png", 1);
-                if (end != null) {
-                    Thread.sleep(1000L);
-                    region.click(Common.QUE_DING);
-                    break;
-                }
+            } else {
+                break;
+            }
+
+            Match end = region.exists(baseDir + "xilianend.png", 1);
+            if (end != null) {
+                Thread.sleep(1000L);
+                region.click(Common.QUE_DING);
+                break;
             }
         }
     }
