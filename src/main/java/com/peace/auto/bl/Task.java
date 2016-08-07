@@ -59,6 +59,7 @@ public enum Task {
     TIAN_SHEN_HUO_QU_SHEN_HUN(TianSheng.class, 0, 0, 8 * 60 * 60),
     TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
     TIAN_SHEN_HUN_JIE(TianSheng.class, 0, 0, 6 * 60 * 60),
+    TIAN_SHEN_HUN_JIE_GOU_MAI(TianSheng.class, 2),
 
     SHI_CHANG(ShiChang.class, 3, -1),
     SHI_CHANG_CHECK(ShiChang.class, 0, -1, 2 * 60 * 60),

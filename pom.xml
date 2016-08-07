@@ -104,6 +104,12 @@
             <version>1.0</version>
             <!--<systemPath>${project.basedir}/lib/com/android/ddmlib/1.0/ddmlib-1.0.jar</systemPath>-->
         </dependency>
+
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.9.2</version>
+        </dependency>
     </dependencies>
 
     <build>

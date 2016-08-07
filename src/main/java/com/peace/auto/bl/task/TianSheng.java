@@ -275,7 +275,7 @@ public class TianSheng implements IDo {
                         }
 
 //                        Pattern p1 = new Pattern(baseDir + "1.png").similar(0.85f);
-                        
+
 //                        shenhuns.stream().filter(x -> x.getMatch().y <= 350 && x.getMatch().x <= 400).collect(Collectors.toList()).forEach(x -> {
 //                            x.getMatch().click();
 //                            try {
@@ -298,9 +298,16 @@ public class TianSheng implements IDo {
 
                             Match quxiao = region.exists(Common.QU_XIAO);
                             if (quxiao != null) {
-                                status.Done(Task.TIAN_SHEN_HUN_JIE);
-                                quxiao.click();
-                                break;
+                                if (status.canDo(Task.TIAN_SHEN_HUN_JIE_GOU_MAI)) {
+                                    region.click(Common.QUE_DING);
+                                    Thread.sleep(1000L);
+                                    kaishizhandou.click();
+                                    Thread.sleep(1000L);
+                                } else {
+                                    status.Done(Task.TIAN_SHEN_HUN_JIE);
+                                    quxiao.click();
+                                    break;
+                                }
                             }
 
                             region.click();
