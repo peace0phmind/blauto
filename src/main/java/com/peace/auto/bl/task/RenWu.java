@@ -41,6 +41,23 @@ public class RenWu implements IDo {
             }
         }
 
+        // 宝箱
+        if (status.canDo(Task.LIN_QU_BAO_XIANG)) {
+            Match baoxiang = region.exists(new Pattern(baseDir + "baoxiang.png").similar(0.95f));
+            if (baoxiang != null) {
+                baoxiang.click();
+                Thread.sleep(3000L);
+
+                Match linqubaoixang = region.exists(baseDir + "linqubaoxiang.png");
+                if (linqubaoixang != null) {
+                    linqubaoixang.click();
+                    Thread.sleep(3000L);
+                }
+
+                status.Done(Task.LIN_QU_BAO_XIANG);
+            }
+        }
+
         // 收集金币
         if (status.canDo(Task.SHOU_JI_JIN_BI)) {
             // 点击收起对话框
@@ -137,6 +154,7 @@ public class RenWu implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.YUE_KA, userName)
+                && !status.canDo(Task.LIN_QU_BAO_XIANG, userName)
                 && !status.canDo(Task.LI_BAO, userName)
                 && !status.canDo(Task.SHOU_JI_JIN_BI, userName)
                 && !status.canDo(Task.LIN_QU_REN_WU, userName)) {
