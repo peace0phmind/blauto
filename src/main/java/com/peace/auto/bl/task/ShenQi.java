@@ -37,9 +37,11 @@ public class ShenQi implements IDo {
                     Match zhaohuan = region.exists(baseDir + "zhaohuan.png");
                     if (zhaohuan != null) {
                         zhaohuan.click();
+                        Thread.sleep(1000L);
 
                         Match mianfeizhaohuan = region.exists(baseDir + "mianfeizhaohuan.png");
                         if (mianfeizhaohuan != null) {
+                            Thread.sleep(1000L);
                             mianfeizhaohuan.click();
                             status.Done(Task.SHEN_QI);
 
