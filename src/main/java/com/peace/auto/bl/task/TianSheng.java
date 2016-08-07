@@ -243,7 +243,10 @@ public class TianSheng implements IDo {
                 boolean firstjinru = true;
 
                 for (int j = 0; j < 10; j++) {
-                    ArrayList<Match> matches = Lists.newArrayList(region.findAll(baseDir + "guanka.png"));
+                    Pattern guanka = new Pattern(baseDir + "guanka.png").similar(0.92f);
+                    region.exists(guanka, 10);
+
+                    ArrayList<Match> matches = Lists.newArrayList(region.findAll(guanka));
                     List<Match> sorted = matches.stream().filter(x -> x.y > 240).sorted((x, y) -> y.x - x.x).collect(Collectors.toList());
                     sorted.addAll(matches.stream().filter(x -> x.y <= 240).sorted((x, y) -> x.x - y.x).collect(Collectors.toList()));
 
@@ -301,6 +304,7 @@ public class TianSheng implements IDo {
                                 if (status.canDo(Task.TIAN_SHEN_HUN_JIE_GOU_MAI)) {
                                     region.click(Common.QUE_DING);
                                     Thread.sleep(1000L);
+                                    status.Done(Task.TIAN_SHEN_HUN_JIE_GOU_MAI);
                                     kaishizhandou.click();
                                     Thread.sleep(1000L);
                                 } else {
@@ -346,6 +350,7 @@ public class TianSheng implements IDo {
 
                         Thread.sleep(1000L);
                         region.click(Common.CLOSE);
+                        Thread.sleep(3000L);
                     } else {
                         status.Done(Task.TIAN_SHEN_HUN_JIE);
                     }
