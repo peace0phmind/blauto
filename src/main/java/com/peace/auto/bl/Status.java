@@ -196,11 +196,11 @@ public class Status {
                 }
 
                 if (t == QI_BING_DUO_BAO) {
-                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(13, 5)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
+                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(12, 25)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
                         return;
                     }
                     if (todayFinishCount(Task.QI_BING_DUO_BAO, u) == 0) {
-                        executableTime = localDateTime.withHour(13).withMinute(10);
+                        executableTime = localDateTime.withHour(12).withMinute(30);
                     }
                 }
 
