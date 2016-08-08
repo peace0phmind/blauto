@@ -56,7 +56,13 @@ public class DengLu implements IDo {
             }
 
             for (int i = 0; i < 10; i++) {
-                boolean bSuccessToDengLu = false;
+                Match xRemove = region.exists(new Pattern(baseDir + "XRemove.png").similar(0.95f));
+                if (xRemove != null) {
+                    xRemove.click();
+                    Thread.sleep(1000L);
+                }
+
+                boolean bSuccessToDengLu;
                 Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
                 if (touxiang != null) {
                     // 在游戏主界面,重新登录
