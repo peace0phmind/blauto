@@ -51,6 +51,7 @@ public class DengLu implements IDo {
                 Match chongxindenglu = region.exists(baseDir + "chongxindenglu.png");
                 if (chongxindenglu != null) {
                     chongxindenglu.click();
+                    Thread.sleep(3000L);
                 }
             }
 

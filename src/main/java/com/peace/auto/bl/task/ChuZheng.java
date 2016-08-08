@@ -219,6 +219,10 @@ public class ChuZheng extends ZhanBao implements IDo {
                     Thread.sleep(500L);
                 } else {
                     sortedList.get(2).click();
+                    Thread.sleep(1000L);
+                    sortedList.get(2).click();
+                    Thread.sleep(1000L);
+                    sortedList.get(2).click();
                     break;
                 }
             }
