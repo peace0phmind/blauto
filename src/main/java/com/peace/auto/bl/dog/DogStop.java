@@ -13,7 +13,7 @@ import java.util.Optional;
 public class DogStop implements Job {
     public static void init(Scheduler scheduler) {
         JobDetail job = JobBuilder.newJob(DogStop.class).build();
-        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(23, 58, 0))
+        Trigger trigger = TriggerBuilder.newTrigger().startAt(DateBuilder.dateOf(22, 30, 0))
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).withRepeatCount(30)).build();
 
         try {
