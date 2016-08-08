@@ -46,6 +46,14 @@ public class DengLu implements IDo {
         if (checkUser(region, status)) {
             return;
         } else {
+            Match xiaxiantongzhi = region.exists(baseDir + "xiaxiantongzhi.png");
+            if (xiaxiantongzhi != null) {
+                Match chongxindenglu = region.exists(baseDir + "chongxindenglu.png");
+                if (chongxindenglu != null) {
+                    chongxindenglu.click();
+                }
+            }
+
             for (int i = 0; i < 10; i++) {
                 boolean bSuccessToDengLu = false;
                 Match touxiang = region.exists(Common.BASE_DIR + "touxiang.png");
