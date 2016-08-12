@@ -319,13 +319,22 @@ public class TianSheng implements IDo {
 
                             region.click();
                             Match tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
+                            log.info("tiaoguo1: {}", tiaoguo);
                             if (tiaoguo == null) {
                                 region.click();
                                 tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
                             }
+                            log.info("tiaoguo2: {}", tiaoguo);
                             if (tiaoguo != null) {
                                 tiaoguo.click();
                                 Thread.sleep(3000L);
+                                tiaoguo = region.exists(baseDir + "tiaoguo.png", 1);
+                                log.info("tiaoguo3: {}", tiaoguo);
+                                if (tiaoguo != null) {
+                                    tiaoguo.click();
+                                    Thread.sleep(3000L);
+                                    log.info("tiaoguo again.");
+                                }
 
                                 Match shengli = region.exists(baseDir + "shengli.png");
                                 if (shengli != null) {
