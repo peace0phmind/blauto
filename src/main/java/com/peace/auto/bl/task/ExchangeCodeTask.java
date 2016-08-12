@@ -20,52 +20,56 @@ public class ExchangeCodeTask implements IDo {
 
     @Override
     public boolean Done(Region region, Status status) throws FindFailed, InterruptedException {
-        // 弹出对话聊天框
-        Match duihua = region.exists(baseDir + "duihua.png");
-        if (duihua != null) {
-            duihua.click();
-            Thread.sleep(1000L);
-        }
+        List<ExchangeCode> exchangeableCodes = status.getExchangeableCodes(LocalDateTime.now(), status.getCurrentUser());
 
-        Match duihuashouqi = region.exists(baseDir + "duihuashouqi.png");
-        if (duihuashouqi != null) {
-            duihuashouqi.left(30).click();
+        if (exchangeableCodes.size() > 0) {
+            for (ExchangeCode ec : exchangeableCodes) {
+                if (ec.getBeginTime().isBefore(LocalDateTime.now())) {
+                    // 弹出对话聊天框
+                    Match duihua = region.exists(baseDir + "duihua.png");
+                    if (duihua != null) {
+                        duihua.click();
+                        Thread.sleep(1000L);
+                    }
 
-            Match inliaotian = region.exists(baseDir + "inliaotian.png", 6);
-            log.info("inliaotian: {}", inliaotian);
-            if (inliaotian != null) {
-                Match lianmeng = region.exists(baseDir + "lianmeng.png");
-                if (lianmeng != null) {
-                    lianmeng.click();
-                    Thread.sleep(1000L);
+                    Match duihuashouqi = region.exists(baseDir + "duihuashouqi.png");
+                    if (duihuashouqi != null) {
+                        duihuashouqi.left(30).click();
 
-                    Match shuru = region.exists(baseDir + "duihuashuru.png");
-                    if (shuru != null) {
-                        List<ExchangeCode> exchangeableCodes = status.getExchangeableCodes(LocalDateTime.now(), status.getCurrentUser());
+                        Match inliaotian = region.exists(baseDir + "inliaotian.png", 6);
+                        log.info("inliaotian: {}", inliaotian);
+                        if (inliaotian != null) {
+                            Match lianmeng = region.exists(baseDir + "lianmeng.png");
+                            if (lianmeng != null) {
+                                lianmeng.click();
+                                Thread.sleep(1000L);
 
-                        if (exchangeableCodes.size() > 0) {
-                            for (ExchangeCode ec : exchangeableCodes) {
-                                if (ec.getBeginTime().isBefore(LocalDateTime.now())) {
-                                    shuru.type(ec.getCode());
+                                Match shuru = region.exists(baseDir + "duihuashuru.png");
+                                if (shuru != null) {
                                     Thread.sleep(1000L);
+                                    shuru.type(ec.getCode());
                                     region.click(baseDir + "fasong.png");
 
                                     // exchange code done
                                     status.CodeExchanged(ec.getId(), status.getCurrentUser());
-                                    Thread.sleep(1000L);
+                                    if (exchangeableCodes.size() > 1) {
+                                        Thread.sleep(10000L);
+                                    }
                                 }
+
                             }
                         }
                     }
+
+                    Thread.sleep(1000L);
+                    region.click(Common.CLOSE);
                 }
-
-                Thread.sleep(1000L);
-                region.click(Common.CLOSE);
-
-                Thread.sleep(3000L);
-                new Mail().Done(region, status);
-                return true;
             }
+
+
+            Thread.sleep(3000L);
+            new Mail().Done(region, status);
+            return true;
         }
 
         return false;

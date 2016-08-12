@@ -76,8 +76,8 @@ public class Main {
 //            }
 //        }
 
-            if (new TianSheng().CanDo(status, user)) {
-                new TianSheng().Done(region, status);
+            if (new ExchangeCodeTask().CanDo(status, user)) {
+                new ExchangeCodeTask().Done(region, status);
             }
         }
 
