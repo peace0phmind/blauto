@@ -265,8 +265,11 @@ public class TianSheng implements IDo {
 
                             List<ShenHun> shenHuns = getShenHun(region.find(baseDir + "dingwei.png").right());
 
-                            shenHuns = shenHuns.stream().sorted((x, y) -> x.getMatch().x - y.getMatch().x)
-                                    .sorted((x, y) -> x.getType().ordinal() - y.getType().ordinal()).collect(Collectors.toList());
+                            shenHuns = shenHuns.stream().sorted((x, y) -> x.getMatch().x - y.getMatch().x).collect(Collectors.toList());
+                            if (shenHuns.size() > 6) {
+                                shenHuns = shenHuns.subList(0, 6);
+                            }
+                            shenHuns = shenHuns.stream().sorted((x, y) -> x.getType().ordinal() - y.getType().ordinal()).collect(Collectors.toList());
 
                             log.info("{}", shenHuns);
 
@@ -432,22 +435,22 @@ public class TianSheng implements IDo {
 
     private List<ShenHun> getShenHun(Region region) throws FindFailed {
         List<ShenHun> shenhuns = new ArrayList<>();
-        Pattern ma = new Pattern(baseDir + "ma.png").similar(0.85f);
+        Pattern ma = new Pattern(baseDir + "ma.png").similar(0.80f);
         if (region.exists(ma) != null) {
             shenhuns.addAll(Lists.newArrayList(region.findAll(ma)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.MA, x)).collect(Collectors.toList()));
         }
 
-        Pattern dun = new Pattern(baseDir + "dun.png").similar(0.85f);
+        Pattern dun = new Pattern(baseDir + "dun.png").similar(0.80f);
         if (region.exists(dun) != null) {
             shenhuns.addAll(Lists.newArrayList(region.findAll(dun)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.DUN, x)).collect(Collectors.toList()));
         }
 
-        Pattern zhang = new Pattern(baseDir + "zhang.png").similar(0.85f);
+        Pattern zhang = new Pattern(baseDir + "zhang.png").similar(0.80f);
         if (region.exists(zhang) != null) {
             shenhuns.addAll(Lists.newArrayList(region.findAll(zhang)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.ZHANG, x)).collect(Collectors.toList()));
         }
 
-        Pattern dao = new Pattern(baseDir + "dao.png").similar(0.85f);
+        Pattern dao = new Pattern(baseDir + "dao.png").similar(0.80f);
         if (region.exists(dao) != null) {
             shenhuns.addAll(Lists.newArrayList(region.findAll(dao)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.DAO, x)).collect(Collectors.toList()));
         }

@@ -60,11 +60,13 @@ public class Main {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
-        String user = Status.USERS.get(0);
+        for (int i = 0; i < 8; i++) {
+            String user = Status.USERS.get(i);
+//        String user = Status.USERS.get(0);
 
-        DENG_LU.checkAndChangeUser(region, status, user);
-        List<IDo> tasks = status.getTasks(status.getCurrentUser());
-        log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
+            DENG_LU.checkAndChangeUser(region, status, user);
+            List<IDo> tasks = status.getTasks(status.getCurrentUser());
+            log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
 //        for (IDo iDo : tasks) {
 //            if (iDo.CanDo(status, status.getCurrentUser())) {
@@ -74,8 +76,9 @@ public class Main {
 //            }
 //        }
 
-        if (new RenWu().CanDo(status, user)) {
-            new RenWu().Done(region, status);
+            if (new TianSheng().CanDo(status, user)) {
+                new TianSheng().Done(region, status);
+            }
         }
 
         region.close();
