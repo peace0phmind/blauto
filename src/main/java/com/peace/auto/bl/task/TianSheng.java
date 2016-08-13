@@ -280,23 +280,6 @@ public class TianSheng implements IDo {
                             firstjinru = false;
                         }
 
-//                        Pattern p1 = new Pattern(baseDir + "1.png").similar(0.85f);
-
-//                        shenhuns.stream().filter(x -> x.getMatch().y <= 350 && x.getMatch().x <= 400).collect(Collectors.toList()).forEach(x -> {
-//                            x.getMatch().click();
-//                            try {
-//                                Thread.sleep(1000L);
-//                            } catch (InterruptedException e) {
-//                            }
-//                        });
-
-//                        kongwei = Lists.newArrayList(region.findAll(p1)).stream().filter(x -> x.x < 400)
-//                                .sorted((x, y) -> x.y / 10 - y.y / 10).sorted((x, y) -> y.x / 10 - x.x / 10).collect(Collectors.toList());
-
-//                        shenhuns = shenhuns.stream().filter(x -> x.getMatch().y > 350).sorted((x, y) -> x.getMatch().x - y.getMatch().x)
-//                                .sorted((x, y) -> x.getType().ordinal() - y.getType().ordinal()).collect(Collectors.toList());
-
-
                         Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
                         if (kaishizhandou != null) {
                             kaishizhandou.click();
@@ -317,11 +300,11 @@ public class TianSheng implements IDo {
                                 }
                             }
 
-                            region.click();
+                            doRobot(region, robot -> robot.touch(400, 10));
                             Match tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
                             log.info("tiaoguo1: {}", tiaoguo);
                             if (tiaoguo == null) {
-                                region.click();
+                                doRobot(region, robot -> robot.touch(400, 10));
                                 tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
                             }
                             log.info("tiaoguo2: {}", tiaoguo);
