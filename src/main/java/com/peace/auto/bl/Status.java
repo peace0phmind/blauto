@@ -305,7 +305,6 @@ public class Status {
         } catch (SQLException e) {
             log.error("{}", e);
         }
-
     }
 
     public void Begin(IDo iDo) {
@@ -354,6 +353,50 @@ public class Status {
 
         return ret;
     }
+
+    public void saveGemLevel(String hunType, String weaponType, String gemType, int level) {
+        String insertSql = "INSERT INTO gem(user_name, hun_type, weapon_type, gem_type, level, update_time) " +
+                "VALUE(?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE level = ?, update_time = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(insertSql)) {
+            int i = 1;
+            stmt.setString(i++, currentUser);
+            stmt.setString(i++, hunType);
+            stmt.setString(i++, weaponType);
+            stmt.setString(i++, gemType);
+            stmt.setInt(i++, level);
+            stmt.setTimestamp(i++, Timestamp.valueOf(LocalDateTime.now()));
+            stmt.setInt(i++, level);
+            stmt.setTimestamp(i++, Timestamp.valueOf(LocalDateTime.now()));
+
+            stmt.execute();
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
+    }
+
+    public Map<String, Integer> listGemLevel() {
+        String selectSql = "SELECT hun_type, weapon_type, gem_type, level FROM gem WHERE user_name = ?";
+
+        Map<String, Integer> ret = new HashMap<>();
+        try (PreparedStatement stmt = conn.prepareStatement(selectSql)) {
+            int i = 1;
+            stmt.setString(i++, currentUser);
+
+            try (ResultSet resultSet = stmt.executeQuery()) {
+                while (resultSet.next()) {
+                    ret.put(String.format("%s:%s:%s", resultSet.getString("hun_type"),
+                            resultSet.getString("weapon_type"), resultSet.getString("gem_type")),
+                            resultSet.getInt("level"));
+                }
+            }
+        } catch (SQLException e) {
+            log.error("{}", e);
+        }
+
+        return ret;
+    }
+
 
     public LocalDateTime getLastFinishTime(Task task) {
         return getLastFinishTime(task, currentUser);

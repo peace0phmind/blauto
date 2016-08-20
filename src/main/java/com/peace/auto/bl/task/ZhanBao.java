@@ -39,26 +39,28 @@ abstract public class ZhanBao {
             return false;
         }
 
-        boolean ret = false;
-        // 先查看是否有战报
-        Match menu = region.exists(Common.MENU, 6);
-        log.info("Menu: {}", menu);
-        if (menu != null) {
-            menu.click();
-
-            Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
-            if (zhanbao != null) {
-                zhanbao.click();
-
-                Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
-                if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
-                    ret = true;
-                }
-
-                region.click(Common.CLOSE);
-            }
-        }
-
-        return ret;
+        return true;
+        //
+//        boolean ret = false;
+//        // 先查看是否有战报
+//        Match menu = region.exists(Common.MENU, 6);
+//        log.info("Menu: {}", menu);
+//        if (menu != null) {
+//            menu.click();
+//
+//            Match zhanbao = region.exists(new Pattern(baseDir + "zhanbao.png").similar(0.95f));
+//            if (zhanbao != null) {
+//                zhanbao.click();
+//
+//                Match kongzhanbao = region.exists(baseDir + "kongzhanbao.png", 6);
+//                if (kongzhanbao != null && kongzhanbao.getScore() > 0.95) {
+//                    ret = true;
+//                }
+//
+//                region.click(Common.CLOSE);
+//            }
+//        }
+//
+//        return ret;
     }
 }
