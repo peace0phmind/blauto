@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class Building implements IDo {
 
     private static List<Integer> buildingIds = Arrays.asList(
+            12,
             1,
             11,
             10,
-            12,
             3,
             6,
             8,

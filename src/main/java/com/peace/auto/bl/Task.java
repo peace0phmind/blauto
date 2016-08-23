@@ -36,7 +36,7 @@ public enum Task {
     //    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
     LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
     LIE_CHANG_QIANG_ZHENG(LieChang.class, 3, -1),
-    LIE_CHANG_DA_GUAI(LieChang.class, 1, -1, 24 * 60 * 60),
+    LIE_CHANG_DA_GUAI(LieChang.class, 0, -1, 24 * 60 * 60),
 
     SHOU_GU_JIA_GONG(ShouGuFang.class, 4),
     SHOU_GU_SHOU_LIE(ShouGuFang.class, 0, 0, 8 * 60 * 60),
@@ -55,11 +55,13 @@ public enum Task {
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
     TIAN_SHEN_QI_DAO_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 4 * 60 * 60),
-    TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 6 * 60 * 60),
+    TIAN_SHEN_LUAN_DOU(TianSheng.class, -1, -1, 6 * 60 * 60),
 
     TIAN_SHEN_HUO_QU_SHEN_HUN(TianSheng.class, 0, 0, 8 * 60 * 60),
     TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
-    TIAN_SHEN_HUN_JIE(TianSheng.class, 0, 0, 6 * 60 * 60),
+    TIAN_SHEN_HUO_QU_SHEN_JI(TianSheng.class, 0, 0, 8 * 60 * 60),
+    TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
+    TIAN_SHEN_HUN_JIE(TianSheng.class, -1, -1, 6 * 60 * 60),
     TIAN_SHEN_HUN_JIE_GOU_MAI(TianSheng.class, 2),
 
     SHI_CHANG(ShiChang.class, 3, -1),
@@ -104,7 +106,7 @@ public enum Task {
     LIN_QU_BAO_XIANG(RenWu.class, 1),
     LIN_QU_REN_WU_UNKNOWN(RenWu.class, 1),
 
-    QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 60),
+    QI_BING_XUN_BAO(DuoBao.class, -1, -3, 5 * 60),
     QI_BING_DUO_BAO(DuoBao.class, -1, -3, 10 * 60),
     //    QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
     QI_BING_LING_TU(DuoBao.class, -1);

@@ -64,6 +64,15 @@ public class LieChang implements IDo {
             // 打怪
             if (status.canDo(Task.LIE_CHANG_DA_GUAI)) {
 
+                while (true) {
+                    Match right = region.exists(new Pattern(baseDir + "right.png").similar(0.98f));
+                    if (right == null) {
+                        break;
+                    }
+                    right.click();
+                    Thread.sleep(2000L);
+                }
+
                 Match guaiwu = region.exists(baseDir + "guaiwu.png", 10);
                 if (guaiwu != null) {
                     List<Match> guaiwus = Lists.newArrayList(region.findAll(baseDir + "guaiwu.png"));
@@ -77,7 +86,7 @@ public class LieChang implements IDo {
                         region.click(baseDir + "kaishichuangguan.png");
 
                         Thread.sleep(1000L);
-                        
+
                         Match peacemianfei = region.exists(new Pattern(baseDir + "peacemianfei.png").similar(0.95f));
                         if (peacemianfei != null) {
                             region.click(baseDir + "kaishizhandou.png");
@@ -106,6 +115,7 @@ public class LieChang implements IDo {
                                 }
                             }
                         } else {
+                            status.Done(Task.LIE_CHANG_DA_GUAI, Status.nextCheck());
                             region.click(Common.CLOSE);
                             Thread.sleep(500L);
                             region.click(baseDir + "close.png");

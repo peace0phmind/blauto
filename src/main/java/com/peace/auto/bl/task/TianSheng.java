@@ -104,9 +104,12 @@ public class TianSheng implements IDo {
                 }
             }
 
-            if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI)) {
+            if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI)
+                    || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI)) {
                 boolean bShenHun = false;
+                boolean bShenJi = false;
                 boolean bGaoJiShenHun = false;
+                boolean bGaoJiShenJi = false;
                 Match hunshi = region.exists(baseDir + "hunshi.png");
                 if (hunshi != null) {
                     hunshi.click();
@@ -117,29 +120,84 @@ public class TianSheng implements IDo {
                         huoqushenhun.click();
                         Thread.sleep(3000L);
 
-                        Pattern mfzh = new Pattern(baseDir + "mianfeizhaohuan.png").similar(0.9f);
-                        Match mianfeizhaohuan = region.exists(mfzh);
-                        if (mianfeizhaohuan != null) {
-                            Iterator<Match> all = region.findAll(mfzh);
-                            while (all.hasNext()) {
-                                Match next = all.next();
-                                next.below().click(baseDir + "zhaohuanyici.png");
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI)) {
+                            Pattern mfzh = new Pattern(baseDir + "mianfeizhaohuan.png").similar(0.9f);
+                            Match mianfeizhaohuan = region.exists(mfzh);
+                            if (mianfeizhaohuan != null) {
+                                Iterator<Match> all = region.findAll(mfzh);
+                                while (all.hasNext()) {
+                                    Match next = all.next();
+                                    next.below().click(baseDir + "zhaohuanyici.png");
 
-                                Match queding = region.exists(Common.QUE_DING);
-                                if (queding != null) {
-                                    queding.click();
-                                    Thread.sleep(3000l);
-                                }
+                                    if (next.getX() > 400) {
+                                        Match mima = region.exists(baseDir + "shurumima.png", 6);
+                                        if (mima != null) {
+                                            Thread.sleep(3000L);
+                                            mima.type(DENG_LU.getPassword());
+                                            Thread.sleep(2000L);
+                                            region.click(Common.QUE_DING);
+                                            Thread.sleep(2000L);
+                                            next.below().click(baseDir + "zhaohuanyici.png");
+                                        }
 
-                                if (next.getX() > 400) {
-                                    bGaoJiShenHun = true;
-                                    status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI);
-                                } else {
-                                    bShenHun = true;
-                                    status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN);
+                                        bGaoJiShenHun = true;
+                                        status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI);
+                                    } else {
+                                        bShenHun = true;
+                                        status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN);
+                                    }
+
+                                    Match queding = region.exists(Common.QUE_DING);
+                                    if (queding != null) {
+                                        queding.click();
+                                        Thread.sleep(3000l);
+                                    }
                                 }
                             }
                         }
+
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI) || status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI)) {
+                            Match shenji = region.exists(baseDir + "zhaohuanshenji.png");
+                            if (shenji != null) {
+                                shenji.click();
+                                Thread.sleep(3000L);
+                            }
+
+                            Pattern mfzh = new Pattern(baseDir + "mianfeizhaohuan.png").similar(0.9f);
+                            Match mianfeizhaohuan = region.exists(mfzh);
+                            if (mianfeizhaohuan != null) {
+                                Iterator<Match> all = region.findAll(mfzh);
+                                while (all.hasNext()) {
+                                    Match next = all.next();
+                                    next.below().click(baseDir + "zhaohuanyici.png");
+
+                                    if (next.getX() > 400) {
+                                        Match mima = region.exists(baseDir + "shurumima.png", 6);
+                                        if (mima != null) {
+                                            Thread.sleep(3000L);
+                                            mima.type(DENG_LU.getPassword());
+                                            Thread.sleep(2000L);
+                                            region.click(Common.QUE_DING);
+                                            Thread.sleep(2000L);
+                                            next.below().click(baseDir + "zhaohuanyici.png");
+                                        }
+
+                                        bGaoJiShenJi = true;
+                                        status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI);
+                                    } else {
+                                        bShenJi = true;
+                                        status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_JI);
+                                    }
+
+                                    Match queding = region.exists(Common.QUE_DING);
+                                    if (queding != null) {
+                                        queding.click();
+                                        Thread.sleep(3000l);
+                                    }
+                                }
+                            }
+                        }
+
 
                         if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN) && !bShenHun) {
                             status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, Status.nextCheck());
@@ -147,6 +205,14 @@ public class TianSheng implements IDo {
 
                         if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI) && !bGaoJiShenHun) {
                             status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI, Status.nextCheck());
+                        }
+
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI) && !bShenJi) {
+                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_JI, Status.nextCheck());
+                        }
+
+                        if (status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI) && !bGaoJiShenJi) {
+                            status.Done(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI, Status.nextCheck());
                         }
 
                         region.click(Common.CLOSE);
@@ -221,6 +287,8 @@ public class TianSheng implements IDo {
                 && !status.canDo(Task.TIAN_SHEN_YUAN_GU, userName)
                 && !status.canDo(Task.TIAN_SHEN_LUAN_DOU, userName)
                 && !status.canDo(Task.TIAN_SHEN_HUN_JIE, userName)
+                && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI, userName)
+                && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI, userName)
                 && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI, userName)
                 && !status.canDo(Task.TIAN_SHEN_HUO_QU_SHEN_HUN, userName)) {
             return false;
@@ -283,7 +351,7 @@ public class TianSheng implements IDo {
                         Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
                         if (kaishizhandou != null) {
                             kaishizhandou.click();
-                            Thread.sleep(1000L);
+                            Thread.sleep(3000L);
 
                             Match quxiao = region.exists(Common.QU_XIAO);
                             if (quxiao != null) {
