@@ -308,116 +308,86 @@ public class TianSheng implements IDo {
                 hunjie.click();
                 Thread.sleep(3000L);
 
-                boolean firstjinru = true;
+                Match guankaanniu = region.exists(baseDir + "guankaButton.png");
+                if (guankaanniu != null) {
+                    guankaanniu.click();
+                    Thread.sleep(2000L);
 
-                for (int j = 0; j < 10; j++) {
-                    Pattern guanka = new Pattern(baseDir + "guanka.png").similar(0.92f);
-                    region.exists(guanka, 10);
+                    for (int j = 0; j < 10; j++) {
+                        if (jinRuGuanKa(region)) {
 
-                    ArrayList<Match> matches = Lists.newArrayList(region.findAll(guanka));
-                    List<Match> sorted = matches.stream().filter(x -> x.y > 240).sorted((x, y) -> y.x - x.x).collect(Collectors.toList());
-                    sorted.addAll(matches.stream().filter(x -> x.y <= 240).sorted((x, y) -> x.x - y.x).collect(Collectors.toList()));
-
-                    log.info("{}", sorted);
-
-                    if (sorted.size() > 2) {
-                        sorted.get(1).click();
-                        Thread.sleep(3000L);
-
-                        if (firstjinru) {
-                            kongweis.forEach(x -> {
-                                doRobot(region, (robot) -> {
-                                    robot.touch(x.x, x.y);
-                                });
-                            });
-
-                            List<ShenHun> shenHuns = getShenHun(region.find(baseDir + "dingwei.png").right());
-
-                            shenHuns = shenHuns.stream().sorted((x, y) -> x.getMatch().x - y.getMatch().x).collect(Collectors.toList());
-                            if (shenHuns.size() > 6) {
-                                shenHuns = shenHuns.subList(0, 6);
-                            }
-                            shenHuns = shenHuns.stream().sorted((x, y) -> x.getType().ordinal() - y.getType().ordinal()).collect(Collectors.toList());
-
-                            log.info("{}", shenHuns);
-
-                            for (int i = 0; i < Math.min(shenHuns.size(), 6); i++) {
-                                move(shenHuns.get(i).getMatch(), kongweis.get(i), 1000);
-                            }
-
-                            firstjinru = false;
-                        }
-
-                        Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
-                        if (kaishizhandou != null) {
-                            kaishizhandou.click();
-                            Thread.sleep(3000L);
-
-                            Match quxiao = region.exists(Common.QU_XIAO);
-                            if (quxiao != null) {
-                                if (status.canDo(Task.TIAN_SHEN_HUN_JIE_GOU_MAI)) {
-                                    region.click(Common.QUE_DING);
-                                    Thread.sleep(1000L);
-                                    status.Done(Task.TIAN_SHEN_HUN_JIE_GOU_MAI);
-                                    kaishizhandou.click();
-                                    Thread.sleep(1000L);
-                                } else {
-                                    status.Done(Task.TIAN_SHEN_HUN_JIE);
-                                    quxiao.click();
-                                    break;
-                                }
-                            }
-
-                            doRobot(region, robot -> robot.touch(400, 10));
-                            Match tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
-                            log.info("tiaoguo1: {}", tiaoguo);
-                            if (tiaoguo == null) {
-                                doRobot(region, robot -> robot.touch(400, 10));
-                                tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
-                            }
-                            log.info("tiaoguo2: {}", tiaoguo);
-                            if (tiaoguo != null) {
-                                tiaoguo.click();
+                            Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
+                            if (kaishizhandou != null) {
+                                kaishizhandou.click();
                                 Thread.sleep(3000L);
-                                tiaoguo = region.exists(baseDir + "tiaoguo.png", 1);
-                                log.info("tiaoguo3: {}", tiaoguo);
+
+                                Match quxiao = region.exists(Common.QU_XIAO);
+                                if (quxiao != null) {
+                                    if (status.canDo(Task.TIAN_SHEN_HUN_JIE_GOU_MAI)) {
+                                        region.click(Common.QUE_DING);
+                                        Thread.sleep(1000L);
+                                        status.Done(Task.TIAN_SHEN_HUN_JIE_GOU_MAI);
+                                        kaishizhandou.click();
+                                        Thread.sleep(1000L);
+                                    } else {
+                                        status.Done(Task.TIAN_SHEN_HUN_JIE);
+                                        quxiao.click();
+                                        break;
+                                    }
+                                }
+
+                                doRobot(region, robot -> robot.touch(400, 10));
+                                Match tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
+                                log.info("tiaoguo1: {}", tiaoguo);
+                                if (tiaoguo == null) {
+                                    doRobot(region, robot -> robot.touch(400, 10));
+                                    tiaoguo = region.exists(baseDir + "tiaoguo.png", 6);
+                                }
+                                log.info("tiaoguo2: {}", tiaoguo);
                                 if (tiaoguo != null) {
                                     tiaoguo.click();
                                     Thread.sleep(3000L);
-                                    log.info("tiaoguo again.");
-                                }
+                                    tiaoguo = region.exists(baseDir + "tiaoguo.png", 1);
+                                    log.info("tiaoguo3: {}", tiaoguo);
+                                    if (tiaoguo != null) {
+                                        tiaoguo.click();
+                                        Thread.sleep(3000L);
+                                        log.info("tiaoguo again.");
+                                    }
 
-                                Match shengli = region.exists(baseDir + "shengli.png");
-                                if (shengli != null) {
-                                    region.click(Common.CLOSE);
-                                    Thread.sleep(1000L);
-                                }
+                                    Match shengli = region.exists(baseDir + "shengli.png");
+                                    if (shengli != null) {
+                                        region.click(Common.CLOSE);
+                                        Thread.sleep(1000L);
+                                    }
 
-                                Match baoxiang = region.exists(baseDir + "baoxiang.png", 10);
-                                if (baoxiang != null) {
-                                    for (int z = 0; z < 7; z++) {
-                                        baoxiang.click();
-                                        Match choujiangjieshu = region.exists(baseDir + "choujiangjieshu.png");
-                                        if (choujiangjieshu != null) {
-                                            break;
-                                        }
+                                    Match baoxiang = region.exists(baseDir + "baoxiang.png", 10);
+                                    if (baoxiang != null) {
+                                        for (int z = 0; z < 7; z++) {
+                                            baoxiang.click();
+                                            Match choujiangjieshu = region.exists(baseDir + "choujiangjieshu.png");
+                                            if (choujiangjieshu != null) {
+                                                break;
+                                            }
 
-                                        Match mantangcai = region.exists(baseDir + "mantangcai.png", 1);
-                                        if (mantangcai != null) {
-                                            break;
+                                            Match mantangcai = region.exists(baseDir + "mantangcai.png", 1);
+                                            if (mantangcai != null) {
+                                                break;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        Thread.sleep(1000L);
-                        region.click(Common.CLOSE);
-                        Thread.sleep(3000L);
-                    } else {
-                        status.Done(Task.TIAN_SHEN_HUN_JIE);
+                            Thread.sleep(1000L);
+                            region.click(Common.CLOSE);
+                            Thread.sleep(3000L);
+                        } else {
+                            status.Done(Task.TIAN_SHEN_HUN_JIE);
+                        }
                     }
                 }
+
 
                 Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
                 if (kaishizhandou != null) {
@@ -493,29 +463,39 @@ public class TianSheng implements IDo {
         return ret;
     }
 
-    private List<ShenHun> getShenHun(Region region) throws FindFailed {
-        List<ShenHun> shenhuns = new ArrayList<>();
-        Pattern ma = new Pattern(baseDir + "ma.png").similar(0.80f);
-        if (region.exists(ma) != null) {
-            shenhuns.addAll(Lists.newArrayList(region.findAll(ma)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.MA, x)).collect(Collectors.toList()));
+    private boolean jinRuGuanKa(Region region) throws FindFailed, InterruptedException {
+        Pattern guanka = new Pattern(baseDir + "guanka.png").similar(0.92f);
+
+        boolean bPuTongClicked = false;
+        for (int i = 0; i < 5; i++) {
+            ArrayList<Match> matches = Lists.newArrayList(region.findAll(guanka));
+            if (matches.size() > 8) {
+                Optional<Match> first = matches.stream().sorted((x, y) -> x.x - y.x).findFirst();
+                if (first != null) {
+                    first.get().click();
+                    Thread.sleep(2000L);
+                    return true;
+                }
+            } else {
+                if (bPuTongClicked) {
+                    Match left = region.exists(new Pattern(baseDir + "leftgk.png").similar(0.95f));
+                    if (left != null) {
+                        left.click();
+                        Thread.sleep(2000L);
+                        bPuTongClicked = false;
+                    }
+                } else {
+                    Match putong = region.exists(baseDir + "putong.png");
+                    if (putong != null) {
+                        putong.click();
+                        Thread.sleep(2000L);
+                        bPuTongClicked = true;
+                    }
+                }
+            }
         }
 
-        Pattern dun = new Pattern(baseDir + "dun.png").similar(0.80f);
-        if (region.exists(dun) != null) {
-            shenhuns.addAll(Lists.newArrayList(region.findAll(dun)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.DUN, x)).collect(Collectors.toList()));
-        }
-
-        Pattern zhang = new Pattern(baseDir + "zhang.png").similar(0.80f);
-        if (region.exists(zhang) != null) {
-            shenhuns.addAll(Lists.newArrayList(region.findAll(zhang)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.ZHANG, x)).collect(Collectors.toList()));
-        }
-
-        Pattern dao = new Pattern(baseDir + "dao.png").similar(0.80f);
-        if (region.exists(dao) != null) {
-            shenhuns.addAll(Lists.newArrayList(region.findAll(dao)).stream().map(x -> new ShenHun(ShenHun.ShenHunType.DAO, x)).collect(Collectors.toList()));
-        }
-
-        return shenhuns;
+        return false;
     }
 
     private void findLastFinishPage(Region region) throws InterruptedException {

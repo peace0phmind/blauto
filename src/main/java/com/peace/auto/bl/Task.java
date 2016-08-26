@@ -23,18 +23,13 @@ public enum Task {
     CLEAR_MAIL(Mail.class, 3, 3, 6 * 60 * 60),
 
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),
-    //    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
-    //    CHU_ZHENG_DI_DUI(ChuZheng.class, -1, 6, 2 * 20 * 60),
     CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -6, 2 * 20 * 60),
-    //    CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, 1, 30 * 60),
     CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
-    //    CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, 1),  // a tag
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
 
-    //    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
-    LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
+    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
     LIE_CHANG_QIANG_ZHENG(LieChang.class, 3, -1),
     LIE_CHANG_DA_GUAI(LieChang.class, 0, -1, 24 * 60 * 60),
 
@@ -55,14 +50,14 @@ public enum Task {
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
     TIAN_SHEN_QI_DAO_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 4 * 60 * 60),
-    TIAN_SHEN_LUAN_DOU(TianSheng.class, -1, -1, 6 * 60 * 60),
+    TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
 
     TIAN_SHEN_HUO_QU_SHEN_HUN(TianSheng.class, 0, 0, 8 * 60 * 60),
     TIAN_SHEN_HUO_QU_SHEN_HUN_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
     TIAN_SHEN_HUO_QU_SHEN_JI(TianSheng.class, 0, 0, 8 * 60 * 60),
     TIAN_SHEN_HUO_QU_SHEN_JI_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
     TIAN_SHEN_HUN_JIE(TianSheng.class, -1, -1, 6 * 60 * 60),
-    TIAN_SHEN_HUN_JIE_GOU_MAI(TianSheng.class, 2),
+    TIAN_SHEN_HUN_JIE_GOU_MAI(TianSheng.class, -2),
 
     SHI_CHANG(ShiChang.class, 3, -1),
     SHI_CHANG_CHECK(ShiChang.class, 0, -1, 2 * 60 * 60),

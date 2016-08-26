@@ -123,6 +123,17 @@ public class Status {
                         break;
                 }
 
+                if (LocalTime.now().isBefore(LocalTime.of(8, 0))) {
+                    switch (t) {
+                        case LIE_CHANG_ZHENG_SHOU:
+                        case LIE_CHANG_QIANG_ZHENG:
+                        case BUILDING:
+                            return;
+                        default:
+                            break;
+                    }
+                }
+
                 int dayLimit = t.getDayLimit(u);
 
                 if (dayLimit < 0) {
@@ -219,6 +230,12 @@ public class Status {
                     Optional<ExchangeCode> first = exchangeCodes.stream().sorted((x, y) -> x.getBeginTime().compareTo(y.getBeginTime())).findFirst();
                     if (first.isPresent()) {
                         executableTime = first.get().getBeginTime();
+                    }
+                }
+
+                if (t == SHI_CHANG_CHECK) {
+                    if (todayFinishCount(SHI_CHANG, u) >= dayLimit) {
+                        return;
                     }
                 }
 
