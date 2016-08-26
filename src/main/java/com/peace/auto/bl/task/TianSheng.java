@@ -20,17 +20,6 @@ import static com.peace.auto.bl.common.Devices.DENG_LU;
  */
 @Slf4j
 public class TianSheng implements IDo {
-    private static final List<Location> kongweis = new ArrayList<Location>() {{
-        add(new Location(318, 156));
-        add(new Location(318, 246));
-        add(new Location(318, 336));
-        add(new Location(228, 156));
-        add(new Location(228, 246));
-        add(new Location(228, 336));
-        add(new Location(138, 156));
-        add(new Location(138, 246));
-        add(new Location(138, 336));
-    }};
     String baseDir = Common.BASE_DIR + "tiansheng/";
     Pattern sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.7f);
 
@@ -313,7 +302,7 @@ public class TianSheng implements IDo {
                     guankaanniu.click();
                     Thread.sleep(2000L);
 
-                    for (int j = 0; j < 10; j++) {
+                    for (int j = 0; j < 15; j++) {
                         if (jinRuGuanKa(region)) {
 
                             Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png");
@@ -359,20 +348,21 @@ public class TianSheng implements IDo {
                                     if (shengli != null) {
                                         region.click(Common.CLOSE);
                                         Thread.sleep(1000L);
-                                    }
 
-                                    Match baoxiang = region.exists(baseDir + "baoxiang.png", 10);
-                                    if (baoxiang != null) {
-                                        for (int z = 0; z < 7; z++) {
-                                            baoxiang.click();
-                                            Match choujiangjieshu = region.exists(baseDir + "choujiangjieshu.png");
-                                            if (choujiangjieshu != null) {
-                                                break;
-                                            }
+                                        // 胜利以后, 获取宝箱
+                                        Match baoxiang = region.exists(baseDir + "baoxiang.png", 10);
+                                        if (baoxiang != null) {
+                                            for (int z = 0; z < 7; z++) {
+                                                baoxiang.click();
+                                                Match choujiangjieshu = region.exists(baseDir + "choujiangjieshu.png");
+                                                if (choujiangjieshu != null) {
+                                                    break;
+                                                }
 
-                                            Match mantangcai = region.exists(baseDir + "mantangcai.png", 1);
-                                            if (mantangcai != null) {
-                                                break;
+                                                Match mantangcai = region.exists(baseDir + "mantangcai.png", 1);
+                                                if (mantangcai != null) {
+                                                    break;
+                                                }
                                             }
                                         }
                                     }
@@ -464,13 +454,13 @@ public class TianSheng implements IDo {
     }
 
     private boolean jinRuGuanKa(Region region) throws FindFailed, InterruptedException {
-        Pattern guanka = new Pattern(baseDir + "guanka.png").similar(0.92f);
+        Pattern guanka = new Pattern(baseDir + "guanka.png");
 
         boolean bPuTongClicked = false;
         for (int i = 0; i < 5; i++) {
             ArrayList<Match> matches = Lists.newArrayList(region.findAll(guanka));
             if (matches.size() > 8) {
-                Optional<Match> first = matches.stream().sorted((x, y) -> x.x - y.x).findFirst();
+                Optional<Match> first = matches.stream().sorted((x, y) -> y.x - x.x).findFirst();
                 if (first != null) {
                     first.get().click();
                     Thread.sleep(2000L);

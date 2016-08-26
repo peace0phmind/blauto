@@ -60,7 +60,7 @@ public class Main {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
-        for (int i = 0; i < 1; i++) {
+        for (int i = 2; i < 8; i++) {
             String user = Status.USERS.get(i);
 //        String user = Status.USERS.get(0);
 
