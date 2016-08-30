@@ -31,6 +31,12 @@ public class XunBao implements IDo {
                 return false;
             }
 
+            Match yijianxunbao = region.exists(baseDir + "yijianxunbao.png");
+            if (yijianxunbao != null) {
+                yijianxunbao.click();
+                Thread.sleep(3000L);
+            }
+
             for (int i = 0; i < 200; i++) {
                 List<Match> list = Lists.newArrayList(region.findAll(baseDir + "xunbaobutton.png"));
                 Optional<Match> lastButton = list.stream().sorted((a, b) -> b.x - a.x).findFirst();
