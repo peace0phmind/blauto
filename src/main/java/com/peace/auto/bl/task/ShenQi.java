@@ -60,7 +60,10 @@ public class ShenQi implements IDo {
 
                         boolean bjb = false;
                         List<LocalDateTime> times = new ArrayList<>();
-                        for (String shenxiang : Arrays.asList("jianling.png", "moling.png", "paoling.png", "yongling.png")) {
+                        List<String> strings = Arrays.asList("jianling.png", "yongling.png", "moling.png", "paoling.png");
+                        int i1 = LocalDateTime.now().getDayOfYear() % 4;
+                        for (int i = 0; i < 4; i++) {
+                            String shenxiang = strings.get((i + i1) % 4);
                             Match sx = region.exists(baseDir + shenxiang);
                             if (sx != null) {
                                 sx.click();
