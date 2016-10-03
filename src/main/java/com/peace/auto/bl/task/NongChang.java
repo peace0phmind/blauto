@@ -57,10 +57,10 @@ public class NongChang implements IDo {
                         if (lastzhongzhi.isPresent()) {
                             lastzhongzhi.get().click();
                             if (status.isPeace()) {
-                                status.Done(Task.NONG_CHANG_ZHONG_ZHI, LocalDateTime.now().plusHours(10));
+                                status.Done(Task.NONG_CHANG_ZHONG_ZHI, LocalDateTime.now().plusHours(6));
                                 Status.USERS.forEach(x -> {
                                     if (!Status.peaceName().equals(x)) {
-                                        status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, LocalDateTime.now().plusHours(9), x);
+                                        status.Done(Task.NONG_CHANG_TOU_CAI_CHECK, LocalDateTime.now().plusHours(5), x);
                                     }
                                 });
                             } else {
