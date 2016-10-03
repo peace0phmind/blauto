@@ -22,6 +22,10 @@ public enum Task {
 
     CLEAR_MAIL(Mail.class, 3, 3, 6 * 60 * 60),
 
+    TIAN_TI_ZHAN_DOU(TianTi.class, 10),
+    TIAN_TI_LING_QU(TianTi.class, 0, 0, 24 * 60 * 60),
+    TIAN_TI_LING_QU_CHECK(TianTi.class, 0, 0, 30 * 60),
+
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 8 * 2 * 6 * 60),
