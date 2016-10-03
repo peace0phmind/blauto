@@ -31,6 +31,8 @@ public class TianTi implements IDo {
                 result = result || zhanDou(region, status);
             }
 
+            Thread.sleep(3000L);
+
             if (status.canDo(Task.TIAN_TI_LING_QU)) {
                 result = result || lingQu(region, status);
             }
@@ -115,6 +117,8 @@ public class TianTi implements IDo {
 
                 status.Done(Task.TIAN_TI_LING_QU);
                 status.Done(Task.TIAN_TI_LING_QU_CHECK, Status.nextDayCheck());
+            } else {
+                log.info("lingqu is null: {}", lingqu);
             }
         }
         return true;

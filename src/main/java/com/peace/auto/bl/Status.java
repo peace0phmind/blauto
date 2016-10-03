@@ -113,6 +113,7 @@ public class Status {
                     case HUO_YUE_DU:
                     case LIN_QU_REN_WU:
                     case SHI_CHANG:
+                    case TIAN_TI_LING_QU:
                     case NONG_CHANG_TOU_CAI:
                     case BUILDING_DUI_LIE:
                     case TIAN_SHEN_HUN_JIE_GOU_MAI:

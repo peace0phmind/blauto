@@ -62,7 +62,7 @@ public class Main {
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
 //        int n = 0;
 //        for (int i = n; i < n + 1; i++) {
-        for (int i = 2; i < 8; i++) {
+        for (int i = 6; i < 8; i++) {
             String user = Status.USERS.get(i);
 //        String user = Status.USERS.get(0);
 
