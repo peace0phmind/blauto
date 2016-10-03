@@ -43,15 +43,21 @@ public class LieChang implements IDo {
                 if (qiangzhizhengshou != null && isButtonEnable(qiangzhizhengshou, 10, 10)) {
                     qiangzhizhengshou.click();
 
-                    Thread.sleep(1000L);
-
-                    region.click(baseDir + "zhengshouanniu.png");
-
-                    Thread.sleep(1000L);
+                    Pattern zhengshou1ci = new Pattern(baseDir + "zhengshou1ci.png").similar(0.99f);
+                    for (int i = 0; i < 21; i++) {
+                        Match zhenshou1 = region.exists(zhengshou1ci);
+                        if (zhenshou1 != null) {
+                            for (int j = 0; j < Task.LIE_CHANG_QIANG_ZHENG.getDayLimit(status.getCurrentUser()); j++) {
+                                Thread.sleep(1000L);
+                                region.click(baseDir + "zhengshouanniu.png");
+                                status.Done(Task.LIE_CHANG_QIANG_ZHENG);
+                            }
+                            break;
+                        }
+                        region.click(baseDir + "jian.png");
+                    }
 
                     region.click(Common.CLOSE);
-
-                    status.Done(Task.LIE_CHANG_QIANG_ZHENG);
                 } else {
                     status.Done(Task.LIE_CHANG_QIANG_ZHENG);
                     status.Done(Task.LIE_CHANG_QIANG_ZHENG);

@@ -33,7 +33,7 @@ public class Status {
             "peace0ph003"
     );
     private static final Random ROOM_NO_RANDOM = new Random();
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 0), LocalTime.of(13, 53, 30), LocalTime.of(21, 30), LocalTime.of(23, 53, 30));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 30), LocalTime.of(13, 10, 0), LocalTime.of(13, 20, 30), LocalTime.of(23, 51, 30));
 
     private static int XUN_BAO_PREPARE_MINUTES = 15;
 
@@ -207,11 +207,11 @@ public class Status {
                 }
 
                 if (t == QI_BING_DUO_BAO) {
-                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(12, 25)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 55)))) {
+                    if (!(dateTime.toLocalTime().isAfter(LocalTime.of(12, 0)) && dateTime.toLocalTime().isBefore(LocalTime.of(13, 0)))) {
                         return;
                     }
                     if (todayFinishCount(Task.QI_BING_DUO_BAO, u) == 0) {
-                        executableTime = localDateTime.withHour(12).withMinute(30);
+                        executableTime = localDateTime.withHour(12).withMinute(0);
                     }
                 }
 

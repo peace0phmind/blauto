@@ -64,14 +64,14 @@ public class DuoBaoModeJob implements Job, TaskJob {
                 status.Done(Task.QI_BING_DUO_BAO);
             }
 
-            if (!status.peaceName().equals(userName)) {
-                // 判断账号是否要额外寻宝
-                if (status.todayFinishCount(Task.QI_BING_XUN_BAO, user1) < Task.QI_BING_XUN_BAO.getDayLimit(status.peaceName())) {
-                    new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
-                    status.Done(Task.QI_BING_XUN_BAO, LocalDateTime.now(), user1);
-                    status.Done(Task.QI_BING_XUN_BAO, LocalDateTime.now(), user2);
-                }
-            }
+//            if (!status.peaceName().equals(userName)) {
+//                // 判断账号是否要额外寻宝
+//                if (status.todayFinishCount(Task.QI_BING_XUN_BAO, user1) < Task.QI_BING_XUN_BAO.getDayLimit(status.peaceName())) {
+//                    new DuoBao().xunbao(region2, region3, false, status.getRoomNo(), null);
+//                    status.Done(Task.QI_BING_XUN_BAO, LocalDateTime.now(), user1);
+//                    status.Done(Task.QI_BING_XUN_BAO, LocalDateTime.now(), user2);
+//                }
+//            }
         } catch (Exception e) {
             log.error("{}", e);
             System.exit(-1);

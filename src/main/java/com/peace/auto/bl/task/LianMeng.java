@@ -98,21 +98,33 @@ public class LianMeng implements IDo {
                                 queding.click();
                                 status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
                             } else {
-                                // 尚未报名则进行报名
-                                Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
-                                if (shangweibaom != null) {
-                                    region.click(baseDir + "baomingcansai.png");
-                                    Thread.sleep(1000L);
-
-                                    Iterator<Match> all = region.findAll(new Pattern(baseDir + "mengzhanbaomin.png").similar(0.95f));
-                                    ArrayList<Match> allBaoMin = Lists.newArrayList(all);
-
-                                    log.info("{}", allBaoMin);
-                                    allBaoMin.get(random.nextInt(allBaoMin.size())).click();
+                                // 联盟尚未报名
+                                Match lianmengshangweibaom = region.exists(new Pattern(baseDir + "lianmengshangweibaoming.png").similar(0.9f));
+                                if (lianmengshangweibaom != null) {
                                     status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                                } else {
+                                    // 尚未报名则进行报名
+                                    Match shangweibaom = region.exists(baseDir + "shangweibaoming.png", 6);
+                                    if (shangweibaom != null) {
+                                        Match baomingcansai = region.exists(baseDir + "baomingcansai.png");
+                                        if (baomingcansai != null) {
+                                            Thread.sleep(1000L);
+                                            baomingcansai.click();
+                                            Thread.sleep(1000L);
 
-                                    Thread.sleep(1000L);
-                                    region.click(Common.CLOSE);
+                                            Iterator<Match> all = region.findAll(new Pattern(baseDir + "mengzhanbaomin.png").similar(0.95f));
+                                            ArrayList<Match> allBaoMin = Lists.newArrayList(all);
+
+                                            log.info("{}", allBaoMin);
+                                            allBaoMin.get(random.nextInt(allBaoMin.size())).click();
+                                            status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+
+                                            Thread.sleep(1000L);
+                                            region.click(Common.CLOSE);
+                                        } else {
+                                            status.Done(Task.LIAN_MENG_LIAN_MENG_ZHAN);
+                                        }
+                                    }
                                 }
 
                                 // 已被淘汰

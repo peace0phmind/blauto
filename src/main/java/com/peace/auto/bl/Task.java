@@ -29,18 +29,20 @@ public enum Task {
     CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
 
-    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
-    LIE_CHANG_QIANG_ZHENG(LieChang.class, 3, -1),
+    LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
+    LIE_CHANG_QIANG_ZHENG(LieChang.class, 3),
     LIE_CHANG_DA_GUAI(LieChang.class, 0, -1, 24 * 60 * 60),
 
     SHOU_GU_JIA_GONG(ShouGuFang.class, 4),
     SHOU_GU_SHOU_LIE(ShouGuFang.class, 0, 0, 8 * 60 * 60),
 
     XUN_BAO(XunBao.class, 1, -1),
-    BUILDING(Building.class, 0, 0, 30 * 60),
-    BUILDING_DUI_LIE(Building.class, 0, 0),
+    //    BUILDING(Building.class, 0, 0, 30 * 60),
+    BUILDING(Building.class, -1, -1, 30 * 60),
+    //    BUILDING_DUI_LIE(Building.class, 0, 0),
+    BUILDING_DUI_LIE(Building.class, -1, -1),
 
-    NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 8 * 60 * 60),
+    NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 4 * 60 * 60),
     NONG_CHANG_SHOU_CAI(NongChang.class, 2),
     NONG_CHANG_TOU_CAI(NongChang.class, 1),
     NONG_CHANG_TOU_CAI_CHECK(NongChang.class, 0, 0, 2 * 60 * 60),
@@ -48,7 +50,7 @@ public enum Task {
     SHENG_YU(ShengYu.class, 0, 0, 30 * 60),
 
     TIAN_SHEN_QI_DAO(TianSheng.class, 0, 0, 12 * 60 * 60),
-    TIAN_SHEN_QI_DAO_GAO_JI(TianSheng.class, 0, 0, 48 * 60 * 60),
+    TIAN_SHEN_QI_DAO_GAO_JI(TianSheng.class, 0, 0, 24 * 60 * 60),
     TIAN_SHEN_YUAN_GU(TianSheng.class, 0, 0, 4 * 60 * 60),
     TIAN_SHEN_LUAN_DOU(TianSheng.class, 0, 0, 4 * 60 * 60),
 
@@ -83,8 +85,8 @@ public enum Task {
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, -1),
     //    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
-    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 2),
-    HAI_DI_SHI_JIE_TIAO_ZHAN(HaiDiShiJie.class, 1),
+    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, -1, -2),
+    HAI_DI_SHI_JIE_TIAO_ZHAN(HaiDiShiJie.class, -1),
 
     SHENG_HUO(ShengHuo.class, 3, 3, 15 * 60),
 
@@ -101,8 +103,8 @@ public enum Task {
     LIN_QU_BAO_XIANG(RenWu.class, 1),
     LIN_QU_REN_WU_UNKNOWN(RenWu.class, 1),
 
-    QI_BING_XUN_BAO(DuoBao.class, -1, -3, 5 * 60),
-    QI_BING_DUO_BAO(DuoBao.class, -1, -3, 10 * 60),
+    QI_BING_XUN_BAO(DuoBao.class, -1, 3, 5 * 60),
+    QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
     //    QI_BING_DUO_BAO(DuoBao.class, -1, 3, 10 * 60),
     QI_BING_LING_TU(DuoBao.class, -1);
 //    QI_BING_LING_TU(DuoBao.class, 1);
@@ -113,7 +115,7 @@ public enum Task {
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
-                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, LIE_CHANG_QIANG_ZHENG,
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
     }};

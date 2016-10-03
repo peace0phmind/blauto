@@ -51,26 +51,28 @@ public class ShiLianDong extends ZhanBao implements IDo {
                         region.click(Common.QU_XIAO);
                         status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
                     } else {
+
                         // 进入成功
-                        if (status.isPeace()) {
-                            status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
-                        } else {
-                            Match zidongzhandou = region.exists(baseDir + "zidongzhandou.png");
-                            if (zidongzhandou != null) {
-                                zidongzhandou.click();
-
-                                Thread.sleep(500L);
-
-                                region.click(baseDir + "zidongbubing.png");
-                                region.click(Common.QUE_DING);
-
-                                Thread.sleep(500L);
-                                region.click(baseDir + "quanbubuman.png");
-                                region.click(baseDir + "queding.png");
-
-                                status.Done(Task.SHI_LIAN_DONG);
-                            }
-                        }
+                        status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now()); // is same after
+//                        if (status.isPeace()) {
+//                            status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
+//                        } else {
+//                            Match zidongzhandou = region.exists(baseDir + "zidongzhandou.png");
+//                            if (zidongzhandou != null) {
+//                                zidongzhandou.click();
+//
+//                                Thread.sleep(500L);
+//
+//                                region.click(baseDir + "zidongbubing.png");
+//                                region.click(Common.QUE_DING);
+//
+//                                Thread.sleep(500L);
+//                                region.click(baseDir + "quanbubuman.png");
+//                                region.click(baseDir + "queding.png");
+//
+//                                status.Done(Task.SHI_LIAN_DONG);
+//                            }
+//                        }
                     }
                 }
 
