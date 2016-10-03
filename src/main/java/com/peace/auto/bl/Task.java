@@ -24,7 +24,6 @@ public enum Task {
 
     TIAN_TI_ZHAN_DOU(TianTi.class, 10),
     TIAN_TI_LING_QU(TianTi.class, 0, 0, 24 * 60 * 60),
-    TIAN_TI_LING_QU_CHECK(TianTi.class, 0, 0, 30 * 60),
 
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 10 * 60),
     SHI_LIAN_DONG(ShiLianDong.class, 2, 3, 45 * 60),

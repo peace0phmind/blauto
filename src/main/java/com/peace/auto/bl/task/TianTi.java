@@ -98,7 +98,7 @@ public class TianTi implements IDo {
     private boolean lingQu(Region region, Status status) throws FindFailed, InterruptedException {
         Match houhuodejiangli = region.exists(baseDir + "houhuodejiangli.png");
         if (houhuodejiangli != null) {
-            status.Done(Task.TIAN_TI_LING_QU_CHECK, Status.nextCheck());
+            status.Done(Task.TIAN_TI_LING_QU, Status.nextCheck());
         } else {
             Match lingqu = region.exists(baseDir + "lingqu.png");
             if (lingqu != null) {
@@ -116,14 +116,12 @@ public class TianTi implements IDo {
                 }
 
                 status.Done(Task.TIAN_TI_LING_QU);
-                status.Done(Task.TIAN_TI_LING_QU_CHECK, Status.nextDayCheck());
             } else {
                 log.info("lingqu is null: {}", lingqu);
             }
         }
         return true;
     }
-
 
     @Override
     public boolean CanDo(Status status, String userName) {
@@ -133,10 +131,6 @@ public class TianTi implements IDo {
             result = result || status.canDo(Task.TIAN_TI_ZHAN_DOU, userName);
         }
 
-        if (status.canDo(Task.TIAN_TI_LING_QU, userName)) {
-            result = result || status.canDo(Task.TIAN_TI_LING_QU_CHECK, userName);
-        }
-
-        return result;
+        return result || status.canDo(Task.TIAN_TI_LING_QU, userName);
     }
 }
