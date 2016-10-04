@@ -228,7 +228,7 @@ public class ChuZheng extends ZhanBao implements IDo {
                     }
                 }
             } else {
-                Pattern duishoupng = new Pattern(baseDir + "duishou.png").similar(0.9f);
+                Pattern duishoupng = new Pattern(baseDir + "duishou.png").similar(0.95f);
                 for (int i = 0; i < 10; i++) {
                     Match duishou = region.exists(duishoupng);
                     if (duishou == null) {
