@@ -154,8 +154,8 @@ public class Status {
                     }
                 }
 
+                LocalTime localTime = dateTime.toLocalTime();
                 if (t == Task.SHENG_HUO) {
-                    LocalTime localTime = dateTime.toLocalTime();
                     if (!((localTime.isAfter(LocalTime.of(11, 30)) && localTime.isBefore(LocalTime.of(13, 59)))
                             || (localTime.isAfter(LocalTime.of(20, 30)) && localTime.isBefore(LocalTime.of(22, 59))))) {
                         return;
@@ -165,6 +165,12 @@ public class Status {
                         executableTime = localDateTime.withHour(11).withMinute(30);
                     } else if (dateTime.toLocalTime().isBefore(LocalTime.of(20, 30)) && dateTime.toLocalTime().isAfter(LocalTime.of(14, 0))) {
                         executableTime = localDateTime.withHour(20).withMinute(30);
+                    }
+                }
+
+                if (t == Task.TIAN_TI_ZHAN_DOU) {
+                    if (localTime.isBefore(LocalTime.of(20, 0))) {
+                        return;
                     }
                 }
 

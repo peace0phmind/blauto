@@ -199,31 +199,53 @@ public class ChuZheng extends ZhanBao implements IDo {
             Thread.sleep(1000L);
 
             // 选择大于战力的第二个
-            while (true) {
-                Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
-                ArrayList<Match> matches = Lists.newArrayList(all);
-                if (matches.size() < 3) {
-                    log.error("list size is {}.", matches.size());
-                    return false;
+            if (status.getCurrentUser().equals("peace0ph003")) {
+                while (true) {
+                    Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
+                    ArrayList<Match> matches = Lists.newArrayList(all);
+                    if (matches.size() < 3) {
+                        log.error("list size is {}.", matches.size());
+                        return false;
+                    }
+
+                    List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
+
+                    Match match = sortedList.get(0);
+                    Region left = match.left(60);
+
+                    int cankaozhanli = getNumber(left);
+                    log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
+                    if (cankaozhanli < userZhanLi) {
+                        move(match, match.getCenter().above(51), 1000);
+                        Thread.sleep(500L);
+                    } else {
+                        sortedList.get(2).click();
+                        Thread.sleep(1000L);
+                        sortedList.get(2).click();
+                        Thread.sleep(1000L);
+                        sortedList.get(2).click();
+                        break;
+                    }
                 }
+            } else {
+                Pattern duishoupng = new Pattern(baseDir + "duishou.png").similar(0.9f);
+                for (int i = 0; i < 10; i++) {
+                    Match duishou = region.exists(duishoupng);
+                    if (duishou == null) {
+                        Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
+                        ArrayList<Match> matches = Lists.newArrayList(all);
+                        if (matches.size() < 3) {
+                            log.error("list size is {}.", matches.size());
+                            return false;
+                        }
 
-                List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
-
-                Match match = sortedList.get(0);
-                Region left = match.left(60);
-
-                int cankaozhanli = getNumber(left);
-                log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
-                if (cankaozhanli < userZhanLi) {
-                    move(match, match.getCenter().above(51), 1000);
-                    Thread.sleep(500L);
-                } else {
-                    sortedList.get(2).click();
-                    Thread.sleep(1000L);
-                    sortedList.get(2).click();
-                    Thread.sleep(1000L);
-                    sortedList.get(2).click();
-                    break;
+                        Match match = matches.stream().sorted((a, b) -> b.y - a.y).findFirst().get();
+                        move(match, match.getCenter().above(280), 1000);
+                        Thread.sleep(500L);
+                    } else {
+                        duishou.click();
+                        break;
+                    }
                 }
             }
 
