@@ -26,14 +26,15 @@ public class TianTi implements IDo {
         if (shenhuntianti != null) {
             shenhuntianti.click();
 
-
-            if (status.canDo(Task.TIAN_TI_ZHAN_DOU)) {
+            LocalTime now = LocalTime.now();
+            if (now.isAfter(LocalTime.of(20, 0)) && now.isBefore(LocalTime.MAX) && status.canDo(Task.TIAN_TI_ZHAN_DOU)) {
                 result = result || zhanDou(region, status);
             }
 
             Thread.sleep(3000L);
 
             if (status.canDo(Task.TIAN_TI_LING_QU)) {
+                region.saveScreenCapture(status.getCurrentUser() + "-tianti");
                 result = result || lingQu(region, status);
             }
 
@@ -131,6 +132,10 @@ public class TianTi implements IDo {
             result = result || status.canDo(Task.TIAN_TI_ZHAN_DOU, userName);
         }
 
-        return result || status.canDo(Task.TIAN_TI_LING_QU, userName);
+        result = result || status.canDo(Task.TIAN_TI_LING_QU, userName);
+
+        log.info("tianti canDo result: {}, {}", userName, result);
+
+        return result;
     }
 }

@@ -92,8 +92,8 @@ public class Main {
             }
             //*/
 
-            if (new ChuZheng().CanDo(status, user)) {
-                new ChuZheng().Done(region, status);
+            if (new TianTi().CanDo(status, user)) {
+                new TianTi().Done(region, status);
             }
 
         }
