@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.sikuli.script.*;
 
 /**
  * Created by mind on 3/17/16.
@@ -49,6 +50,11 @@ public class DuoBao implements IDo {
             Thread.sleep(3000L);
 
             Match duobao = region.exists(baseDir + "duobaoqibing.png", 20);
+            if (duobao == null) {
+                doRobot(region, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                duobao = region.exists(baseDir + "duobaoqibing.png", 20);
+            }
+
             if (duobao != null) {
                 duobao.click();
 
@@ -108,7 +114,17 @@ public class DuoBao implements IDo {
             Thread.sleep(3000L);
 
             Match duobao1 = region1.exists(baseDir + "duobaoqibing.png", 20);
+            if (duobao1 == null) {
+                doRobot(region1, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                duobao1 = region1.exists(baseDir + "duobaoqibing.png", 20);
+            }
+
             Match duobao2 = region2.exists(baseDir + "duobaoqibing.png", 20);
+            if (duobao2 == null) {
+                doRobot(region2, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                duobao2 = region2.exists(baseDir + "duobaoqibing.png", 20);
+            }
+
             if (duobao1 != null && duobao2 != null) {
                 duobao1.click();
                 duobao2.click();

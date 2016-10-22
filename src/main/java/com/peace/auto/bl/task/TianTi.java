@@ -28,14 +28,14 @@ public class TianTi implements IDo {
 
             LocalTime now = LocalTime.now();
             if (now.isAfter(LocalTime.of(20, 0)) && now.isBefore(LocalTime.MAX) && status.canDo(Task.TIAN_TI_ZHAN_DOU)) {
-                result = result || zhanDou(region, status);
+                result = zhanDou(region, status) || result;
             }
 
             Thread.sleep(3000L);
 
             if (status.canDo(Task.TIAN_TI_LING_QU)) {
-                region.saveScreenCapture(status.getCurrentUser() + "-tianti");
-                result = result || lingQu(region, status);
+                region.saveScreenCapture(".", status.getCurrentUser() + "-tianti");
+                result = lingQu(region, status) || result;
             }
 
             Thread.sleep(1000L);
@@ -128,11 +128,11 @@ public class TianTi implements IDo {
     public boolean CanDo(Status status, String userName) {
         boolean result = false;
         LocalTime now = LocalTime.now();
-        if (now.isAfter(LocalTime.of(20, 0)) && now.isBefore(LocalTime.MAX)) {
-            result = result || status.canDo(Task.TIAN_TI_ZHAN_DOU, userName);
+        if (now.isAfter(LocalTime.of(20, 0)) && now.isBefore(LocalTime.of(23, 50))) {
+            result = status.canDo(Task.TIAN_TI_ZHAN_DOU, userName) || result;
         }
 
-        result = result || status.canDo(Task.TIAN_TI_LING_QU, userName);
+        result = status.canDo(Task.TIAN_TI_LING_QU, userName) || result;
 
         log.info("tianti canDo result: {}, {}", userName, result);
 

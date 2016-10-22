@@ -1,6 +1,7 @@
 package com.peace.auto.bl;
 
 import com.peace.auto.bl.job.AutoMode;
+import com.peace.auto.bl.job.XunBaoModeJob;
 import com.peace.auto.bl.task.*;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,10 @@ public class Main {
 //        new DuoBaoModeJob().execute();
 //        new XunBaoModeJob().execute(null);
 
-        testMode();
+//        log.info("{}", status.canDo(Task.TIAN_TI_LING_QU, "peace0ph001"));
+
+//        testMode();
+        new XunBaoModeJob().xunbao();
 //        System.exit(0);
 //        testGetTask();
 //        time();

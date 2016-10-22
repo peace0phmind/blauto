@@ -169,7 +169,7 @@ public class Status {
                 }
 
                 if (t == Task.TIAN_TI_ZHAN_DOU) {
-                    if (localTime.isBefore(LocalTime.of(20, 0))) {
+                    if (localTime.isBefore(LocalTime.of(20, 0)) || localTime.isAfter(LocalTime.of(23, 50))) {
                         return;
                     }
                 }
