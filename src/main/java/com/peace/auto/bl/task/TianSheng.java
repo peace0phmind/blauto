@@ -249,7 +249,7 @@ public class TianSheng implements IDo {
                             region.click(baseDir + "xiaoclose.png");
                         }
                     } else {
-                        status.Done(Task.TIAN_SHEN_LUAN_DOU, Status.nextDayCheck());
+                        status.Done(Task.TIAN_SHEN_LUAN_DOU);
                     }
 
                     Thread.sleep(500L);
