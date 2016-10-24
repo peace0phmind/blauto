@@ -36,8 +36,8 @@ public class Main {
 
 //        log.info("{}", status.canDo(Task.TIAN_TI_LING_QU, "peace0ph001"));
 
-//        testMode();
-        new XunBaoModeJob().xunbao();
+        testMode();
+//        new XunBaoModeJob().xunbao();
 //        System.exit(0);
 //        testGetTask();
 //        time();
@@ -96,8 +96,8 @@ public class Main {
             }
             //*/
 
-            if (new TianTi().CanDo(status, user)) {
-                new TianTi().Done(region, status);
+            if (new TianSheng().CanDo(status, user)) {
+                new TianSheng().Done(region, status);
             }
 
         }
