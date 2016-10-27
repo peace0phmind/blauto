@@ -40,6 +40,8 @@ public class TianTi implements IDo {
 
             Thread.sleep(1000L);
             region.click(baseDir + "close.png");
+        } else {
+            status.Done(Task.TIAN_TI_LING_QU, Status.nextCheck());
         }
 
         return result;
