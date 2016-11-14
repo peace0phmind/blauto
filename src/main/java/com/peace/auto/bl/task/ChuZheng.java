@@ -243,20 +243,23 @@ public class ChuZheng extends ZhanBao implements IDo {
                         move(match, match.getCenter().above(280), 1000);
                         Thread.sleep(500L);
                     } else {
-                        duishou.click();
+                        Iterator<Match> allduishou = region.findAll(duishoupng);
+                        ArrayList<Match> duishous = Lists.newArrayList(allduishou);
+                        Match first = duishous.stream().sorted((a, b) -> a.y - b.y).findFirst().get();
+                        first.above(20).click();
                         break;
                     }
                 }
             }
 
             Thread.sleep(1000L);
-
             chuzhenganniu.click();
+            Thread.sleep(3000L);
 
             Match zidongbubing = region.exists(baseDir + "zidongbubing.png");
             if (zidongbubing != null) {
                 zidongbubing.click();
-                Thread.sleep(500L);
+                Thread.sleep(1000L);
 
                 for (int i = 0; i < 5; i++) {
                     region.click(baseDir + "tianjiacishu.png");

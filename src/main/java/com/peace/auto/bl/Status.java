@@ -118,6 +118,7 @@ public class Status {
                     case TIAN_SHEN_HUN_JIE_GOU_MAI:
                     case LIN_QU_BAO_XIANG:
                     case LIN_QU_REN_WU_UNKNOWN:
+                    case CLEAN_BAG:
                         return;
                     default:
                         break;

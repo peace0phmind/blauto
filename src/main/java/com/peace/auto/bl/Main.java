@@ -64,7 +64,7 @@ public class Main {
         AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
-        int n = 7;
+        int n = 0;
         for (int i = n; i < n + 1; i++) {
 //        for (int i = 6; i < 8; i++) {
             String user = Status.USERS.get(i);
@@ -96,8 +96,8 @@ public class Main {
             }
             //*/
 
-            if (new TianSheng().CanDo(status, user)) {
-                new TianSheng().Done(region, status);
+            if (new ChuZheng().CanDo(status, user)) {
+                new ChuZheng().Done(region, status);
             }
 
         }
