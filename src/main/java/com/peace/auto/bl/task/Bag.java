@@ -36,7 +36,7 @@ public class Bag implements IDo {
                 if (zidongzhengli != null) {
                     zidongzhengli.click();
 
-                    for (int i = 0; i < 8; i++) {
+                    for (int i = 0; i < 6; i++) {
                         try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "yong_*.png")) {
                             for (Path path : paths) {
                                 Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f), 0.1);
