@@ -139,14 +139,17 @@ public class RenWu implements IDo {
                     } catch (IOException e) {
                         log.error("{}", e);
                     }
-
+                    yiwancheng = region.exists(baseDir + "yiwancheng.png");
+                    if (yiwancheng == null) {
+                        break;
+                    }
                     ArrayList<Match> matches = Lists.newArrayList(region.findAll(baseDir + "yiwancheng.png"));
                     if (matches.size() < 3) {
                         break;
                     }
 
                     Match yiwanchenghand = matches.stream().sorted((a, b) -> a.y - b.y).collect(Collectors.toList()).get(matches.size() / 2);
-                    move(yiwanchenghand, yiwanchenghand.aboveAt(240), 1);
+                    move(yiwanchenghand, yiwanchenghand.aboveAt(-240), 1);
                     yiwancheng = region.exists(baseDir + "yiwancheng.png");
                     i++;
                 }
