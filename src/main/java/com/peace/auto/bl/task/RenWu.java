@@ -1,5 +1,6 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +14,8 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Created by mind on 3/3/16.
@@ -108,29 +111,44 @@ public class RenWu implements IDo {
 
                 Pattern renwuPattern = new Pattern(baseDir + "renwulingqu.png").similar(0.95f);
 
-                try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "renwu_*.png")) {
-                    for (Path path : paths) {
-                        Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f));
-                        if (p == null) {
-                            continue;
-                        }
+                Match yiwancheng = region.exists(baseDir + "yiwancheng.png");
 
-                        Match renwulingqu = p.right().exists(renwuPattern, 3);
-                        if (renwulingqu != null) {
-                            renwulingqu.click();
-                            Thread.sleep(1000L);
-
-                            Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
-                            if (lingqu != null) {
-                                lingqu.click();
-                                Thread.sleep(3000L);
+                int i = 0;
+                while (yiwancheng != null && i < 10) {
+                    try (DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "renwu_*.png")) {
+                        for (Path path : paths) {
+                            Match p = region.exists(new Pattern(path.toFile().toString()).similar(0.95f), 0.1);
+                            if (p == null) {
+                                continue;
                             }
-                        }
 
-                        status.Done(Task.LIN_QU_REN_WU);
+                            Match renwulingqu = p.right().exists(renwuPattern, 3);
+                            if (renwulingqu != null) {
+                                renwulingqu.click();
+                                Thread.sleep(1000L);
+
+                                Match lingqu = region.exists(baseDir + "lingqu.png", 0.5);
+                                if (lingqu != null) {
+                                    lingqu.click();
+                                    Thread.sleep(3000L);
+                                }
+                            }
+
+                            status.Done(Task.LIN_QU_REN_WU);
+                        }
+                    } catch (IOException e) {
+                        log.error("{}", e);
                     }
-                } catch (IOException e) {
-                    log.error("{}", e);
+
+                    ArrayList<Match> matches = Lists.newArrayList(region.findAll(baseDir + "yiwancheng.png"));
+                    if (matches.size() < 3) {
+                        break;
+                    }
+
+                    Match yiwanchenghand = matches.stream().sorted((a, b) -> a.y - b.y).collect(Collectors.toList()).get(matches.size() / 2);
+                    move(yiwanchenghand, yiwanchenghand.aboveAt(240), 1);
+                    yiwancheng = region.exists(baseDir + "yiwancheng.png");
+                    i++;
                 }
 
                 if (region.exists(renwuPattern) != null && status.canDo(Task.LIN_QU_REN_WU_UNKNOWN)) {
