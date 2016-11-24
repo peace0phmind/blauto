@@ -65,7 +65,7 @@ public class Main {
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
         int n = 1;
-        for (int i = n; i < n + 1; i++) {
+        for (int i = n; i < n + 7; i++) {
 //        for (int i = 6; i < 8; i++) {
             String user = Status.USERS.get(i);
 //        String user = Status.USERS.get(0);
@@ -75,13 +75,13 @@ public class Main {
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
             //*
-//            for (IDo iDo : tasks) {
-//                if (iDo.CanDo(status, status.getCurrentUser())) {
-//                    if (iDo.Done(region, status)) {
-//                        Thread.sleep(3 * 1000L);
-//                    }
-//                }
-//            }
+            for (IDo iDo : tasks) {
+                if (iDo.CanDo(status, status.getCurrentUser())) {
+                    if (iDo.Done(region, status)) {
+                        Thread.sleep(3 * 1000L);
+                    }
+                }
+            }
             //*/
 
             /*
@@ -96,9 +96,11 @@ public class Main {
             }
             //*/
 
+            /*
             if (new RenWu().CanDo(status, user)) {
                 new RenWu().Done(region, status);
             }
+            //*/
 
         }
 

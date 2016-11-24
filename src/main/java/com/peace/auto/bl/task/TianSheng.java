@@ -525,7 +525,7 @@ public class TianSheng implements IDo {
         Pattern guanka = new Pattern(baseDir + "guanka.png").similar(0.95f);
 
         boolean bPuTongClicked = false;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 10; i++) {
             Match mgk = region.exists(guanka);
             if (mgk != null) {
                 mgk.click();
