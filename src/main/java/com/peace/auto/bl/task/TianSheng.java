@@ -19,6 +19,7 @@ import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.peace.auto.bl.common.Devices.DENG_LU;
 import static java.time.DayOfWeek.SUNDAY;
@@ -245,9 +246,10 @@ public class TianSheng implements IDo {
                     if (sanxing != null) {
                         List<Match> sanxings = Lists.newArrayList(region.findAll(sanxingpng));
 
-                        Optional<Match> lastsanxing = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).findFirst();
-                        if (lastsanxing.isPresent()) {
-                            Match sx = lastsanxing.get();
+                        List<Match> lists = sanxings.stream().sorted((x, y) -> y.getX() - x.getX()).sorted((x, y) -> y.getY() - x.getY()).collect(Collectors.toList());
+                        if (lists.size() > 0) {
+                            int j = 0;
+                            Match sx = lists.get(j);
                             log.info("{}", sx);
                             sx.click();
                             Thread.sleep(500L);
@@ -260,6 +262,24 @@ public class TianSheng implements IDo {
                                     region.click(Common.QUE_DING);
                                     status.Done(Task.TIAN_SHEN_LUAN_DOU);
                                     break;
+                                }
+
+                                Match tiaozhanshangxian = region.exists(baseDir + "tiaozhanshangxian.png", 1);
+                                if (tiaozhanshangxian != null) {
+                                    Thread.sleep(500L);
+                                    region.click(Common.QUE_DING);
+                                    Thread.sleep(500L);
+                                    region.click(baseDir + "xiaoclose.png");
+
+                                    j++;
+                                    if (j < lists.size()) {
+                                        sx = lists.get(j++);
+                                        log.info("{}", sx);
+                                        sx.click();
+                                        Thread.sleep(500L);
+                                    } else {
+                                        break;
+                                    }
                                 }
                             }
 
