@@ -238,8 +238,9 @@ public class TianSheng implements IDo {
 
                     findLastFinishPage(region);
 
+                    sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.8f);
                     if (LocalDateTime.now().getDayOfWeek() == SUNDAY) {
-                        sanxingpng = new Pattern(baseDir + "sanxing_sunday.png");
+                        sanxingpng = new Pattern(baseDir + "sanxing_sunday.png").similar(0.8f);
                     }
 
                     Match sanxing = region.exists(sanxingpng);
