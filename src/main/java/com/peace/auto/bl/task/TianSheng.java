@@ -271,9 +271,11 @@ public class TianSheng implements IDo {
                                     Thread.sleep(500L);
                                     region.click(baseDir + "xiaoclose.png");
 
+                                    Thread.sleep(3000L);
+
                                     j++;
                                     if (j < lists.size()) {
-                                        sx = lists.get(j++);
+                                        sx = lists.get(j);
                                         log.info("{}", sx);
                                         sx.click();
                                         Thread.sleep(500L);
