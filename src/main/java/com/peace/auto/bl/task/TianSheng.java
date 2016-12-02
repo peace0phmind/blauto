@@ -253,13 +253,13 @@ public class TianSheng implements IDo {
                             Match sx = lists.get(j);
                             log.info("{}", sx);
                             sx.click();
-                            Thread.sleep(500L);
+                            Thread.sleep(5000L);
 
                             for (int i = 0; i < 25; i++) {
                                 region.click(baseDir + "saodang.png");
                                 Match shenglibugou = region.exists(baseDir + "hunlibuzu.png", 1);
                                 if (shenglibugou != null) {
-                                    Thread.sleep(500L);
+                                    Thread.sleep(1000L);
                                     region.click(Common.QUE_DING);
                                     status.Done(Task.TIAN_SHEN_LUAN_DOU);
                                     break;
@@ -267,9 +267,9 @@ public class TianSheng implements IDo {
 
                                 Match tiaozhanshangxian = region.exists(baseDir + "tiaozhanshangxian.png", 1);
                                 if (tiaozhanshangxian != null) {
-                                    Thread.sleep(500L);
+                                    Thread.sleep(1000L);
                                     region.click(Common.QUE_DING);
-                                    Thread.sleep(500L);
+                                    Thread.sleep(1000L);
                                     region.click(baseDir + "xiaoclose.png");
 
                                     Thread.sleep(6000L);
@@ -279,7 +279,7 @@ public class TianSheng implements IDo {
                                         sx = lists.get(j);
                                         log.info("{}", sx);
                                         sx.click();
-                                        Thread.sleep(300L);
+                                        Thread.sleep(3000L);
                                     } else {
                                         break;
                                     }
