@@ -68,6 +68,28 @@ public class JiangLi implements IDo {
             status.Done(Task.HUO_YUE_DU);
         }
 
+        if (status.canDo(Task.ZHEN_QING_HUI_KUI)) {
+            Match zhenqinghuikui = region.exists(baseDir + "zhenqinghuikui.png");
+            if (zhenqinghuikui != null) {
+                zhenqinghuikui.click();
+                Thread.sleep(1000L);
+
+                Match qing = region.exists(baseDir + "qing.png");
+                if (qing != null) {
+                    Match jinru = qing.left().exists(baseDir + "jinru.png");
+
+                    if (jinru != null) {
+                        jinru.click();
+                        Thread.sleep(3000L);
+
+                        region.saveScreenCapture(".", "jianianhua-" + status.getCurrentUser() + "-");
+
+                        status.Done(Task.ZHEN_QING_HUI_KUI);
+                    }
+                }
+            }
+        }
+
         region.click(Common.CLOSE);
 
         return true;
@@ -76,7 +98,8 @@ public class JiangLi implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.HUO_YUE_DU, userName)
-                && !status.canDo(Task.MEI_RI_JIANG_LI, userName)) {
+                && !status.canDo(Task.MEI_RI_JIANG_LI, userName)
+                && !status.canDo(Task.ZHEN_QING_HUI_KUI, userName)) {
             return false;
         }
 
