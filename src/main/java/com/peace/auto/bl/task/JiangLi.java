@@ -76,7 +76,7 @@ public class JiangLi implements IDo {
 
                 Match qing = region.exists(baseDir + "qing.png");
                 if (qing != null) {
-                    Match jinru = qing.left().exists(baseDir + "jinru.png");
+                    Match jinru = qing.right().exists(baseDir + "jinru.png");
 
                     if (jinru != null) {
                         jinru.click();
