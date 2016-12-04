@@ -140,6 +140,8 @@ public class LianMeng implements IDo {
                                     Thread.sleep(1000L);
 
                                     mengzhanlingqujiangli = region.exists(baseDir + "mengzhanlingqujiangli.png");
+
+                                    region.saveScreenCapture(".", "lianmeng");
                                     if (mengzhanlingqujiangli != null) {
                                         mengzhanlingqujiangli.click();
 

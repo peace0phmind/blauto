@@ -60,6 +60,10 @@ public class Status {
         return LocalDateTime.now().plusMinutes(30);
     }
 
+    public static LocalDateTime nextHour() {
+        return LocalDateTime.now().withMinute(0).withSecond(5).withNano(0).plusHours(1);
+    }
+
     public static LocalDateTime nextRefresh() {
         LocalDateTime next = LocalDateTime.now().withMinute(0).withSecond(5).withNano(0);
         return next.plusHours(next.getHour() % 2 == 0 ? 2 : 1);

@@ -85,7 +85,7 @@ public class JiangLi implements IDo {
 
                         region.saveScreenCapture(".", "jianianhua-" + status.getCurrentUser() + "-");
 
-                        status.Done(Task.ZHEN_QING_HUI_KUI);
+                        status.Done(Task.ZHEN_QING_HUI_KUI, Status.nextHour());
 
                         region.click(Common.CLOSE);
                         Thread.sleep(1000L);
