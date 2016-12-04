@@ -85,7 +85,7 @@ public enum Task {
 
     MEI_RI_JIANG_LI(JiangLi.class, 2),
     HUO_YUE_DU(JiangLi.class, 0),
-    ZHEN_QING_HUI_KUI(JiangLi.class, 0),
+    ZHEN_QING_HUI_KUI(JiangLi.class, 0, 0, 1 * 60 * 60),
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, -1),
     //    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
