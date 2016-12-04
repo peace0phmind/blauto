@@ -70,6 +70,7 @@ public class JiangLi implements IDo {
 
         if (status.canDo(Task.ZHEN_QING_HUI_KUI)) {
             Match zhenqinghuikui = region.exists(baseDir + "zhenqinghuikui.png");
+            log.info("zhenqinghuikui: {}", zhenqinghuikui);
             if (zhenqinghuikui != null) {
                 zhenqinghuikui.click();
                 Thread.sleep(1000L);
@@ -85,6 +86,9 @@ public class JiangLi implements IDo {
                         region.saveScreenCapture(".", "jianianhua-" + status.getCurrentUser() + "-");
 
                         status.Done(Task.ZHEN_QING_HUI_KUI);
+
+                        region.click(Common.CLOSE);
+                        Thread.sleep(1000L);
                     }
                 }
             }

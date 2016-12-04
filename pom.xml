@@ -149,11 +149,11 @@
     </build>
 
     <repositories>
-        <repository>
-            <id>genymotion</id>
-            <name>Genymotion repo</name>
-            <url>http://api.genymotion.com/repositories/releases/</url>
-        </repository>
+        <!--<repository>-->
+            <!--<id>genymotion</id>-->
+            <!--<name>Genymotion repo</name>-->
+            <!--<url>http://api.genymotion.com/repositories/releases/</url>-->
+        <!--</repository>-->
         <repository>
             <id>repo</id>
             <releases>
