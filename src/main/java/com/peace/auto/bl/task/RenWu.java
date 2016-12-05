@@ -15,6 +15,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 
 /**
@@ -28,16 +29,27 @@ public class RenWu implements IDo {
         if (status.canDo(Task.YUE_KA)) {
             Match yueka = region.exists(baseDir + "yueka.png");
             if (yueka != null) {
-                yueka.click();
-                Thread.sleep(1000L);
+                ArrayList<Match> yuekas = Lists.newArrayList(region.findAll(baseDir + "yueka.png"));
 
-                region.click(baseDir + "lingquyueka.png");
+                for (Match yk : yuekas) {
+                    yk.click();
+                    Thread.sleep(1000L);
 
-                Thread.sleep(2000L);
+                    Match lingquyueka = region.exists(baseDir + "lingquyueka.png");
+                    if (lingquyueka == null) {
+                        yk.click();
+                        Thread.sleep(1000L);
+                        continue;
+                    }
 
-                Match close = region.exists(Common.CLOSE, 20);
-                if (close != null) {
-                    close.click();
+                    lingquyueka.click();
+
+                    Thread.sleep(2000L);
+
+                    Match close = region.exists(Common.CLOSE, 20);
+                    if (close != null) {
+                        close.click();
+                    }
                 }
 
                 status.Done(Task.YUE_KA);
