@@ -53,7 +53,7 @@ public class ShengLingQuan implements IDo {
                         }
                     }
 
-                    if (status.isPeace() && LocalTime.now().isAfter(LocalTime.of(22, 0))) {
+                    if (LocalTime.now().isAfter(LocalTime.of(22, 0))) {
                         putongxilian(region, false);
                     }
 
