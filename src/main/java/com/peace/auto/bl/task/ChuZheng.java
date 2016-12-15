@@ -35,7 +35,8 @@ public class ChuZheng extends ZhanBao implements IDo {
         if (super.canDo(status, userName)
                 && (status.canDo(Task.CHU_ZHENG_YE_GUAI, userName)
                 || canChuZhengDiDui(status, userName)
-                || status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK, userName))) {
+                || status.canDo(Task.CHU_ZHENG_DI_DUI_CHECK, userName)
+                || status.canDo(Task.SONG_HUA, userName))) {
             return true;
         }
 
@@ -84,11 +85,68 @@ public class ChuZheng extends ZhanBao implements IDo {
                     return chuZhengDiDui(region, status);
                 }
 
+                if (status.canDo(Task.SONG_HUA)) {
+                    songhua(region, status);
+                }
+
                 Thread.sleep(1000L);
                 region.click(Common.CLOSE);
             }
 
             return true;
+        }
+
+        return false;
+    }
+
+    private boolean songhua(Region region, Status status) throws InterruptedException, FindFailed {
+        Match diduishili = region.exists(baseDir + "diduishili.png");
+        if (diduishili != null) {
+            diduishili.click();
+            Thread.sleep(6000L);
+
+            Match shoucangdebuluo = region.exists(baseDir + "shoucangdebuluo.png");
+            if (shoucangdebuluo != null) {
+                shoucangdebuluo.click();
+                Thread.sleep(3000L);
+
+                Match zhengchang = region.exists(baseDir + "zhengchang.png");
+
+                if (zhengchang != null) {
+                    zhengchang.left(800).click();
+
+                    Match hua = region.exists(baseDir + "hua.png", 10);
+                    if (hua != null) {
+                        for (int i = 0; i < 6; i++) {
+                            hua.click();
+
+                            Match songhuahuodong = region.exists(baseDir + "songhuahuode.png", 3);
+                            if (songhuahuodong != null) {
+                                region.click(Common.QUE_DING);
+                            }
+
+                            Match daojubuzu = region.exists(baseDir + "songhuadaojubuzu", 1);
+                            if (daojubuzu != null) {
+                                region.click(Common.QUE_DING);
+                                break;
+                            }
+
+                            Match dadaoshangxian = region.exists(baseDir + "dadaosonghuashangxian.png", 1);
+                            if (dadaoshangxian != null) {
+                                region.click(Common.QUE_DING);
+                                break;
+                            }
+                        }
+
+                        clickInside(region, Common.CLOSE);
+
+                        Thread.sleep(1000L);
+                        status.Done(Task.SONG_HUA);
+                        Thread.sleep(1000L);
+                        return true;
+                    }
+                }
+            }
         }
 
         return false;
@@ -199,8 +257,39 @@ public class ChuZheng extends ZhanBao implements IDo {
             Thread.sleep(1000L);
 
             // 选择大于战力的第二个
-            if (status.getCurrentUser().equals("peace0ph003")) {
-                while (true) {
+//            if (status.getCurrentUser().equals("peace0ph003")) {
+//                while (true) {
+//                    Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
+//                    ArrayList<Match> matches = Lists.newArrayList(all);
+//                    if (matches.size() < 3) {
+//                        log.error("list size is {}.", matches.size());
+//                        return false;
+//                    }
+//
+//                    List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
+//
+//                    Match match = sortedList.get(0);
+//                    Region left = match.left(60);
+//
+//                    int cankaozhanli = getNumber(left);
+//                    log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
+//                    if (cankaozhanli < userZhanLi) {
+//                        move(match, match.getCenter().above(51), 1000);
+//                        Thread.sleep(500L);
+//                    } else {
+//                        sortedList.get(2).click();
+//                        Thread.sleep(1000L);
+//                        sortedList.get(2).click();
+//                        Thread.sleep(1000L);
+//                        sortedList.get(2).click();
+//                        break;
+//                    }
+//                }
+//            } else {
+            Pattern duishoupng = new Pattern(baseDir + "duishou.png").similar(0.95f);
+            for (int i = 0; i < 10; i++) {
+                Match duishou = region.exists(duishoupng);
+                if (duishou == null) {
                     Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
                     ArrayList<Match> matches = Lists.newArrayList(all);
                     if (matches.size() < 3) {
@@ -208,49 +297,18 @@ public class ChuZheng extends ZhanBao implements IDo {
                         return false;
                     }
 
-                    List<Match> sortedList = matches.stream().sorted((a, b) -> b.y - a.y).collect(Collectors.toList());
-
-                    Match match = sortedList.get(0);
-                    Region left = match.left(60);
-
-                    int cankaozhanli = getNumber(left);
-                    log.info("{}, {}, {}", status.getCurrentUser(), userZhanLi, cankaozhanli);
-                    if (cankaozhanli < userZhanLi) {
-                        move(match, match.getCenter().above(51), 1000);
-                        Thread.sleep(500L);
-                    } else {
-                        sortedList.get(2).click();
-                        Thread.sleep(1000L);
-                        sortedList.get(2).click();
-                        Thread.sleep(1000L);
-                        sortedList.get(2).click();
-                        break;
-                    }
-                }
-            } else {
-                Pattern duishoupng = new Pattern(baseDir + "duishou.png").similar(0.95f);
-                for (int i = 0; i < 10; i++) {
-                    Match duishou = region.exists(duishoupng);
-                    if (duishou == null) {
-                        Iterator<Match> all = region.findAll(new Pattern(baseDir + "yingxiongjingyanjinbi.png").similar(0.85f));
-                        ArrayList<Match> matches = Lists.newArrayList(all);
-                        if (matches.size() < 3) {
-                            log.error("list size is {}.", matches.size());
-                            return false;
-                        }
-
-                        Match match = matches.stream().sorted((a, b) -> b.y - a.y).findFirst().get();
-                        move(match, match.getCenter().above(280), 1000);
-                        Thread.sleep(500L);
-                    } else {
-                        Iterator<Match> allduishou = region.findAll(duishoupng);
-                        ArrayList<Match> duishous = Lists.newArrayList(allduishou);
-                        Match first = duishous.stream().sorted((a, b) -> a.y - b.y).findFirst().get();
-                        first.above(20).click();
-                        break;
-                    }
+                    Match match = matches.stream().sorted((a, b) -> b.y - a.y).findFirst().get();
+                    move(match, match.getCenter().above(280), 1000);
+                    Thread.sleep(500L);
+                } else {
+                    Iterator<Match> allduishou = region.findAll(duishoupng);
+                    ArrayList<Match> duishous = Lists.newArrayList(allduishou);
+                    Match first = duishous.stream().sorted((a, b) -> a.y - b.y).findFirst().get();
+                    first.above(20).click();
+                    break;
                 }
             }
+//            }
 
             Thread.sleep(1000L);
             chuzhenganniu.click();

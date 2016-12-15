@@ -31,6 +31,7 @@ public enum Task {
     CHU_ZHENG_DI_DUI(ChuZheng.class, -1, -6, 2 * 20 * 60),
     CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, -1, -1, 30 * 60),
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, -1, -1),  // a tag
+    SONG_HUA(ChuZheng.class, 1, 0),
 
     LIE_CHANG_ZHENG_SHOU(LieChang.class, -1),
     LIE_CHANG_QIANG_ZHENG(LieChang.class, 3),
@@ -122,7 +123,7 @@ public enum Task {
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
-                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, SONG_HUA,
                 QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
     }};
