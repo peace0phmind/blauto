@@ -76,6 +76,17 @@ public class DengLu implements IDo {
                         // 检查是否登录成功?成功则返回
                         Match dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
                         Thread.sleep(6000l);
+
+                        if (dating == null) {
+                            Match qd = region.exists(Common.QUE_DING, 10);
+                            if (qd != null) {
+                                qd.click();
+                                Thread.sleep(3000L);
+                            }
+
+                            dating = region.exists(Common.BASE_DIR + "building/building.png", 30);
+                        }
+
                         if (dating != null && checkUser(region, status)) {
                             log.info("login ok");
                             return;
