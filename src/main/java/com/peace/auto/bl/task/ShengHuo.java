@@ -4,6 +4,7 @@ import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
 import org.sikuli.script.FindFailed;
+import org.sikuli.script.Location;
 import org.sikuli.script.Match;
 import org.sikuli.script.Region;
 
@@ -29,6 +30,11 @@ public class ShengHuo implements IDo {
             Thread.sleep(3000L);
 
             Match shenghuozhan = region.exists(baseDir + "shenghuozhengduozhan.png", 10);
+            if (shenghuozhan == null) {
+                doRobot(region, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                shenghuozhan = region.exists(baseDir + "shenghuozhengduozhan.png", 20);
+            }
+
             if (shenghuozhan != null) {
                 shenghuozhan.click();
 

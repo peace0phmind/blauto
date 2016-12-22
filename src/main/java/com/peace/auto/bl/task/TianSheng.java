@@ -52,7 +52,7 @@ public class TianSheng implements IDo {
                     qidao.click();
                     Thread.sleep(1000L);
 
-                    Pattern mfp = new Pattern(baseDir + "mianfei.png").similar(0.95f);
+                    Pattern mfp = new Pattern(baseDir + "mianfei.png").similar(0.90f);
                     Match mianfei = region.exists(mfp, 3);
                     if (mianfei != null) {
                         region.click(baseDir + "guanbijieguo.png");
@@ -348,33 +348,45 @@ public class TianSheng implements IDo {
                     xuanzecailiao.click();
                     Thread.sleep(2000L);
 
-                    Region newReg = newRegion(region, new Rectangle(400, 0, 400, 480));
-
-                    for (int i = 0; i < 5; i++) {
-                        List<Match> cailiaos = getCaiLiaos(newReg);
-                        if (cailiaos.size() == 0) {
-                            region.click(baseDir + "rightcailiao.png");
-                            continue;
-                        }
-
-                        log.info("{}", cailiaos);
-
-                        cailiaos.forEach(x -> {
-                            x.click();
-                            try {
-                                Thread.sleep(500L);
-                            } catch (InterruptedException e) {
-                            }
-                        });
-
-                        region.click(baseDir + "shengji.png");
-
-                        Match queding = region.exists(Common.QUE_DING);
-                        if (queding != null) {
-                            region.saveScreenCapture(".", "shen_hun");
-                            queding.click();
-                        }
+                    Match star1 = region.exists(baseDir + "1star.png");
+                    if (star1 != null) {
+                        star1.click();
+                        Thread.sleep(1000L);
                     }
+
+                    Match star2 = region.exists(baseDir + "2star.png");
+                    if (star2 != null) {
+                        star2.click();
+                        Thread.sleep(1000L);
+                    }
+
+                    region.click(baseDir + "shengji.png");
+
+//                    for (int i = 0; i < 5; i++) {
+//                        List<Match> cailiaos = getCaiLiaos(newReg);
+//                        if (cailiaos.size() == 0) {
+//                            region.click(baseDir + "rightcailiao.png");
+//                            continue;
+//                        }
+//
+//                        log.info("{}", cailiaos);
+//
+//                        cailiaos.forEach(x -> {
+//                            x.click();
+//                            try {
+//                                Thread.sleep(500L);
+//                            } catch (InterruptedException e) {
+//                            }
+//                        });
+//
+//                        region.click(baseDir + "shengji.png");
+//
+//                        Match queding = region.exists(Common.QUE_DING);
+//                        if (queding != null) {
+//                            region.saveScreenCapture(".", "shen_hun");
+//                            queding.click();
+//                        }
+//                    }
                 }
 
                 Thread.sleep(1000L);

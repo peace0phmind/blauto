@@ -51,7 +51,7 @@ public class DuoBao implements IDo {
 
             Match duobao = region.exists(baseDir + "duobaoqibing.png", 20);
             if (duobao == null) {
-                doRobot(region, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                doRobot(region, robot -> robot.smoothMove(new Location(180, 400), new Location(180, 0), 1000));
                 duobao = region.exists(baseDir + "duobaoqibing.png", 20);
             }
 
@@ -115,13 +115,13 @@ public class DuoBao implements IDo {
 
             Match duobao1 = region1.exists(baseDir + "duobaoqibing.png", 20);
             if (duobao1 == null) {
-                doRobot(region1, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                doRobot(region1, robot -> robot.smoothMove(new Location(180, 400), new Location(180, 0), 1000));
                 duobao1 = region1.exists(baseDir + "duobaoqibing.png", 20);
             }
 
             Match duobao2 = region2.exists(baseDir + "duobaoqibing.png", 20);
             if (duobao2 == null) {
-                doRobot(region2, robot -> robot.smoothMove(new Location(180, 240), new Location(180, 0), 1000));
+                doRobot(region2, robot -> robot.smoothMove(new Location(180, 400), new Location(180, 0), 1000));
                 duobao2 = region2.exists(baseDir + "duobaoqibing.png", 20);
             }
 

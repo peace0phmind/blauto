@@ -74,7 +74,7 @@ public class Main {
             List<IDo> tasks = status.getTasks(status.getCurrentUser());
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-            /*
+            //*
             for (IDo iDo : tasks) {
                 if (iDo.CanDo(status, status.getCurrentUser())) {
                     if (iDo.Done(region, status)) {
@@ -90,7 +90,7 @@ public class Main {
             }
             //*/
 
-            //*
+            /*
             if (new ChuZheng().CanDo(status, user)) {
                 new ChuZheng().Done(region, status);
             }
