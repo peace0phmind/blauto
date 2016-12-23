@@ -52,7 +52,7 @@ public class TianSheng implements IDo {
                     qidao.click();
                     Thread.sleep(1000L);
 
-                    Pattern mfp = new Pattern(baseDir + "mianfei.png").similar(0.90f);
+                    Pattern mfp = new Pattern(baseDir + "mianfei.png").similar(0.85f);
                     Match mianfei = region.exists(mfp, 3);
                     if (mianfei != null) {
                         region.click(baseDir + "guanbijieguo.png");
@@ -361,6 +361,12 @@ public class TianSheng implements IDo {
                     }
 
                     region.click(baseDir + "shengji.png");
+
+                    Match qd = region.exists(Common.QUE_DING, 3);
+                    if (qd != null) {
+                        qd.click();
+                        Thread.sleep(3000L);
+                    }
 
 //                    for (int i = 0; i < 5; i++) {
 //                        List<Match> cailiaos = getCaiLiaos(newReg);
