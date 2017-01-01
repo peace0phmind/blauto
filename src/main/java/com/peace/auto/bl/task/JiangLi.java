@@ -1,5 +1,6 @@
 package com.peace.auto.bl.task;
 
+import com.google.common.collect.Lists;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -7,6 +8,13 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
+
+import java.io.IOException;
+import java.nio.file.DirectoryStream;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Iterator;
 
 /**
  * Created by mind on 3/3/16.
@@ -83,7 +91,24 @@ public class JiangLi implements IDo {
                         jinru.click();
                         Thread.sleep(3000L);
 
-                        region.saveScreenCapture(".", "jianianhua-" + status.getCurrentUser() + "-");
+                        int count = 0;
+
+                        try {
+                            DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "need_*.png");
+                            for (Path path : paths) {
+                                Pattern png = new Pattern(path.toFile().toString()).similar(0.85f);
+                                Match p = region.exists(png, 0.3);
+                                if (p == null) {
+                                    continue;
+                                } else {
+                                    count += Lists.newArrayList(region.findAll(png)).size();
+                                }
+                            }
+                        } catch (IOException e) {
+                            log.error("{}", e);
+                        }
+
+                        region.saveScreenCapture(".", String.format("jianianhua-%d-%s-", count, status.getCurrentUser()));
 
                         status.Done(Task.ZHEN_QING_HUI_KUI, Status.nextHour());
 

@@ -110,7 +110,7 @@ public enum Task {
 
     CLEAN_BAG(Bag.class, Task.DO_INFINITY),
 
-    QI_BING_XUN_BAO(DuoBao.class, Task.NOT_TO_DO, 3, 5 * 60),
+    QI_BING_XUN_BAO(DuoBao.class, 3, 3, 5 * 60),
     QI_BING_DUO_BAO(DuoBao.class, Task.NOT_TO_DO, 3, 10 * 60),
     //    QI_BING_DUO_BAO(DuoBao.class, Task.NOT_TO_DO, 3, 10 * 60),
     QI_BING_LING_TU(DuoBao.class, Task.NOT_TO_DO);
@@ -129,11 +129,11 @@ public enum Task {
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, SONG_HUA,
                 BUILDING_DUI_LIE, BUILDING,
 
-//                QI_BING_XUN_BAO, QI_BING_DUO_BAO,
+//              QI_BING_DUO_BAO,
                 LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
         put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, BUILDING_DUI_LIE, BUILDING,
 
-//                QI_BING_DUO_BAO,
+//              QI_BING_DUO_BAO,
                 LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
     }};
 
