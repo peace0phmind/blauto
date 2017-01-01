@@ -60,7 +60,14 @@ public class Device {
 
         for (int i = 0; i < 30; i++) {
             if (!visible) {
-                rt.exec(args);
+                Process exec = rt.exec(args);
+                BufferedReader stdError = new BufferedReader(new
+                        InputStreamReader(exec.getErrorStream()));
+
+                BufferedReader stdOut = new BufferedReader(new
+                        InputStreamReader(exec.getInputStream()));
+
+                log.info("{}, {}", stdError.readLine(), stdOut.readLine());
             }
             Thread.sleep(1 * 1000L);
         }

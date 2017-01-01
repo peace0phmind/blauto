@@ -48,10 +48,8 @@ public class ShengHuo implements IDo {
                     Thread.sleep(3000L);
                 }
 
-                if (!duoqu(region, status, "huguo.png")) {
-                    if (!duoqu(region, status, "fengguo.png")) {
-                        duoqu(region, status, "langguo.png");
-                    }
+                if (!duoqu(region, status, "fengguo.png")) {
+                    duoqu(region, status, "langguo.png");
                 }
 
                 region.click(Common.CLOSE);

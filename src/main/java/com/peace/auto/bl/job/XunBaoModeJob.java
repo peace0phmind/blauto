@@ -1,10 +1,13 @@
 package com.peace.auto.bl.job;
 
+import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import com.peace.auto.bl.task.DuoBao;
 import com.peace.sikuli.monkey.AndroidScreen;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
+import org.sikuli.script.FindFailed;
+import org.sikuli.script.Region;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -49,14 +52,36 @@ public class XunBaoModeJob implements Job, TaskJob {
     }
 
     public void prepare() {
+//        try {
+//            AndroidScreen region1 = DEVICE_1.getRegion();
+//            AndroidScreen region2 = DEVICE_2.getRegion();
+//
+//            DENG_LU.checkAndChangeUser(region1, status, status.peaceName());
+//            DENG_LU.checkAndChangeUser(region2, status, "peace0ph001");
+//
+//            status.setCurrentUser(status.peaceName());
+//        } catch (Exception e) {
+//            log.error("{}", e);
+//
+//            try {
+//                DEVICE_1.stopDevice();
+//                DEVICE_2.stopDevice();
+//            } catch (Exception e1) {
+//                log.error("{}", e1);
+//            }
+//        }
+    }
+
+    public void xunbao() {
         try {
             AndroidScreen region1 = DEVICE_1.getRegion();
             AndroidScreen region2 = DEVICE_2.getRegion();
 
-            DENG_LU.checkAndChangeUser(region1, status, status.peaceName());
-            DENG_LU.checkAndChangeUser(region2, status, "peace0ph001");
+            xunbao(region1, region2, Status.USERS.get(0), Status.USERS.get(1));
+            xunbao(region1, region2, Status.USERS.get(2), Status.USERS.get(3));
+            xunbao(region1, region2, Status.USERS.get(4), Status.USERS.get(5));
+            xunbao(region1, region2, Status.USERS.get(6), Status.USERS.get(7));
 
-            status.setCurrentUser(status.peaceName());
         } catch (Exception e) {
             log.error("{}", e);
 
@@ -69,24 +94,17 @@ public class XunBaoModeJob implements Job, TaskJob {
         }
     }
 
-    public void xunbao() {
-        try {
-            AndroidScreen region1 = DEVICE_1.getRegion();
-            AndroidScreen region2 = DEVICE_2.getRegion();
+    private void xunbao(Region region1, Region region2, String userName1, String userName2) throws FindFailed, InterruptedException {
+        DENG_LU.checkAndChangeUser(region1, status, userName1);
+        DENG_LU.checkAndChangeUser(region2, status, userName2);
 
-            new DuoBao().xunbao(region1, region2, false, status.getRoomNo(), null);
+        status.setCurrentUser(userName1);
+        new DuoBao().xunbao(region1, region2, false, status.getRoomNo(), null);
 
-            status.setCurrentUser(status.peaceName());
-            status.Done(Task.QI_BING_XUN_BAO);
-        } catch (Exception e) {
-            log.error("{}", e);
+        status.setCurrentUser(userName1);
+        status.Done(Task.QI_BING_XUN_BAO);
 
-            try {
-                DEVICE_1.stopDevice();
-                DEVICE_2.stopDevice();
-            } catch (Exception e1) {
-                log.error("{}", e1);
-            }
-        }
+        status.setCurrentUser(userName2);
+        status.Done(Task.QI_BING_XUN_BAO);
     }
 }

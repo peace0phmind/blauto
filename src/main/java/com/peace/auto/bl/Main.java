@@ -61,7 +61,7 @@ public class Main {
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = DEVICE_2.getRegion(true);
+        AndroidScreen region = DEVICE_2.getRegion(false);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
         int n = 0;

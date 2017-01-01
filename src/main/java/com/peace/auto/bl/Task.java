@@ -69,9 +69,9 @@ public enum Task {
     SHI_CHANG_CHECK(ShiChang.class, Task.DO_INFINITY, Task.NOT_TO_DO, 2 * 60 * 60),
 
     LIAN_MENG_GONG_FENG(LianMeng.class, 1),
-    LIAN_MENG_NAN_MAN(LianMeng.class, 1),
+    LIAN_MENG_NAN_MAN(LianMeng.class, -1, -1),
     LIAN_MENG_FU_LI(LianMeng.class, 1),
-    LIAN_MENG_LIAN_MENG_ZHAN(LianMeng.class, 1),
+    LIAN_MENG_LIAN_MENG_ZHAN(LianMeng.class, -1, -1),
     HAO_YOU(HaoYou.class, 1),
 
     YING_HUN(YingHun.class, 1),
@@ -127,8 +127,14 @@ public enum Task {
         put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, SONG_HUA,
-                QI_BING_XUN_BAO, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, QI_BING_DUO_BAO, BUILDING_DUI_LIE, BUILDING));
+                BUILDING_DUI_LIE, BUILDING,
+
+//                QI_BING_XUN_BAO, QI_BING_DUO_BAO,
+                LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, BUILDING_DUI_LIE, BUILDING,
+
+//                QI_BING_DUO_BAO,
+                LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
     }};
 
     private int timesPerDay;
