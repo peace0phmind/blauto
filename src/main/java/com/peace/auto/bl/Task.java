@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 public enum Task {
 
-    SHEN_SHOU_WU(ShenShouWu.class, 11, 20),
+    SHEN_SHOU_WU(ShenShouWu.class, 4, 20),
 
     EXCHANGE_CODE(ExchangeCodeTask.class, Task.DO_INFINITY),
 
