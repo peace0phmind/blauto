@@ -74,6 +74,8 @@ public class Bag implements IDo {
 
                                 p.click();
 
+                                Thread.sleep(6000L);
+
                                 Match maichu = region.exists(baseDir + "maichu.png");
                                 if (maichu != null) {
                                     maichu.click();
