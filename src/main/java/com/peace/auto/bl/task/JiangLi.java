@@ -14,7 +14,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 /**
  * Created by mind on 3/3/16.
@@ -91,24 +93,31 @@ public class JiangLi implements IDo {
                         jinru.click();
                         Thread.sleep(3000L);
 
-                        int count = 0;
-
-                        try {
-                            DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "need_*.png");
-                            for (Path path : paths) {
-                                Pattern png = new Pattern(path.toFile().toString()).similar(0.85f);
-                                Match p = region.exists(png, 0.3);
-                                if (p == null) {
-                                    continue;
-                                } else {
-                                    count += Lists.newArrayList(region.findAll(png)).size();
-                                }
-                            }
-                        } catch (IOException e) {
-                            log.error("{}", e);
+                        int count = getNeedCount(region);
+                        if (count > 2) {
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%s-", count, status.getCurrentUser()));
                         }
 
-                        region.saveScreenCapture(".", String.format("jianianhua-%d-%s-", count, status.getCurrentUser()));
+                        while (count > 5) {
+                            Match kaishichoujiang = region.exists(baseDir + "kaishichoujiang.png");
+                            if (kaishichoujiang == null) {
+                                break;
+                            }
+                            kaishichoujiang.click();
+                            Thread.sleep(3000L);
+
+                            Match fanpai = region.exists(baseDir + "fanpai.png");
+                            if (fanpai == null) {
+                                break;
+                            }
+                            ArrayList<Match> pais = Lists.newArrayList(region.findAll(baseDir + "fanpai.png"));
+                            Random random = new Random();
+                            Match pai = pais.get(random.nextInt(pais.size()));
+                            pai.click();
+                            Thread.sleep(3000L);
+
+                            count = getNeedCount(region);
+                        }
 
                         status.Done(Task.ZHEN_QING_HUI_KUI, Status.nextHour());
 
@@ -133,5 +142,25 @@ public class JiangLi implements IDo {
         }
 
         return true;
+    }
+
+    private int getNeedCount(Region region) throws FindFailed {
+        int count = 0;
+        try {
+            DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "need_*.png");
+            for (Path path : paths) {
+                Pattern png = new Pattern(path.toFile().toString()).similar(0.85f);
+                Match p = region.exists(png, 0.3);
+                if (p == null) {
+                    continue;
+                } else {
+                    count += Lists.newArrayList(region.findAll(png)).size();
+                }
+            }
+        } catch (IOException e) {
+            log.error("{}", e);
+        }
+
+        return count;
     }
 }

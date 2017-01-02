@@ -26,7 +26,7 @@ public enum Task {
     TIAN_TI_LING_QU(TianTi.class, 1),
 
     LIAN_BING_CHANG(LianBingChang.class, 3, 3, 2 * 10),
-    SHI_LIAN_DONG(ShiLianDong.class, 2, 4, 45 * 60),
+    SHI_LIAN_DONG(ShiLianDong.class, 2, 2),
     CHU_ZHENG_YE_GUAI(ChuZheng.class, 1, 1, 6 * 2 * 10),
     CHU_ZHENG_DI_DUI(ChuZheng.class, Task.NOT_TO_DO, -6, 2 * 20 * 60),
     CHU_ZHENG_DI_DUI_CHECK(ChuZheng.class, Task.NOT_TO_DO, Task.NOT_TO_DO, 30 * 60),

@@ -46,9 +46,33 @@ public class ShiLianDong extends ZhanBao implements IDo {
                 if (jingrudongxue != null) {
                     jingrudongxue.click();
 
+                    Match mianfeicishuyongwan = region.exists(baseDir + "mianfeicishuyongwan.png");
+                    if (mianfeicishuyongwan != null) {
+                        Thread.sleep(1000L);
+                        region.click(Common.QUE_DING);
+                        Thread.sleep(3000L);
+
+                        Match goumai = region.exists(baseDir + "goumai.png");
+                        if (goumai != null) {
+                            goumai.click();
+
+                            Match goumaichenggong = region.exists(baseDir + "goumaichenggong.png");
+                            if (goumaichenggong != null) {
+                                region.click(Common.QUE_DING);
+                            }
+                        }
+                    }
+
+
                     Match wancheng = region.exists(baseDir + "jihuiwancheng.png");
                     if (wancheng != null) {
-                        region.click(Common.QU_XIAO);
+//                        region.click(Common.QU_XIAO);
+                        Match queding = region.exists(Common.QUE_DING);
+                        if (queding != null) {
+                            queding.click();
+
+
+                        }
                         status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
                     } else {
 
@@ -73,6 +97,12 @@ public class ShiLianDong extends ZhanBao implements IDo {
 //                                status.Done(Task.SHI_LIAN_DONG);
 //                            }
 //                        }
+                    }
+
+                    Match tiaozhanshangxian = region.exists(baseDir + "tiaozhanshangxian.png");
+                    if (tiaozhanshangxian != null) {
+                        region.click(Common.QUE_DING);
+                        status.Done(Task.SHI_LIAN_DONG, LocalDateTime.now());
                     }
                 }
 

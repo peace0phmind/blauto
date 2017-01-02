@@ -14,6 +14,11 @@ import org.sikuli.script.FindFailed;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.peace.auto.bl.common.Devices.*;
 
@@ -35,6 +40,10 @@ public class Main {
 //        new XunBaoModeJob().execute(null);
 
 //        log.info("{}", status.canDo(Task.TIAN_TI_LING_QU, "peace0ph001"));
+
+//        Random random = new Random();
+//        Map<Integer, Long> collect = IntStream.range(1, 1000000).mapToObj(x -> random.nextInt(10)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+//        log.info("{}", collect);
 
         testMode();
 //        new XunBaoModeJob().xunbao();
@@ -61,10 +70,10 @@ public class Main {
     }
 
     private static void testMode() throws IOException, InterruptedException, FindFailed {
-        AndroidScreen region = DEVICE_2.getRegion(false);
+        AndroidScreen region = DEVICE_2.getRegion(true);
 
 //        DENG_LU.checkAndChangeUser(region, status, status.peaceName());
-        int n = 0;
+        int n = 1;
         for (int i = n; i < n + 1; i++) {
 //        for (int i = 6; i < 8; i++) {
             String user = Status.USERS.get(i);
@@ -74,7 +83,7 @@ public class Main {
             List<IDo> tasks = status.getTasks(status.getCurrentUser());
             log.info("currentUser: {}, tasks: {}", status.getCurrentUser(), tasks);
 
-            //*
+            /*
             for (IDo iDo : tasks) {
                 if (iDo.CanDo(status, status.getCurrentUser())) {
                     if (iDo.Done(region, status)) {
@@ -84,9 +93,9 @@ public class Main {
             }
             //*/
 
-            /*
-            if (new BaoShi().CanDo(status, user)) {
-                new BaoShi().Done(region, status);
+            //*
+            if (new ShiLianDong().CanDo(status, user)) {
+                new ShiLianDong().Done(region, status);
             }
             //*/
 
