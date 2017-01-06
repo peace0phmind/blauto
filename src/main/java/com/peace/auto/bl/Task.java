@@ -69,7 +69,7 @@ public enum Task {
     SHI_CHANG_CHECK(ShiChang.class, Task.DO_INFINITY, Task.NOT_TO_DO, 2 * 60 * 60),
 
     LIAN_MENG_GONG_FENG(LianMeng.class, 1),
-    LIAN_MENG_NAN_MAN(LianMeng.class, -1, -1),
+    LIAN_MENG_NAN_MAN(LianMeng.class, 1, 1),
     LIAN_MENG_FU_LI(LianMeng.class, 1),
     LIAN_MENG_LIAN_MENG_ZHAN(LianMeng.class, -1, -1),
     HAO_YOU(HaoYou.class, 1),
