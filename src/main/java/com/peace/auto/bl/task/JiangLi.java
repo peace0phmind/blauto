@@ -98,24 +98,33 @@ public class JiangLi implements IDo {
                             region.saveScreenCapture(".", String.format("jianianhua-%d-%s-", count, status.getCurrentUser()));
                         }
 
+                        int i = 0;
                         while (count > 5) {
                             Match kaishichoujiang = region.exists(baseDir + "kaishichoujiang.png");
                             if (kaishichoujiang == null) {
                                 break;
                             }
+
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
                             kaishichoujiang.click();
                             Thread.sleep(3000L);
 
                             Match fanpai = region.exists(baseDir + "fanpai.png");
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
                             if (fanpai == null) {
                                 break;
                             }
                             ArrayList<Match> pais = Lists.newArrayList(region.findAll(baseDir + "fanpai.png"));
                             Random random = new Random();
                             Match pai = pais.get(random.nextInt(pais.size()));
-                            pai.click();
-                            Thread.sleep(3000L);
 
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+                            pai.click();
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+                            Thread.sleep(300L);
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+                            Thread.sleep(3000L);
+                            region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
                             count = getNeedCount(region);
                         }
 
