@@ -82,6 +82,16 @@ public class XunBaoModeJob implements Job, TaskJob {
             xunbao(region1, region2, Status.USERS.get(4), Status.USERS.get(5));
             xunbao(region1, region2, Status.USERS.get(6), Status.USERS.get(7));
 
+            xunbao(region1, region2, Status.USERS.get(0), Status.USERS.get(1));
+            xunbao(region1, region2, Status.USERS.get(2), Status.USERS.get(3));
+            xunbao(region1, region2, Status.USERS.get(4), Status.USERS.get(5));
+            xunbao(region1, region2, Status.USERS.get(6), Status.USERS.get(7));
+
+            xunbao(region1, region2, Status.USERS.get(0), Status.USERS.get(1));
+            xunbao(region1, region2, Status.USERS.get(2), Status.USERS.get(3));
+            xunbao(region1, region2, Status.USERS.get(4), Status.USERS.get(5));
+            xunbao(region1, region2, Status.USERS.get(6), Status.USERS.get(7));
+
         } catch (Exception e) {
             log.error("{}", e);
 
