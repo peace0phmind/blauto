@@ -73,6 +73,26 @@ public class LianMeng implements IDo {
                 }
             }
 
+            // 南蛮开始
+            if (status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI)) {
+                Match nanman = region.exists(baseDir + "nanman.png", 3);
+                if (nanman != null) {
+                    nanman.click();
+
+                    Thread.sleep(3000L);
+
+                    Match kaishizhandou = region.exists(baseDir + "kaishizhandou.png", 5);
+                    if (kaishizhandou != null) {
+                        kaishizhandou.click();
+                    }
+
+                    Thread.sleep(2000L);
+                    region.click(Common.CLOSE);
+
+                    status.Done(Task.LIAN_MENG_NAN_MAN_KAI_SHI);
+                }
+            }
+
             // 联盟战
             if (status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN)) {
                 Match lianmengzhan = region.exists(baseDir + "lianmengzhan.png");
@@ -219,6 +239,7 @@ public class LianMeng implements IDo {
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.LIAN_MENG_GONG_FENG, userName)
                 && !status.canDo(Task.LIAN_MENG_NAN_MAN, userName)
+                && !status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI, userName)
                 && !status.canDo(Task.LIAN_MENG_FU_LI, userName)
                 && !status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN, userName)) {
             return false;
