@@ -1,6 +1,7 @@
 package com.peace.auto.bl.task;
 
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.peace.auto.bl.Status;
 import com.peace.auto.bl.Task;
 import lombok.extern.slf4j.Slf4j;
@@ -194,6 +195,56 @@ public class LianMeng implements IDo {
                 }
             }
 
+            if (status.canDo(Task.LIAN_MENG_QING_QIU_JUAN_KA) || status.canDo(Task.LIAN_MENG_JUAN_KA)) {
+                Match juanka = region.exists(baseDir + "juanka.png");
+                if (juanka != null) {
+                    juanka.click();
+
+                    Thread.sleep(3000L);
+
+                    // 请求捐卡
+                    if (status.canDo(Task.LIAN_MENG_QING_QIU_JUAN_KA)) {
+                        Match qingqiujuanzeng = region.exists(baseDir + "qingqiujuanzeng.png");
+                        if (qingqiujuanzeng == null) {
+                            status.Done(Task.LIAN_MENG_QING_QIU_JUAN_KA, Status.nextCheck());
+                        } else {
+                            qingqiujuanzeng.click();
+                            Thread.sleep(3000L);
+
+                            Match left = region.exists(baseDir + "left.png");
+                            if (left != null) {
+                                for (int i = 0; i < 3; i++) {
+                                    Match mengji = region.exists(baseDir + "mengji.png");
+                                    if (mengji != null) {
+                                        mengji.click();
+                                        Thread.sleep(3000L);
+                                        status.Done(Task.LIAN_MENG_QING_QIU_JUAN_KA);
+                                        break;
+                                    }
+
+                                    move(left, left.getCenter().offset(-800, 0), 1000);
+                                }
+                            }
+                        }
+                    }
+
+                    // 捐卡
+                    if (status.canDo(Task.LIAN_MENG_JUAN_KA)) {
+                        Match juanzeng = region.exists(baseDir + "juanzeng.png");
+                        if (juanzeng == null) {
+                            status.Done(Task.LIAN_MENG_JUAN_KA, Status.nextCheck());
+                        } else {
+                            for (int i = 0; i < 4; i++) {
+                                juanzeng.click();
+                                Thread.sleep(1000L);
+                            }
+
+                            status.Done(Task.LIAN_MENG_JUAN_KA);
+                        }
+                    }
+                }
+            }
+
             // 福利
             if (status.canDo(Task.LIAN_MENG_FU_LI)) {
                 Match fuli = region.exists(baseDir + "fuli.png", 3);
@@ -238,6 +289,8 @@ public class LianMeng implements IDo {
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.LIAN_MENG_GONG_FENG, userName)
+                && !status.canDo(Task.LIAN_MENG_QING_QIU_JUAN_KA, userName)
+                && !status.canDo(Task.LIAN_MENG_JUAN_KA, userName)
                 && !status.canDo(Task.LIAN_MENG_NAN_MAN, userName)
                 && !status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI, userName)
                 && !status.canDo(Task.LIAN_MENG_FU_LI, userName)
