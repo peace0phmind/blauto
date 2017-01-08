@@ -39,6 +39,8 @@ public class JingJiChang implements IDo {
                     Match lingqujiangli = region.exists(baseDir + "lingqujiangli.png", 3);
                     if (lingqujiangli != null) {
                         lingqujiangli.click();
+                        Thread.sleep(3000L);
+                        lingqujiangli.click();
                         status.Done(Task.JING_JI_CHANG_LING_QU);
                     }
                 }
