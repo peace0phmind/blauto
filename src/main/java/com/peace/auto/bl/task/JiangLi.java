@@ -128,6 +128,11 @@ public class JiangLi implements IDo {
                             count = getNeedCount(region);
                         }
 
+                        Match huoqujiangli = region.exists(baseDir + "huoqujiangli.png", 6);
+                        if (huoqujiangli != null) {
+                            huoqujiangli.click();
+                        }
+
                         status.Done(Task.ZHEN_QING_HUI_KUI, Status.nextHour());
 
                         region.click(Common.CLOSE);
