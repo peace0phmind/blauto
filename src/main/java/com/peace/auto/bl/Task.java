@@ -129,7 +129,7 @@ public enum Task {
     private static Map<String, List<Task>> vipUser = new HashMap<String, List<Task>>() {{
         put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
-                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI, SONG_HUA,
+                HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
                 BUILDING_DUI_LIE, BUILDING, LIAN_MENG_NAN_MAN_KAI_SHI,
 
 //              QI_BING_DUO_BAO,
