@@ -33,7 +33,7 @@ public class Status {
             "peace0ph003"
     );
     private static final Random ROOM_NO_RANDOM = new Random();
-    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 30), LocalTime.of(12, 20, 0), LocalTime.of(13, 10, 0), LocalTime.of(23, 51, 30));
+    private static final List<LocalTime> QI_BING_XUN_BAO_TIME = Arrays.asList(LocalTime.of(11, 30, 30), LocalTime.of(21, 30, 0));
 
     private static int XUN_BAO_PREPARE_MINUTES = 15;
 
