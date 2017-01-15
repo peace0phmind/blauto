@@ -10,6 +10,7 @@ import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
@@ -75,7 +76,7 @@ public class LianMeng implements IDo {
             }
 
             // 南蛮开始
-            if (status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI)) {
+            if (status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI) && LocalTime.now().isAfter(LocalTime.of(20, 0))) {
                 Match nanman = region.exists(baseDir + "nanman.png", 3);
                 if (nanman != null) {
                     nanman.click();
@@ -292,7 +293,7 @@ public class LianMeng implements IDo {
                 && !status.canDo(Task.LIAN_MENG_QING_QIU_JUAN_KA, userName)
                 && !status.canDo(Task.LIAN_MENG_JUAN_KA, userName)
                 && !status.canDo(Task.LIAN_MENG_NAN_MAN, userName)
-                && !status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI, userName)
+                && (!status.canDo(Task.LIAN_MENG_NAN_MAN_KAI_SHI, userName) || LocalTime.now().isBefore(LocalTime.of(20, 0)))
                 && !status.canDo(Task.LIAN_MENG_FU_LI, userName)
                 && !status.canDo(Task.LIAN_MENG_LIAN_MENG_ZHAN, userName)) {
             return false;
