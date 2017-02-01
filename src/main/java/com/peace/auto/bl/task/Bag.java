@@ -50,6 +50,8 @@ public class Bag implements IDo {
                                     }
                                     p.click();
 
+                                    Thread.sleep(6000L);
+
                                     Match shiyong = region.exists(baseDir + "shiyong.png");
                                     if (shiyong != null) {
                                         shiyong.click();
