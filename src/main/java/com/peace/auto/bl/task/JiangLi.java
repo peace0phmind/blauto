@@ -202,7 +202,7 @@ public class JiangLi implements IDo {
         try {
             DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "need_*.png");
             for (Path path : paths) {
-                Pattern png = new Pattern(path.toFile().toString()).similar(0.85f);
+                Pattern png = new Pattern(path.toFile().toString()).similar(0.9f);
                 Match p = region.exists(png, 0.3);
                 if (p == null) {
                     continue;
