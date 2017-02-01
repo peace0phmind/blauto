@@ -8,6 +8,7 @@ import org.sikuli.script.FindFailed;
 import org.sikuli.script.Match;
 import org.sikuli.script.Pattern;
 import org.sikuli.script.Region;
+import sun.jvm.hotspot.debugger.ThreadAccess;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -76,6 +77,12 @@ public class JiangLi implements IDo {
             }
 
             status.Done(Task.HUO_YUE_DU);
+        }
+
+        try {
+            lvJingDuiHuan(region, status);
+        } catch (IOException e) {
+            log.error("{}", e);
         }
 
         if (status.canDo(Task.ZHEN_QING_HUI_KUI)) {
@@ -148,10 +155,43 @@ public class JiangLi implements IDo {
         return true;
     }
 
+    private void lvJingDuiHuan(Region region, Status status) throws InterruptedException, IOException {
+        if (status.canDo(Task.LV_JING_DUI_HUAN)) {
+            Match jiangliduihuan = region.exists(baseDir + "jiangliduihuan.png");
+            if (jiangliduihuan != null) {
+                jiangliduihuan.click();
+
+                Match lvjingzhishi = region.exists(baseDir + "lvjingzhishi.png", 6);
+                if (lvjingzhishi != null) {
+                    lvjingzhishi.click();
+
+                    Thread.sleep(3000L);
+
+                    DirectoryStream<Path> paths = Files.newDirectoryStream(FileSystems.getDefault().getPath(baseDir), "lvjing_*.png");
+                    for (Path path : paths) {
+                        Pattern png = new Pattern(path.toFile().toString()).similar(0.85f);
+                        Match p = region.exists(png, 0.3);
+
+                        if (p != null) {
+                            Match duihuan = p.below().exists(baseDir + "duihuan.png");
+                            if (duihuan != null) {
+                                duihuan.click();
+                                Thread.sleep(1000L);
+                            }
+                        }
+                    }
+
+                    status.Done(Task.LV_JING_DUI_HUAN);
+                }
+            }
+        }
+    }
+
     @Override
     public boolean CanDo(Status status, String userName) {
         if (!status.canDo(Task.HUO_YUE_DU, userName)
                 && !status.canDo(Task.MEI_RI_JIANG_LI, userName)
+                && !status.canDo(Task.LV_JING_DUI_HUAN, userName)
                 && !status.canDo(Task.ZHEN_QING_HUI_KUI, userName)) {
             return false;
         }

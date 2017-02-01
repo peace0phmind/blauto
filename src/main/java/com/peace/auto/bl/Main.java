@@ -93,7 +93,7 @@ public class Main {
             }
             //*/
 
-            //*
+            /*
             if (new LianMeng().CanDo(status, user)) {
                 new LianMeng().Done(region, status);
             }
@@ -108,6 +108,12 @@ public class Main {
             /*
             if (new RenWu().CanDo(status, user)) {
                 new RenWu().Done(region, status);
+            }
+            //*/
+
+            //*
+            if (new JiangLi().CanDo(status, user)) {
+                new JiangLi().Done(region, status);
             }
             //*/
 

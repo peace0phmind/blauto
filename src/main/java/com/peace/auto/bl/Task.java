@@ -90,6 +90,7 @@ public enum Task {
     MEI_RI_JIANG_LI(JiangLi.class, 2),
     HUO_YUE_DU(JiangLi.class, Task.DO_INFINITY),
     ZHEN_QING_HUI_KUI(JiangLi.class, Task.DO_INFINITY, Task.DO_INFINITY, 1 * 60 * 60),
+    LV_JING_DUI_HUAN(JiangLi.class, 1),
 
     HAI_DI_SHI_JIE(HaiDiShiJie.class, Task.NOT_TO_DO),
     //    HAI_DI_SHI_JIE_SAO_DANG(HaiDiShiJie.class, 1, 3),
