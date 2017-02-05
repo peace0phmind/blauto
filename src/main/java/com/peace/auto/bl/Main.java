@@ -93,9 +93,9 @@ public class Main {
             }
             //*/
 
-            /*
-            if (new LianMeng().CanDo(status, user)) {
-                new LianMeng().Done(region, status);
+            //*
+            if (new TianSheng().CanDo(status, user)) {
+                new TianSheng().Done(region, status);
             }
             //*/
 
@@ -111,12 +111,11 @@ public class Main {
             }
             //*/
 
-            //*
+            /*
             if (new JiangLi().CanDo(status, user)) {
                 new JiangLi().Done(region, status);
             }
             //*/
-
         }
 
         region.close();

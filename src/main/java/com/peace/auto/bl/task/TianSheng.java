@@ -236,12 +236,12 @@ public class TianSheng implements IDo {
                     tianshendaluandou.click();
                     Thread.sleep(1000L);
 
-                    findLastFinishPage(region);
-
                     sanxingpng = new Pattern(baseDir + "sanxing.png").similar(0.8f);
                     if (LocalDateTime.now().getDayOfWeek() == SUNDAY) {
                         sanxingpng = new Pattern(baseDir + "sanxing_sunday.png").similar(0.8f);
                     }
+
+                    findLastFinishPage(region, sanxingpng);
 
                     Match sanxing = region.exists(sanxingpng);
                     if (sanxing != null) {
@@ -519,7 +519,7 @@ public class TianSheng implements IDo {
                 Thread.sleep(1000L);
             }
 
-            findLastFinishPage(region);
+            findLastFinishPage(region, sanxingpng);
 
             Match sanxing = region.exists(sanxingpng);
             if (sanxing != null) {
@@ -607,7 +607,7 @@ public class TianSheng implements IDo {
         return false;
     }
 
-    private void findLastFinishPage(Region region) throws InterruptedException {
+    private void findLastFinishPage(Region region, Pattern sxpng) throws InterruptedException {
         Match right = region.exists(baseDir + "right.png");
         while (right != null) {
             right.click();
@@ -615,7 +615,7 @@ public class TianSheng implements IDo {
             right = region.exists(baseDir + "right.png");
         }
 
-        Match sanxing = region.exists(sanxingpng);
+        Match sanxing = region.exists(sxpng);
         if (sanxing == null) {
             Match left = region.exists(baseDir + "left.png");
             if (left != null) {
