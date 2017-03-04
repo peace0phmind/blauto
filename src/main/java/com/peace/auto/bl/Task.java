@@ -33,7 +33,7 @@ public enum Task {
     CHU_ZHENG_DI_DUI_CAN_FIGHT(ChuZheng.class, Task.NOT_TO_DO, Task.NOT_TO_DO),  // a tag
     SONG_HUA(ChuZheng.class, 1, Task.NOT_TO_DO),
 
-    LIE_CHANG_ZHENG_SHOU(LieChang.class, Task.NOT_TO_DO),
+    LIE_CHANG_ZHENG_SHOU(LieChang.class, 1),
     LIE_CHANG_QIANG_ZHENG(LieChang.class, 3),
     LIE_CHANG_DA_GUAI(LieChang.class, Task.DO_INFINITY, Task.NOT_TO_DO, 24 * 60 * 60),
 
@@ -41,10 +41,10 @@ public enum Task {
     SHOU_GU_SHOU_LIE(ShouGuFang.class, Task.DO_INFINITY, Task.DO_INFINITY, 8 * 60 * 60),
 
     XUN_BAO(XunBao.class, 1, Task.NOT_TO_DO),
-    //    BUILDING(Building.class,Task.DO_INFINITY,Task.DO_INFINITY, 30 * 60),
-    BUILDING(Building.class, Task.NOT_TO_DO, Task.NOT_TO_DO, 30 * 60),
-    //    BUILDING_DUI_LIE(Building.class,Task.DO_INFINITY,Task.DO_INFINITY),
-    BUILDING_DUI_LIE(Building.class, Task.NOT_TO_DO, Task.NOT_TO_DO),
+    BUILDING(Building.class, Task.DO_INFINITY, Task.DO_INFINITY, 30 * 60),
+    //    BUILDING(Building.class, Task.NOT_TO_DO, Task.NOT_TO_DO, 30 * 60),
+    BUILDING_DUI_LIE(Building.class, Task.DO_INFINITY, Task.DO_INFINITY),
+    //    BUILDING_DUI_LIE(Building.class, Task.NOT_TO_DO, Task.NOT_TO_DO),
 
     NONG_CHANG_ZHONG_ZHI(NongChang.class, 2, 2, 4 * 60 * 60),
     NONG_CHANG_SHOU_CAI(NongChang.class, 2),
@@ -131,12 +131,11 @@ public enum Task {
         put(Status.peaceName(), Arrays.asList(CHU_ZHENG_DI_DUI, CHU_ZHENG_DI_DUI_CHECK, JING_JI_CHANG, SHI_LIAN_DONG,
                 SHI_CHANG, SHI_CHANG_CHECK, SHEN_SHOU_WU,
                 HAI_DI_SHI_JIE_SAO_DANG, LIE_CHANG_DA_GUAI,
-                BUILDING_DUI_LIE, BUILDING, LIAN_MENG_NAN_MAN_KAI_SHI,
-
+                LIAN_MENG_NAN_MAN_KAI_SHI,
 //              QI_BING_DUO_BAO,
                 LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
-        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG, BUILDING_DUI_LIE, BUILDING,
 
+        put("peace0ph001", Arrays.asList(SHI_LIAN_DONG, HAI_DI_SHI_JIE_SAO_DANG,
 //              QI_BING_DUO_BAO,
                 LIAN_MENG_NAN_MAN, LIAN_MENG_FU_LI, LIAN_MENG_LIAN_MENG_ZHAN));
     }};

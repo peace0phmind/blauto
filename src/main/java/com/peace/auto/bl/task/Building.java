@@ -73,7 +73,8 @@ public class Building implements IDo {
                         while (all.hasNext()) {
                             kaiqixinduilie = all.next();
 
-                            if (status.isPeace() || kaiqixinduilie.getX() < 400) {
+//                            if (status.isPeace() || kaiqixinduilie.getX() < 400) {
+                            if (kaiqixinduilie.getX() < 400) {
                                 kaiqixinduilie.click();
                                 status.Done(Task.BUILDING_DUI_LIE);
 
