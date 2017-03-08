@@ -94,8 +94,8 @@ public class Main {
             //*/
 
             //*
-            if (new TianSheng().CanDo(status, user)) {
-                new TianSheng().Done(region, status);
+            if (new ChuZheng().CanDo(status, user)) {
+                new ChuZheng().Done(region, status);
             }
             //*/
 

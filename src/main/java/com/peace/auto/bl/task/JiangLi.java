@@ -135,6 +135,16 @@ public class JiangLi implements IDo {
                             region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
                             Thread.sleep(3000L);
                             region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+
+                            Match gongxi_close = region.exists(baseDir + "gongxi_close.png");
+                            if (gongxi_close != null) {
+                                gongxi_close.click();
+                                Thread.sleep(3000L);
+                                region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+                                Thread.sleep(3000L);
+                                region.saveScreenCapture(".", String.format("jianianhua-%d-%d-%s-", count, i++, status.getCurrentUser()));
+                            }
+
                             count = getNeedCount(region);
                         }
 

@@ -117,25 +117,28 @@ public class ChuZheng extends ZhanBao implements IDo {
 
                     Match hua = region.exists(baseDir + "hua.png", 10);
                     if (hua != null) {
-                        for (int i = 0; i < 6; i++) {
-                            hua.click();
+                        hua.click();
 
-                            Match songhuahuodong = region.exists(baseDir + "songhuahuode.png", 3);
-                            if (songhuahuodong != null) {
-                                region.click(Common.QUE_DING);
-                            }
+                        Thread.sleep(2000L);
 
-                            Match daojubuzu = region.exists(baseDir + "songhuadaojubuzu", 1);
-                            if (daojubuzu != null) {
-                                region.click(Common.QUE_DING);
-                                break;
-                            }
+                        Match zengsong = region.exists(baseDir + "zengsong.png");
+                        if (zengsong != null) {
+                            zengsong.click();
+                        }
 
-                            Match dadaoshangxian = region.exists(baseDir + "dadaosonghuashangxian.png", 1);
-                            if (dadaoshangxian != null) {
-                                region.click(Common.QUE_DING);
-                                break;
-                            }
+                        Match songhuahuodong = region.exists(baseDir + "songhuahuode.png", 3);
+                        if (songhuahuodong != null) {
+                            region.click(Common.QUE_DING);
+                        }
+
+                        Match daojubuzu = region.exists(baseDir + "songhuadaojubuzu", 1);
+                        if (daojubuzu != null) {
+                            region.click(Common.QUE_DING);
+                        }
+
+                        Match dadaoshangxian = region.exists(baseDir + "dadaosonghuashangxian.png", 1);
+                        if (dadaoshangxian != null) {
+                            region.click(Common.QUE_DING);
                         }
 
                         clickInside(region, Common.CLOSE);
